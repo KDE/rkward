@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 14:38+0000\n"
-"PO-Revision-Date: 2024-09-13 06:27+0200\n"
+"PO-Revision-Date: 2026-01-17 03:26+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.8\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1032,6 +1032,12 @@ msgid ""
 "histograms or distribution functions. For brevity, D will denote the "
 "contending distribution (<label id=\"dist_name\"/> here)."
 msgstr ""
+"ნორმალური აპროქსიმაცია <label id=\"dist_name\"/> სინჯის საშუალოებამდე. ამმ "
+"დახმარების ფაილის უმეტესი ნაწილი CLT დამატებების ზოგადი აღწერაა. სინჯის "
+"საშუალოები განსხვავებული განაწილებიდან (<label id=\"dist_name\"/> აქ) "
+"დარდება სამიზნე ნორმალურ განაწილებასთან. შედარება ეყრდნობა ან ჰისტოგრამებს, "
+"ან განაწილების ფუნქციებს. სიმოკლისთვის D აღნიშნავს განსხვავებულ განაწილებას "
+"(<label id=\"dist_name\"/> აქ)."
 
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <usage>
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <usage>
@@ -1085,6 +1091,10 @@ msgid ""
 "value of the parameters, one would be interested in seeing how the "
 "distribution of the sample averages change as this number increases."
 msgstr ""
+"ეს ბევრი სინჯები (nAvg) გამოიყენება სინჯის საშუალოს გამოსათვლელად. "
+"პარამეტრების ფიქსირებული მნიშვნელობებისთვის ინტერესი უნდა ეკუთვნოდეს "
+"დანახვას, როგორ იცვლება სინჯის საშუალოების განაწილება ამ რიცხვის ზრდასთან "
+"ერთად."
 
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <settings> <setting> (refers to element labelled "Samples for distribution")
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <settings> <setting> (refers to element labelled "Samples for distribution")
@@ -1111,6 +1121,10 @@ msgid ""
 "these averages are used to construct the 'Histogram' or the 'Distribution "
 "function'."
 msgstr ""
+"ეს ბევრი სინჯების ნაკრებები (nDist) გამოიყენება სინჯის საშუალოების "
+"განაწილების შესახებ წარმოდგენის შესაქმნელად. თითოეული ნაკრები მოგაწვდით "
+"საშუალოს. შემდეგ კი ეს საშუალოები გამოიყენება 'ჰისტოგრამის' ან 'განაწილების "
+"ფუნქციის' ასაგებად."
 
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <settings> <setting> (refers to element labelled "Choose type of function plot")
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <settings> <setting> (refers to element labelled "Choose type of function plot")
@@ -1135,6 +1149,8 @@ msgid ""
 "Choose one of 'Histogram' or 'Distribution function' to compare the "
 "distribution of the sample averages of D with that of Normal distribution."
 msgstr ""
+"აირჩიეთ ერთ-ერთი 'ჰისტოგრამა', ან 'განაწილების ფუნქცია', რომ შეადაროთ D-ის "
+"საშუალო სინჯის განაწილება ნორმალურ განაწილებას."
 
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <settings> <setting> (refers to element labelled "Use normalised random variable")
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <settings> <setting> (refers to element labelled "Use normalised random variable")
@@ -1163,6 +1179,12 @@ msgid ""
 "the target distribution is Normal with the mean E(D) and standard deviation "
 "S(D)/sqrt(nAvg)."
 msgstr ""
+"უნდა მოხდეს, თუ არა სინჯის საშუალოების ნორმალიზაცია საშუალოს, D-ის E(D)-ის "
+"გამოკლებით და სტანდარტულ გადახრაზე S(D)/sqrt(nAvg) გაყოფით, სადაც S(D) aris "
+"D-ის სტანდარტული გადახრა? თუ ეს ასეა, მაშინ სამიზნე ნორმალური განაწილება "
+"ჩაითვლება სტანდარტულად, რაც ნიშნავს საშუალოს 0 და დისპერსიას 1. სხვა "
+"შემთხვევაში სამიზნე განაწილება ნორმალურია საშუალოთი E(D) და სტანდარტული "
+"გადახრით S(D)/sqrt(nAvg)."
 
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <settings> <setting> (refers to element labelled "Draw normal curve")
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <settings> <setting> (refers to element labelled "Draw normal curve")
@@ -1188,6 +1210,9 @@ msgid ""
 "samples are drawn from the target Normal distribution and their density "
 "values are plotted."
 msgstr ""
+"უნდა იყოს ნორმალური რკალი დახატული? 'ჰისტოგრამის' შემთხვევაში დახატულია "
+"nDist შემთხვევითი სინჯები სამიზნე ნორმალური განაწილებიდან და მათი სიმკვრივის "
+"მნიშვნელობები იხაზება."
 
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <settings> <setting> (refers to element labelled "Type of points/lines")
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <settings> <setting> (refers to element labelled "Type of points/lines")
@@ -1303,6 +1328,11 @@ msgid ""
 "disabled. See RKWard help on <link href=\"rkward://component/"
 "histogram_options\"/> for other histogram centric details."
 msgstr ""
+"თოლია 'სიხშირე' ხელმიუწვდომელია, რადგან ამ სიტუაციასი ჰისტოგრამის დახატვა "
+"<i>freq=TRUE</i> მნიშვნელობით უაზროა. ასევე, რადგან ჰისტოგრამა მთავარი "
+"დიაგრამაა, ასევე გათიშულია 'მიმდინარე დიაგრამაში ჩამატების' თოლია. "
+"ჰისტოგრამების შესახებ სხვა დეტალებთან გასაცნობად გამოიყენეთ RKWard-ის "
+"დახმარება ბმულზე <link href=\"rkward://component/histogram_options\"/>."
 
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <settings> <setting label="..."> (refers to element labelled "")
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <settings> <setting label="..."> (refers to element labelled "")
@@ -2128,6 +2158,9 @@ msgid ""
 "For variance to exist we need the 'Denominator degrees of freedom' parameter "
 "to be greater than 4."
 msgstr ""
+"იხილეთ RKWard დახმარება ბმულზე <link href=\"rkward://component/"
+"plot_f_distribution\"/>. იმისათვის, რომ სხვაობა არსებობდეს, გვჭირდება, რომ "
+"პარამეტრი 'მნიშვნელის თავისუფლების ხარისხი' 4-ზე მეტი იყოს."
 
 #. i18n: ectx: (Central Limit Theorem: F to Normal) <snippets> <snippet> <frame label="...">
 #: rkward/plugins/distributions/clt/plot_f_clt.xml:12
@@ -2529,6 +2562,9 @@ msgid ""
 "For the variance to exist, the 'Degrees of freedom' parameter has to be "
 "greater than 2."
 msgstr ""
+"იხილეთ RKWard დახმარება ბმულზე <link href=\"rkward://component/"
+"plot_t_distribution\"/>. იმისათვის, რომ სხვაობა არსებობდეს, გვჭირდება, რომ "
+"პარამეტრი 'მნიშვნელის თავისუფლების ხარისხი' 2-ზე მეტი იყოს."
 
 #. i18n: ectx: (Central Limit Theorem: t to Normal) <snippets> <snippet> <frame label="...">
 #: rkward/plugins/distributions/clt/plot_t_clt.xml:12
@@ -3002,6 +3038,10 @@ msgid ""
 "case a short sequence of evenly spaced values will be filled in, "
 "automatically."
 msgstr ""
+"აირჩიეთ ოპერაციის სასურველი რეჟიმი. შემდეგ მიუთითეთ საინტერესო "
+"მნიშვნელობები. შესაყვანი მნიშვნელობები (კვანტილები, ან ალბათობები), "
+"შეიძლება, ცარიელი დატოვოთ. ამ შემთხვევაში მნიშვნელობები ავტომატურად შეივსება "
+"თანაბრად განაწილებული მნიშვნელობების მოკლე მიმდევრობით."
 
 #. i18n: ectx: (Loaded from Beta distribution calculator) <snippet> <dropdown label="...">
 #. i18n: ectx: (Loaded from Binomial probabilities, quantiles, densities) <snippet> <dropdown label="...">
@@ -3434,6 +3474,8 @@ msgid ""
 "Quantiles in the geometric distribution represent the number of failures in "
 "a sequence of Bernoulli trials before the first success."
 msgstr ""
+"კვანტილები გეომეტრიულ განაწილებაში წარმოადგენს ჩავარდნების რაოდენობას "
+"ბერნულის გამოცდების მიმდევრობაში პირველ წარმატებამდე."
 
 #. i18n: ectx: (Loaded from Geometric distribution calculator) <settings> <setting> (refers to element labelled "probability of success in each trial")
 #: rkward/plugins/distributions/geom.rkh:19
@@ -3443,6 +3485,9 @@ msgid ""
 "affected by the \"log probabilities\" setting, i.e. always specify the plain "
 "probability,"
 msgstr ""
+"წარმატების ალბათობა თითოეულ გამოცდაში. დაიმახსოვრეთ, რომ ამ პარამეტრზე "
+"პარამეტრი 'ალბათობების ჟურნალი' გავლენას <b>არ</b> ახდენს, ანუ, უბრალოდ "
+"მიუთითეთ ალბათობა,"
 
 #. i18n: ectx: (Geometric distribution calculator)
 #: rkward/plugins/distributions/geom.xml:13
@@ -3451,6 +3496,8 @@ msgid ""
 "Quantiles represent the number of failures in a sequence of Bernoulli trials "
 "before the first success."
 msgstr ""
+"კვანტილები წარმოადგენს ჩავარდნების რაოდენობას ბერნულის გამოცდების "
+"მიმდევრობაში პირველ წარმატებამდე."
 
 #. i18n: ectx: (Geometric distribution calculator) <snippets> <snippet> <spinbox label="...">
 #: rkward/plugins/distributions/geom.xml:18
@@ -3495,6 +3542,8 @@ msgid ""
 "<link href=\"rkward://rhelp/pgumgel\">R help on the gumbel distribution "
 "functions from package FAdist</link>"
 msgstr ""
+"<link href=\"rkward://rhelp/pgumgel\">R-ის დახმარება გუმბელის განაწილების "
+"ფუნქციებზე პაკეტიდან FAdist</link>"
 
 #. i18n: ectx: (Loaded from Hypergeometric distribution calculator)
 #: rkward/plugins/distributions/hypergeometric.js:9
@@ -3521,6 +3570,8 @@ msgid ""
 "Quantiles represent the number of white balls drawn in k draws without "
 "replacement from an urn containing m white and n black balls."
 msgstr ""
+"კვანტილები წარმოადგენს k-ში დახატული თეთრი ბურთების რაოდენობას m და n შავი "
+"ბურთების შემცველი ურნის ჩანაცვლების გარეშე."
 
 #. i18n: ectx: (Loaded from Hypergeometric distribution calculator) <settings> <setting> (refers to element labelled "m (Number of white balls in the urn)")
 #. i18n: ectx: (Hypergeometric distribution calculator) <snippets> <snippet> <spinbox label="...">
@@ -3635,6 +3686,8 @@ msgid ""
 "Note: Quantiles represents the number of failures in a sequence of Bernoulli "
 "trials before the target number of successes is reached."
 msgstr ""
+"შენიშვნა: კვანტილები წარმოადენს ჩავარდნების რაოდენობას ბერნულის გამოცდების "
+"მიმდევრობაში, სანამ წარმატებების სამიზნე რაოდენობა არ იქნება მიღწეული."
 
 #. i18n: ectx: (Loaded from Negative Binomial distribution calculator) <settings> <setting> (refers to element labelled "Target number of successful trials")
 #: rkward/plugins/distributions/negative_binomial.rkh:19
@@ -3651,6 +3704,9 @@ msgid ""
 "affected by the \"log probabilities\" setting, i.e. always specify the plain "
 "probability."
 msgstr ""
+"წარმატების ალბათობა თითოეულ გამოცდაში. დაიმახსოვრეთ, რომ ამ პარამეტრზე "
+"პარამეტრი \"ალბათობების ჟურნალი გავლენას <b>არ</b> ახდენს, ანუ, უბრალოდ "
+"მიუთითეთ ალბათობა."
 
 #. i18n: ectx: (Negative Binomial distribution calculator)
 #: rkward/plugins/distributions/negative_binomial.xml:13
@@ -3659,6 +3715,8 @@ msgid ""
 "Quantiles represent the number of failures in a sequence of Bernoulli trials "
 "before the target number of successes is reached."
 msgstr ""
+"კვანტილები წარმოადენს ჩავარდნების რაოდენობას ბერნულის გამოცდების "
+"მიმდევრობაში, სანამ წარმატებების სამიზნე რაოდენობა არ იქნება მიღწეული."
 
 #. i18n: ectx: (Loaded from Plot binomial probabilities) <settings> <setting> (refers to element labelled "Probability of success on each trial")
 #. i18n: ectx: (Negative Binomial distribution calculator) <snippets> <snippet> <spinbox label="...">
@@ -3703,6 +3761,8 @@ msgid ""
 "Various tests for normality of observed measures are available, for instance "
 "<link href=\"rkward://component/rkward/jb_test\"/>."
 msgstr ""
+"ხელმისაწვდომია დაკვირვებული გაზომვების ნორმალურობის სხვადასხვა შემოწმებები. "
+"მაგ: <link href=\"rkward://component/rkward/jb_test\"/>."
 
 #. i18n: ectx: (Normal distribution calculator) <snippets> <snippet> <spinbox label="...">
 #: rkward/plugins/distributions/normal.xml:15
@@ -4260,6 +4320,13 @@ msgid ""
 "try again. If it still persists, use only the \"Submit\" button to view the "
 "exported plot in the Output window."
 msgstr ""
+"დასვით ეს თოლია ფუნქციის გრაფიკის გადასახედად. გამოჩნდება ახალი გრაფიკის "
+"ფანჯარა და ის ავტომატურად განახლდება პარამეტრების არჩევნიდან გამომდინარე. "
+"ფანჯრის გამოჩენას, შეიძლება, დიდი დრო დასჭირდეს და ხანდახან, შეიძლება, "
+"ცარიელი გრაფიკული მოწყობილობა გამოჩნდეს. ამ შემთხვევაში დახურეთ მოწყობილობა "
+"(dev.off(), ან შეიძლება graphics.off()-იც კი), გამორთეთ ეს თოლია, მოითმინეთ "
+"ცოტა ხანს და ისევ სცადეთ. თუ პრობლემა არ გაქრება, გამოტანის ფანჯარაში "
+"გატანილი გრაფიკის სანახავად გამოიყენეთ, მხოლოდ, ღილაკი 'გადაცემა'."
 
 #. i18n: ectx: (Loaded from Loaded from Plot Beta probabilities) <snippet> <setting> (refers to element labelled "Plot Options")
 #. i18n: ectx: (Loaded from Plot Beta probabilities) <snippet> <setting> (refers to element labelled "Plot Options")
@@ -4305,6 +4372,8 @@ msgid ""
 "Various plotting parameter settings for the plot. See the help page of "
 "\"Plot Options\" for more details."
 msgstr ""
+"სხვადასხვა ხაზვის პარამეტრები დიაგრამისთვის. მეტი დეტალებისთვის იხილეთ "
+"'დიაგრამის მორგების' დახმარების გვერდი."
 
 #. i18n: ectx: (Loaded from Loaded from Plot Beta probabilities) <snippet> <usage>
 #. i18n: ectx: (Loaded from Plot Beta probabilities) <snippet> <usage>
@@ -4352,6 +4421,9 @@ msgid ""
 "the \"Output\" window. To dynamically visualize the plot check the \"Preview"
 "\" box."
 msgstr ""
+"აირჩიეთ შესაფერისი მნიშვნელობები განაწილების სხვადასხვა პარამეტრებისთვის და "
+"აირჩიეთ ფუნქციის ტიპი. ღილაკი 'გადაცემა' გრაფიკს 'გამოტანის' ფანჯარაში "
+"გაიტანს. გრაფიკის დინამიკური ვიზუალიზაციისთვის დასვით ღილაკი 'გადახედვა'."
 
 #. i18n: ectx: (Loaded from Loaded from Plot Beta probabilities) <snippet> <setting> (refers to element labelled "Choose type of function plot")
 #. i18n: ectx: (Loaded from Plot Beta probabilities) <snippet> <setting> (refers to element labelled "Choose type of function plot")
@@ -4621,6 +4693,9 @@ msgid ""
 "between the lower quantile and the upper quantile (inclusive of the end "
 "points)."
 msgstr ""
+"ფუნქციის უდიდესი მნიშვნელობა, რომელიც დაიხატება. ვინაიდან ეს დისკრეტული "
+"განაწილებაა, ფუნქცია გამოითვლება ყველა მთელი რიცხვისთვის ქვედა კვანტილსა და "
+"ზედა კვანტილს შორის (ორივე წერტილის ჩათვლით)."
 
 #. i18n: ectx: (Loaded from Loaded from Plot Beta probabilities) <snippet> <spinbox label="...">
 #. i18n: ectx: (Loaded from Plot Beta probabilities) <snippet> <spinbox label="...">
@@ -4899,6 +4974,9 @@ msgid ""
 "parametrization is used. This is always a non-negative integer. See R "
 "reference on Negative Binomial distribution."
 msgstr ""
+"ეს არის პარამეტრი <i>ზომა</i>, როცა გამოიყენება პარამეტრიზაციის ფორმა "
+"'ალბათობა'. ეს ყოველთვის არაუარყოფითი მთელი რიცხვია. იხილეთ R-ის "
+"სახელმძღვანელო უარყოფითი ბინომური განაწილების შესახებ."
 
 #. i18n: ectx: (Loaded from Plot negative binomial probabilities) <settings> <setting> (refers to element labelled "Dispersion (Size)")
 #: rkward/plugins/distributions/plot_negbinomial_distribution.rkh:22
@@ -4908,6 +4986,9 @@ msgid ""
 "is used. This is a non-negative real number. See R reference on Negative "
 "Binomial distribution."
 msgstr ""
+"ეს არის პარამეტრი <i>ზომა</i>, როცა გამოიყენება პარამეტრიზაციის ფორმა 'მუ'. "
+"ეს ყოველთვის არაუარყოფითი მთელი რიცხვია. იხილეთ R-ის სახელმძღვანელო "
+"უარყოფითი ბინომური განაწილების შესახებ."
 
 #. i18n: ectx: (Loaded from Plot negative binomial probabilities) <settings> <setting> (refers to element labelled "Probability of success on each trial")
 #. i18n: ectx: (Loaded from Plot negative binomial probabilities) <settings> <setting> (refers to element labelled "Mean (alternate parameter, mu)")
@@ -4924,6 +5005,8 @@ msgid ""
 "The type of the parametrization to be used. See R reference on Negative "
 "Binomial distribution."
 msgstr ""
+"გამოსაყენებელი პარამეტრიზაციის ტიპი. იხილეთ R-ის დოკუმენტაცია უარყოფითი "
+"ბინომური განაწილების შესახებ."
 
 #. i18n: ectx: (Plot negative binomial probabilities) <snippets> <snippet> <frame label="Parameters"> <spinbox label="...">
 #: rkward/plugins/distributions/plot_negbinomial_distribution.xml:30
@@ -5206,6 +5289,9 @@ msgid ""
 "g. a fixed number of trials, or a fixed period of time), where λ (lambda) is "
 "the expected (mean) number of such events."
 msgstr ""
+"კვანტილები წარმოადგენს მითითებულ რეგიონში აღმოჩენილი მოვლენების რაოდენობას "
+"(მაგ: გამოცდების ფიქსირებული რაოდენობა, ან დროის ფიქსირებული ხანგრძლივობა), "
+"სადაც λ (ლამბდა) ამნაირი მოვლენების საშუალო რაოდენობაა."
 
 #. i18n: ectx: (Loaded from Poisson distribution calculator) <settings> <setting> (refers to element labelled "λ (Lambda)")
 #: rkward/plugins/distributions/poisson.rkh:19
@@ -5354,6 +5440,9 @@ msgid ""
 "option is checked, as neglecting this will usually prevent the test from "
 "succeeding."
 msgstr ""
+"დარწმუნდით, რომ მონაცემები NA-ებს არ შეიცავს. თუ კი, დარწმუნდით, რომ "
+"ჩართულია პარამეტრი 'NA-ების ამოღება', რადგან ამის უგულებელყოფა, როგორც წესი, "
+"შემოწმების წარმატებას ხელს უშლის."
 
 #. i18n: ectx: (Loaded from Jarque-Bera Normality Test) <settings> <setting> (refers to element labelled "variable(s):")
 #: rkward/plugins/distributions/tests/jb_test.rkh:21
@@ -5362,6 +5451,8 @@ msgid ""
 "Select the data to be computed (one or more variables). The vectors need to "
 "be numeric and can be of different length."
 msgstr ""
+"აირჩიეთ, თუ მონაცემები გამოსათვლელია (ერთი, ან მეტი ცვლადი). ვექტორები "
+"რიცხვითი უნდა იყოს და შეიძლება, იყოს სხვადასხვა სიგრძის."
 
 #. i18n: ectx: (Loaded from Jarque-Bera Normality Test) <settings> <setting> (refers to element labelled "Show Length and NAs")
 #: rkward/plugins/distributions/tests/jb_test.rkh:22
@@ -5380,6 +5471,8 @@ msgid ""
 "Select if your data has missing values. The NAs are then omitted when "
 "performing the test. (Default: YES)"
 msgstr ""
+"აირჩიეთ, თუ თქვენს მონაცემებს მნიშვნელობები აკლია. NAები ამოღებული იქნება "
+"შემოწმების ჩატარებისას. (ნაგულისხმევი: დიახ)"
 
 #. i18n: ectx: (Jarque-Bera Normality Test) <dialog label="Jarque-Bera Normality Test"> <tab label="Options"> <checkbox label="...">
 #: rkward/plugins/distributions/tests/jb_test.xml:25
@@ -5466,6 +5559,9 @@ msgid ""
 "observations, and the standard deviation estimate (based on given number of "
 "degrees of freedom) of an independent sample."
 msgstr ""
+"კვანტილები ფარდობაა მოცემული რაოდენობის დაკვირვებებში დაკვირვების შუალედსა "
+"და დამოუკიდებელი სინჯის სტანდარტული აცდენის შეფასებას შორის (ეყრდნობა "
+"თავისუფლების დონის მოცემულ რაოდენობას)."
 
 #. i18n: ectx: (Loaded from Uniform distribution calculator)
 #: rkward/plugins/distributions/uniform.js:11

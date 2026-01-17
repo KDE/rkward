@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 14:38+0000\n"
-"PO-Revision-Date: 2025-10-01 05:15+0200\n"
+"PO-Revision-Date: 2026-01-17 03:27+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.7\n"
+"X-Generator: Poedit 3.8\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -76,6 +76,11 @@ msgid ""
 "activated by default. It can further be extended with custom scripts, or "
 "color-schemes."
 msgstr ""
+"<strong>Kate-ის დამატებები</strong>: Kate ძრავაა RKWard-ის სკრიპტების "
+"რედაქტორისთვის. მას ბევრი დამატებითი ფუნქცია მოჰყვება, რომლების უმრავლესობის "
+"დაყენებაც RKWard-თან ერთად ხდება. მაგრამ მათი რაოდენობის სიდიდის გამო ყველას "
+"გააქტიურება არ ხდება. ის შეიძლება, კიდევ უფრო გაფართოვდეს თქვენი სკრიპტებით, "
+"ან ფერის სქემებით."
 
 #. i18n: ectx: (RKWard Add-Ons) <summary>
 #: rkward/pages/rkward_addons.rkh:9
@@ -86,6 +91,10 @@ msgid ""
 "mostly implemented as plugin-ins in RKWard. Many such plugins are available "
 "for download, separately."
 msgstr ""
+"<strong>RKWard-ის დამატებები</strong>: თუ თქვენ ეძებთ გრაფიკულ დიალოგურ "
+"ფანჯარას, რომელიც დაგეხმარებათ მონაცემთა შემოტანაში/კონვერტაციაში/ანალიზში/"
+"ვიზუალიზაციაში, ასეთი დიალოგები RKWard-ში ძირითადად, დამატებების სახითაა "
+"რეალიზებული. ბევრი ასეთი დამატება ცალკე გადმოსაწერადაა ხელმისაწვდომი."
 
 #. i18n: ectx: (RKWard Add-Ons) <summary>
 #: rkward/pages/rkward_addons.rkh:9
@@ -152,6 +161,16 @@ msgid ""
 ">Addons</link>. Addons shown in bold have been reported to be useful and "
 "work well in RKWard, but feel free to explore the others, too."
 msgstr ""
+"<link href=\"https://kate.kde.org\">Kate</link> არის ძალიან მძლავრი ტექსტური "
+"რედაქტორი, რომელიც იყენებს იმავე ტექსტის რედაქტირების კომპონენტს, რომელსაც "
+"RKWard. მას ასევე გააჩნია მრავალფეროვანი დამატებები, მაგალითად, კოდის "
+"ფრაგმენტების შესაქმნელად, ან git-ის რეპოზიტორიაში პროექტების სამართავად. "
+"ზოგიერთ მათგანს — მაგალითად, C++-ის უკუტრეისის ნავიგაციის ხელსაწყოს — RKWard-"
+"ის კონტექსტში დიდი აზრი არ აქვს, თუმცა ბევრ სხვას - კი. იმისათვის, რომ ნახოთ "
+"რა არის ხელმისაწვდომი, დარწმუნდით, რომ დაყენებული გაქვთ Kate, შემდეგ კი "
+"იხილეთ მენიუ: <link href=\"rkward://settings/addons\">მორგება->დამატებები</"
+"link>. მუქი შრიფტით მითითებული დამატებები მიჩნეულია სასარგებლოდ და კარგად "
+"მუშაობს RKWard-ში, თუმცა, შეგიძლიათ სხვა დამატებებიც სცადოთ."
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="...">
 #: rkward/pages/rkward_addons.rkh:39
@@ -192,6 +211,16 @@ msgid ""
 "text=https://github.com/rkward-community/rk.Teaching.git\">this dialog</"
 "link> (pre-initialized for installation of rk.Teaching)."
 msgstr ""
+"ასე შეფუთული RKWard-ის ყველა დამატება არ გამოჩნდება R-ის პაკეტების დაყენების "
+"დიალოგში, რადგან ისინი (ჯერ) არაა განთავსებული ნაგულისხმევ რეპოზიტორიებში. "
+"კერძოდ, ამ ტექსტის წერის მომენტისთვის, ასეთია დამატებების ძალიან ვრცელი "
+"ნაკრები <link href=\"https://github.com/rkward-community/rk.Teaching\">rk."
+"Teaching</link>. ბევრი მათგანი განთავსებულია ისეთ პლატფორმებზე, როგორიცაა "
+"github.com და რეპოზიტორიის URL-ის ცოდნის შემთხვევაში, მათი დაყენება "
+"შესაძლებელია რამდენიმე დაწკაპუნებით, <link href=\"rkward://runplugin/rkward::"
+"install_from_git/fullURL.text=https://github.com/rkward-community/rk."
+"Teaching.git\">ამ დიალოგის</link> გამოყენებით (რომელიც წინასწარაა "
+"ინიციალიზებული rk.Teaching-ის დასაყენებლად)."
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="...">
 #: rkward/pages/rkward_addons.rkh:47
@@ -217,6 +246,14 @@ msgid ""
 "rhelp/rkward-package\">rkward package overview</link> for RKWard specific "
 "function for development and scripting."
 msgstr ""
+"გაეცანით <link href=\"help:/rkwardplugins/index.html\">RKWard-ის დამატებების "
+"წერის შესავალს</link> (<link href=\"https://rkward.kde.org/doc/rkwardplugins/"
+"\">უახლესი ონლაინ ვერსია</link>), რათა ისწავლოთ, თუ რამდენად მარტივია RKWard-"
+"ის გაუმჯობესება თქვენივე მორგებული დიალოგებით. ასევე, სურვილის შემთხვევაში, "
+"გაიგებთ, თუ როგორ გაუზიაროთ თქვენი ნამუშევარი RKWard-ის მომხმარებელთა "
+"საზოგადოებას. RKWard-ის სპეციფიკური ფუნქციების სანახავად პროგრამირებისა და "
+"სკრიპტინგისთვის, იხილეთ <link href=\"rkward://rhelp/rkward-package\">rkward-"
+"ის პაკეტის მიმოხილვა</link>."
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <title>
 #: rkward/pages/rkward_code_navigation.rkh:8
@@ -235,6 +272,13 @@ msgid ""
 "href=\"rkward://rhelp/browser\">browser()</link>-command, but importantly "
 "this works entirely without actually running the code."
 msgstr ""
+"სკრიპტების რედაქტორის ფანჯრებში კოდის ნავიგაციის ფუნქცია საშუალებას გაძლევთ, "
+"გადაადგილდეთ R-ის კოდში მისი სინტაქსური სტრუქტურის მიხედვით, მაგალითად: "
+"სწრაფად გადახვიდეთ მიმდინარე არეს გარეთ არსებულ შემდეგ ოპერატორზე ან წინა "
+"ზედა დონის ოპერატორზე. ნავიგაციის რამდენიმე ფუნქცია შეგნებულად "
+"მიმსგავსებულია R-ის <link href=\"rkward://rhelp/browser\">browser()</link> "
+"ბრძანებით გამართვის პროცესს, თუმცა, რაც მთავარია, ეს ყველაფერი მუშაობს კოდის "
+"რეალურად გაშვების გარეშე."
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <section title="...">
 #: rkward/pages/rkward_code_navigation.rkh:15
@@ -254,6 +298,13 @@ msgid ""
 "your sources very quickly. Once in this mode, subsequent single key presses "
 "invoke the following actions:"
 msgstr ""
+"კოდის ნავიგაციის ფუნქცია ხელმისაწვდომია <i>გაშვების</i> მენიუდან და "
+"სკრიპტების (R ან R markdown) ფანჯრების კონტექსტური მენიუდან ორი ვარიანტით: "
+"პირველი გზაა ნავიგაციის ცალკეული მოქმედებების პირდაპირ მენიუდან არჩევა. "
+"მეორე მხრივ, „კოდის სწრაფი ნავიგაციის რეჟიმი“ (მენიუს ზედა პუნქტი; "
+"ნაგულისხმევი მალსახმობია „Meta+n“) საშუალებას გაძლევთ, ძალიან სწრაფად "
+"გადაადგილდეთ თქვენს კოდში. ამ რეჟიმში გადასვლის შემდეგ, კლავიშზე ერთჯერადი "
+"დაჭერით სრულდება შემდეგი ქმედებები:"
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <section title="Available commands">
 #: rkward/pages/rkward_code_navigation.rkh:15
@@ -287,6 +338,35 @@ msgid ""
 "<tr><td><tt><b>Ctrl+Return</b></tt></td><td>Run the current line or "
 "selection</td></tr> </table>"
 msgstr ""
+"<table border=\"0\"> <tr><td><tt><b>n / N</b></tt></td><td>გადასვლა შემდეგ "
+"(n) ან წინა (N) ოპერატორზე მიმდინარე დონეზე, ან შემდეგ გარე დონეზე</td></tr> "
+"<tr><td><tt><b>i / I</b></tt></td><td>იგივე, რაც n/N, ოღონდ შიდა "
+"კონტექსტებში შესვლითაც (მაგალითად, ფუნქციის განსაზღვრებაში)</td></tr> "
+"<tr><td><tt><b>o / O</b></tt></td><td>პირდაპირ გადახტომა შემდეგ / წინა "
+"ოპერატორზე მიმდინარე დონის გარეთ (მაგ. პირველი ოპერატორი ფუნქციის ტანის "
+"შემდეგ)</td></tr> <tr><td><tt><b>t / T</b></tt></td><td>გადასვლა შემდეგ / "
+"წინა ოპერატორზე სკრიპტის უმაღლეს (ზედა) დონეზე</td></tr> <tr><td><tt><b>c / "
+"C</b></tt></td><td>(მხოლოდ R Markdown დოკუმენტებისთვის:) გადასვლა შემდეგ / "
+"წინა კოდის ბლოკზე (chunk)</td></tr> <tr><td><tt><b>1 / !</b></tt></"
+"td><td>გადასვლა დოკუმენტის დასაწყისში / ბოლოში</td></tr> <tr><td><tt><b>s</"
+"b></tt></td><td>მიმდინარე ოპერატორის მონიშვნა</td></tr> <tr><td><tt><b>S</"
+"b></tt></td><td>(მხოლოდ R Markdown დოკუმენტებისთვის:) მიმდინარე ბლოკში "
+"არსებული მთელი კოდის მონიშვნა</td></tr> <tr><td><tt><b>r</b></tt></"
+"td><td>მიმდინარე ოპერატორის გაშვება და შემდეგ ოპერატორზე გადასვლა (იგივეა, "
+"რაც თანმიმდევრობა: <tt>s - Ctrl+Return - n</tt>)</td></tr> "
+"<tr><td><tt><b>Backspace</b></tt></td><td>დაბრუნება ბოლო მოქმედებამდე "
+"არსებულ პოზიციაზე</td></tr> <tr><td><tt><b>Esc</b></tt></td><td>კოდის სწრაფი "
+"ნავიგაციის რეჟიმიდან გამოსვლა და კურსორის / მონიშვნის დაბრუნება იმ "
+"მდგომარეობაში, რომელიც რეჟიმში შესვლამდე იყო</td></tr> "
+"<tr><td><tt><b>Return</b></tt></td><td>კოდის სწრაფი ნავიგაციის რეჟიმიდან "
+"გამოსვლა მიმდინარე პოზიციის/მონიშვნის შენარჩუნებით</td></tr> <tr><td/"
+"><td>კოდის სწრაფი ნავიგაციის რეჟიმი ასევე დასრულდება, თუ სკრიპტში სხვაგან "
+"დააწკაპუნებთ, სხვა ფანჯარაზე გადახვალთ ან სკრიპტი შეიცვლება</td></tr> "
+"<tr><td colspan=\"2\"> </td></tr> <tr><td colspan=\"2\">და ბოლოს, კოდის "
+"სწრაფი ნავიგაციის რეჟიმში ყოფნისას შეგიძლიათ გააგრძელოთ ჩვეულებრივი "
+"მალსახმობების გამოყენება. მათ შორის, რაც მთავარია:</td></tr> "
+"<tr><td><tt><b>Ctrl+Return</b></tt></td><td>მიმდინარე ხაზის ან მონიშნულის "
+"გაშვება</td></tr> </table>"
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <section title="...">
 #: rkward/pages/rkward_code_navigation.rkh:38
@@ -306,6 +386,13 @@ msgid ""
 "syntax is assumed, syntax errors will be skipped over, which may lead to "
 "unexpected behavior."
 msgstr ""
+"ქმედება 'n' შექმნილია იმისთვის, რომ შეგახსენოთ R-ის გამმართველის შესაბამისი "
+"ბრძანება (იხილეთ <link href=\"rkward://rhelp/browser\"/>), თუმცა ის იგივე "
+"არაა. ყველაზე მნიშვნელოვანი განსხვავება ისაა, რომ აქ აღწერილი კოდის "
+"ნავიგაცია ეფუძნება სკრიპტის სრულად სტატიკურ სინტაქსურ ანალიზს და საერთოდ არ "
+"ცდილობს მართვის ნაკადის მიყოლას. გარდა ამისა, იგულისხმება, რომ სინტაქსი "
+"სწორადაა ჩამოყალიბებული. ხდება სინტაქსური შეცდომების გამოტოვება, რამაც "
+"შეიძლება, მოულოდნელი შედეგები გამოიწვიოს."
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <section title="Notes and Tips">
 #: rkward/pages/rkward_code_navigation.rkh:38
@@ -317,6 +404,12 @@ msgid ""
 "behave in a way, that we hope makes sense, intuitively. Remember to always "
 "control, visually, what you are doing, before you hit Ctrl+Enter."
 msgstr ""
+"გარდა ამისა, ის, თუ რა არის ზუსტად „ოპერატორი“, ან „შიდა“ და „გარე“ "
+"კონტექსტი, შეიძლება, ყოველთვის ნათელი არ იყოს და შესაძლოა, ყოველთვის ზუსტად "
+"არ შეესაბამებოდეს იმას, თუ როგორ აღიქვამს R-ის გარემო თქვენს კოდს. ნაცვლად "
+"ამისა, ეს ბრძანებები ისეა ჩაფიქრებული, რომ ინტუიციურად გასაგები იყოს. "
+"გახსოვდეთ, რომ Ctrl+Enter-ზე დაჭერამდე ყოველთვის ვიზუალურად გააკონტროლოთ, "
+"რას აკეთებთ."
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <section title="Notes and Tips">
 #: rkward/pages/rkward_code_navigation.rkh:38
@@ -326,6 +419,10 @@ msgid ""
 "are not exact opposites. Remember you can undo your last step using "
 "Backspace, if you went past the location you were looking for."
 msgstr ""
+"ბრძანებების უმრავლესობას აქვს ტენდენცია, გადაადგილდეს გარე კონტექსტებისკენ, "
+"ამიტომ 'n' და 'N' ზუსტად საპირისპიროები არაა. გახსოვდეთ, რომ შეგიძლიათ, "
+"გააუქმოთ თქვენი ბოლო ნაბიჯი Backspace-ის გამოყენებით, თუ გასცდით იმ ადგილს, "
+"რომელსაც ეძებდით."
 
 #. i18n: ectx: (Using the RKWard R Console) <title>
 #: rkward/pages/rkward_console.rkh:8
@@ -364,6 +461,10 @@ msgid ""
 "know some basics of the R language. Select Help->Help on R for some "
 "introductory information."
 msgstr ""
+"RKWard ეფუძნება R ენას სტატისტიკური გამოთვლებისთვის. კონსოლი საშუალებას "
+"გაძლევთ, პირდაპირ შეიყვანოთ R-ის ბრძანებები. ცხადია, მის გამოსაყენებლად "
+"საჭიროა R ენის საფუძვლების ცოდნა. გაეცანით მენიუს: დახმარება->დახმარება R-ის "
+"შესახებ, სადაც იხილავთ შესავალ ინფორმაციას."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="What is the console?">
 #: rkward/pages/rkward_console.rkh:15
@@ -373,6 +474,9 @@ msgid ""
 "complex commands / scripts, using the Script File Editor (File->New->Script "
 "File) is much more comfortable."
 msgstr ""
+"კონსოლი განკუთვნილია ინტერაქტიული გამოყენებისა და პატარა ბრძანებებისთვის. "
+"რთული ბრძანებების ან სკრიპტების ჩასასწორებლად ბევრად უფრო მოსახერხებელია "
+"სკრიპტების რედაქტორის (ფაილი->ახალი->სკრიპტის ფაილი) გამოყენება."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="What is the console?">
 #: rkward/pages/rkward_console.rkh:15
@@ -400,6 +504,12 @@ msgid ""
 "time (e.g. some action you invoked from the Analysis menu), the console will "
 "only become available again, when the R backend becomes idle."
 msgstr ""
+"მიმდინარე ბრძანების შესაწყვეტად დააჭირეთ Ctrl+C-ს, ან კონტექსტური მენიუდან "
+"„მიმდინარე ბრძანების შეწყვეტა“ აირჩიეთ. გაითვალისწინეთ, რომ ბრძანება "
+"აუცილებლად მაშინვე არ დასრულდება. თუ ერთდროულად ხდება რამდენიმე სხვა "
+"ბრძანების შესრულება (მაგალითად, ანალიზის მენიუდან გამოძახებული რომელიმე "
+"ქმედება), კონსოლი მხოლოდ მაშინ გახდება ხელმისაწვდომი, როცა R backend-ი "
+"თავისუფალ (idle) მდგომარეობაში გადავა."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
 #: rkward/pages/rkward_console.rkh:27
@@ -416,6 +526,10 @@ msgid ""
 "+Return). Leading \"> \" and \"+ \" on the selected lines will be removed "
 "automatically."
 msgstr ""
+"მონიშნული ბრძანებების (ან მათი მიმდევრობის) თავიდან გასაშვებად, მონიშნეთ "
+"ისინი თაგუნათი. შემდეგ აირჩიეთ „მონიშნულის გაშვება“ კონტექსტური მენიუდან "
+"(ნაგულისხმევი მალსახმობია Ctrl+Return). მონიშნული ხაზების დასაწყისში "
+"არსებული „> “ და „+ “ სიმბოლოები ავტომატურად წაიშლება."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
 #: rkward/pages/rkward_console.rkh:31
@@ -432,6 +546,10 @@ msgid ""
 "\"> \" and \"+ \". In contrast, \"Copy commands, only\" will remove the "
 "prompts from the text copied into the clipboard."
 msgstr ""
+"კონტექსტური მენიუდან (ან ჩასწორების მენიუდან) ხელმისაწვდომია კოპირების ორი "
+"რეჟიმი. ერთი საშუალებას გაძლევთ, მონიშნული ტექსტი სიტყვასიტყვით დააკოპიროთ, "
+"ანუ „> “ და „+ “ ნიშნების ჩათვლით. ამის საპირისპიროდ, ქმედება „მხოლოდ "
+"ბრძანებების კოპირება“ გაცვლის ბუფერში გადატანილი ტექსტიდან ამ ნიშნებს წაშლის."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Copying commands / output">
 #: rkward/pages/rkward_console.rkh:31
@@ -440,6 +558,8 @@ msgid ""
 "Note that the customary shortcut for copying text - Ctrl+C - does NOT work "
 "in the console, as Ctrl+C already means interrupting the current command."
 msgstr ""
+"გაითვალისწინეთ, რომ ტექსტის კოპირების ჩვეული მალსახმობი - Ctrl+C - კონსოლში "
+"არ მუშაობს, რადგან Ctrl+C უკვე ნიშნავს მიმდინარე ბრძანების შეწყვეტას."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
 #: rkward/pages/rkward_console.rkh:37
@@ -455,6 +575,9 @@ msgid ""
 "try to look up the R help page for whichever keyword the cursor is currently "
 "on."
 msgstr ""
+"F2-ზე დაჭერა (ან კონტექსტური მენიუდან „ფუნქციის ცნობის“ არჩევა) შეეცდება, "
+"მოძებნოს R-ის დახმარების გვერდი ნებისმიერი საკვანძო სიტყვისთვის, რომელზეც "
+"კურსორი იმყოფება."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
 #: rkward/pages/rkward_console.rkh:41
@@ -469,6 +592,8 @@ msgid ""
 "The console provides a mechanism to recall recent commands, similar to the "
 "readline functionality offered in R or most shells."
 msgstr ""
+"კონსოლი გთავაზობთ ბოლო დროს გამოყენებული ბრძანებების გამოძახების მექანიზმს, "
+"რომელიც R-ში ან სხვა გარსებში არსებული readline-ის ფუნქციონალის მსგავსია."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Navigating the command history">
 #: rkward/pages/rkward_console.rkh:41
@@ -479,6 +604,11 @@ msgid ""
 "pressing the down arrow goes downwards in the command history. Of course, "
 "you can also edit a recalled command line."
 msgstr ""
+"წინა ბრძანების გამოსაძახებლად უბრალოდ დააჭირეთ ზედა ისარს. ზედა ისარზე "
+"განმეორებითი დაჭერით გამოიძახებთ მანამდე არსებულ ბრძანებებს და ა.შ. "
+"ანალოგიურად, ქვედა ისარზე დაჭერით გადაადგილდებით ბრძანებების ისტორიაში "
+"ქვემოთ. რა თქმა უნდა, თქვენ ასევე შეგიძლიათ გამოძახებული ბრძანების სტრიქონის "
+"ჩასწორება."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Navigating the command history">
 #: rkward/pages/rkward_console.rkh:41
@@ -489,6 +619,10 @@ msgid ""
 "console. Now use Shift+Up / Shift+Down. You will note, that only those "
 "recent command lines that started with \"print\" will be shown."
 msgstr ""
+"ასევე შესაძლებელია ბრძანებების ისტორიაში იმ ხაზების მოძებნა, რომლებიც "
+"კონკრეტული სტრიქონით იწყება. ამის გამოსაყენებლად, მაგალითად, ჩაწერეთ \"print"
+"\" კონსოლში. ახლა გამოიყენეთ Shift+Up / Shift+Down. თქვენ შენიშნავთ, რომ "
+"გამოჩნდება მხოლოდ ის ბოლო ბრძანებები, რომლებიც იწყებოდა სიტყვით \"print\"."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Navigating the command history">
 #: rkward/pages/rkward_console.rkh:41
@@ -499,6 +633,11 @@ msgid ""
 "while pressing Up/Down without the Shift key will show only matching lines. "
 "(see <link href=\"#settings\">Section settings</link>)."
 msgstr ""
+"შესაძლებელია ბრძანებების ისტორიაში ძიების ეს მეორე რეჟიმი ნაგულისხმევად "
+"იქცეს. ამ შემთხვევაში, Shift+Up/Down-ზე დაჭერით გადაადგილდებით ყველა "
+"ბრძანებას შორის, ხოლო Up/Down-ზე დაჭერით (Shift ღილაკის გარეშე) გამოჩნდება "
+"მხოლოდ შესაბამისი ხაზები (იხილეთ <link href=\"#settings\">სექციის მორგება</"
+"link>)."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Navigating the command history">
 #: rkward/pages/rkward_console.rkh:41
@@ -508,6 +647,10 @@ msgid ""
 "using <i>File->Import / Export command history</i> or the R commands "
 "<i>savehistory()</i> and <i>loadhistory()</i>."
 msgstr ""
+"სესიის განმავლობაში ნებისმიერ დროს შეგიძლიათ შეინახოთ ან ჩატვირთოთ "
+"ბრძანებების ისტორია მენიუდან: <i>ფაილი->შემოტანის / გატანის ბრძანების "
+"ისტორია</i>, ან R-ის ბრძანებების: <i>savehistory()</i> და <i>loadhistory()</"
+"i> გამოყენებით."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
 #: rkward/pages/rkward_console.rkh:53
@@ -523,6 +666,9 @@ msgid ""
 "complete the name of that R object. If several objects start with the typed "
 "characters, a list of all those objects will be shown."
 msgstr ""
+"R ობიექტის სახელის აკრეფისას Tab ღილაკზე დაჭერა შეეცდება, ამ R ობიექტის "
+"სახელი ავტომატურად დაასრულოს. თუ აკრეფილი სიმბოლოებით რამდენიმე სხვადასხვა "
+"ობიექტი იწყება, გამოჩნდება ყველა ამ ობიექტის ჩამონათვალი."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Filename and Object name completion">
 #: rkward/pages/rkward_console.rkh:53
@@ -533,6 +679,10 @@ msgid ""
 "\", and press Tab again. The word will be changed to \"paste\", as that is "
 "the only matching object name."
 msgstr ""
+"მაგალითად, ჩაწერეთ „base::pa“ კონსოლში და შემდეგ დააჭირეთ Tab ღილაკს. ეს "
+"გამოაჩენს „base“ პაკეტის ყველა იმ ობიექტის ჩამონათვალს, რომლებიც იწყება "
+"სიმბოლოებით „pa“. ახლა მიაწერეთ „s“ და კვლავ დააჭირეთ Tab ღილაკს. სიტყვა "
+"შეიცვლება „paste“-ით, რადგან ეს ერთადერთი შესატყვისი ობიექტის სახელია."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Filename and Object name completion">
 #: rkward/pages/rkward_console.rkh:53
@@ -543,6 +693,10 @@ msgid ""
 "seems to be inside a quoted string that does not seem to be part of an "
 "object name."
 msgstr ""
+"მარტივ ევრისტიკაზე დაყრდნობით, RKWard შეეცდება, ობიექტების სახელების "
+"ნაცვლად, ფაილის სახელები დაასრულოს იქ, სადაც ეს შესაფერისია. ეს ხდება მაშინ, "
+"როცა კურსორი მოთავსებულია ბრჭყალებში მოქცეულ სტრიქონში, რომელიც არ ჰგავს "
+"ობიექტის სახელის ნაწილს."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
 #. i18n: ectx: (Screen device history) <section title="...">
@@ -561,6 +715,9 @@ msgid ""
 "console\">Settings->Configure RKWard->R Console</a> or \"Configure\" from "
 "the context menu. The following options are configurable:"
 msgstr ""
+"კონსოლის ქცევის მოსარგებად აირჩიეთ <a href=\"rkward://settings/console"
+"\">მორგება->RKWard-ის მორგება->R-ის კონსოლი</a> ან „მორგება“ კონტექსტური "
+"მენიუდან. შესაძლებელია შემდეგი პარამეტრების მორგება:"
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
 #: rkward/pages/rkward_console.rkh:61
@@ -571,6 +728,10 @@ msgid ""
 "next starting RKWard again. If this is not checked, each session of RKWard "
 "will start out with an empty command history."
 msgstr ""
+"<b>ბრძანებების ისტორიის შენახვა/ჩატვირთვა</b>: მოხდეს თუ არა <link href="
+"\"#command_history\">ბრძანებების ისტორიის</link> შენახვა RKWard-ის "
+"დახურვისას და ჩაიტვირთოს თუ არა ის RKWard-ის ხელახლა გაშვებისას. თუ ეს "
+"მონიშნული არაა, RKWard-ის ყოველი სესია ცარიელი ბრძანებების ისტორიით დაიწყება."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
 #: rkward/pages/rkward_console.rkh:61
@@ -579,6 +740,8 @@ msgid ""
 "<b>Maximum length of command history</b>: Only this many lines are kept in "
 "the <link href=\"#command_history\">command history</link>."
 msgstr ""
+"<b>ბრძანებების ისტორიის მაქსიმალური სიგრძე</b>: <link href=\"#command_history"
+"\">ბრძანებების ისტორიაში</link> შეინახება მხოლოდ ხაზების ეს რაოდენობა."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
 #: rkward/pages/rkward_console.rkh:61
@@ -590,6 +753,11 @@ msgid ""
 "top of the console window. To clear the console entirely, choose \"Clear\" "
 "from the context menu or the Edit menu."
 msgstr ""
+"<b>კონსოლში ნაჩვენები აბზაცების/ხაზების მაქს. რაოდენობა</b>: კონსოლში "
+"გამოჩნდება ხაზების (ბრძანებები და გამომავალი მონაცემები) არაუმეტეს ამ ჯამური "
+"რაოდენობისა. როცა მოხდება ხაზების ამ რაოდენობის გადაჭარბება, ხაზები წაიშლება "
+"კონსოლის ფანჯრის ზედა ნაწილიდან. კონსოლის მთლიანად გასასუფთავებლად აირჩიეთ "
+"„Clear“ კონტექსტური მენიუდან ან მენიუდან „ჩასწორება“."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
 #: rkward/pages/rkward_console.rkh:61
@@ -600,6 +768,10 @@ msgid ""
 "their results will be shown in the console. If this option is not checked, "
 "the commands will only be visible in the Command log, but not in the console."
 msgstr ""
+"<b>ბრძანებების გაშვება სკრიპტების რედაქტორიდან კონსოლში</b>: სკრიპტების "
+"რედაქტორიდან მომავალი ბრძანებები შესაძლოა გაიგზავნოს კონსოლის საშუალებით, ე."
+"ი. ბრძანებები და მათი შედეგები გამოჩნდება კონსოლში. თუ ეს პარამეტრი ჩართული "
+"არაა, ბრძანებები გამოჩნდება მხოლოდ ბრძანებების ჟურნალში, მაგრამ არა კონსოლში."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
 #: rkward/pages/rkward_console.rkh:61
@@ -610,6 +782,10 @@ msgid ""
 "history. Turning off this option may help to keep the console history \"clean"
 "\"."
 msgstr ""
+"<b>ასევე დაამატე ის ბრძანებები კონსოლის ისტორიას</b>: თუ ზემოთ მოცემული "
+"პარამეტრი მონიშნულია, ეს განსაზღვრავს, დაემატება თუ არა ასეთი ბრძანებები "
+"კონსოლის ისტორიასაც. ამ პარამეტრის გამორთვა დაგეხმარებათ კონსოლის ისტორიის "
+"„სისუფთავის“ შენარჩუნებაში."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
 #: rkward/pages/rkward_console.rkh:61
@@ -620,6 +796,11 @@ msgid ""
 "\">command history</link> is the default, i.e. available with Up/Down "
 "without Shift. Else the key binding for this is Shift+Up/Down."
 msgstr ""
+"<b>ბრძანებების ისტორია ნაგულისხმევად კონტექსტზეა დამოკიდებული</b>: თუ ეს "
+"მონიშნულია, <link href=\"#command_history\">ბრძანებების ისტორიაში</link> "
+"ნავიგაციის კონტექსტზე დამოკიდებული რეჟიმი იქნება ნაგულისხმევი, ე.ი. "
+"ხელმისაწვდომი იქნება ზედა/ქვედა ღილაკებით Shift-ის გარეშე. წინააღმდეგ "
+"შემთხვევაში, ამისათვის გამოიყენება ღილაკთა კომბინაცია Shift+ზემოთ/ქვემოთ."
 
 #. i18n: ectx: (RKWard for new Users) <title>
 #: rkward/pages/rkward_for_new_users.rkh:8
@@ -634,6 +815,9 @@ msgid ""
 "Provide some starting points for users new to R and RKWard. For a more in "
 "depth guide see <link href=\"rkward://page/rkward_for_r_users\"/>."
 msgstr ""
+"შემოგთავაზებთ საწყის ნაბიჯებს იმ მომხმარებლებისთვის, რომლებიც გამოუცდელები "
+"არიან R-სა და RKWard-ში. უფრო დეტალური სახელმძღვანელოსთვის იხილეთ ბმული "
+"<link href=\"rkward://page/rkward_for_r_users\"/>."
 
 #. i18n: ectx: (RKWard for new Users) <section title="...">
 #: rkward/pages/rkward_for_new_users.rkh:14
@@ -651,6 +835,11 @@ msgid ""
 "course, R can deal with this sort of data (technically called a \"data.frame"
 "\"), it is much more flexible, and may be slightly confusing at first."
 msgstr ""
+"თუ ადრე სხვადასხვა სტატისტიკის პროგრამებს იყენებდით, შესაძლოა მიჩვეული ხართ "
+"იმ აზრს, რომ თქვენი ყველა მონაცემი, როგორც წესი, ერთადერთ ცხრილში ინახება და "
+"ეს ცხრილი მუდმივად ჩანს. მიუხედავად იმისა, რომ R-ს, რა თქმა უნდა, შეუძლია ამ "
+"ტიპის მონაცემებთან (რომელთაც ტექნიკურად „data.frame“ ეწოდება) მუშაობა, ის "
+"ბევრად უფრო მოქნილია, რაც თავიდან შესაძლოა ოდნავ დამაბნეველიც კი აღმოჩნდეს."
 
 #. i18n: ectx: (RKWard for new Users) <section title="Where's my data?">
 #: rkward/pages/rkward_for_new_users.rkh:14
@@ -663,6 +852,13 @@ msgid ""
 "of the language itself, the functions, are stored just like data and can "
 "also be edited."
 msgstr ""
+"R-ს — და, შესაბამისად, RKWard-საც — შეუძლია სხვადასხვა ტიპის მონაცემთა დიდი "
+"რაოდენობით დამუშავება: კარგად ნაცნობი ცხრილები, ასევე მონაცემთა ცალკეული "
+"ვექტორები (მაგალითად, როგორც სვეტი ელცხრილში), სხვადასხვა ვექტორებისგან ან "
+"სხვა ობიექტებისგან შემდგარი ე.წ. „სიები“, რომლებსაც შესაძლოა სხვადასხვა "
+"სიგრძე ჰქონდეთ, ცალკეული მონაცემთა წერტილები და ა.შ. თვით ენის უდიდესი "
+"ნაწილიც კი, ფუნქციები, ინახება ისევე, როგორც მონაცემები და მათი ჩასწორებაც "
+"შესაძლებელია."
 
 #. i18n: ectx: (RKWard for new Users) <section title="Where's my data?">
 #: rkward/pages/rkward_for_new_users.rkh:14
@@ -678,6 +874,16 @@ msgid ""
 "other objects are predefined in libraries, such as \"package:base\". See "
 "<link href=\"rkward://page/rkward_workspace_browser\"/> for details."
 msgstr ""
+"ამავდროულად, R არ არის შეზღუდული მხოლოდ ერთ მონაცემზე მუშაობით. პირიქით, "
+"თქვენ გაქვთ „სამუშაო სივრცე“, სადაც ხელმისაწვდომია ყველა თქვენი სხვადასხვა "
+"ცვლადი, ცხრილი და ა.შ. შეგიძლიათ ერთდროულად გქონდეთ მრავალი data.frame და "
+"სხვა ტიპის დამატებითი მონაცემები. პროგრამის ფანჯრის მარცხენა მხარეს უნდა "
+"იყოს ხატულა წარწერით „სამუშაო სივრცე“. მასზე დაწკაპუნებით შეგიძლიათ, ნახოთ "
+"თქვენს სამუშაო სივრცეში არსებული ყველა ობიექტი. ყველა ობიექტი, რომელსაც "
+"შექმნით ან შეცვლით, გამოჩნდება „.GlobalEnv“-ის შიგნით. სხვა ობიექტების "
+"უმეტესობა წინასწარ არის განსაზღვრული ბიბლიოთეკებში, როგორიცაა „package:"
+"base“. დეტალებისთვის იხილეთ <link href=\"rkward://page/"
+"rkward_workspace_browser\"/>."
 
 #. i18n: ectx: (RKWard for new Users) <section title="Where's my data?">
 #: rkward/pages/rkward_for_new_users.rkh:14
@@ -689,6 +895,11 @@ msgid ""
 "work with pre-existing data, pick the appropriate option from the File-"
 ">Import menu."
 msgstr ""
+"თქვენ არ გჭირდებათ ყველა ამ დეტალზე ნერვიულობა. ახალი ელცხრილის (data.frame) "
+"შესაქმნელად მენიუდან აირჩიეთ ფაილი->ახალი->მონაცემთა ნაკრები. სულ ესაა — "
+"გევალებათ, მხოლოდ, ამ ცხრილისთვის სახელის მინიჭება, რის შემდეგაც შეგიძლიათ, "
+"დაიწყოთ რედაქტირება. უკვე არსებულ მონაცემებთან სამუშაოდ კი შეარჩიეთ "
+"შესაბამისი პარამეტრი მენიუდან ფაილი->შემოტანა."
 
 #. i18n: ectx: (RKWard for new Users) <section title="...">
 #: rkward/pages/rkward_for_new_users.rkh:23
@@ -703,6 +914,8 @@ msgid ""
 "In this section you will learn about some basic methods how to make use of "
 "your results in external applications."
 msgstr ""
+"ამ სექციაში გაეცნობით რამდენიმე ძირითად მეთოდს იმის შესახებ, თუ როგორ "
+"გამოიყენოთ თქვენი შედეგები გარე აპლიკაციებში."
 
 #. i18n: ectx: (RKWard for new Users) <section title="How can I make use of my results in an external application?">
 #: rkward/pages/rkward_for_new_users.rkh:23
@@ -713,6 +926,10 @@ msgid ""
 "your work since a standard of RKWard is to show everything in chronological "
 "order together with the date of creation."
 msgstr ""
+"ვთქვათ, თქვენ ჩაატარეთ ტესტები და მიიღეთ ტექსტური შედეგი. ასეთი მონაცემები "
+"წარმოდგენილი იქნება RKWard-ის „გამოტანის ფანჯარაში“. თქვენი სამუშაოსთვის "
+"თვალის მიდევნება ადვილია, რადგან RKWard-ის სტანდარტია ყველაფრის ქრონოლოგიური "
+"თანმიმდევრობით ჩვენება, შექმნის თარიღთან ერთად."
 
 #. i18n: ectx: (RKWard for new Users) <section title="How can I make use of my results in an external application?">
 #: rkward/pages/rkward_for_new_users.rkh:23
@@ -722,6 +939,10 @@ msgid ""
 "the output. The easiest method of reusing the output is to select the "
 "relevant portion, and copy and paste them to an office suite."
 msgstr ""
+"დეტალებისთვის იხილეთ ბმული <link href=\"rkward://page/rkward_output\"/> "
+"გამოტანილ მონაცემებთან მუშაობის შესახებ. შედეგების ხელახლა გამოყენების "
+"ყველაზე მარტივი მეთოდია შესაბამისი ნაწილის მონიშვნა, კოპირება და ჩასმა "
+"საოფისე პროგრამებში."
 
 #. i18n: ectx: (RKWard for new Users) <section title="...">
 #: rkward/pages/rkward_for_new_users.rkh:30
@@ -740,6 +961,12 @@ msgid ""
 "introduced above. On the additional tabs you can choose which types of "
 "descriptive statistics should be calculated."
 msgstr ""
+"იმისათვის, რომ გაეცნოთ RKWard-ს (ან თქვენს მონაცემებს), ერთ-ერთი პირველი "
+"ნაბიჯი შეიძლება იყოს მენიუდან ანალიზი->აღწერითი სტატისტიკის არჩევა. თქვენს "
+"წინაშე გაიხსნება დიალოგი, რომელიც საშუალებას მოგცემთ, აირჩიოთ ერთი ან "
+"რამდენიმე ცვლადი ანალიზისთვის. ეს ფანჯარა ჰგავს ზემოთ უკვე განხილულ სამუშაო "
+"სივრცის ბრაუზერს. დამატებით ჩანართებზე შეგიძლიათ მიუთითოთ, თუ რომელი ტიპის "
+"აღწერითი სტატისტიკა უნდა იქნას გამოთვლილი."
 
 #. i18n: ectx: (RKWard for new Users) <section title="Basic Analyses">
 #: rkward/pages/rkward_for_new_users.rkh:30
@@ -759,6 +986,21 @@ msgid ""
 "\"Calculate\" to perform the actual calculations, and \"Printout\" to "
 "generate output in RKWard's output window."
 msgstr ""
+"დიალოგის ქვედა მარჯვენა კუთხეში არის ღილაკი წარწერით „კოდი“. მისი "
+"გამოყენებით შეგიძლიათ, გამოაჩინოთ ან დამალოთ ტექსტური არე. თუ დააკვირდებით "
+"ამ ტექსტური არის შემცველობას (შეიძლება, ფანჯრის ზომის შეცვლა დაგჭირდეთ მის "
+"უფრო კომფორტულად დასანახად), შეამჩნევთ, რომ ტექსტი იცვლება დიალოგურ "
+"ფანჯარაში თქვენ მიერ არჩეული პარამეტრების შესაბამისად. ეს ტექსტი, "
+"სინამდვილეში, R-ის სინტაქსია. ეს არის კოდი, რომელიც საჭიროა ამ გამოთვლების R-"
+"ში შესასრულებლად. RKWard-ის უდიდესი ნაწილი დაფუძნებულია თქვენთვის ამ კოდის "
+"გენერაციაზე და შემდეგ მის გაშვებაზე R-ის გარემოში. მოგვიანებით, როდესაც თავს "
+"უფრო თავდაჯერებულად იგრძნობთ, ან გექნებათ სპეციფიკური საჭიროებები, რომლებსაც "
+"RKWard არ ფარავს, ან მოგინდებათ რუტინული დავალებების ავტომატიზაცია, შეძლებთ, "
+"გამოიყენოთ ეს სინტაქსი თქვენი ანალიზის პირდაპირ დასაპროგრამებლად. "
+"გაითვალისწინეთ, რომ კოდი იყოფა მაქსიმუმ სამ სექციად: „პრეპროცესინგი“ — "
+"საჭირო ბიბლიოთეკების ჩასატვირთად ან დამხმარე ფუნქციების განსასაზღვრად, "
+"„გამოთვლა“ — უშუალოდ გამოთვლების შესასრულებლად და „გამობეჭდვა“ — RKWard-ის "
+"შედეგების ფანჯარაში გამონატანის გენერირებისთვის."
 
 #. i18n: ectx: (RKWard for new Users) <section title="Basic Analyses">
 #: rkward/pages/rkward_for_new_users.rkh:30
@@ -767,6 +1009,8 @@ msgid ""
 "For now, just click submit, once you've made your choices, and watch the "
 "results show up in a new window."
 msgstr ""
+"ახლა კი, არჩევანის გაკეთების შემდეგ, უბრალოდ დააწკაპუნეთ „გადაცემაზე“ და "
+"დააკვირდით, როგორ გამოჩნდება შედეგები ახალ ფანჯარაში."
 
 #. i18n: ectx: (RKWard for new Users) <section title="...">
 #: rkward/pages/rkward_for_new_users.rkh:38
@@ -785,6 +1029,13 @@ msgid ""
 "easier, both for users new to R, and R experts. Read on in <link href="
 "\"rkward://page/rkward_for_r_users\"/> for more on this."
 msgstr ""
+"RKWard-ის დანიშნულებაა, მომხმარებლისთვის ხელმისაწვდომი გახადოს R ენის "
+"შესაძლებლობები ისე, რომ მას არ მოუწიოს სრული დაპროგრამების ენის წინასწარ "
+"შესწავლა. თუმცა, უფრო რთული ამოცანების გადასაჭრელად, შესაძლოა, დაგჭირდეთ R "
+"ენის სრული მოქნილობის გამოყენება. RKWard გთავაზობთ უამრავ ხელსაწყოს ამ "
+"პროცესის გასამარტივებლად, როგორც R-ის დამწყები მომხმარებლებისთვის, ისე "
+"ექსპერტებისთვის. ამ თემის შესახებ დამატებითი ინფორმაციისთვის იხილეთ <link "
+"href=\"rkward://page/rkward_for_r_users\"/>."
 
 #. i18n: ectx: (RKWard for new Users) <section title="So much more">
 #: rkward/pages/rkward_for_new_users.rkh:38
@@ -793,6 +1044,8 @@ msgid ""
 "Also, you may want to select Help->Help on R from the menu for some starting "
 "points in learning R."
 msgstr ""
+"ასევე, შეგიძლიათ მენიუდან აირჩიოთ დახმარება->R-ის დახმარება, რომ იპოვოთ "
+"საწყისი სახელმძღვანელოები R ენის შესასწავლად."
 
 #. i18n: ectx: (RKWard for R Users) <title>
 #: rkward/pages/rkward_for_r_users.rkh:8
@@ -807,6 +1060,8 @@ msgid ""
 "Briefly explains the main components of RKWard, assuming the user is already "
 "familiar with basic concepts of R."
 msgstr ""
+"მოკლედ აგიხსნით RKWard-ის მთავარ კომპონენტებს იმ დაშვებით, რომ მომხმარებელი "
+"უკვე გაეცნო R-ის საბაზისო იდეებს."
 
 #. i18n: ectx: (RKWard for R Users) <section title="...">
 #: rkward/pages/rkward_for_r_users.rkh:12
@@ -822,6 +1077,9 @@ msgid ""
 "the bottom on the screen. There you will notice several buttons, one of "
 "which is labelled \"R Console\" and has a console icon."
 msgstr ""
+"უპირველეს ყოვლისა: სტანდარტული R კონსოლის ემულაცია შეგიძლიათ იხილოთ ეკრანის "
+"ქვედა ნაწილში. იქ შეამჩნევთ რამდენიმე ღილაკს, რომელთაგან ერთ-ერთს აწერია „R-"
+"ის კონსოლი“ და აქვს კონსოლის ხატულა."
 
 #. i18n: ectx: (RKWard for R Users) <section title="The Console">
 #: rkward/pages/rkward_for_r_users.rkh:12
@@ -893,6 +1151,11 @@ msgid ""
 "syntax highlighting, and many more features), choose File->New->Script File, "
 "or open an already existing Script file using File->Open R Script File."
 msgstr ""
+"ხშირად ბევრად უფრო მოსახერხებელია სკრიპტების ცალკე ფაილში წერა, ნაცვლად მათი "
+"პირდაპირ კონსოლში აკრეფისა. ახალი სკრიპტების რედაქტორის გასახსნელად "
+"(რომელსაც აქვს სინტაქსის გაფერადება და ბევრი სხვა ფუნქცია), აირჩიეთ ფაილი-"
+">ახალი->სკრიპტის ფაილი, ან გახსენით უკვე არსებული სკრიპტის ფაილი ფაილი->R-ის "
+"სკრიპტის გახსნის მენიუს გამოყენებით."
 
 #. i18n: ectx: (RKWard for R Users) <section title="Script Editors">
 #: rkward/pages/rkward_for_r_users.rkh:26
@@ -1207,6 +1470,8 @@ msgid ""
 "To load / save / switch between output files, etc., refer to <link href="
 "\"rkward://rhelp/rk.output\"/>."
 msgstr ""
+"ჩასატვირთად / შესანახად / გამოტანის ფაილებს შორის გადასართავად და ა.შ. "
+"იხილეთ <link href=\"rkward://rhelp/rk.output\"/>."
 
 #. i18n: ectx: (RKWard Output) <section title="...">
 #: rkward/pages/rkward_output.rkh:22
@@ -1382,6 +1647,9 @@ msgid ""
 "<a href=\"rkward://settings/graphics\">Settings->Configure RKWard->Onscreen "
 "Graphics</a>:"
 msgstr ""
+"ეკრანის მოწყობილობის ისტორიის ზოგიერთი ნაგულისხმევი პარამეტრის მორგება "
+"შეგიძლიათ მენიუდან <a href=\"rkward://settings/graphics\">მორგება->RKWard-ის "
+"მორგება->გრაფიკები ეკრანზე</a>:"
 
 #. i18n: ectx: (Screen device history) <section title="Configurable Settings">
 #: rkward/pages/rkward_plot_history.rkh:29
@@ -1455,6 +1723,9 @@ msgid ""
 "<code>graphics::plot.new()</code> or <code>graphics::persp()</code> or "
 "<code>lattice::print.trellis()</code> are captured."
 msgstr ""
+"ტექნიკური სიტყვებით, ხდება ფუნქციების, რომლებიც გადიან <code>graphics::plot."
+"new()</code>-ში, <code>graphics::persp()</code>-ში და <code>lattice::print."
+"trellis()</code>-ში, ჩაჭერა ."
 
 #. i18n: ectx: (Screen device history) <section title="Technical Details">
 #: rkward/pages/rkward_plot_history.rkh:39
@@ -1463,6 +1734,8 @@ msgid ""
 "The base graphics plots are recorded and replayed using <code>recordPlot()</"
 "code> and <code>replayPlot()</code>."
 msgstr ""
+"საბაზისო გრაფიკების ჩაწერა და თავიდან დაკვრა <code>recordPlot()</code> და "
+"<code>replayPlot()</code> ფუნქციებით ხდება."
 
 #. i18n: ectx: (Screen device history) <section title="Technical Details">
 #: rkward/pages/rkward_plot_history.rkh:39
@@ -1507,6 +1780,9 @@ msgid ""
 "interest is to browse the menu. Shortcuts are listed next to their action in "
 "the menu."
 msgstr ""
+"ბევრ სიტუაციაში RKWard-ის მართვა თაგუნას გარეშე, მხოლოდ, კლავიატურით "
+"შეგიძლიათ. საჭირო მალსახმობების შესახებ ინფორმაციის ძებნა მენიუს თვალიერებით "
+"შეგიძლიათ. მალსახმობები მენიუში მათ ქმედების გასწვრივ წერია."
 
 #. i18n: ectx: (RKWard Shortcut keys) <summary>
 #: rkward/pages/rkward_shortcuts.rkh:9
@@ -1540,6 +1816,8 @@ msgid ""
 "On most systems, you can also configure shortcuts by right-clicking on the "
 "respective menu item."
 msgstr ""
+"სისტემების უმრავლესობაზე მალსახმობების მორგება შესაბამისი მენიუს პუნქტზე "
+"მარჯვენა წკაპით შეგიძლიათ."
 
 #. i18n: ectx: (RKWard Shortcut keys) <section title="...">
 #: rkward/pages/rkward_shortcuts.rkh:19
@@ -1589,6 +1867,8 @@ msgid ""
 "Meta+n to bring up <link href=\"rkward://rkward_code_navigation\">Code "
 "Navigation</link> mode in script windows"
 msgstr ""
+"Meta+n იძახებს <link href=\"rkward://rkward_code_navigation\">კოდის "
+"ნავიგაციის</link> რეჟიმს სკრიპტის ფანჯრებში"
 
 #. i18n: ectx: (Split views) <title>
 #: rkward/pages/rkward_split_views.rkh:8
@@ -1612,6 +1892,8 @@ msgid ""
 "They can be used to make better use of screen space, but also to view far-"
 "apart portions of a single file, simultaneously."
 msgstr ""
+"ისინი შეიძლება გამოიყენოთ ეკრანის სივრცის უკეთესად გამოსაყენებლად და ასევე "
+"ერთი ფაილის ორი დაშორებული ნაწილის ერთდროულად სანახავად."
 
 #. i18n: ectx: (Split views) <section title="...">
 #: rkward/pages/rkward_split_views.rkh:16
@@ -1667,6 +1949,9 @@ msgid ""
 "RKWard. See also <link href=\"https://rkward.kde.org/faq\">the online FAQ</"
 "link>."
 msgstr ""
+"ეს გვერდი RKWard-ის გამოყენებისას ყველაზე ხშირად აღმოჩენილი შეცდომების "
+"გადაწყვეტებს შეიცავს. ასევე იხილეთ <link href=\"https://rkward.kde.org/faq"
+"\">ხდკ ინტერნეტში</link>."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:12
@@ -1724,6 +2009,9 @@ msgid ""
 "advised to use the same, or a similar version of R to what was available "
 "during compilation, however."
 msgstr ""
+"ხშირ შემთხვევაში, თუ აირჩევთ R-ის აგების დროს გამოყენებული ვერსიისგან "
+"განსხვავებულს, ის \"უბრალოდ მუშაობს\". თუ პრობლემებს გადააწყდით, გამოიყენეთ "
+"R-ის იგივე, ან მსგავსი ვერსია."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="The R backend crashed or failed to start">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
@@ -1766,6 +2054,8 @@ msgid ""
 "Sometimes I enter a command short after the start of RKWard but it is not "
 "processed. What's wrong?"
 msgstr ""
+"ხანდახან მე შემყავს ბრძანება RKWard-ის გაშვებიდან მალევე, მაგრამ ის არ "
+"მუშავდება. რა სჭირს?"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:33
@@ -1783,6 +2073,11 @@ msgid ""
 "at the little box on the right bottom corner of RKWard. If it is green you "
 "can go ahead."
 msgstr ""
+"ეს ხდება იმიტომ, რომ ჯერ ეშვება RKWard და R, მხოლოდ, შემდეგ ეშვება, ფონში. "
+"თქვენი მანქანის სიჩქარეზე დამოკიდებულებით, R-ის გაშვებას რაღაც დრო შეიძლება, "
+"დასჭირდეს. ნებისმიერ შემთხვევაში, შეგიძლიათ, RKWard-ში R-ის გაშვების "
+"მდგომარეობა შეამოწმოთ. უბრალოდ შეხედეთ პატარა ყუთს RKWard-ის ქვედა მარჯვენა "
+"კუთხეში. თუ ის მწვანეა, ყველაფერი კარგადაა."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="Sometimes I enter a command short after the start of RKWard but it is not processed. What's wrong?">
 #: rkward/pages/rkward_trouble_shooting.rkh:33
@@ -1793,6 +2088,10 @@ msgid ""
 "commands will be placed into a queue, first, and executed as soon as the "
 "backend becomes available, again."
 msgstr ""
+"ბრძანებების გადაცემა მანამდეც შეგიძლიათ, სანამ უკანაბოლო გაეშვება, ან სანამ "
+"რამე გრძელი გამოთვლა მიმდინარეობს. ამ შემთხვევაში თქვენი ბრძანებები, ჯერ, "
+"რიგში ჩადგებიან და შესრულდებიან მაშინ, როცა უკანაბოლო ისევ ხელმისაწვდომი "
+"გახდება."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:38
@@ -2100,6 +2399,11 @@ msgid ""
 "\"Workspace\" icon, which is located on the top of the left window border, "
 "by default."
 msgstr ""
+"სამუშაო სივრცეების დამთვალიერებელი შეგიძლიათ, გამოიძახოთ მენიუდან ფანჯრები-"
+">გააქტიურება-> სამუშაო სივრცეების დამთვალიერებლის ჩვენება/დამალვა "
+"(ნაგულისხმევი მალსახმობია Alt+1), ან \"სამუშაო სივრცის\" ხატულაზე "
+"დაწკაპუნებით, რომელიც ნაგულისხმევად მარცხენა ფანჯრის ზედა საზღვარზეა "
+"მოთავსებული."
 
 #. i18n: ectx: (Workspace Browser) <section title="...">
 #: rkward/pages/rkward_workspace_browser.rkh:16
@@ -2128,6 +2432,10 @@ msgid ""
 "objects, which are not meant for direct use, so it's generally safe to hide "
 "them from view."
 msgstr ""
+"პირველი ისედაც ნათელი უნდა იყოს. ის მართავს, ნაჩვენებია, თუ არა ობიექტები, "
+"რომლის სახელიც იწყება წერტილით (\".\"). ისინი ხშირად გამოიყენება შიდა "
+"ობიექტებისთვის და პირდაპირი გამოყენებისთვის განკუთვნილი არაა, ასე რომ, "
+"ზოგადად, ისინი ხედიდან დამალულია ხოლმე."
 
 #. i18n: ectx: (Workspace Browser) <section title="What is shown">
 #: rkward/pages/rkward_workspace_browser.rkh:16
@@ -2137,6 +2445,9 @@ msgid ""
 "while \"Functions\" shows only functions, and \"Non-Functions\" shows all "
 "other objects (typically data)."
 msgstr ""
+"მეორე საშუალებას გაძლევთ, ობიექტის ტიპით მონიშნოთ. \"ყველა\" არ ფილტრავს, "
+"მაშინ, როცა \"ფუნქციები\", მხოლოდ, ფუნქციებს აჩვენებს და \"არაფუნქციები\" "
+"ყველა სხვა ობიექტს აჩვენებს (ჩვეულებრივ - მონაცემებს)."
 
 #. i18n: ectx: (Workspace Browser) <section title="What is shown">
 #: rkward/pages/rkward_workspace_browser.rkh:16

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 14:38+0000\n"
-"PO-Revision-Date: 2025-06-25 04:34+0200\n"
+"PO-Revision-Date: 2026-01-17 03:28+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.8\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -210,6 +210,9 @@ msgid ""
 "option. Refer to <link href=\"rkward://component/one_var_tabulation\"/> for "
 "details on the dependent options."
 msgstr ""
+"თუ თქვენი მონაცემები საჭიროებს ტაბულაციას / აგრეგაციას დახაზვამდე, ჩართეთ ეს "
+"პარამეტრი. დამოკიდებული ოფციების შესახებ დეტალებისთვის იხილეთ <link href="
+"\"rkward://component/one_var_tabulation\"/>."
 
 #. i18n: ectx: (Loaded from Barplot) <settings> <setting> (refers to element labelled "Matrix, Vector or Factor")
 #. i18n: ectx: (Loaded from Pie chart) <settings> <setting> (refers to element labelled "Variable")
@@ -235,6 +238,10 @@ msgid ""
 "set a limit. See Refer to <link href=\"rkward://component/limit_vector_length"
 "\"/> for details on the dependent options."
 msgstr ""
+"თუ თქვენს მონაცემებში ძალიან ბევრი კატეგორიაა, შესაძლოა, მიზანშეწონილი იყოს "
+"საჩვენებელი კატეგორიების რაოდენობის შეზღუდვა. ჩართეთ ეს პარამეტრი, თუ გსურთ "
+"ლიმიტის დაწესება. დამოკიდებული პარამეტრების შესახებ დეტალებისთვის იხილეთ "
+"<link href=\"rkward://component/limit_vector_length\"/>."
 
 #. i18n: ectx: (Loaded from Barplot) <settings> <setting> (refers to element labelled "Bar labels")
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Labeling")
@@ -251,6 +258,12 @@ msgid ""
 "string, or as an R statement (e.g. if the names are stored in a different "
 "variable in the workspace)."
 msgstr ""
+"გრაფიკისთვის ჭდეების მინიჭების მეთოდი. „ნაგულისხმევი“ ნიშნავს, რომ ჭდეები "
+"ავტომატურად შეირჩევა. თუ ჭდეები ხელმისაწვდომი არაა, ზოგადად დაიბეჭდება "
+"მნიშვნელობები. სხვა პარამეტრები საშუალებას გაძლევთ, მიუთითოთ ჭდეები, როგორც "
+"პირდაპირი ტექსტი, ან როგორც R-ის ოპერატორი (მაგალითად, თუ სახელები სამუშაო "
+"გარემოს სხვა ცვლადშია შენახული). იხილეთ ბმული <link href=\"rkward://"
+"component/label_options\"/>."
 
 #. i18n: ectx: (Loaded from Barplot) <settings> <setting> (refers to element labelled "Barplot Options")
 #: rkward/plugins/plots/barplot.rkh:28
@@ -259,6 +272,9 @@ msgid ""
 "Since these settings are reused in further plugins, they are documented on a "
 "page of their own: See <link href=\"rkward://component/barplot_embed\"/>."
 msgstr ""
+"რადგან ეს პარამეტრები სხვა დამატებებშიც გამოიყენება, ისინი ცალკე გვერდზეა "
+"დოკუმენტირებული: იხილეთ ბმული <link href=\"rkward://component/barplot_embed"
+"\"/>."
 
 #. i18n: ectx: (Barplot) <dialog label="Barplot"> <tab label="...">
 #. i18n: ectx: (Dot chart) <dialog label="Dot chart"> <tab label="...">
@@ -532,6 +548,9 @@ msgid ""
 "Choose numerical data to be plotted. Data can be organized in separate "
 "vectors, or in a single outcome variable and one or more grouping variables."
 msgstr ""
+"აირჩიეთ დასახაზი რიცხვითი მონაცემები. მონაცემები შეიძლება ორგანიზებული იყოს "
+"ცალკეულ ვექტორებად, ან ერთ გამოსავალ ცვლადად და ერთ ან რამდენიმე დამჯგუფებელ "
+"ცვლადად."
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Data format")
 #: rkward/plugins/plots/box_plot.rkh:18
@@ -560,6 +579,8 @@ msgid ""
 "For single(grouped) variable mode: Select one numerical vector as the "
 "outcome variable."
 msgstr ""
+"ერთი (დაჯგუფებული) ცვლადის რეჟიმისთვის: აირჩიეთ ერთი რიცხვითი ვექტორი, "
+"როგორც გამოსავალი ცვლადი."
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Group variable(s):")
 #: rkward/plugins/plots/box_plot.rkh:21
@@ -569,6 +590,9 @@ msgid ""
 "group the outcome variable. Group variables should have the same length as "
 "the outcome variable."
 msgstr ""
+"ერთი (დაჯგუფებული) ცვლადის რეჟიმისთვის: აირჩიეთ ერთი ან რამდენიმე ვექტორი, "
+"რომელთა მიხედვითაც დაჯგუფდება გამოსავალი ცვლადი. დამჯგუფებელი ცვლადების "
+"სიგრძე გამოსავალი ცვლადის სიგრძის ტოლი უნდა იყოს."
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Dodged groups")
 #: rkward/plugins/plots/box_plot.rkh:22
@@ -579,12 +603,19 @@ msgid ""
 "This allows you to select, across how many group variables, boxes should be "
 "dodged (\"0\" for no dodging, \"1\" to dodge only the first group variable)."
 msgstr ""
+"ერთი (დაჯგუფებული) ცვლადის რეჟიმისთვის: ყუთების გვერდიგვერდ განთავსება ერთ "
+"ან რამდენიმე ჯგუფში, შეიძლება, კარგი გადაწყვეტილება იყოს, როცა გამოსავალი "
+"ცვლადი რამდენიმე დამჯგუფებელ ცვლადად იყოფა. ეს საშუალებას გაძლევთ, მიუთითოთ, "
+"რამდენი დამჯგუფებელი ცვლადის მიხედვით უნდა განთავსდეს ყუთები გვერდიგვერდ "
+"(„0“ ნიშნავს, რომ გვერდიგვერდ განთავსება არ მოხდეს, ხოლო „1“ — გვერდიგვერდ "
+"განთავსებას მხოლოდ პირველი დამჯგუფებელი ცვლადისთვის)."
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Box width")
 #: rkward/plugins/plots/box_plot.rkh:24
 #, kde-format
 msgid "Allows to change the width of the boxes, relative to the entire plot."
 msgstr ""
+"საშუალებას იძლევა შეიცვალოს ყუთების სიგანე მთლიან დიაგრამასთან შეფარდებით."
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "orientation")
 #: rkward/plugins/plots/box_plot.rkh:26
@@ -605,6 +636,8 @@ msgid ""
 "Whether to draw outliers (if any). Outliers are draw as dots, if this option "
 "is checked."
 msgstr ""
+"დაიხაზოს თუ არა გამონაკლისი მნიშვნელობები (ასეთის არსებობის შემთხვევაში). თუ "
+"ეს პარამეტრი ჩართულია, გამონაკლისი მნიშვნელობები დაიხატება წერტილების სახით."
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Show mean")
 #: rkward/plugins/plots/box_plot.rkh:29
@@ -620,6 +653,9 @@ msgid ""
 "defines the fraction of observations to be trimmed from each end of a "
 "variable before the arithmetic mean is computed."
 msgstr ""
+"ჩამოჭრა, მხოლოდ, არითმეტიკულ საშუალოზე ვრცელდება. ნაგულისხმევად, ჩამოჭრა "
+"ნულის ტოლია. ის განსაზღვრავს დაკვირვებათა იმ წილს, რომელიც უნდა ჩამოიჭრას "
+"ცვლადის თითოეული ბოლოდან არითმეტიკული საშუალოს გამოთვლამდე."
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "mean symbol")
 #: rkward/plugins/plots/box_plot.rkh:31
@@ -635,6 +671,9 @@ msgid ""
 "the default. Others include the geometric mean, the harmonic mean and "
 "interquartile mean (IQM)."
 msgstr ""
+"გამოიყენეთ ეს პარამეტრი საშუალოს კონკრეტული ტიპის ასარჩევად. ნაგულისხმევია "
+"არითმეტიკული საშუალო. სხვა პარამეტრები მოიცავს გეომეტრიულ საშუალოს, "
+"ჰარმონიულ საშუალოსა და კვარტილთაშორის საშუალოს (IQM)."
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "show standard deviation")
 #: rkward/plugins/plots/box_plot.rkh:33
@@ -649,6 +688,8 @@ msgid ""
 "If the standard deviation is to be indicated: Symbol to use as mark for the "
 "upper sd."
 msgstr ""
+"თუ მითითებული უნდა იყოს სტანდარტული გადახრა: სიმბოლო, რომელიც გამოყენებული "
+"იქნება ზედა სტანდარტული გადახრის (sd) ნიშნულად."
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "standard deviation symbol (lower)")
 #: rkward/plugins/plots/box_plot.rkh:35
@@ -657,6 +698,8 @@ msgid ""
 "If the standard deviation is to be indicated: Symbol to use as mark for the "
 "lower sd."
 msgstr ""
+"თუ მითითებული უნდა იყოს სტანდარტული გადახრა: სიმბოლო, რომელიც გამოყენებული "
+"იქნება ქვედა სტანდარტული გადახრის (sd) ნიშნულად."
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "size")
 #: rkward/plugins/plots/box_plot.rkh:36
@@ -665,6 +708,9 @@ msgid ""
 "Size of mean / sd indicators. This option is only available, if at least one "
 "of mean or sd are to be drawn."
 msgstr ""
+"საშუალოს / სტანდარტული გადახრის (SD) ინდიკატორების ზომა. ეს პარამეტრი "
+"ხელმისაწვდომია, მხოლოდ, თუ ხდება, სულ ცოტა, ერთი საშუალოს, ან სტანდარტული "
+"გადახრის დახაზვა."
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Color")
 #: rkward/plugins/plots/box_plot.rkh:37
@@ -673,6 +719,9 @@ msgid ""
 "Color of mean / sd indicators. This option is only available, if at least "
 "one of mean or sd are to be drawn."
 msgstr ""
+"საშუალოს / სტანდარტული გადახრის (SD) ინდიკატორების ფერი. ეს პარამეტრი "
+"ხელმისაწვდომია, მხოლოდ, თუ ხდება, სულ ცოტა, ერთი საშუალოს, ან სტანდარტული "
+"გადახრის დახაზვა."
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting title="..."> (refers to element labelled "Plot Options")
 #: rkward/plugins/plots/box_plot.rkh:38
@@ -687,6 +736,9 @@ msgid ""
 "Since these settings are reused in further plugins, they are documented on a "
 "page of their own: See <link href=\"rkward://component/plot_options\"/>."
 msgstr ""
+"რადგან ეს პარამეტრები სხვა დამატებებშიც გამოიყენება, ისინი ცალკე გვერდზეა "
+"დოკუმენტირებული: იხილეთ ბმული <link href=\"rkward://component/plot_options\"/"
+">."
 
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> <tab label="Variable(s)"> <radio label="...">
 #: rkward/plugins/plots/box_plot.xml:41
@@ -943,6 +995,9 @@ msgid ""
 "regions marked up. For the second option, only the gaussian smoothing kernel "
 "is available (see below)."
 msgstr ""
+"გრაფიკის ტიპი: ჩვეულებრივი სიმკვრივის მრუდი, ან სიმკვრივის მრუდი უმაღლესი "
+"სიმკვრივის რეგიონების მონიშვნით. მეორე ვარიანტისთვის ხელმისაწვდომია, მხოლოდ, "
+"გაუსის დამარბილებელი ბირთვი (იხილეთ ქვემოთ)."
 
 #. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "Smoothing Kernel")
 #: rkward/plugins/plots/density_plot.rkh:24
@@ -962,6 +1017,9 @@ msgid ""
 "kernels. This is the <i>bw</i> option of <link href=\"rkward://rhelp/density"
 "\">density()</link>."
 msgstr ""
+"გამტარობის ზოლის არჩევის რეჟიმი. ეს გამოიყენება, მხოლოდ, გაუსის "
+"დამარბილებელი ბირთვებისთვის. ეს არის <i>bw</i> პარამეტრი ფუნქციიდან <link "
+"href=\"rkward://rhelp/density\">density()</link>."
 
 #. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "Adjust Bandwidth")
 #. i18n: ectx: (Loaded from Histogram) <settings> <setting> (refers to element labelled "Adjust Bandwidth")
@@ -978,6 +1036,8 @@ msgid ""
 "Whether missing values should be removed. Otherwise missing values lead to "
 "an error during density estimation."
 msgstr ""
+"უნდა წაიშალოს თუ არა გამოტოვებული მნიშვნელობები. წინააღმდეგ შემთხვევაში, "
+"გამოტოვებული მნიშვნელობები სიმკვრივის შეფასებისას შეცდომას გამოიწვევს."
 
 #. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "Resolution")
 #: rkward/plugins/plots/density_plot.rkh:28
@@ -986,6 +1046,8 @@ msgid ""
 "Resolution of the density estimation, i.e. the number of (equally spaced) "
 "points at which the density is estimated."
 msgstr ""
+"სიმკვრივის შეფასების გარჩევადობა, ანუ (თანაბრად დაშორებული) წერტილების "
+"რაოდენობა, რომლებზეც ხდება სიმკვრივის შეფასება."
 
 #. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "Add rug")
 #. i18n: ectx: (Loaded from Empirical Distribution Function) <settings> <setting> (refers to element labelled "Add rug to plot")
@@ -1265,6 +1327,8 @@ msgid ""
 "Data is not numeric, but proceeding as requested.\\nDid you forget to check "
 "the tabulate option?"
 msgstr ""
+"მონაცემები არ არის რიცხვითი, თუმცა პროცესი მოთხოვნისამებრ გრძელდება.\\nხომ "
+"არ დაგავიწყდათ დაჯგუფების (tabulate) პარამეტრის მონიშვნა?"
 
 #. i18n: ectx: (Loaded from Dot chart)
 #. i18n: ectx: (Dot chart) <dialog label="...">
@@ -1287,6 +1351,9 @@ msgid ""
 "Otherwise, leave this empty, and check the <i><label id=\"tabulate\"/></i> "
 "option, below."
 msgstr ""
+"თუ თქვენი მონაცემები უკვე გამოსადეგია პირდაპირ დასახაზად, მიუთითეთ ისინი აქ. "
+"წინააღმდეგ შემთხვევაში, დატოვეთ ეს ველი ცარიელი და მონიშნეთ ქვემოთ მოცემული "
+"<i><label id=\"tabulate\"/></i> პარამეტრი."
 
 #. i18n: ectx: (Loaded from Dot chart) <settings> <setting> (refers to element labelled "Plot Options")
 #. i18n: ectx: (Loaded from Pie chart) <settings> <setting> (refers to element labelled "Plot Options")
@@ -1329,6 +1396,8 @@ msgid ""
 "Select a variable to plot an ECDF for. The theoretical normal distribution "
 "and a rug can be added to the plot."
 msgstr ""
+"აირჩიეთ ცვლადი ECDF-ის დასახაზად. გრაფიკზე შესაძლებელია თეორიული ნორმალური "
+"განაწილებისა და დამატებითი გრაფიკის დამატება."
 
 #. i18n: ectx: (Loaded from Empirical Distribution Function) <settings> <setting> (refers to element labelled "variable(s):")
 #: rkward/plugins/plots/ecdf_plot.rkh:16
@@ -1360,6 +1429,9 @@ msgid ""
 "standard deviation of the plotted data? If this is not set a normal curve "
 "with mean 0 and sd 1 is drawn."
 msgstr ""
+"უნდა მოერგოს, თუ არა ნორმალური განაწილების მრუდი დახაზული მონაცემების "
+"საშუალოსა და სტანდარტულ გადახრას? თუ ეს დაყენებული არაა, დაიხაზება ნორმალური "
+"მრუდი, რომლის საშუალოა 0, ხოლო სტანდარტული გადახრა — 1."
 
 #. i18n: ectx: (Loaded from Empirical Distribution Function) <settings> <setting> (refers to element labelled "Color")
 #: rkward/plugins/plots/ecdf_plot.rkh:22
@@ -1512,6 +1584,9 @@ msgid ""
 "Should a density curve be plotted over the histogram? This option is only "
 "available, if the histogram is density scaled."
 msgstr ""
+"უნდა დაიხაზოს თუ არა სიმკვრივის მრუდი ჰისტოგრამაზე? ეს პარამეტრი "
+"ხელმისაწვდომია, მხოლოდ, იმ შემთხვევაში, თუ ჰისტოგრამა სიმკვრივის მიხედვითაა "
+"მასშტაბირებული."
 
 #. i18n: ectx: (Loaded from Histogram) <settings> <setting> (refers to element labelled "Color")
 #: rkward/plugins/plots/histogram.rkh:21
@@ -1608,6 +1683,8 @@ msgid ""
 "frequency, percentage and cumulative percentage will be printed under the "
 "plot."
 msgstr ""
+"აირჩიეთ დასახაზი ვექტორი ან ფაქტორი. გრაფიკის ქვეშ დაიბეჭდება სიხშირე, "
+"კუმულაციური სიხშირე, პროცენტული წილი და კუმულაციური პროცენტული წილი."
 
 #. i18n: ectx: (Loaded from Pareto chart) <settings> <setting> (refers to element labelled "Raw vector to plot")
 #: rkward/plugins/plots/pareto.rkh:19
@@ -1617,6 +1694,10 @@ msgid ""
 "data suitable for direct display in a pareto chart, specify it here. "
 "Otherwise, leave this empty, and check the \"Tabulate\" option, above."
 msgstr ""
+"თუ თქვენი მონაცემები უკვე შეიცავს დეფექტების რაოდენობას, დეფექტების ხარჯებს, "
+"ან სხვა ისეთ მონაცემებს, რომლებიც გამოსადეგია პარეტოს დიაგრამაზე პირდაპირ "
+"გამოსახვისთვის, მიუთითეთ ისინი აქ. წინააღმდეგ შემთხვევაში, დატოვეთ ეს ველი "
+"ცარიელი, და მონიშნეთ ზემოთ მოცემული პარამეტრი „დაჯგუფება“ (Tabulate)."
 
 #. i18n: ectx: (Loaded from Pareto chart) <settings> <setting> (refers to element labelled "Print descriptives")
 #: rkward/plugins/plots/pareto.rkh:20
@@ -1625,6 +1706,8 @@ msgid ""
 "Whether to print the frequency, cumulative frequency, percentage and "
 "cumulative percentage below the plot in the output window."
 msgstr ""
+"დაიბეჭდოს თუ არა გრაფიკის ქვეშ, შედეგების ფანჯარაში, სიხშირე, კუმულაციური "
+"სიხშირე, პროცენტული წილი და კუმულაციური პროცენტული წილი."
 
 #. i18n: ectx: (Loaded from Pareto chart) <settings> <setting> (refers to element labelled "Plot Options")
 #: rkward/plugins/plots/pareto.rkh:24
@@ -1688,6 +1771,8 @@ msgid ""
 "Draws a pie chart from numerical data, or from tabulated data. Further "
 "options are available on the second tab."
 msgstr ""
+"ხაზავს წრიულ დიაგრამას რიცხვითი, ან დაჯგუფებული მონაცემებიდან. დამატებითი "
+"პარამეტრები ხელმისაწვდომია მეორე ჩანართზე."
 
 #. i18n: ectx: (Loaded from Pie chart) <settings> <setting> (refers to element labelled "Colors")
 #: rkward/plugins/plots/piechart.rkh:28
@@ -1700,6 +1785,8 @@ msgstr "გამოყენებული ფერების ტიპი.
 #, kde-format
 msgid "Define if slices should be drawn clockwise or counter clockwise."
 msgstr ""
+"განსაზღვრეთ, სექტორები საათის ისრის მიმართულებით დაიხაზოს თუ საათის ისრის "
+"საწინააღმდეგოდ."
 
 #. i18n: ectx: (Loaded from Pie chart) <settings> <setting> (refers to element labelled "Radius")
 #: rkward/plugins/plots/piechart.rkh:31
@@ -1708,6 +1795,8 @@ msgid ""
 "Radius of the pie. For long labels it may be necessary to make the pie "
 "smaller than the default."
 msgstr ""
+"წრიული დიაგრამის რადიუსი. გრძელი წარწერების შემთხვევაში, შესაძლოა, საჭირო "
+"გახდეს დიაგრამის ზომის შემცირება ნაგულისხმევ მნიშვნელობასთან შედარებით."
 
 #. i18n: ectx: (Loaded from Pie chart) <settings> <setting> (refers to element labelled "density")
 #: rkward/plugins/plots/piechart.rkh:32
@@ -1716,6 +1805,8 @@ msgid ""
 "Density of shading lines (lines per inch). The default value of -1 means no "
 "shading lines are drawn."
 msgstr ""
+"დაჩრდილვის ხაზების სიმჭიდროვე (ხაზების რაოდენობა დუიმზე). ნაგულისხმევი "
+"მნიშვნელობა -1 ნიშნავს, რომ დაჩრდილვის ხაზები არ დაიხაზება."
 
 #. i18n: ectx: (Loaded from Pie chart) <settings> <setting> (refers to element labelled "increment in density")
 #: rkward/plugins/plots/piechart.rkh:33
@@ -1724,6 +1815,9 @@ msgid ""
 "The density of shading lines can be varied per pie slice. Set this to values "
 "other than 0 to get different densities of shading lines for each slice."
 msgstr ""
+"დაჩრდილვის ხაზების სიმჭიდროვე შეიძლება შეიცვალოს წრიული დიაგრამის თითოეული "
+"სექტორისთვის. მიუთითეთ 0-სგან განსხვავებული მნიშვნელობები, რათა თითოეული "
+"სექტორისთვის მიიღოთ დაჩრდილვის ხაზების განსხვავებული სიმჭიდროვე."
 
 #. i18n: ectx: (Loaded from Pie chart) <settings> <setting> (refers to element labelled "angle")
 #: rkward/plugins/plots/piechart.rkh:34
@@ -1733,6 +1827,10 @@ msgid ""
 "This option is only available, if shading lines are drawn, as controlled by "
 "the density options above."
 msgstr ""
+"დაჩრდილვის ხაზების დახრილობა, მოცემული, როგორც კუთხე გრადუსებში (საათის "
+"ისრის საწინააღმდეგო მიმართულებით). ეს პარამეტრი ხელმისაწვდომია, მხოლოდ, იმ "
+"შემთხვევაში, თუ დაჩრდილვის ხაზები იხაზება, რაც კონტროლდება ზემოთ მოცემული "
+"სიმჭიდროვის პარამეტრებით."
 
 #. i18n: ectx: (Loaded from Pie chart) <settings> <setting> (refers to element labelled "increment in angle")
 #: rkward/plugins/plots/piechart.rkh:35
@@ -1743,6 +1841,11 @@ msgid ""
 "option is only available, if shading lines are drawn, as controlled by the "
 "density options above."
 msgstr ""
+"დაჩრდილვის ხაზების დახრილობა შეიძლება შეიცვალოს წრიული დიაგრამის თითოეული "
+"სექტორისთვის. მიუთითეთ 0-სგან განსხვავებული მნიშვნელობები, რომ თითოეული "
+"სექტორისთვის დაჩრდილვის ხაზების განსხვავებული დახრილობა მიიღოთ. ეს პარამეტრი "
+"ხელმისაწვდომია, მხოლოდ, იმ შემთხვევაში, თუ იხაზება დაჩრდილვის ხაზები, რაც "
+"კონტროლდება ზემოთ მოცემული სიმჭიდროვის პარამეტრებით."
 
 #. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Options"> <radio label="...">
 #: rkward/plugins/plots/piechart.xml:76
@@ -1817,6 +1920,8 @@ msgid ""
 "This is an implementation of the standard (traditional S) graphics function "
 "<b>plot</b>."
 msgstr ""
+"ეს სტანდარტული (ტრადიციული S) გრაფიკული ფუნქციის <b>გრაფიკის</b> "
+"განხორციელებაა."
 
 #. i18n: ectx: (Loaded from Generic Plot) <usage>
 #: rkward/plugins/plots/plot.rkh:11
@@ -1836,6 +1941,12 @@ msgid ""
 "meaningful visualization of the data, but does not allow for fine grained "
 "control."
 msgstr ""
+"შენიშვნა: <b>plot</b> ზოგადი ფუნქციაა. გრაფიკის ტიპი, რომელსაც რეალურად "
+"მიიღებთ, დამოკიდებულია შეტანილი ცვლადების ტიპზე. მაგალითად, რიცხვითი "
+"ვექტორებისთვის იქმნება გაბნევის დიაგრამა (იხ. ქვემოთ), ხოლო data.frames-"
+"ისთვის დაიხაზება გაბნევის დიაგრამების მატრიცა და ა.შ. ეს ხშირად სასარგებლოა "
+"მონაცემთა შინაარსიანი ვიზუალიზაციისთვის, თუმცა არ იძლევა დეტალური კონტროლის "
+"საშუალებას."
 
 #. i18n: ectx: (Loaded from Generic Plot) <settings> <setting> (refers to element labelled "X variable")
 #: rkward/plugins/plots/plot.rkh:18
@@ -1847,6 +1958,12 @@ msgid ""
 "indices of the plotting variable is taken as the x-coordinate. See R "
 "reference on 'plot' for more details."
 msgstr ""
+"ეს არის <i>x</i> არგუმენტი, რომელიც აუცილებელია ნებისმიერი გრაფიკის "
+"დასახატად. უმარტივეს შემთხვევაში, როცა იხაზება მთელი რიცხვის ან რიცხვითი "
+"ტიპის ცვლადები და \"Y ცვლადი\" მითითებული არაა, ეს მნიშვნელობები, რეალურად, "
+"აღიქმება y-კოორდინატად, ხოლო თავად ამ ცვლადის ინდექსები გამოყენებულია x-"
+"კოორდინატად. დამატებითი დეტალებისთვის იხილეთ R-ის სახელმძღვანელო ფუნქციაზე "
+"'plot'."
 
 #. i18n: ectx: (Loaded from Generic Plot) <settings> <setting> (refers to element labelled "Y variable")
 #: rkward/plugins/plots/plot.rkh:19
@@ -1855,6 +1972,8 @@ msgid ""
 "This is the <i>y</i> argument. Note that this is not always needed, and does "
 "not have an effect for some types of x variables."
 msgstr ""
+"ეს არის <i>y</i> არგუმენტი. გაითვალისწინეთ, რომ იგი ყოველთვის საჭირო არაა და "
+"ზოგიერთი ტიპის x ცვლადისთვის მას გავლენა არ აქვს."
 
 #. i18n: ectx: (Loaded from Generic Plot) <settings> <setting> (refers to element labelled "Plot Options")
 #: rkward/plugins/plots/plot.rkh:21
@@ -1864,6 +1983,10 @@ msgid ""
 "plot_options\"/> for details. Note that some of these settings may not have "
 "an effect, depending on the type of plot actually produced."
 msgstr ""
+"გრაფიკის დამატებითი ზოგადი პარამეტრები. დეტალებისთვის იხილეთ <link href="
+"\"rkward://component/plot_options\"/>. გაითვალისწინეთ, რომ ამ პარამეტრებიდან "
+"ზოგს, შესაძლოა, გავლენა არ ჰქონდეს, იმის მიხედვით, თუ რეალურად რა ტიპის "
+"გრაფიკი აიგება."
 
 #. i18n: ectx: (Generic Plot) <dialog label="Generic Plot"> <tab label="Variables"> <varslot label="...">
 #: rkward/plugins/plots/plot.xml:21
@@ -1979,6 +2102,7 @@ msgstr "ხაზებით გადახატული წერტილ�
 #, kde-format
 msgid "Plot vertical lines from points to the zero axis (high-density)"
 msgstr ""
+"ვერტიკალური ხაზების დახაზვა წერტილებიდან ნულოვან ღერძამდე (მაღალი სიმკვრივე)"
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Options"> <dropdown label="Type of all points/lines"> <option label="...">
 #: rkward/plugins/plots/scatterplot.xml:51
@@ -2011,6 +2135,8 @@ msgid ""
 "Enter value - for diff.col. enter a vector -<br/> eg: c(1,2) or "
 "c('red','green')"
 msgstr ""
+"შეიყვანეთ მნიშვნელობა - სხვა ფერისთვის შეიყვანეთ ვექტორი -<br/> მაგ: c(1,2) "
+"ან c('red','green')"
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Options"> <input label="...">
 #: rkward/plugins/plots/scatterplot.xml:69
@@ -2039,6 +2165,8 @@ msgid ""
 "A numerical value giving the amount by which plotting text and symbols "
 "should be scaled relative to the default."
 msgstr ""
+"რიცხვითი მნიშვნელობა რომლითაც ხდება დახატული ტექსტისა და სიმბოლოების "
+"გადიდება ნაგულისხმევ ზომასთან შედარებით."
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Further options"> <input label="...">
 #: rkward/plugins/plots/scatterplot.xml:86
@@ -2059,6 +2187,8 @@ msgid ""
 "Either an integer specifying a symbol or a single character to be used as "
 "the default in plotting points."
 msgstr ""
+"ან მთელი რიცხვი, რომელიც მიუთითებს სიმბოლოს, ან ერთი სიმბოლო, რომელიც "
+"ნაგულისხმევად იქნება გამოყენებული წერტილების ხატვაში."
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Further options"> <input label="...">
 #: rkward/plugins/plots/scatterplot.xml:100
@@ -2073,6 +2203,8 @@ msgid ""
 "Scatterplot matrix plot produces scatterplot matrices with univariate "
 "displays down the diagonal."
 msgstr ""
+"გაბნევის დიაგრამების მატრიცა ქმნის გაბნევის დიაგრამების მატრიცებს, რომლებსაც "
+"დიაგონალზე აქვთ ერთგანზომილებიანი მონაცემების ასახვა."
 
 #. i18n: ectx: (Loaded from Scatterplot Matrix) <usage>
 #: rkward/plugins/plots/scatterplot_matrix.rkh:12
@@ -2081,6 +2213,8 @@ msgid ""
 "Choose one or more objects to be plotted. Choose the diagonal plot and how "
 "the scatterplots should be plotted from the options tab."
 msgstr ""
+"აირჩიეთ ერთი ან მეტი ობიექტი დასახაზად. აირჩიეთ მორგების ჩანართიდან "
+"დიაგონალური დიაგრამა და როგორ უნდა მოხდეს გაფანტული დიაგრამის დახაზვა."
 
 #. i18n: ectx: (Loaded from Scatterplot Matrix) <settings> <setting> (refers to element labelled "variable(s):")
 #: rkward/plugins/plots/scatterplot_matrix.rkh:18
@@ -2089,6 +2223,8 @@ msgid ""
 "Select a data matrix or a numeric data frame or more than one variables from "
 "a data matrix"
 msgstr ""
+"აირჩიეთ მონაცემთა მატრიცა, რიცხვითი მონაცემების კადრი, ან ერთზე მეტი ცვლადი "
+"მონაცემთა მატრიციდან"
 
 #. i18n: ectx: (Loaded from Scatterplot Matrix) <settings> <setting> (refers to element labelled "Diagonal panels")
 #: rkward/plugins/plots/scatterplot_matrix.rkh:20
@@ -2130,13 +2266,13 @@ msgstr "დახაზვის გარეშე. დიაგონალზ
 #: rkward/plugins/plots/scatterplot_matrix.rkh:27
 #, kde-format
 msgid "Select it if you want points to be plotted in scatterplots."
-msgstr ""
+msgstr "აირჩიეთ, თუ გნებავთ წერტილების დახაზვა გაფანტულ დიაგრამებში."
 
 #. i18n: ectx: (Loaded from Scatterplot Matrix) <settings> <setting> (refers to element labelled "Plot smooth")
 #: rkward/plugins/plots/scatterplot_matrix.rkh:28
 #, kde-format
 msgid "Select it if you want a lowess smooth to be plotted in scatterplots."
-msgstr ""
+msgstr "მონიშნეთ, თუ გსურთ გაფანტვის დიაგრამებზე lowess-გლუვი წირის დახაზვა."
 
 #. i18n: ectx: (Loaded from Scatterplot Matrix) <settings> <setting> (refers to element labelled "Plot data concentration ellipses")
 #: rkward/plugins/plots/scatterplot_matrix.rkh:29
@@ -2203,6 +2339,10 @@ msgid ""
 "<link href=\"http://cran.r-project.org/src/contrib/Descriptions/Rcmdr.html"
 "\">Rcmdr package</link>."
 msgstr ""
+"აირჩიეთ მონაცემები ტოტი-და-ფოთოლის ტიპის დიაგრამის დასახაზად. იხილეთ ბმული "
+"<link href=\"rkward://rhelp/stem\"/>. უფრო რთული ტოტი-და-ფოთოლის ტიპის "
+"დიაგრამებისთვის იხილეთ <link href=\"http://cran.r-project.org/src/contrib/"
+"Descriptions/Rcmdr.html\"> პაკეტი Rcmdr</link>."
 
 #. i18n: ectx: (Loaded from Stem-and-Leaf Plots) <settings> <setting> (refers to element labelled "variable:")
 #: rkward/plugins/plots/stem.rkh:18
