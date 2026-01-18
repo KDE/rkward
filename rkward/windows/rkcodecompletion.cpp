@@ -1042,7 +1042,7 @@ void RKDynamicCompletionsAddition::doUpdateFromR() {
 
 	status = Updating;
 	RCommand *command = new RCommand(QStringLiteral("rkward:::.rk.completions(%1, \"%2\")").arg(RObject::rQuote(current_fragment), current_mode), RCommand::Sync | RCommand::PriorityCommand | RCommand::GetStringVector);
-	command->whenFinished(this, [this](RCommand *command) {
+	command->whenFinished(this, [this](const RCommand *command) {
 		if (status == PendingUpdate) {
 			QTimer::singleShot(0, this, &RKDynamicCompletionsAddition::doUpdateFromR);
 			return;

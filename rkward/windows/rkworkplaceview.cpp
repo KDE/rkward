@@ -531,7 +531,6 @@ void RKWorkplaceView::restoreLayout(const QString &desc) {
 		}
 		if (dl[i] == QStringLiteral("p")) {
 			RKWorkplaceViewPane *pane = createPane();
-			pane = createPane();
 			panes.append(pane);
 			parents.last()->addWidget(pane);
 		} else if (dl[i] == QStringLiteral("row")) {

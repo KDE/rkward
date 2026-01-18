@@ -758,12 +758,10 @@ void RKWardMainWindow::partChanged(KParts::Part *part) {
 	}
 	plugged_save_actions.clear();
 
-	if (w) {
-		QAction *a = w->fileSaveAction();
-		if (a) plugged_save_actions.append(a);
-		a = w->fileSaveAsAction();
-		if (a) plugged_save_actions.append(a);
-	}
+	QAction *a = w->fileSaveAction();
+	if (a) plugged_save_actions.append(a);
+	a = w->fileSaveAsAction();
+	if (a) plugged_save_actions.append(a);
 	for (int i = 0; i < plugged_save_actions.size(); ++i) {
 		save_any_action->insertAction(save_actions_plug_point, plugged_save_actions[i]);
 	}

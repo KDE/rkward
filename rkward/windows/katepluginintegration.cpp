@@ -277,7 +277,7 @@ KTextEditor::MainWindow *KatePluginIntegrationApp::activeMainWindow() {
 	return window->main;
 }
 
-RKCommandEditorWindow *findWindowForView(KTextEditor::View *view) {
+RKCommandEditorWindow *findWindowForView(const KTextEditor::View *view) {
 	RK_TRACE(APP);
 
 	QList<RKMDIWindow *> w = RKWorkplace::mainWorkplace()->getObjectList(RKMDIWindow::CommandEditorWindow);
@@ -290,7 +290,7 @@ RKCommandEditorWindow *findWindowForView(KTextEditor::View *view) {
 	return nullptr;
 }
 
-RKCommandEditorWindow *findWindowForDocument(KTextEditor::Document *document) {
+RKCommandEditorWindow *findWindowForDocument(const KTextEditor::Document *document) {
 	RK_TRACE(APP);
 
 	QList<RKMDIWindow *> w = RKWorkplace::mainWorkplace()->getObjectList(RKMDIWindow::CommandEditorWindow);

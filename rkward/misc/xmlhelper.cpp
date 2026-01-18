@@ -142,15 +142,14 @@ QDomElement XMLHelper::resolveSnippets(QDomElement &from_doc) {
 		displayError(&ref, u"resolving snippet '"_s + id + u'\'', DL_DEBUG, DL_DEBUG);
 
 		// resolve the reference
+		const auto found = std::find_if(snippets.cbegin(), snippets.cend(), [this, id](const auto &sel) {
+			return (getStringAttribute(sel, QStringLiteral("id"), QString(), DL_ERROR) == id);
+		});
 		QDomElement snippet;
-		for (XMLChildList::const_iterator it = snippets.constBegin(); it != snippets.constEnd(); ++it) {
-			if (getStringAttribute(*it, QStringLiteral("id"), QString(), DL_ERROR) == id) {
-				snippet = *it;
-				break;
-			}
-		}
-		if (snippet.isNull()) {
+		if (found == snippets.cend()) {
 			displayError(&ref, u"no such snippet '"_s + id + u'\'', DL_ERROR, DL_ERROR);
+		} else {
+			snippet = *found;
 		}
 
 		// now insert it.
@@ -228,10 +227,7 @@ XMLChildList XMLHelper::findElementsWithAttribute(const QDomElement &parent, con
 			}
 		}
 		if (recursive) {
-			XMLChildList subret = findElementsWithAttribute(*it, attribute_name, attribute_value, true, debug_level);
-			for (XMLChildList::const_iterator it = subret.constBegin(); it != subret.constEnd(); ++it) {
-				ret.append(*it);
-			}
+			ret += findElementsWithAttribute(*it, attribute_name, attribute_value, true, debug_level);
 		}
 	}
 

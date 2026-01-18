@@ -89,7 +89,7 @@ RInterface::RInterface() {
 	// The backend will fetch this command, then send a BackendRequest::Started event. In response to this, we will send further
 	// (sub)-commands to set everything up (see there).
 	auto fake_c = new RCommand(i18n("R Startup"), RCommand::App | RCommand::Sync | RCommand::ObjectListUpdate, i18n("R Startup"));
-	fake_c->whenFinished(this, [this](RCommand *command) {
+	fake_c->whenFinished(this, [this](const RCommand *command) {
 		if (startup_phase2_error || command->failed()) backend_error.message.append(i18n("<p>\t-An unspecified error occurred that is not yet handled by RKWard. Likely RKWard will not function properly. Please check your setup.</p>\n"));
 		if (!backend_error.message.isEmpty()) {
 			backend_error.message.prepend(i18n("<p>There was a problem starting the R backend. The following error(s) occurred:</p>\n"));
@@ -751,7 +751,7 @@ GenericRRequestResult RInterface::processRCallRequest(const QString &call, const
 		backend_error.message.append(args.toString());
 
 		runStartupCommand(new RCommand(QStringLiteral("paste (R.version[c (\"major\", \"minor\")], collapse=\".\")\n"), RCommand::GetStringVector | RCommand::App | RCommand::Sync), in_chain,
-		                  [](RCommand *command) {
+		                  [](const RCommand *command) {
 			                  RK_ASSERT(command->getDataType() == RData::StringVector);
 			                  RK_ASSERT(command->getDataLength() == 1);
 			                  RKSessionVars::setRVersion(command->stringVector().value(0));
@@ -778,7 +778,7 @@ GenericRRequestResult RInterface::processRCallRequest(const QString &call, const
 
 		// find out about standard library locations
 		runStartupCommand(new RCommand(QStringLiteral("c(path.expand(Sys.getenv(\"R_LIBS_USER\")), .libPaths())\n"), RCommand::GetStringVector | RCommand::App | RCommand::Sync), in_chain,
-		                  [this](RCommand *command) {
+		                  [this](const RCommand *command) {
 			                  RK_ASSERT(command->getDataType() == RData::StringVector);
 			                  RKSettingsModuleRPackages::r_libs_user = command->stringVector().value(0);
 			                  RKSettingsModuleRPackages::defaultliblocs = command->stringVector().mid(1);
@@ -805,7 +805,7 @@ GenericRRequestResult RInterface::processRCallRequest(const QString &call, const
 
 		// start help server / determined help base url
 		runStartupCommand(new RCommand(QStringLiteral(".rk.getHelpBaseUrl ()\n"), RCommand::GetStringVector | RCommand::App | RCommand::Sync), in_chain,
-		                  [](RCommand *command) {
+		                  [](const RCommand *command) {
 			                  RK_ASSERT(command->getDataType() == RData::StringVector);
 			                  RK_ASSERT(command->getDataLength() == 1);
 			                  RKSettingsModuleR::help_base_url = command->stringVector().value(0);

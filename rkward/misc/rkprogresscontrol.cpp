@@ -53,8 +53,6 @@ class RKProgressControlDialog : public QDialog {
 	QLabel *error_indicator;
 	QDialogButtonBox *buttons;
 
-	QString output_button_text;
-
 	ROutput::ROutputType last_output_type;
 	bool prevent_close;
 	bool is_done;
@@ -118,7 +116,7 @@ void RKProgressControl::addRCommand(RCommand *command, bool done_when_finished) 
 
 	outstanding_commands.append(command);
 	connect(command->notifier(), &RCommandNotifier::commandOutput, this, &RKProgressControl::newOutput);
-	command->whenFinished(this, [this, done_when_finished](RCommand *command) {
+	command->whenFinished(this, [this, done_when_finished](const RCommand *command) {
 		qDebug("finished");
 		if (command->failed()) {
 			qDebug("failed");
@@ -430,7 +428,7 @@ void RKInlineProgressControl::cancelAndClose() {
 void RKInlineProgressControl::addRCommand(RCommand *command) {
 	RK_TRACE(MISC);
 	unfinished_commands.append(command);
-	connect(command->notifier(), &RCommandNotifier::commandFinished, this, [this](RCommand *c) {
+	connect(command->notifier(), &RCommandNotifier::commandFinished, this, [this](const RCommand *c) {
 		unfinished_commands.removeAll(c);
 		if (c->failed()) {
 			any_failed = true;
@@ -439,7 +437,7 @@ void RKInlineProgressControl::addRCommand(RCommand *command) {
 			done();
 		}
 	});
-	connect(command->notifier(), &RCommandNotifier::commandOutput, this, [this](RCommand *, const ROutput &o) {
+	connect(command->notifier(), &RCommandNotifier::commandOutput, this, [this](const RCommand *, const ROutput &o) {
 		addOutput(output_display, o);
 	});
 }

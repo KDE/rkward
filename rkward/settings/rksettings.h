@@ -40,8 +40,8 @@ class RKSettings : public KPageDialog {
 	void pageChange(KPageWidgetItem *current, KPageWidgetItem *before);
 
   protected:
-	RKSettings(QWidget *parent = nullptr);
-	~RKSettings();
+	explicit RKSettings(QWidget *parent = nullptr);
+	~RKSettings() override;
 
 	void done(int result) override;
   private Q_SLOTS:

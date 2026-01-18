@@ -266,7 +266,7 @@ void RKPasteSpecialDialog::accept() {
 	RK_TRACE(MISC);
 	if (objectname) {
 		RCommand *command = new RCommand(objectname->currentFullName() + u" <- "_s + resultingText(), RCommand::App | RCommand::ObjectListUpdate);
-		connect(command->notifier(), &RCommandNotifier::commandFinished, [](RCommand *c) {
+		connect(command->notifier(), &RCommandNotifier::commandFinished, [](const RCommand *c) {
 			if (c->failed()) {
 				QString msg = c->fullOutput();
 				if (msg.isEmpty()) msg = i18n("Command failed to parse. Try using <i>Edit->Paste special...</i> in the R Console window for better diagnostics.");

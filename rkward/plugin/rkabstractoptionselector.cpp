@@ -133,7 +133,7 @@ void RKAbstractOptionSelector::propertyChanged(RKComponentPropertyBase *property
 void RKAbstractOptionSelector::ItemPropertyChanged(RKComponentPropertyBase *property) {
 	RK_TRACE(PLUGIN);
 
-	Option *opt = nullptr;
+	const Option *opt = nullptr;
 	int id = -1;
 	for (OptionsMap::const_iterator it = options.cbegin(); it != options.cend(); ++it) {
 		RK_ASSERT(it.value());

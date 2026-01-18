@@ -176,7 +176,7 @@ void RKComponentScriptingProxy::doRCommand2(const QString &command, const QStrin
 		if (old_c) RInterface::instance()->softCancelCommand(old_c);
 		latest_commands.insert(id, c);
 	}
-	c->whenFinished(this, [this, resolve, reject, id](RCommand *command) {
+	c->whenFinished(this, [this, resolve, reject, id](const RCommand *command) {
 		QJSValue res;
 		auto latest_c = id.isNull() ? nullptr : latest_commands.value(id);
 		if (latest_c && (latest_c != command)) {
@@ -269,7 +269,7 @@ void RKComponentScriptingProxy::setListValue(const QStringList &value, const QSt
 QVariantList RKComponentScriptingProxy::getObjectInfo(const QString &name) {
 	RK_TRACE(PHP);
 
-	RObject *object = RObjectList::getObjectList()->findObject(name);
+	const RObject *object = RObjectList::getObjectList()->findObject(name);
 	if (object) {
 		QVariantList ret;
 
@@ -302,7 +302,7 @@ QVariantList RKComponentScriptingProxy::getObjectInfo(const QString &name) {
 QString RKComponentScriptingProxy::getObjectParent(const QString &name) {
 	RK_TRACE(PHP);
 
-	RObject *object = RObjectList::getObjectList()->findObject(name);
+	const RObject *object = RObjectList::getObjectList()->findObject(name);
 	if (object) {
 		if (object->parentObject()) return (object->parentObject()->getFullName());
 	}
@@ -311,11 +311,11 @@ QString RKComponentScriptingProxy::getObjectParent(const QString &name) {
 
 QString RKComponentScriptingProxy::getObjectChild(const QString &name) {
 	RK_TRACE(PHP);
-	RObject *object = RObjectList::getObjectList()->findObject(name);
+	const RObject *object = RObjectList::getObjectList()->findObject(name);
 
 	if (object) {
 		if (object->isContainer()) {
-			RObject *child = static_cast<RContainerObject *>(object)->findChildByName(name);
+			const RObject *child = static_cast<const RContainerObject *>(object)->findChildByName(name);
 			if (child) return (child->getFullName());
 		}
 	}

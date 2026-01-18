@@ -44,7 +44,7 @@ RKMDIWindow *RKToolWindowList::findToolWindowById(const QString &id) {
 	return nullptr;
 }
 
-void RKToolWindowList::unregisterToolWindow(RKMDIWindow *window) {
+void RKToolWindowList::unregisterToolWindow(const RKMDIWindow *window) {
 	RK_TRACE(APP);
 
 	for (int i = 0; i < RKToolWindowListPrivate::registered_tool_windows.size(); ++i) {
@@ -57,7 +57,7 @@ void RKToolWindowList::unregisterToolWindow(RKMDIWindow *window) {
 	RK_ASSERT(false);
 }
 
-QString RKToolWindowList::idOfWindow(RKMDIWindow *window) {
+QString RKToolWindowList::idOfWindow(const RKMDIWindow *window) {
 	RK_TRACE(APP);
 
 	for (int i = 0; i < RKToolWindowListPrivate::registered_tool_windows.size(); ++i) {

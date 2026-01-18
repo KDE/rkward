@@ -48,7 +48,7 @@ class RKSetupWizardPage : public QWidget {
 
 	void lazyInitOnce(std::function<void(RKSetupWizardPage *)> initfun) {
 		auto refcopy = ref;
-		QObject::connect(wizard, &KPageDialog::currentPageChanged, this, [this, refcopy, initfun](KPageWidgetItem *current, KPageWidgetItem *) mutable {
+		QObject::connect(wizard, &KPageDialog::currentPageChanged, this, [this, refcopy, initfun](const KPageWidgetItem *current, KPageWidgetItem *) mutable {
 			if (current && current == refcopy) {
 				initfun(this);
 				refcopy = nullptr;
@@ -56,7 +56,7 @@ class RKSetupWizardPage : public QWidget {
 		});
 	}
 	void lazyInitRepeated(std::function<void(RKSetupWizardPage *)> initfun) {
-		QObject::connect(wizard, &KPageDialog::currentPageChanged, this, [this, initfun](KPageWidgetItem *current, KPageWidgetItem *) {
+		QObject::connect(wizard, &KPageDialog::currentPageChanged, this, [this, initfun](const KPageWidgetItem *current, KPageWidgetItem *) {
 			if (current && current == ref) {
 				initfun(this);
 			}
@@ -99,7 +99,7 @@ static auto iconForStatus(RKSetupWizardItem::Status status) {
 
 class RBackendStatusWidget : public QWidget {
   public:
-	RBackendStatusWidget(QWidget *parent) : QWidget(parent), anim(nullptr) {
+	explicit RBackendStatusWidget(QWidget *parent) : QWidget(parent), anim(nullptr) {
 		auto l = new QVBoxLayout(this);
 		rinst_label = new QLabel();
 		l->addWidget(rinst_label);
@@ -176,7 +176,7 @@ class RBackendStatusWidget : public QWidget {
 
 class RBackendSelectionWidget : public RKRadioGroup {
   public:
-	RBackendSelectionWidget(QWidget *parent) : RKRadioGroup(parent) {
+	explicit RBackendSelectionWidget(QWidget *parent) : RKRadioGroup(parent) {
 		req = new KUrlRequester();
 		req->setPlaceholderText(i18n("Select another R executable"));
 		req->setWindowTitle(i18n("Select R executable"));
@@ -443,7 +443,6 @@ RKSetupWizard::RKSetupWizard(QWidget *parent, InvokationReason reason, const QLi
 		software_to_install.clear();
 		packages_to_install.clear();
 		r_commands_to_run.clear();
-		;
 
 		// NOTE: This is not quite clean: Some settings get applied before clicking finish, this way.
 		//       However, I don't really want to pop up a separate dialog for a summary page, either.

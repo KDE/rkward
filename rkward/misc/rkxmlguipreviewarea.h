@@ -27,8 +27,8 @@ class RKPreviewManager;
 class RKXMLGUIPreviewArea : public QWidget {
 	Q_OBJECT
   public:
-	RKXMLGUIPreviewArea(const QString &label, QWidget *parent, RKPreviewManager *manager);
-	~RKXMLGUIPreviewArea();
+	explicit RKXMLGUIPreviewArea(const QString &label, QWidget *parent, RKPreviewManager *manager);
+	~RKXMLGUIPreviewArea() override;
 	QString label() const;
 	void setLabel(const QString &label);
 	void setWindow(RKMDIWindow *window);

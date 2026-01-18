@@ -148,8 +148,8 @@ void RKFormula::makeModelString() {
 	model_ok = false;
 	QString table_string, model_string, labels_string;
 	mangled_names.clear();
-	RObject *dep_var = dependent->objectValue();
-	RObject *container = nullptr;
+	const RObject *dep_var = dependent->objectValue();
+	const RObject *container = nullptr;
 	if (dep_var) {
 		model_ok = true;
 	}
@@ -223,16 +223,16 @@ void RKFormula::makeModelString() {
 	changed();
 }
 
-QString RKFormula::mangleName(RObject *var) {
+QString RKFormula::mangleName(const RObject *var) {
 	RK_TRACE(PLUGIN);
 	if (!var) return QString();
 
 	QString dummy = var->getShortName();
-	QString dummy2 = dummy;
+	const QString dummy2 = dummy;
 	MangledNames::iterator it;
 	int i = -1;
 	while (((it = mangled_names.find(dummy)) != mangled_names.end()) && (it.value() != var)) {
-		dummy = dummy2.append(QString().setNum(++i));
+		dummy = dummy + QString::number(++i);
 	}
 	mangled_names.insert(dummy, var);
 	return dummy;

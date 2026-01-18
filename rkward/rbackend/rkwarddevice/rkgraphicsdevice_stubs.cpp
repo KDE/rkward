@@ -9,6 +9,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
  * not a compilation unit of its own.
  * It is meant to be included, there. */
 
+// cppcheck-suppress-file [constParameterPointer, constParameterCallback] ; function signatures as specified by R
+
 #define RKD_BACKEND_CODE
 #include "../../debug.h"
 #include "../rkrbackend.h"

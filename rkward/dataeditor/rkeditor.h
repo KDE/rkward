@@ -35,7 +35,7 @@ class RKEditor : public RKMDIWindow {
 	/// flushes all pending edit operations and syncs the data to R. Implement in the child classes
 	virtual void flushChanges() = 0;
 	/// returns the object that is being edited in this editor
-	RObject *getObject() { return object; };
+	RObject *getObject() const { return object; };
 
 	enum PasteMode { PasteEverywhere,
 		             PasteToTable,
@@ -43,8 +43,6 @@ class RKEditor : public RKMDIWindow {
 
 	/** Tells the editor to restore the given object in the R-workspace from its copy of the data */
 	virtual void restoreObject(RObject *object) = 0;
-
-	bool isModified() const override { return false; };
 
   protected:
 	RObject *object;

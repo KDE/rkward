@@ -219,7 +219,7 @@ private:
 
 void MyReceiver::someFunction () {
     RCommand *c = new RCommand("print (1+1)", RCommand::App);
-    c->whenFinished(this, [this](RCommand *command) {
+    c->whenFinished(this, [this](const RCommand *command) {
         if (command->successful ()) {
             qDebug ("Result was %s", command->output ()->utf8 ());
         }
@@ -359,7 +359,7 @@ These are special modifiers helpful when transferring data from R to RKWard (use
 
 \code
 auto command = new RCommand("myobject", RCommand::Sync | RCommand::GetIntVector);
-command->whenFinished(this, [this](RCommand *command) { this->syncDataFromR(command->getIntVector(); });
+command->whenFinished(this, [this](const RCommand *command) { this->syncDataFromR(command->getIntVector(); });
 RInterface::issueCommand(command);
 \endcode
 

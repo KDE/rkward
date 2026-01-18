@@ -24,10 +24,10 @@ class RKSaveModifiedDialog : public QDialog {
 	 *  @param windows List of windows to ask about
 	 *  @param project Whether to also ask about saving project related resources: Outputs, Workplace, Workspace.
 	 *  @returns true, if the user chose to proceed (with or without saving modications), _and_ saving was successful; false, if the user cancelled the operation, or some saves failed. */
-	static bool askSaveModified(QWidget *parent, QList<RKMDIWindow *> windows, bool project);
+	static bool askSaveModified(QWidget *parent, const QList<RKMDIWindow *> &windows, bool project);
 
   private:
-	RKSaveModifiedDialog(QWidget *parent, QList<RKMDIWindow *> modified_windows, bool project);
+	RKSaveModifiedDialog(QWidget *parent, const QList<RKMDIWindow *> modified_windows, bool project);
 	virtual ~RKSaveModifiedDialog();
 	QMap<QTreeWidgetItem *, QPointer<RKMDIWindow>> window_checklist;
 	QTreeWidgetItem *save_project_check;

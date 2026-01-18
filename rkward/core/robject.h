@@ -299,8 +299,8 @@ class RObject {
 	/** Notify the object that a model no longer needs its data. If there have been as many endEdit() as beginEdit() calls, the object should discard its data storage. The default implementation does nothing (raises an assert). */
 	virtual void endEdit();
 
-	/** wrapper around RCommand::whenFinishe(), needed because RObject is not a Qbject subclass */
-	void whenCommandFinished(RCommand *command, std::function<void(RCommand *)> callback);
+	/** wrapper around RCommand::whenFinished(), needed because RObject is not a Qbject subclass */
+	void whenCommandFinished(RCommand *command, std::function<void(const RCommand *)> callback);
 
 	/* Storage hashes for special objects which are held by some but not all objects, and thus should not have a pointer
 	 * in the class declaration. Some apply only to specific RObject types, but moving storage to the relevant classes, would make it more

@@ -461,7 +461,7 @@ int RKAccordionTable::rowOfButton(QObject *button) const {
 	if (!button) return -1;
 
 	// we rely on the fact that the buttons in use, here, are encapsulaped in a parent widget, which is set as indexWidget()
-	QObject *button_parent = button->parent();
+	const QObject *button_parent = button->parent();
 	for (int i = model()->rowCount() - 1; i >= 0; --i) {
 		QModelIndex row = model()->index(i, model()->columnCount() - 1);
 		if (button_parent == indexWidget(row)) {

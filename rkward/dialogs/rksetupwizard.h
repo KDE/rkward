@@ -89,7 +89,7 @@ class RKSetupWizardItem {
 	QString shortlabel;
 	QString longlabel;
 	QString shortstatuslabel;
-	QComboBox *box;
+	QComboBox *box; // cppcheck-suppress unsafeClassCanLeak ; always added to layout, deleted by Qt
 };
 
 #endif

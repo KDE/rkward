@@ -334,7 +334,7 @@ class RKSettingsPageRPackages : public RKSettingsModuleWidget {
 		connect(cran_mirror_button, &QPushButton::clicked, this, [this, cran_mirror_input]() {
 			QString title = i18n("Select CRAN mirror");
 			RCommand *command = new RCommand(QStringLiteral("rk.select.CRAN.mirror()\n"), RCommand::App | RCommand::GetStringVector, title);
-			connect(command->notifier(), &RCommandNotifier::commandFinished, cran_mirror_input, [cran_mirror_input](RCommand *command) {
+			connect(command->notifier(), &RCommandNotifier::commandFinished, cran_mirror_input, [cran_mirror_input](const RCommand *command) {
 				if (command->succeeded()) {
 					RK_ASSERT(command->getDataLength() >= 1);
 					cran_mirror_input->setText(command->stringVector().value(0));

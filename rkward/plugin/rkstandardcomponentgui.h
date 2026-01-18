@@ -137,7 +137,7 @@ class RKStandardComponentWizard : public RKStandardComponentGUI {
 	Q_OBJECT
   public:
 	RKStandardComponentWizard(RKStandardComponent *component, RKComponentPropertyCode *code_property, bool enslaved);
-	~RKStandardComponentWizard();
+	~RKStandardComponentWizard() override;
 
 	void enableSubmit(bool enable) override;
 	void updateCode() override;

@@ -37,7 +37,7 @@ class RCommandChain {
   protected:
 	friend class RCommandStack;
 	friend class RCommandStackModel;
-	RCommandChain(bool is_chain = true) : closed(!is_chain), is_command(!is_chain) {};
+	explicit RCommandChain(bool is_chain = true) : closed(!is_chain), is_command(!is_chain) {};
 	QList<RCommandChain *> sub_commands;
 	bool closed;
 	bool is_command;
@@ -235,7 +235,7 @@ class RCommand : public RData, public RCommandChain {
  *  - If @param warning is non-null, the message will be shown (as a warning), but no error will be raised.
  *  - Unless an error was thrown, @param ret will be returned as a basic data type (possibly NULL). */
 struct GenericRRequestResult {
-	GenericRRequestResult(const QVariant &ret = QVariant(), const QString &warning = QString(), const QString &error = QString()) : error(error), warning(warning), ret(ret) {};
+	explicit GenericRRequestResult(const QVariant &ret = QVariant(), const QString &warning = QString(), const QString &error = QString()) : error(error), warning(warning), ret(ret) {};
 	static GenericRRequestResult makeError(const QString &error) {
 		return GenericRRequestResult(QVariant(), QString(), error);
 	}

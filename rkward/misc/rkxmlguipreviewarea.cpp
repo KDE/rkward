@@ -186,12 +186,12 @@ void RKXMLGUIPreviewArea::prepareMenu() {
 /** Similar to KMessageWidget, but much smaller margins / spacings */
 class RKPreviewStatusNote : public QFrame {
 	friend class RKPreviewManager;
-	RKPreviewStatusNote(RKPreviewManager *manager) : QFrame(),
-	                                                 updating(i18nc("very short: Preview is updating", "updating")),
-	                                                 error(i18nc("very short: Error while generating preview", "error")),
-	                                                 ready(i18nc("very short: Preview is up to date", "ready")),
-	                                                 unavailable(i18nc("very short: Preview is not(yet) possible", "n/a")),
-	                                                 off(i18nc("very short: Preview is turned off", "off")) {
+	explicit RKPreviewStatusNote(RKPreviewManager *manager) : QFrame(),
+	                                                          updating(i18nc("very short: Preview is updating", "updating")),
+	                                                          error(i18nc("very short: Error while generating preview", "error")),
+	                                                          ready(i18nc("very short: Preview is up to date", "ready")),
+	                                                          unavailable(i18nc("very short: Preview is not(yet) possible", "n/a")),
+	                                                          off(i18nc("very short: Preview is turned off", "off")) {
 		QFontMetrics fm(font());
 		em = fm.horizontalAdvance(u'w');
 		auto l = new QVBoxLayout(this);

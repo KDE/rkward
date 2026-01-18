@@ -19,7 +19,7 @@ class RKRBackendProtocolFrontend;
 class RKFrontendTransmitter : public RKAbstractTransmitter, public RKROutputBuffer {
 	Q_OBJECT
   public:
-	RKFrontendTransmitter(RKRBackendProtocolFrontend *frontend);
+	explicit RKFrontendTransmitter(RKRBackendProtocolFrontend *frontend);
 	~RKFrontendTransmitter() override;
 
 	void run() override;

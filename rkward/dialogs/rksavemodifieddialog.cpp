@@ -24,7 +24,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../debug.h"
 
-bool RKSaveModifiedDialog::askSaveModified(QWidget *parent, QList<RKMDIWindow *> windows, bool project) {
+bool RKSaveModifiedDialog::askSaveModified(QWidget *parent, const QList<RKMDIWindow *> &windows, bool project) {
 	RK_TRACE(APP);
 
 	QList<RKMDIWindow *> modified_wins;
@@ -58,7 +58,7 @@ QTreeWidgetItem *makeHeaderItem(const QString &label, QTreeWidget *tree) {
 	return header;
 }
 
-RKSaveModifiedDialog::RKSaveModifiedDialog(QWidget *parent, QList<RKMDIWindow *> modified_wins, bool project) : QDialog(parent) {
+RKSaveModifiedDialog::RKSaveModifiedDialog(QWidget *parent, const QList<RKMDIWindow *> modified_wins, bool project) : QDialog(parent) {
 	RK_TRACE(APP);
 
 	setWindowTitle(i18n("Save modified"));
@@ -85,12 +85,12 @@ RKSaveModifiedDialog::RKSaveModifiedDialog(QWidget *parent, QList<RKMDIWindow *>
 
 		auto modified_outputs = RKOutputDirectory::modifiedOutputDirectories();
 		if (!modified_outputs.isEmpty()) {
-			QTreeWidgetItem *header = makeHeaderItem(i18n("Output files"), tree);
+			QTreeWidgetItem *hitem = makeHeaderItem(i18n("Output files"), tree);
 			for (int i = 0; i < modified_outputs.size(); ++i) {
 				QTreeWidgetItem *item = new QTreeWidgetItem();
 				item->setText(0, modified_outputs[i]->caption());
 				item->setFirstColumnSpanned(true);
-				header->addChild(item);
+				hitem->addChild(item);
 				item->setCheckState(0, Qt::Checked);
 				outputdir_checklist.insert(item, modified_outputs[i]->getId());
 			}
