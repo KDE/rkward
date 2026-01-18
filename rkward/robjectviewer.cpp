@@ -211,7 +211,7 @@ void RObjectViewerWidget::update() {
 	control->setAutoCloseWhenCommandsDone(true);
 	control->setText(i18n("Fetching information"));
 	control->show(100);
-	command->whenFinished(this, [this](RCommand *command) {
+	command->whenFinished(this, [this](const RCommand *command) {
 		setText(command->fullOutput());
 		update_button->setEnabled(_object != nullptr);
 	});

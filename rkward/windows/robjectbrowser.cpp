@@ -165,7 +165,7 @@ void RObjectBrowserInternal::updateButtonClicked() {
 void RObjectBrowserInternal::currentHelpContext(QString *symbol, QString *package) {
 	RK_TRACE(APP);
 
-	RObject *object = list_view->menuObject();
+	const RObject *object = list_view->menuObject();
 	if (!object) return;
 	*symbol = object->getShortName();
 	*package = object->isInGlobalEnv() ? QString() : object->toplevelEnvironment()->packageName();
@@ -180,7 +180,7 @@ void RObjectBrowserInternal::popupCopy() {
 	RK_TRACE(APP);
 
 	bool ok;
-	RObject *object = list_view->menuObject();
+	const RObject *object = list_view->menuObject();
 	QString suggested_name = RObjectList::getGlobalEnv()->validizeName(object->getShortName());
 	QString name = QInputDialog::getText(this, i18n("Copy object"), i18n("Enter the name to copy to"), QLineEdit::Normal, suggested_name, &ok);
 

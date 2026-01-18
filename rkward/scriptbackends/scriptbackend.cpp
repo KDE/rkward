@@ -73,10 +73,9 @@ void ScriptBackend::invalidateCalls(int type) {
 void ScriptBackend::commandFinished(const QString &output) {
 	RK_TRACE(PHP);
 
-	QString _output = output;
-
 	if (current_type != Ignore) {
 		if (code_property) {
+			QString _output = output;
 			if (_output.isNull()) _output = QLatin1String(""); // must not be null for the code property!
 			bool add_header = add_headings && (!_output.isEmpty());
 			if (current_type == Preprocess) {

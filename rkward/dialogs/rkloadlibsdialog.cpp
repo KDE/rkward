@@ -67,7 +67,7 @@ RKLoadLibsDialog::RKLoadLibsDialog(QWidget *parent, RCommandChain *chain, bool m
 	QTimer::singleShot(0, this, [this]() { slotPageChanged(); });
 
 	RCommand *command = new RCommand(QStringLiteral(".libPaths()"), RCommand::App | RCommand::GetStringVector);
-	connect(command->notifier(), &RCommandNotifier::commandFinished, this, [this](RCommand *command) {
+	connect(command->notifier(), &RCommandNotifier::commandFinished, this, [this](const RCommand *command) {
 		RK_ASSERT(command->getDataType() == RData::StringVector);
 		RK_ASSERT(command->getDataLength() > 0);
 		// NOTE: The problem is that e.g. R_LIBS_USER is not in .libPaths() if it does not exist, yet. But it should be available as an option, of course
@@ -403,7 +403,7 @@ void LoadUnloadWidget::updateInstalledPackages() {
 	loaded_view->clear();
 
 	auto command = new RCommand(QStringLiteral(".rk.get.installed.packages()"), RCommand::App | RCommand::Sync | RCommand::GetStructuredData);
-	connect(command->notifier(), &RCommandNotifier::commandFinished, this, [this](RCommand *command) {
+	connect(command->notifier(), &RCommandNotifier::commandFinished, this, [this](const RCommand *command) {
 		if (command->failed()) return;
 		RK_ASSERT(command->getDataLength() == 5);
 
@@ -431,7 +431,7 @@ void LoadUnloadWidget::updateInstalledPackages() {
 	RInterface::issueCommand(command, parent->chain);
 
 	command = new RCommand(QStringLiteral(".packages()"), RCommand::App | RCommand::Sync | RCommand::GetStringVector);
-	connect(command->notifier(), &RCommandNotifier::commandFinished, this, [this](RCommand *command) {
+	connect(command->notifier(), &RCommandNotifier::commandFinished, this, [this](const RCommand *command) {
 		if (command->failed()) return;
 		RK_ASSERT(command->getDataType() == RData::StringVector);
 		QStringList data = command->stringVector();
@@ -536,7 +536,7 @@ void LoadUnloadWidget::doLoadUnload() {
 
 	// find out, when we're done
 	RCommand *command = new RCommand(QString(), RCommand::EmptyCommand);
-	connect(command->notifier(), &RCommandNotifier::commandFinished, this, [this](RCommand *) { clearChanged(); });
+	connect(command->notifier(), &RCommandNotifier::commandFinished, this, [this](const RCommand *) { clearChanged(); });
 	control->addRCommand(command); // this is actually important, in case no commands had been generated, above
 	RInterface::issueCommand(command, parent->chain);
 	control->setAutoCloseWhenCommandsDone(true);
@@ -560,11 +560,11 @@ void LoadUnloadWidget::apply() {
 class InstallPackagesDelegate : public QStyledItemDelegate {
 	Q_OBJECT
   public:
-	explicit InstallPackagesDelegate(QTreeView *parent) : QStyledItemDelegate(parent) {
-		table = parent;
-		expanded = RKStandardIcons::getIcon(RKStandardIcons::ActionCollapseUp);
-		collapsed = RKStandardIcons::getIcon(RKStandardIcons::ActionExpandDown);
-	}
+	explicit InstallPackagesDelegate(QTreeView *parent) : QStyledItemDelegate(parent),
+	                                                      table(parent),
+	                                                      expanded(RKStandardIcons::getIcon(RKStandardIcons::ActionCollapseUp)),
+	                                                      collapsed(RKStandardIcons::getIcon(RKStandardIcons::ActionExpandDown)) {};
+
 	void initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const override {
 		QStyledItemDelegate::initStyleOption(option, index);
 		if (!index.parent().isValid()) {
@@ -867,27 +867,26 @@ QModelIndex RKRPackageInstallationStatus::markPackageForInstallation(const QStri
 	RK_TRACE(DIALOGS);
 
 	// is the package available at all?
-	QModelIndex pindex;
 	int row = available_packages.indexOf(package_name);
-	if (row < 0) return pindex;
+	if (row < 0) return QModelIndex();
 
 	// find out, whether it is a new or and updateable package
-	QModelIndex parent;
+	QModelIndex catindex;
 	int urow = updateable_packages_in_available.indexOf(row);
 	if (urow >= 0) {
-		parent = index(UpdateablePackages, 0);
+		catindex = index(UpdateablePackages, 0);
 		row = urow;
 	} else {
 		row = new_packages_in_available.indexOf(row);
-		parent = index(NewPackages, 0);
+		catindex = index(NewPackages, 0);
 	}
 	if (row < 0) {
 		RK_ASSERT(false);
-		return pindex;
+		return QModelIndex();
 	}
 
 	// mark for installation
-	pindex = index(row, InstallationStatus, parent);
+	auto pindex = index(row, InstallationStatus, catindex);
 	setData(pindex, QVariant(Qt::Checked), Qt::CheckStateRole);
 	return pindex;
 }
