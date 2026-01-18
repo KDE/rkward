@@ -67,7 +67,6 @@ template <typename T, typename STORAGE_T = T>
 class RKConfigValue : public RKConfigBase {
   public:
 	RKConfigValue(const char *name, const T &default_value) : RKConfigBase(name), value(default_value) {};
-	~RKConfigValue() {};
 
 	void loadConfig(KConfigGroup &cg) override {
 		value = (T)cg.readEntry(name, (STORAGE_T)value);
@@ -123,7 +122,6 @@ class RKConfigGroup : public RKConfigBase {
 		for (size_t i = 0; i < count; ++i)
 			values[i] = (_values + i);
 	}
-	~RKConfigGroup() {};
 	void loadConfig(KConfigGroup &cg) override {
 		KConfigGroup lcg = cg;
 		if (name && name[0]) {

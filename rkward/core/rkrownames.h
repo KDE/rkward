@@ -15,7 +15,7 @@ This object is special in that it exists during editing, only. It is not represe
 class RKRowNames : public RKVariable {
   public:
 	explicit RKRowNames(RContainerObject *parent);
-	~RKRowNames();
+	~RKRowNames() override;
 
 	QString getFullName(int) const override;
 	/** Reimplemented to do nothing. There is no metadata on the rownames. */
