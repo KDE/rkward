@@ -44,7 +44,7 @@ class RKObjectListViewRootDelegate : public QStyledItemDelegate {
 			// v4->decorationPosition = QStyleOptionViewItemV4::Right;  // easily gets out of the picture, thus using left-align
 			option->features |= QStyleOptionViewItem::HasDecoration;
 
-			RObject *object = static_cast<RObject *>(tree->settings->mapToSource(index).internalPointer());
+			const RObject *object = static_cast<RObject *>(tree->settings->mapToSource(index).internalPointer());
 			option->font.setBold(true);
 			option->backgroundBrush = tree->palette().mid();
 			if (object == RObjectList::getObjectList()) {
@@ -456,8 +456,8 @@ bool RKObjectListViewSettings::lessThan(const QModelIndex &left, const QModelInd
 
 	// for top-level environments, always use the search order
 	if (left_object->isType(RObject::ToplevelEnv) && right_object->isType(RObject::ToplevelEnv)) {
-		RObject *left_parent = left_object->parentObject();
-		RObject *right_parent = right_object->parentObject();
+		const RObject *left_parent = left_object->parentObject();
+		const RObject *right_parent = right_object->parentObject();
 		if (!(left_parent && right_parent)) return false;
 
 		return (left_parent->getObjectModelIndexOf(left_object) < right_parent->getObjectModelIndexOf(right_object));

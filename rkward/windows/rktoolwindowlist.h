@@ -32,9 +32,9 @@ struct ToolWindowRepresentation {
 };
 
 void registerToolWindow(RKMDIWindow *window, const QString &id, Placement default_placement, const QKeyCombination &default_shortcut);
-void unregisterToolWindow(RKMDIWindow *window);
+void unregisterToolWindow(const RKMDIWindow *window);
 RKMDIWindow *findToolWindowById(const QString &id);
-QString idOfWindow(RKMDIWindow *window);
+QString idOfWindow(const RKMDIWindow *window);
 QList<ToolWindowRepresentation> &registeredToolWindows();
 }; // namespace RKToolWindowList
 

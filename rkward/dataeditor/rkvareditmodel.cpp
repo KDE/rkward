@@ -66,8 +66,8 @@ void RKVarEditModel::addObject(int index, RKVariable *object) {
 	if (meta_model) meta_model->endAddDataObject();
 	endInsertColumns();
 
-	auto name = object->getShortName();
 	if (index >= var_col_offset) {
+		const auto name = object->getShortName();
 		for (int i = var_col_offset; i < objects.size(); ++i) {
 			if (i == index) continue;
 			if (objects[i]->getShortName() == name) {
@@ -841,7 +841,7 @@ bool RKVarEditDataFrameModel::insertColumns(int column, int count, const QModelI
 	if (column > trueCols()) column = trueCols();
 	if (column < var_col_offset) column = var_col_offset;
 	for (int col = column; col < (column + count); ++col) {
-		RObject *obj = dataframe->createPendingChild(dataframe->validizeName(QString()), col - var_col_offset);
+		const RObject *obj = dataframe->createPendingChild(dataframe->validizeName(QString()), col - var_col_offset);
 		RK_ASSERT(obj->isVariable());
 		//		addObject (col, obj);	// the object will be added via RKModificationTracker::addObject -> this::childAdded. That will also take care of calling
 		// beginInsertColumns()/endInsertColumns()
@@ -962,7 +962,7 @@ void RKVarEditDataFrameModel::pushTable(RCommandChain *sync_chain) {
 	command.append(u" <- data.frame ("_s);
 
 	RK_ASSERT(objects.size());
-	RKVariable *child = objects[0];
+	const RKVariable *child = objects[0];
 	QString na_vector = u"=as.numeric (rep (NA, "_s + QString::number(child->getLength()) + u"))"_s;
 	for (int col = var_col_offset; col < objects.size(); ++col) {
 		if (col > var_col_offset) command.append(u", "_s);

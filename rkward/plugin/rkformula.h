@@ -51,7 +51,7 @@ class RKFormula : public RKComponent {
 
 	bool multitable;
 	bool model_ok;
-	typedef QMap<QString, RObject *> MangledNames;
+	typedef QMap<QString, const RObject *> MangledNames;
 	MangledNames mangled_names;
 
 	enum ModelType { FullModel = 0,
@@ -70,7 +70,7 @@ class RKFormula : public RKComponent {
 
 	void checkCustomModel();
 	void makeModelString();
-	QString mangleName(RObject *var);
+	QString mangleName(const RObject *var);
 
 	typedef QHash<QTreeWidgetItem *, RObject *> ItemMap;
 	ItemMap predictors_map;

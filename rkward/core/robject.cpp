@@ -40,9 +40,9 @@ class RObjectLifeTimeGuard {
 			object->guard = nullptr;
 		}
 	}
-	void addCommandFinishedCallback(RCommand *command, std::function<void(RCommand *)> callback) {
+	void addCommandFinishedCallback(RCommand *command, std::function<void(const RCommand *)> callback) {
 		++command_count;
-		QObject::connect(command->notifier(), &RCommandNotifier::commandFinished, [this, callback](RCommand *command) { // clazy:exclude=connect-3arg-lambda
+		QObject::connect(command->notifier(), &RCommandNotifier::commandFinished, [this, callback](const RCommand *command) { // clazy:exclude=connect-3arg-lambda
 			if (object) {
 				callback(command);
 			}
@@ -56,7 +56,7 @@ class RObjectLifeTimeGuard {
 	RObject *object;
 };
 
-void RObject::whenCommandFinished(RCommand *command, std::function<void(RCommand *)> callback) {
+void RObject::whenCommandFinished(RCommand *command, std::function<void(const RCommand *)> callback) {
 	if (!guard) {
 		guard = new RObjectLifeTimeGuard(this);
 	}
@@ -291,7 +291,7 @@ void RObject::updateFromR(RCommandChain *chain) {
 		commandstring = u".rk.get.structure ("_s + getFullName() + u", "_s + rQuote(getShortName()) + u')';
 	}
 	RCommand *command = new RCommand(commandstring, RCommand::App | RCommand::Sync | RCommand::GetStructuredData);
-	whenCommandFinished(command, [this](RCommand *command) {
+	whenCommandFinished(command, [this](const RCommand *command) {
 		if (command->failed()) {
 			RK_DEBUG(OBJECTS, DL_INFO, "command failed while trying to update object '%s'. No longer present?", getShortName().toLatin1().data());
 			// this may happen, if the object has been removed in the workspace in between

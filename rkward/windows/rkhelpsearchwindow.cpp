@@ -152,7 +152,7 @@ void RKHelpSearchWindow::getFunctionHelp(const QString &function_name, const QSt
 	else command = u".rk.getHelp("_s + command + u')'; // we use .rk.getHelp() instead of plain help() to receive an error, if no help could be found
 
 	auto c = new RCommand(command, RCommand::App | RCommand::GetStringVector, i18n("Find HTML help for %1", function_name));
-	c->whenFinished(this, [this, function_name](RCommand *command) {
+	c->whenFinished(this, [this, function_name](const RCommand *command) {
 		if (command->failed()) {
 			KMessageBox::error(this,
 			                   i18n("No help found on '%1'. Maybe the corresponding package is not installed/loaded, or maybe you mistyped the command. Try "
@@ -196,7 +196,7 @@ void RKHelpSearchWindow::slotFindButtonClicked() {
 	            u", fields="_s + fields + u')';
 
 	auto c = new RCommand(s, RCommand::App | RCommand::Sync | RCommand::GetStringVector);
-	c->whenFinished(this, [this](RCommand *command) {
+	c->whenFinished(this, [this](const RCommand *command) {
 		QStringList res;
 		if (command->failed()) {
 			RK_ASSERT(false);

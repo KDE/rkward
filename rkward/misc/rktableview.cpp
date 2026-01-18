@@ -215,11 +215,11 @@ void RKItemDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, co
 
 		int row = index.row();
 		if (row == RKVarEditMetaModel::FormatRow) {
-			EditFormatDialogProxy *fed = static_cast<EditFormatDialogProxy *>(editor);
+			const EditFormatDialogProxy *fed = static_cast<EditFormatDialogProxy *>(editor);
 			model->setData(index, RKVariable::formattingOptionsToString(fed->getOptions()), Qt::EditRole);
 			return;
 		} else if (row == RKVarEditMetaModel::LevelsRow) {
-			EditLabelsDialogProxy *led = static_cast<EditLabelsDialogProxy *>(editor);
+			const EditLabelsDialogProxy *led = static_cast<EditLabelsDialogProxy *>(editor);
 			metamodel->setValueLabels(index.column(), led->getLabels());
 			return;
 		} // else all others use the regular CellEditor

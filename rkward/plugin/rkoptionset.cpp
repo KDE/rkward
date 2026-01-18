@@ -210,9 +210,8 @@ QString serializeMap(const RKComponent::PropertyValueMap &map) {
 
 RKComponent::PropertyValueMap unserializeMap(const QString &serial) {
 	RKComponent::PropertyValueMap ret;
-	QStringList l = serial.split(u'\t', Qt::KeepEmptyParts);
-	for (int i = 0; i < l.size(); ++i) {
-		QString &line = l[i];
+	const QStringList l = serial.split(u'\t', Qt::KeepEmptyParts);
+	for (const auto &line : l) {
 		int sep = line.indexOf(u'=');
 		ret.insert(RKCommonFunctions::unescape(line.left(sep)), RKCommonFunctions::unescape(line.mid(sep + 1)));
 	}
@@ -380,7 +379,7 @@ void RKOptionSet::addRow(int row) {
 	QMap<RKComponentPropertyStringList *, ColumnInfo>::iterator it = column_map.begin();
 	for (; it != column_map.end(); ++it) {
 		RKComponentPropertyStringList *col = it.key();
-		ColumnInfo &column = it.value();
+		const ColumnInfo &column = it.value();
 		QStringList values = col->values();
 		values.insert(row, getDefaultValue(column, row));
 		col->setValueList(values);
@@ -591,7 +590,7 @@ void RKOptionSet::handleKeycolumnUpdate() {
 	QMap<RKComponentPropertyStringList *, ColumnInfo>::iterator it = column_map.begin();
 	for (; it != column_map.end(); ++it) {
 		RKComponentPropertyStringList *col = it.key();
-		ColumnInfo &column = it.value();
+		const ColumnInfo &column = it.value();
 		if (column.external) continue;
 
 		// Ok, we'll have to adjust this column. We start by copying the old values, and padding to the
@@ -793,7 +792,7 @@ QVariant RKOptionSetDisplayModel::data(const QModelIndex &index, int role) const
 	int column = index.column();
 
 	if (role == Qt::DisplayRole) {
-		RKComponentPropertyStringList *p = set->visible_columns.value(column);
+		const RKComponentPropertyStringList *p = set->visible_columns.value(column);
 		if (p) {
 			return QVariant(p->valueAt(row));
 		} else {
