@@ -86,7 +86,7 @@ void RData::setData(const StringStorage &from) {
 	datatype = RData::StringVector;
 }
 
-void RData::printStructure(const QString &prefix) {
+void RData::printStructure(const QString &prefix) const {
 	if (datatype == NoData) {
 		qDebug("%s: NoData, length %d", prefix.toLatin1().data(), getDataLength());
 	} else if (datatype == IntVector) {
@@ -109,7 +109,7 @@ void RData::printStructure(const QString &prefix) {
 		}
 	} else if (datatype == StructureVector) {
 		qDebug("%s: StructureVector, length %d", prefix.toLatin1().data(), getDataLength());
-		RDataStorage data = structureVector();
+		RDataStorageConst data = structureVector();
 		for (int i = 0; i < data.size(); ++i) {
 			QString sub_prefix = prefix + QString::number(i);
 			data.at(i)->printStructure(sub_prefix);

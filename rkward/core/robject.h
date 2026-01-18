@@ -259,39 +259,39 @@ class RObject {
 
 	/** Update object to reflect the structure passed in the new_data argument. If the data is mismatching (i.e. can not be accommodated by this type of object) false is returned (calls canAccommodateStructure () internally). In this case you should delete the object, and create a new one.
 	@returns true if the changes could be done, false if this  */
-	virtual bool updateStructure(RData *new_data);
+	virtual bool updateStructure(const RData *new_data);
 
 	typedef QMap<QString, QString> MetaMap;
 	MetaMap *meta_map;
 
-	virtual bool canAccommodateStructure(RData *new_data);
-	bool isValidName(RData *new_data);
-	bool isValidType(RData *new_data) const;
+	virtual bool canAccommodateStructure(const RData *new_data);
+	bool isValidName(const RData *new_data);
+	bool isValidType(const RData *new_data) const;
 
 	/** handles updating the object name from the given data (common functionality between RContainerObject and RKVariable. This should really never return true, as the name should never change. Hence also raises an assert. Is still useful for it's side effect of detaching and deleting the data from the RData structure after checking it.
 	@param new_data The data. Make sure it really is the classes field of an .rk.get.structure-command to update classes *before* calling this function! WARNING: the new_data object may get changed during this call. Call canAccommodateStructure () before calling this function!
 	@returns whether this caused any changes */
-	bool updateName(RData *new_data);
+	bool updateName(const RData *new_data);
 	/** update type information from the given data.
 	@param new_data The command. Make sure it really is the classification field of an .rk.get.structure-command to update classes *before* calling this function! WARNING: the new_data object may get changed during this call. Call canAccommodateStructure () before calling this function!
 	@returns whether this caused any changes */
-	virtual bool updateType(RData *new_data);
+	virtual bool updateType(const RData *new_data);
 	/** handles updating class names from the given data (common functionality between RContainerObject and RKVariable
 	@param new_data The data. Make sure it really is the classes field of an .rk.get.structure-command to update classes *before* calling this function! WARNING: the new_data object may get changed during this call. Call canAccommodateStructure () before calling this function!
 	@returns whether this caused any changes */
-	bool updateClasses(RData *new_data);
+	bool updateClasses(const RData *new_data);
 	/** handles updating the meta data from the given data (common functionality between RContainerObject and RKVariable. WARNING: the new_data object may get changed during this call. Call canAccommodateStructure () before calling this function!
 	@param new_data The data. Make sure it really is the meta field of an .rk.get.structure-command to update classes *before* calling this function!
 	@returns whether this caused any changes */
-	bool updateMeta(RData *new_data);
+	bool updateMeta(const RData *new_data);
 	/** update dimension information from the given data.
 	@param new_data The command. Make sure it really is the dims field of an .rk.get.structure-command to update classes *before* calling this function! WARNING: the new_data object may get changed during this call. Call canAccommodateStructure () before calling this function!
 	@returns whether this caused any changes */
-	bool updateDimensions(RData *new_data);
+	bool updateDimensions(const RData *new_data);
 	/** update information on slots of this object (if it is an S4 object)
 	@param new_data The command. Make sure it really is the slots field of an .rk.get.structure-command to update classes *before* calling this function! WARNING: the new_data object may get changed during this call. Call canAccommodateStructure () before calling this function!
 	@returns whether this caused any changes */
-	bool updateSlots(RData *new_data);
+	bool updateSlots(const RData *new_data);
 
 	friend class RKModificationTracker;
 	/** Notify the object that some model needs its data. The object should take care of fetching the data from the backend, unless it already has the data. The default implementation does nothing (raises an assert). */

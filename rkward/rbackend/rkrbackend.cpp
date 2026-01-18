@@ -371,7 +371,7 @@ int RReadConsole(const char *prompt, unsigned char *buf, int buflen, int hist) {
 
 			request_type = RBackendRequest::Debugger;
 			if ((dummy->getDataType() == RData::StructureVector) && (dummy->getDataLength() >= 4)) {
-				RData::RDataStorage dummy_data = dummy->structureVector();
+				const auto &dummy_data = dummy->structureVector();
 				params[QStringLiteral("calls")] = QVariant(dummy_data.at(0)->stringVector());
 				params[QStringLiteral("funs")] = QVariant(dummy_data.at(1)->stringVector());
 				params[QStringLiteral("envs")] = QVariant(dummy_data.at(2)->stringVector());

@@ -113,7 +113,7 @@ void REnvironmentObject::updateFromR(RCommandChain *chain, const QStringList &ad
 	}
 }
 
-bool REnvironmentObject::updateStructure(RData *new_data) {
+bool REnvironmentObject::updateStructure(const RData *new_data) {
 	RK_TRACE(OBJECTS);
 	RK_ASSERT(new_data->getDataType() == RData::StructureVector);
 	RK_ASSERT(new_data->getDataLength() >= StorageSizeBasicInfo);
@@ -122,9 +122,9 @@ bool REnvironmentObject::updateStructure(RData *new_data) {
 		if (!RContainerObject::updateStructure(new_data)) return false;
 	}
 
-	RData::RDataStorage new_data_data = new_data->structureVector();
+	const auto &new_data_data = new_data->structureVector();
 	if (new_data->getDataLength() > StorageSizeBasicInfo) {
-		RData *children_sub = new_data_data.at(StoragePositionChildren);
+		const RData *children_sub = new_data_data.at(StoragePositionChildren);
 		RK_ASSERT(children_sub->getDataType() == RData::StructureVector);
 		updateChildren(children_sub);
 
@@ -139,7 +139,7 @@ bool REnvironmentObject::updateStructure(RData *new_data) {
 	return true;
 }
 
-void REnvironmentObject::updateNamespace(RData *new_data) {
+void REnvironmentObject::updateNamespace(const RData *new_data) {
 	RK_TRACE(OBJECTS);
 
 	if (!new_data) {

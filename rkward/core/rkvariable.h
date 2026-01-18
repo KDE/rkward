@@ -133,7 +133,7 @@ class RKVariable : public RObject {
 	/** set numeric values in the given range. Assumes you provide enough values for the range. If internalStorage is String, all values will be converted to strings, so you should use this function only, if you know you are dealing with a numeric object. Code may assume that all data comes directly from R, is entirely valid in R. */
 	void setNumericFromR(int from_row, int to_row, const QVector<double> &data);
 	/** reimplemented from RObject to change the internal data storage mode, if the var is being edited */
-	bool updateType(RData *new_data) override;
+	bool updateType(const RData *new_data) override;
 	/** Extended from RObject::EditData to actually contain data. */
 	struct RKVarEditData {
 		QStringList cell_strings;

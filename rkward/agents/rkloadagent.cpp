@@ -57,7 +57,7 @@ RKLoadAgent::RKLoadAgent(const QUrl &url, bool merge) {
 	}
 
 	command = new RCommand(u"load (\""_s + filename + u"\")"_s, RCommand::App | RCommand::ObjectListUpdate);
-	command->whenFinished(this, [this](RCommand *command) {
+	command->whenFinished(this, [this](const RCommand *command) {
 		if (command->failed()) {
 			KMessageBox::error(nullptr, i18n("There has been an error opening file '%1':\n%2", RKWorkplace::mainWorkplace()->workspaceURL().path(), command->warnings() + command->error()), i18n("Error loading workspace"));
 			RKWorkplace::mainWorkplace()->setWorkspaceURL(QUrl());

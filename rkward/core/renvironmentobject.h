@@ -34,13 +34,13 @@ class REnvironmentObject : public RContainerObject {
 	QString getObjectDescription() const override;
 
   protected:
-	bool updateStructure(RData *new_data) override;
+	bool updateStructure(const RData *new_data) override;
 	/// reimplemented from RContainerObject to call "remove (objectname)" instead of "objectname <- NULL"
 	QString removeChildCommand(RObject *object) const override;
 	/// reimplemented from RContainerObject to call "remove (objectname)" instead of "objectname <- NULL"
 	QString renameChildCommand(RObject *object, const QString &new_name) const override;
 	friend class RObject;
-	void updateNamespace(RData *new_data);
+	void updateNamespace(const RData *new_data);
 };
 
 #endif

@@ -25,11 +25,11 @@ class RContainerObject : public RObject {
 	~RContainerObject() override;
 
 	/** update the given child with the given data. Since the child may be mismatching, and may need to be recreated, returns a pointer to the child (old or new) */
-	RObject *updateChildStructure(RObject *child, RData *new_data, bool just_created = false);
-	RObject *createChildFromStructure(RData *child_data, const QString &child_name, int position);
+	RObject *updateChildStructure(RObject *child, const RData *new_data, bool just_created = false);
+	RObject *createChildFromStructure(const RData *child_data, const QString &child_name, int position);
 
 	/** reimplemented from RObject to also update children */
-	bool updateStructure(RData *new_data) override;
+	bool updateStructure(const RData *new_data) override;
 
 	int numChildren() const;
 	/** returns true, if there are no children in this container. Note: of course the object list may not be up to date! */
@@ -65,7 +65,7 @@ class RContainerObject : public RObject {
 	/** reimplemented from RObject to actually search for matching objects among the children */
 	RObject::ObjectList findObjects(const QStringList &path, bool partial, const QString &op) override;
 
-	void updateChildren(RData *new_children);
+	void updateChildren(const RData *new_children);
 	RObjectMap childmap;
 	// why do I need this to make it compile?!
 	friend class RObjectList;

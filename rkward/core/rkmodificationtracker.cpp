@@ -228,7 +228,7 @@ void RKModificationTracker::sendListenerNotification(RObjectListener::Notificati
 	// for child objects will know the object is gone.
 	if (type == RObjectListener::ObjectRemoved) {
 		if (o->isContainer()) {
-			RContainerObject *c = static_cast<RContainerObject *>(o);
+			const auto *c = static_cast<RContainerObject *>(o);
 			for (int i = c->numChildren() - 1; i >= 0; --i) {
 				sendListenerNotification(RObjectListener::ObjectRemoved, c->findChildByIndex(i), 0, 0, nullptr);
 			}
@@ -272,7 +272,7 @@ QModelIndex RKObjectListModel::index(int row, int column, const QModelIndex &par
 		RK_ASSERT(false);
 		return QModelIndex();
 	}
-	RObject *parent_object = static_cast<RObject *>(parent.internalPointer());
+	const RObject *parent_object = static_cast<RObject *>(parent.internalPointer());
 
 	RK_ASSERT(row < parent_object->numChildrenForObjectModel());
 
@@ -292,10 +292,9 @@ QModelIndex RKObjectListModel::parent(const QModelIndex &index) const {
 int RKObjectListModel::rowCount(const QModelIndex &parent) const {
 	RK_TRACE(OBJECTS);
 
-	RObject *parent_object = nullptr;
-	if (parent.isValid()) parent_object = static_cast<RObject *>(parent.internalPointer());
-	else return 2; // the root item
+	if (!parent.isValid()) return 2; // the root item
 
+	const RObject *parent_object = static_cast<RObject *>(parent.internalPointer());
 	if (!parent_object) return 0;
 	return (parent_object->numChildrenForObjectModel());
 }
@@ -310,7 +309,7 @@ QVariant RKObjectListModel::data(const QModelIndex &index, int role) const {
 	RK_TRACE(OBJECTS);
 
 	int col = index.column();
-	RObject *object = static_cast<RObject *>(index.internalPointer());
+	const RObject *object = static_cast<RObject *>(index.internalPointer());
 
 	if (!object) {
 		RK_ASSERT(object);
@@ -360,10 +359,9 @@ QVariant RKObjectListModel::headerData(int section, Qt::Orientation orientation,
 bool RKObjectListModel::hasChildren(const QModelIndex &parent) const {
 	RK_TRACE(OBJECTS);
 
-	RObject *parent_object = nullptr;
-	if (parent.isValid()) parent_object = static_cast<RObject *>(parent.internalPointer());
-	else return true; // the root item
+	if (!parent.isValid()) return true; // the root item
 
+	const RObject *parent_object = static_cast<RObject *>(parent.internalPointer());
 	if (!parent_object) return false;
 	return (parent_object->isType(RObject::Incomplete) || parent_object->numChildrenForObjectModel());
 }
@@ -371,7 +369,7 @@ bool RKObjectListModel::hasChildren(const QModelIndex &parent) const {
 bool RKObjectListModel::canFetchMore(const QModelIndex &parent) const {
 	RK_TRACE(OBJECTS);
 
-	RObject *object = static_cast<RObject *>(parent.internalPointer());
+	const RObject *object = static_cast<RObject *>(parent.internalPointer());
 	return (object && object->isType(RObject::Incomplete));
 }
 
@@ -389,9 +387,9 @@ QModelIndex RKObjectListModel::indexFor(RObject *object) const {
 	if (!object) return QModelIndex();
 	if (object->isType(RObject::NonVisibleObject)) return QModelIndex();
 
-	RObject *parent = object->parentObject();
+	const RObject *parent_object = object->parentObject();
 	// must cast to RObject, here. Else casting to void* and back will confuse the hell out of GCC 4.2
-	if (!parent) {
+	if (!parent_object) {
 		if (object == RObjectList::getObjectList()) {
 			return createIndex(1, 0, static_cast<RObject *>(RObjectList::getObjectList()));
 		} else {
@@ -400,7 +398,7 @@ QModelIndex RKObjectListModel::indexFor(RObject *object) const {
 		}
 	}
 
-	int row = parent->getObjectModelIndexOf(object);
+	int row = parent_object->getObjectModelIndexOf(object);
 	if (row < 0) {
 		RK_ASSERT(false);
 		return QModelIndex();
