@@ -5,6 +5,8 @@ SPDX-FileContributor: The RKWard Team <rkward@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
 
+// cppcheck-suppress-file [redundantAssignment, unreadVariable]
+
 #include <QFile>
 #include <QStandardPaths>
 #include <QTest>
