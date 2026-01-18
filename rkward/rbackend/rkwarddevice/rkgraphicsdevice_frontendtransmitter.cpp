@@ -309,7 +309,7 @@ void RKGraphicsDeviceFrontendTransmitter::newData() {
 		} else if (opcode == RKDStrWidthUTF8) {
 			QString out;
 			streamer.instream >> out;
-			double w = device->strSize(out, readFont(streamer.instream)).width();
+			double w = device->strWidth(out, readFont(streamer.instream));
 			streamer.outstream << w;
 			streamer.writeOutBuffer();
 		} else if (opcode == RKDMetricInfo) {

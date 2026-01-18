@@ -50,7 +50,7 @@ class RKGraphicsDevice : public QObject {
 	void circle(double x, double y, double r, const QPen &pen, const QBrush &brush);
 	void line(double x1, double y1, double x2, double y2, const QPen &pen);
 	void rect(const QRectF &rec, const QPen &pen, const QBrush &brush);
-	QSizeF strSize(const QString &text, const QFont &font);
+	double strWidth(const QString &text, const QFont &font);
 	void text(double x, double y, const QString &text, double rot, double hadj, const QColor &col, const QFont &font);
 	QString glyph(const QString &font, quint8 index, const QString &family, quint32 weight, QFont::Style style, double size, const QColor &col, double rot, const QVector<QPointF> &points, const QVector<quint32> &glyphs);
 	void metricInfo(const QChar &c, const QFont &font, double *ascent, double *descent, double *width);

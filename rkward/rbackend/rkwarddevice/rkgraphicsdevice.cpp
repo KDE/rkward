@@ -473,12 +473,11 @@ void RKGraphicsDevice::rect(const QRectF &rec, const QPen &pen, const QBrush &br
 	triggerUpdate();
 }
 
-QSizeF RKGraphicsDevice::strSize(const QString &text, const QFont &font) {
+double RKGraphicsDevice::strWidth(const QString &text, const QFont &font) {
 	RK_TRACE(GRAPHICS_DEVICE);
 
 	painter.setFont(font);
-	QSizeF size = painter.fontMetrics().boundingRect(text).size();
-	return size;
+	return painter.fontMetrics().horizontalAdvance(text);
 }
 
 void RKGraphicsDevice::text(double x, double y, const QString &text, double rot, double hadj, const QColor &col, const QFont &font) {
@@ -486,8 +485,8 @@ void RKGraphicsDevice::text(double x, double y, const QString &text, double rot,
 
 	if (recording_path) {
 		QPainterPath sub;
-		QSizeF size = strSize(text, font);
-		sub.addText(-(hadj * size.width()), 0, font, text);
+		const auto hoffset = hadj * strWidth(text, font);
+		sub.addText(-hoffset, 0, font, text);
 		QTransform trans;
 		trans.translate(x, y);
 		trans.rotate(-rot);
@@ -497,12 +496,12 @@ void RKGraphicsDevice::text(double x, double y, const QString &text, double rot,
 
 	if (current_mask) initMaskedDraw();
 	painter.save();
-	QSizeF size = strSize(text, font); // NOTE: side-effect of setting font!
-	                                   //	painter.setFont(font);
+	// NOTE: side effect of setting font
+	const auto hoffset = hadj * strWidth(text, font);
 	painter.setPen(QPen(col));
 	painter.translate(x, y);
 	painter.rotate(-rot);
-	painter.drawText(-(hadj * size.width()), 0, text);
+	painter.drawText(-hoffset, 0, text);
 	//	painter.drawRect(painter.fontMetrics().boundingRect(text));  // for debugging
 	painter.restore(); // undo rotation / translation
 	if (current_mask) commitMaskedDraw();
