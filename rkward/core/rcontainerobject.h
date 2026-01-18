@@ -22,8 +22,7 @@ Internal representation of objects in the R-workspace that contain other objects
 class RContainerObject : public RObject {
   public:
 	RContainerObject(RObject *parent, const QString &name);
-
-	~RContainerObject();
+	~RContainerObject() override;
 
 	/** update the given child with the given data. Since the child may be mismatching, and may need to be recreated, returns a pointer to the child (old or new) */
 	RObject *updateChildStructure(RObject *child, RData *new_data, bool just_created = false);

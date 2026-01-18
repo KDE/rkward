@@ -20,7 +20,7 @@ This class roughly corresponds to an environment in R. It keeps a list of all ob
 class REnvironmentObject : public RContainerObject {
   public:
 	REnvironmentObject(RContainerObject *parent, const QString &name);
-	~REnvironmentObject();
+	~REnvironmentObject() override;
 
 	using RObject::updateFromR;
 	/** like updateFromR, but only update new / removed symbols from R. Theoretically this could be defined in RContainerObject, but the only use case is for environments. */

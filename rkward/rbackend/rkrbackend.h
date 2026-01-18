@@ -58,7 +58,7 @@ class RKRBackend : public RKROutputBuffer {
 	/** constructor. Only one RKRBackend should ever be created, and that happens in RInterface::RInterface (). */
 	RKRBackend();
 	/** destructor */
-	virtual ~RKRBackend();
+	~RKRBackend() override;
 
 	/** interrupt processing of the current command. This is much like the user pressing Ctrl+C in a terminal with R. This is probably the only non-portable function in RKRBackend, but I can't see a good way around placing it here, or to make it portable. */
 	static void interruptProcessing(bool interrupt);

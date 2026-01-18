@@ -23,7 +23,7 @@ This class represents a "pseudo" list of the S4 slots of the corresponding paren
 class RSlotsPseudoObject : public RContainerObject {
   public:
 	explicit RSlotsPseudoObject(RObject *parent);
-	~RSlotsPseudoObject();
+	~RSlotsPseudoObject() override;
 
 	QString getFullName(int) const override;
 	QString makeChildName(const QString &short_child_name, int) const override;
@@ -39,7 +39,7 @@ rather call it a "special" object, instead).
 class RKNamespaceObject : public REnvironmentObject {
   public:
 	explicit RKNamespaceObject(REnvironmentObject *package, const QString &name = QString());
-	~RKNamespaceObject();
+	~RKNamespaceObject() override;
 
 	QString getFullName(int) const override;
 	QString makeChildName(const QString &short_child_name, int) const override;
@@ -63,7 +63,7 @@ It exists only once, as a direct child of the RObjectList.
 class RKOrphanNamespacesObject : public REnvironmentObject {
   public:
 	explicit RKOrphanNamespacesObject(RObjectList *parent);
-	~RKOrphanNamespacesObject();
+	~RKOrphanNamespacesObject() override;
 
 	QString getFullName(int options) const override;
 	QString makeChildName(const QString &short_child_name, int options) const override;
