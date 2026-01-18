@@ -22,8 +22,7 @@ class RKText : public RKComponent {
 	Q_OBJECT
   public:
 	RKText(const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
-
-	~RKText();
+	~RKText() override;
 
 	RKComponentPropertyBase *text;
 	QVariant value(const QString &modifier = QString()) override { return (text->value(modifier)); };

@@ -32,7 +32,7 @@ class TwinTable : public RKEditor, public RObjectListener, public KXMLGUIClient 
 	Q_OBJECT
   public:
 	explicit TwinTable(QWidget *parent = nullptr);
-	~TwinTable();
+	~TwinTable() override;
 	/** Pastes clipboard content to the current table */
 	void paste(RKEditor::PasteMode paste_mode);
 	/** Clear the currently selected cells */

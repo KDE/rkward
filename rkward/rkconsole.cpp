@@ -703,7 +703,7 @@ void RKConsole::userSaveHistory(const QUrl &_url) {
 	}
 
 	QTemporaryFile tempfile;
-	tempfile.open();
+	RK_ASSERT(tempfile.open());
 	tempfile.write(QString(commandHistory().join(QStringLiteral("\n")) + u'\n').toLocal8Bit().data());
 	tempfile.close();
 

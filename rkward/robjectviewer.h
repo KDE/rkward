@@ -29,7 +29,7 @@ A simple object viewer. You pass it an object in the constructor. It will extrac
 class RObjectViewer : public RKMDIWindow, public RObjectListener {
 	Q_OBJECT
   public:
-	~RObjectViewer();
+	~RObjectViewer() override;
 
 	RObject *object() { return _object; };
 
@@ -69,7 +69,7 @@ class RObjectViewerWidget : public QWidget {
 	Q_OBJECT
   protected:
 	RObjectViewerWidget(QWidget *parent, RObject *object);
-	virtual ~RObjectViewerWidget();
+	~RObjectViewerWidget() override;
 
   public:
 	void objectKilled() { _object = nullptr; };
@@ -97,7 +97,6 @@ class RObjectViewerWidget : public QWidget {
 class RObjectSummaryWidget : public RObjectViewerWidget {
   public:
 	RObjectSummaryWidget(QWidget *parent, RObject *object) : RObjectViewerWidget(parent, object) {};
-	~RObjectSummaryWidget() {};
 
 	/** reimplemented from RObjectViewerWidget to call "summary" */
 	RCommand *makeCommand() override;
@@ -107,7 +106,6 @@ class RObjectSummaryWidget : public RObjectViewerWidget {
 class RObjectPrintWidget : public RObjectViewerWidget {
   public:
 	RObjectPrintWidget(QWidget *parent, RObject *object) : RObjectViewerWidget(parent, object) {}
-	~RObjectPrintWidget() {};
 
 	/** reimplemented from RObjectViewerWidget to call "print" */
 	RCommand *makeCommand() override;
@@ -117,7 +115,6 @@ class RObjectPrintWidget : public RObjectViewerWidget {
 class RObjectStructureWidget : public RObjectViewerWidget {
   public:
 	RObjectStructureWidget(QWidget *parent, RObject *object) : RObjectViewerWidget(parent, object) {};
-	~RObjectStructureWidget() {};
 
 	/** reimplemented from RObjectViewerWidget to call "str" */
 	RCommand *makeCommand() override;

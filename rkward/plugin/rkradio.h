@@ -19,7 +19,7 @@ class RKRadio : public RKAbstractOptionSelector {
 	Q_OBJECT
   public:
 	RKRadio(const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
-	~RKRadio();
+	~RKRadio() override;
 	int type() override { return ComponentRadio; };
 
   protected:

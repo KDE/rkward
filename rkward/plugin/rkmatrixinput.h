@@ -25,7 +25,7 @@ class RKMatrixInput : public RKComponent {
 	Q_OBJECT
   public:
 	RKMatrixInput(const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
-	~RKMatrixInput();
+	~RKMatrixInput() override;
 	int type() override { return ComponentMatrixInput; };
 	bool isValid() override { return is_valid; };
 	QVariant value(const QString &modifier = QString()) override;

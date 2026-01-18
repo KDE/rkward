@@ -22,7 +22,7 @@ class RKSaveObjectChooser : public QWidget, public RObjectListener {
 	Q_OBJECT
   public:
 	RKSaveObjectChooser(QWidget *parent, const QString &initial);
-	~RKSaveObjectChooser();
+	~RKSaveObjectChooser() override;
 
 	QString currentFullName() const { return current_full_name; };
 	QString currentBaseName() const;

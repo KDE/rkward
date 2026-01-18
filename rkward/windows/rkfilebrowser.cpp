@@ -100,7 +100,6 @@ RKFileBrowserWidget::RKFileBrowserWidget(QWidget *parent) : QWidget(parent) {
 	layout->addWidget(urlbox);
 
 	dir = new KDirOperator(QUrl(), this);
-	dir->setPreviewWidget(nullptr);
 	KConfigGroup config = KSharedConfig::openConfig()->group(QStringLiteral("file browser window"));
 	dir->readConfig(config);
 	dir->setViewMode(KFile::Tree);

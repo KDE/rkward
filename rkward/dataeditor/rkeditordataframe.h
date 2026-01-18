@@ -31,7 +31,7 @@ class RKEditorDataFrame : public TwinTable {
 	@param parent parent widget */
 	RKEditorDataFrame(const QString &new_object_name, QWidget *parent);
 	/** destructor */
-	~RKEditorDataFrame();
+	~RKEditorDataFrame() override;
 
 	void flushChanges() override;
 

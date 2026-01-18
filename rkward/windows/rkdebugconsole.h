@@ -20,7 +20,7 @@ class RKDebugConsole : public RKMDIWindow {
 	Q_OBJECT
   public:
 	RKDebugConsole(QWidget *parent, bool tool_window, const char *name = nullptr);
-	~RKDebugConsole();
+	~RKDebugConsole() override;
 
 	static RKDebugConsole *instance() { return _instance; };
 

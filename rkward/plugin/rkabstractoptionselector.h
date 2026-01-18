@@ -23,7 +23,7 @@ class RKAbstractOptionSelector : public RKComponent {
 	Q_OBJECT
   public:
 	RKAbstractOptionSelector(RKComponent *parent_component, QWidget *parent_widget);
-	~RKAbstractOptionSelector();
+	~RKAbstractOptionSelector() override;
 	/** Find the option number with the corresponding string. If not found, returns -1
 	@param option_string the option string to search for
 	@returns the id (0, 1, 2...) of the corresponding option, or -1 if not found */

@@ -163,7 +163,7 @@ class RKComponent : public QWidget, public RKComponentBase {
 	@param parent_widget The parent QWidget. This may be the same as the parent_component or a different specific widget.. If 0, this RKComponent will be represented by a top-level widget */
 	RKComponent(RKComponent *parent_component, QWidget *parent_widget);
 	/** destructor */
-	virtual ~RKComponent();
+	~RKComponent() override;
 	int type() override { return Component; };
 	/** change notification mechanism. Call this, if something in the component changed that could result in a change in code/values/satisfaction state. Default implementation propagates the change upwards to parent components, if any, but does not do anything further. Reimplement, for instance, to regenerate code */
 	virtual void changed();

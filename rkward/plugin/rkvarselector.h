@@ -29,7 +29,7 @@ class RKVarSelector : public RKComponent {
 	Q_OBJECT
   public:
 	RKVarSelector(const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
-	~RKVarSelector();
+	~RKVarSelector() override;
 	int type() override { return ComponentVarSelector; };
   private Q_SLOTS:
 	void objectSelectionChanged();

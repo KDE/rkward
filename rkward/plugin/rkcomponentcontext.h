@@ -38,7 +38,7 @@ class RKContextHandler : public QObject, public RKComponentBase, public KXMLGUIC
 	/** constructor. Protected. Use RKContextMap::makeContextHandler() instead. */
 	RKContextHandler(QObject *parent, const QDomDocument &gui_xml, const QString &id);
 	/** desctructor. Should be called automatically, as this is QObject */
-	~RKContextHandler();
+	~RKContextHandler() override;
 	/** add a QAction to the context. To be called from RKContext::makeContextHandler(). */
 	void addAction(const QString &id, RKComponentHandle *handle);
   private Q_SLOTS:

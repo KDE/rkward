@@ -24,7 +24,7 @@ class RKVarLevelsTable : public RKTableView {
 	Q_OBJECT
   public:
 	RKVarLevelsTable(QWidget *parent, const RObject::ValueLabels &labels);
-	~RKVarLevelsTable();
+	~RKVarLevelsTable() override;
   public Q_SLOTS:
 	/** cut */
 	void cut();
@@ -44,7 +44,7 @@ class RKVarLevelsTable : public RKTableView {
 class RKVarLevelsTableModel : public QAbstractTableModel {
   public:
 	RKVarLevelsTableModel(const RObject::ValueLabels &labels, QObject *parent);
-	~RKVarLevelsTableModel();
+	~RKVarLevelsTableModel() override;
 
 	int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 	int columnCount(const QModelIndex &parent = QModelIndex()) const override;
@@ -70,7 +70,7 @@ class EditLabelsDialog : public QDialog {
 	@param parent a QWidget parent */
 	EditLabelsDialog(QWidget *parent, const RObject::ValueLabels &labels, const QString &varname);
 
-	~EditLabelsDialog();
+	~EditLabelsDialog() override;
 
 	/** reimplemented to make sure pending edit operations are not lost */
 	void accept() override;
@@ -86,7 +86,7 @@ class EditLabelsDialogProxy : public QWidget {
 	Q_OBJECT
   public:
 	explicit EditLabelsDialogProxy(QWidget *parent);
-	~EditLabelsDialogProxy();
+	~EditLabelsDialogProxy() override;
 
 	void initialize(const RObject::ValueLabels &labels, const QString &varname);
 

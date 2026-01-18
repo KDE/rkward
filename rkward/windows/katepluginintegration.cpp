@@ -49,7 +49,7 @@ class KatePluginWindow : public RKMDIWindow {
 		initializeActivationSignals();
 		setFocusPolicy(Qt::ClickFocus);
 	}
-	~KatePluginWindow() {
+	~KatePluginWindow() override {
 		RK_TRACE(APP);
 	}
 

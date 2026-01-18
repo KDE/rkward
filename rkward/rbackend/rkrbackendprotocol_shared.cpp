@@ -17,6 +17,7 @@ RCommandProxy::RCommandProxy(const QString &command, int type) : outer_command(n
 	id = -1;
 	status = 0;
 	interruptible_stage = false;
+	has_been_run_up_to = 0;
 }
 
 RCommandProxy::~RCommandProxy() {

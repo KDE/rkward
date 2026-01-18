@@ -23,8 +23,8 @@ class RKPluginSpinBox : public RKComponent {
 	Q_OBJECT
   public:
 	RKPluginSpinBox(const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
+	~RKPluginSpinBox() override;
 
-	~RKPluginSpinBox();
 	QVariant value(const QString &modifier = QString()) override;
 	QStringList getUiLabelPair() const override;
 	int type() override { return ComponentSpinBox; };

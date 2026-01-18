@@ -21,7 +21,7 @@ class RKGraphicsDeviceFrontendTransmitter : public QObject {
 	Q_OBJECT
   public:
 	RKGraphicsDeviceFrontendTransmitter();
-	~RKGraphicsDeviceFrontendTransmitter();
+	~RKGraphicsDeviceFrontendTransmitter() override;
 	QString serverName() const { return server_name; };
 	static double lwdscale;
 	static void suppressShowingCreatedWindows(bool suppress) { suppress_windows = suppress; };

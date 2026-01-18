@@ -30,7 +30,7 @@ class EditFormatDialog : public QDialog {
 	/** ctor */
 	explicit EditFormatDialog(QWidget *parent);
 	/** dtor */
-	~EditFormatDialog();
+	~EditFormatDialog() override;
 
 	/** initializes the GUI-options from the settings for the variable */
 	void initialize(const RKVariable::FormattingOptions &options, const QString &varname);
@@ -47,7 +47,7 @@ class EditFormatDialogProxy : public QWidget {
 	Q_OBJECT
   public:
 	explicit EditFormatDialogProxy(QWidget *parent);
-	~EditFormatDialogProxy();
+	~EditFormatDialogProxy() override;
 
 	void initialize(const RKVariable::FormattingOptions &options, const QString &varname);
 	RKVariable::FormattingOptions getOptions() const { return options; };

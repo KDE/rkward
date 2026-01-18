@@ -16,7 +16,7 @@ class RKRBackendTransmitter : public RKAbstractTransmitter {
 	Q_OBJECT
   public:
 	RKRBackendTransmitter(const QString &servername, const QString &token);
-	~RKRBackendTransmitter();
+	~RKRBackendTransmitter() override;
 
 	void publicmsleep(int delay) { msleep(delay); };
 

@@ -29,7 +29,7 @@ class RKComponentPropertyBase : public QObject, public RKComponentBase {
 	/** constructor. Pass a valid QObject as parent so the property will be auto-destructed when no longer needed */
 	RKComponentPropertyBase(QObject *parent, bool required);
 	/** destructor */
-	virtual ~RKComponentPropertyBase();
+	~RKComponentPropertyBase() override;
 	/** supplies the current value. Since more than one value may be supplied, modifier can be used to select a value. Default implementation only has  a single string, however. Reimplemented from RKComponentBase */
 	QVariant value(const QString &modifier = QString()) override;
 	/** set the value in string form.
@@ -66,7 +66,7 @@ class RKComponentPropertyBase : public QObject, public RKComponentBase {
 class RKComponentPropertyAbstractList : public RKComponentPropertyBase {
   public:
 	RKComponentPropertyAbstractList(QObject *parent, bool required);
-	virtual ~RKComponentPropertyAbstractList();
+	~RKComponentPropertyAbstractList() override;
 	/** how many items can this property hold? Use default values (0) to remove constraints
 	@param min_num_items Minimum number of items for this property to be valid
 	@param min_num_items_if_any Some properties may be valid, if they hold either no items at all, or at least a certain number of items
@@ -101,7 +101,7 @@ class RKComponentPropertyStringList : public RKComponentPropertyAbstractList {
   public:
 	RKComponentPropertyStringList(QObject *parent, bool required);
 	/** destructor */
-	~RKComponentPropertyStringList();
+	~RKComponentPropertyStringList() override;
 	/** for RTTI. see RKComponentBase::RKComponentTypes */
 	int type() override { return PropertyStringList; };
 	/** reimplemented to return all current strings */
@@ -143,7 +143,7 @@ class RKComponentPropertyBool : public RKComponentPropertyBase {
 	@param default_state value to use, if invalid string value was set */
 	RKComponentPropertyBool(QObject *parent, bool required, bool default_state = true, const QString &value_true = QStringLiteral("true"), const QString &value_false = QStringLiteral("false"));
 	/** destructor */
-	~RKComponentPropertyBool();
+	~RKComponentPropertyBool() override;
 	/** Set this property to the inverted, i.e. true if set to false and vice-versa. Used for the "not" sub-property. */
 	void setInverted(bool invert) { inverted = invert; };
 	/** sets the bool value. Also takes care of notifying dependent components */
@@ -186,7 +186,7 @@ class RKComponentPropertyInt : public RKComponentPropertyBase {
 	@param default_value value to use, if invalid string value was set */
 	RKComponentPropertyInt(QObject *parent, bool required, int default_value);
 	/** destructor */
-	~RKComponentPropertyInt();
+	~RKComponentPropertyInt() override;
 	/** sets the int value. Also takes care of notifying dependent components */
 	bool setIntValue(int new_value);
 	/** set lower boundary. Default parameter will effectively remove the boundary. You should call this *before* connecting to any other properties, so limits can be reconciled */
@@ -234,7 +234,7 @@ class RKComponentPropertyDouble : public RKComponentPropertyBase {
 	@param default_value value to use, if invalid string value was set */
 	RKComponentPropertyDouble(QObject *parent, bool required, double default_value);
 	/** destructor */
-	~RKComponentPropertyDouble();
+	~RKComponentPropertyDouble() override;
 	/** sets the int value. Also takes care of notifying dependent components */
 	bool setDoubleValue(double new_value);
 	/** reimplemented from RKComponentPropertyBase to convert to int value according to current settings */
@@ -292,7 +292,7 @@ class RKComponentPropertyRObjects : public RKComponentPropertyAbstractList, publ
 	/** constructor */
 	RKComponentPropertyRObjects(QObject *parent, bool required);
 	/** destructor */
-	~RKComponentPropertyRObjects();
+	~RKComponentPropertyRObjects() override;
 	/** add an object value */
 	bool addObjectValue(RObject *object);
 	/** Set property to only accept certain classes. If you provide an empty list, all classes will be accepted*/
@@ -375,7 +375,7 @@ class RKComponentPropertyCode : public RKComponentPropertyBase {
 	/** constructor */
 	RKComponentPropertyCode(QObject *parent, bool required);
 	/** destructor */
-	~RKComponentPropertyCode();
+	~RKComponentPropertyCode() override;
 	/** the preprocess code */
 	QString preprocess() { return preprocess_code; };
 	/** the calculate code */
@@ -430,7 +430,7 @@ class RKComponentPropertyConvert : public RKComponentPropertyBool {
   public:
 	/** constructor. Note that this property *requires* an RKComponent as parent (the one at the top of all the source properties) */
 	explicit RKComponentPropertyConvert(RKComponent *parent);
-	~RKComponentPropertyConvert();
+	~RKComponentPropertyConvert() override;
 	int type() override { return PropertyConvert; };
 
 	/** Mode of operation. see setMode () */
@@ -489,7 +489,7 @@ class RKComponentPropertySwitch : public RKComponentPropertyBase {
 	 @param standards the values to match against. Note: Providing an empty list make the switch operate in boolean mode,
 	 switching between the first two sources / values, based on the boolean value of the condition_prop. */
 	RKComponentPropertySwitch(RKComponent *parent, const QStringList &def_values, const QStringList &standards);
-	~RKComponentPropertySwitch();
+	~RKComponentPropertySwitch() override;
 
 	/** set the sources, i.e. the properties to operate on */
 	void setSources(const QString &condition_prop, const QStringList &value_props);

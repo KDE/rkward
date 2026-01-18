@@ -25,7 +25,7 @@ class RKPluginSaveObject : public RKComponent {
 	Q_OBJECT
   public:
 	RKPluginSaveObject(const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
-	~RKPluginSaveObject();
+	~RKPluginSaveObject() override;
 
 	QVariant value(const QString &modifier = QString()) override;
 	QStringList getUiLabelPair() const override;

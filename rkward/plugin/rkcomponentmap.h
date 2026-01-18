@@ -211,7 +211,7 @@ class RKComponentMap : public QObject, public RKComponentGUIXML, public KXMLGUIC
 	Q_OBJECT
   public:
 	RKComponentMap();
-	~RKComponentMap();
+	~RKComponentMap() override;
 
 	/** adds all Plugins / components in a .pluginmap-file. Also takes care of creating the menu-items, etc.
 	@returns status info of number of plugins (i.e. stand-alone components/menu-entries) added successfully / failed */

@@ -23,8 +23,7 @@ class RKTabPage : public RKComponent {
 	Q_OBJECT
   public:
 	RKTabPage(const QDomElement &element, RKComponent *parent_component, QTabWidget *parent_widget);
-
-	~RKTabPage();
+	~RKTabPage() override;
 
 	/** @returns the page child elements should be drawn in */
 	QWidget *getPage() { return this; };

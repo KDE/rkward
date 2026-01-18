@@ -41,7 +41,7 @@ class RKConsole : public RKMDIWindow, public RKScriptContextProvider {
 	/** Constructor. */
 	RKConsole(QWidget *parent, bool tool_window, const char *name = nullptr);
 	/** Destructor */
-	~RKConsole();
+	~RKConsole() override;
 
 	/** Returns the command currently being edited (not executed yet) */
 	QString currentEditingLine() const;

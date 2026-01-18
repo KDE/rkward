@@ -30,7 +30,7 @@ class RKPluginBrowser : public RKComponent {
 	Q_OBJECT
   public:
 	RKPluginBrowser(const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
-	~RKPluginBrowser();
+	~RKPluginBrowser() override;
 
 	RKComponentPropertyBase *selection;
 	QVariant value(const QString &modifier = QString()) override { return (selection->value(modifier)); };

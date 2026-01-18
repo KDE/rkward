@@ -33,7 +33,7 @@ class RControlWindow : public RKMDIWindow {
 	@param parent parent QWidget, usually RKGlobals::rkApp () or similar */
 	RControlWindow(QWidget *parent, bool tool_window, const char *name = nullptr);
 	/** destructor */
-	~RControlWindow();
+	~RControlWindow() override;
 
 	/** reimplemented to start listening to the RCommandStackModel when showing. */
 	void showEvent(QShowEvent *e) override;

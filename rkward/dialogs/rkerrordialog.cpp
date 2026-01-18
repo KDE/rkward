@@ -66,7 +66,7 @@ class RKBugzillaReportDialog : public QDialog {
 		QTemporaryFile proxy;
 		proxy.setFileTemplate(QDir::tempPath() + u"/rkwardbugXXXXXX.html"_s); // Force .html-suffix, as it appears to be required on Windows
 		proxy.setAutoRemove(false);
-		proxy.open();
+		RK_ASSERT(proxy.open());
 		QTextStream out(&proxy);
 		out << "<html><head><title>Relaying to " SUBMIT_ADDRESS "</title></head><body onLoad=\"document.getElementById('form').submit();\">\n";
 		out << "<h1>" << i18n("Forwarding you to the KDE bugtracking system") << "</h1>\n";
