@@ -22,7 +22,7 @@ class RKPluginFrame : public RKComponent {
 	Q_OBJECT
   public:
 	RKPluginFrame(const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
-	~RKPluginFrame();
+	~RKPluginFrame() override;
 
 	/** returns the page child elements should be drawn in */
 	QWidget *getPage();

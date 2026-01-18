@@ -594,7 +594,7 @@ bool RKHTMLWindow::openURL(const QUrl &url) {
 			if (!mtype.inherits(QStringLiteral("text/html"))) {
 				RK_DEBUG(APP, DL_WARNING, "Applying workaround for https://bugs.kde.org/show_bug.cgi?id=405386");
 				QFile f(url.toLocalFile());
-				f.open(QIODevice::ReadOnly);
+				RK_ASSERT(f.open(QIODevice::ReadOnly));
 				page->setHtmlWrapper(QString::fromUtf8(f.readAll()), url.adjusted(QUrl::RemoveFilename));
 				f.close();
 			} else {
@@ -826,7 +826,7 @@ void RKHTMLWindow::useMode(WindowMode new_mode) {
 void RKHTMLWindow::startNewCacheFile() {
 	delete current_cache_file;
 	current_cache_file = new QTemporaryFile(QDir::tempPath() + u"/rkward_XXXXXX.html"_s);
-	current_cache_file->open();
+	RK_ASSERT(current_cache_file->open());
 }
 
 void RKHTMLWindow::fileDoesNotExistMessage() {

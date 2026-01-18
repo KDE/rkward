@@ -20,7 +20,7 @@ class RKCallstackViewer : public RKMDIWindow {
 	Q_OBJECT
   public:
 	RKCallstackViewer(QWidget *parent, bool tool_window, const char *name = nullptr);
-	~RKCallstackViewer();
+	~RKCallstackViewer() override;
 
 	/** reimplemented to create the real widget only when the viewer is shown for the first time */
 	void showEvent(QShowEvent *e) override;

@@ -29,7 +29,7 @@ class RKVarSlot : public RKComponent {
 	Q_OBJECT
   public:
 	RKVarSlot(const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
-	~RKVarSlot();
+	~RKVarSlot() override;
 	int type() override { return ComponentVarSlot; };
 	QVariant value(const QString &modifier = QString()) override { return (available->value(modifier)); };
 	QStringList getUiLabelPair() const override;

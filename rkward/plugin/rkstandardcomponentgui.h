@@ -20,7 +20,7 @@ class RKStandardComponentStack : public QStackedWidget {
   public:
 	/** constructor. */
 	explicit RKStandardComponentStack(QWidget *parent);
-	~RKStandardComponentStack();
+	~RKStandardComponentStack() override;
 	/** see RKStandardComponent::havePage () */
 	bool havePage(bool next);
 	/** see RKStandardComponent::movePage () */
@@ -67,7 +67,7 @@ class RKStandardComponentGUI : public QWidget {
 	Q_OBJECT
   public:
 	RKStandardComponentGUI(RKStandardComponent *component, RKComponentPropertyCode *code_property, bool enslaved);
-	~RKStandardComponentGUI();
+	~RKStandardComponentGUI() override;
 
 	QWidget *mainWidget() { return main_widget; };
 

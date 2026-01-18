@@ -30,7 +30,7 @@ Note: Most actual functionality is realized in RObjectBrowserInternal, which is 
 class RObjectBrowser : public RKMDIWindow {
   public:
 	RObjectBrowser(QWidget *parent, bool tool_window, const char *name = nullptr);
-	~RObjectBrowser();
+	~RObjectBrowser() override;
 	void unlock();
 	static RObjectBrowser *mainBrowser() { return object_browser; };
 	/** reimplemented to create the real file browser widget only when the file browser is shown for the first time */
@@ -55,7 +55,7 @@ class RObjectBrowserInternal : public QWidget, public RKScriptContextProvider {
 	Q_OBJECT
   public:
 	explicit RObjectBrowserInternal(QWidget *parent, RObjectBrowser *browser);
-	~RObjectBrowserInternal();
+	~RObjectBrowserInternal() override;
   private Q_SLOTS:
 	void updateButtonClicked();
 	void contextMenuCallback(RObject *object, bool *suppress);

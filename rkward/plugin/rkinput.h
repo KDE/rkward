@@ -24,7 +24,7 @@ class RKInput : public RKComponent {
 	Q_OBJECT
   public:
 	RKInput(const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
-	~RKInput();
+	~RKInput() override;
 
 	RKComponentPropertyBase *text;
 	QVariant value(const QString &modifier = QString()) override { return (text->value(modifier)); };

@@ -28,7 +28,7 @@ class RKFormula : public RKComponent {
 	Q_OBJECT
   public:
 	RKFormula(const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
-	~RKFormula();
+	~RKFormula() override;
 
 	QVariant value(const QString &modifier = QString()) override { return model->value(modifier); };
 	QStringList getUiLabelPair() const override;

@@ -20,7 +20,7 @@ class QLocalSocket;
  Also it provides the namespace for some statics.
  As the protocol is really quite simple (only the backend send requests, only one request at a time), so is the transmitter. */
 class RKGraphicsDeviceBackendTransmitter : public QThread {
-	~RKGraphicsDeviceBackendTransmitter();
+	~RKGraphicsDeviceBackendTransmitter() override;
 
   public:
 	static void kill();

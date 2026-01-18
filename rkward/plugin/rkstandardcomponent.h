@@ -35,7 +35,7 @@ class RKStandardComponent : public RKComponent {
 	@param filename Filename of the XML-file to construct this component from */
 	RKStandardComponent(RKComponent *parent_component, QWidget *parent_widget, const QString &filename, const QString &id);
 	/** destructor */
-	~RKStandardComponent();
+	~RKStandardComponent() override;
 	/** reimplemented to update code on changes*/
 	void changed() override;
 	/** reimplemented to return true, if the RKStandardComponent is in Wizard mode */

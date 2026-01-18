@@ -21,7 +21,7 @@ class RKDropDown : public RKAbstractOptionSelector {
 	Q_OBJECT
   public:
 	RKDropDown(const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
-	~RKDropDown();
+	~RKDropDown() override;
 	int type() override { return ComponentDropDown; };
   public Q_SLOTS:
 	// workaround for a qt bug (3.3.7)

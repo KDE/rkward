@@ -24,7 +24,7 @@ class RKCheckBox : public RKComponent {
 	Q_OBJECT
   public:
 	RKCheckBox(const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
-	~RKCheckBox();
+	~RKCheckBox() override;
 	int type() override { return ComponentCheckBox; };
 	RKComponentPropertyBool *state;
 	QVariant value(const QString &modifier = QString()) override {

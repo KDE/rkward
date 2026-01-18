@@ -23,7 +23,7 @@ class RKValueSelector : public RKComponent {
 	Q_OBJECT
   public:
 	RKValueSelector(const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
-	~RKValueSelector();
+	~RKValueSelector() override;
 	int type() override { return ComponentValueSelector; };
 	QVariant value(const QString &modifier = QString()) override;
 	QStringList getUiLabelPair() const override;

@@ -29,7 +29,7 @@ class RKEditor : public RKMDIWindow {
   protected:
 	RKEditor(QWidget *parent);
 
-	virtual ~RKEditor();
+	~RKEditor() override;
 
   public:
 	/// flushes all pending edit operations and syncs the data to R. Implement in the child classes

@@ -29,7 +29,7 @@ class RKOptionSet : public RKComponent {
 	Q_OBJECT
   public:
 	RKOptionSet(const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
-	~RKOptionSet();
+	~RKOptionSet() override;
 	int type() override { return ComponentOptionSet; };
 	bool isValid() override;
 	/** reimplemented from RKComponent */

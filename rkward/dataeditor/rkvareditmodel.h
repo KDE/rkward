@@ -26,7 +26,6 @@ class RKRowNames;
 class RKVarEditModelBase : public QAbstractTableModel {
   public:
 	explicit RKVarEditModelBase(QObject *parent) : QAbstractTableModel(parent), var_col_offset(0) {};
-	virtual ~RKVarEditModelBase() {};
 
 	virtual RKTextMatrix getTextMatrix(const QItemSelectionRange &range) const = 0;
 	virtual void blankRange(const QItemSelectionRange &range) = 0;
@@ -44,7 +43,7 @@ class RKVarEditModel : public RKVarEditModelBase, public RObjectListener {
 	Q_OBJECT
   public:
 	explicit RKVarEditModel(QObject *parent);
-	~RKVarEditModel();
+	~RKVarEditModel() override;
 
 	/** set the editor that is using this model. This is useful to find out, e.g. which window should be raised, when calling "Edit" on an object represented in this data-model. Also, the editor will be notified, if all objects in the model have been removed. */
 	void setEditor(RKEditor *editor) { myeditor = editor; };
@@ -161,7 +160,7 @@ class RKVarEditMetaModel : public RKVarEditModelBase {
   protected:
 	friend class RKVarEditModel;
 	explicit RKVarEditMetaModel(RKVarEditModel *data_model);
-	~RKVarEditMetaModel();
+	~RKVarEditMetaModel() override;
 
 	void beginAddDataObject(int index);
 	void endAddDataObject();
@@ -178,7 +177,7 @@ class RKVarEditDataFrameModel : public RKVarEditModel {
 	RKVarEditDataFrameModel(RContainerObject *dataframe, QObject *parent);
 	/** ctor that constructs a new empty data frame */
 	RKVarEditDataFrameModel(const QString &validized_name, RContainerObject *parent_object, RCommandChain *chain, int initial_cols, QObject *parent);
-	~RKVarEditDataFrameModel();
+	~RKVarEditDataFrameModel() override;
 
 	bool insertColumns(int column, int count, const QModelIndex &parent = QModelIndex()) override;
 	bool removeColumns(int column, int count, const QModelIndex &parent = QModelIndex()) override;

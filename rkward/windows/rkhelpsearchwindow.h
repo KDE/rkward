@@ -29,7 +29,7 @@ class RKHelpSearchWindow : public RKMDIWindow {
 	Q_OBJECT
   public:
 	RKHelpSearchWindow(QWidget *parent, bool tool_window, const char *name = nullptr);
-	~RKHelpSearchWindow();
+	~RKHelpSearchWindow() override;
 	/** small convenience function to get context help for RKCommandEditorWindow and RKConsole.
 	@param context_line The current line
 	@param cursor_pos cursor position in the current line

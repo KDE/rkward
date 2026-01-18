@@ -26,7 +26,7 @@ class TwinTableMember : public RKTableView {
 	Q_OBJECT
   public:
 	explicit TwinTableMember(QWidget *parent);
-	~TwinTableMember();
+	~TwinTableMember() override;
 	TwinTableMember *getTwin() { return twin; };
 	/** ends editing. Actually it's just a simple wrapper around QTable::endEdit () */
 	void stopEditing();

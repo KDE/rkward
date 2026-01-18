@@ -56,7 +56,7 @@ class RKHTMLWindow : public RKMDIWindow {
 	@param parent parent QWidget, usually RKGlobals::rkApp () or similar */
 	explicit RKHTMLWindow(QWidget *parent, WindowMode mode = HTMLHelpWindow);
 	/** destructor */
-	~RKHTMLWindow();
+	~RKHTMLWindow() override;
 	/** open given URL. Returns false, if the URL is not an existing local file. Loading a non-local URL may succeed, even if this returns false! */
 	bool openURL(const QUrl &url);
 	/** Show the given content, assuming HTML mimetype. */

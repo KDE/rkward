@@ -27,7 +27,7 @@ class RKPreviewBox : public RKComponent {
 	Q_OBJECT
   public:
 	RKPreviewBox(const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
-	~RKPreviewBox();
+	~RKPreviewBox() override;
 	int type() override { return ComponentPreviewBox; };
 	RKComponentPropertyBool *state;
 	QVariant value(const QString &modifier = QString()) override;
