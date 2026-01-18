@@ -27,6 +27,7 @@ class RData {
 	typedef QVector<qint32> IntStorage;
 	typedef QVector<double> RealStorage;
 	typedef QVector<RData *> RDataStorage;
+	typedef QVector<const RData *> RDataStorageConst;
 	typedef QStringList StringStorage;
 	/** returns the type of data contained */
 	RDataType getDataType() const { return datatype; };
@@ -57,16 +58,16 @@ class RData {
 		return StringStorage();
 	}
 	/** returns a vector of RData*, if that is the type of data contained (else, an assert is raised, and an empty vector is returned). Can be used safely on a null RData pointer (but raises an assert in this case). @see RCommand::GetStructureVector @see RData::getDataType () */
-	const RDataStorage structureVector() const {
+	const RDataStorageConst structureVector() const {
 		if (datatype == StructureVector) {
-			return (*static_cast<RDataStorage *>(data));
+			return (*static_cast<RDataStorageConst *>(data));
 		}
 		doAssert(StructureVector);
-		return RDataStorage();
+		return RDataStorageConst();
 	}
 	void discardData();
 	/** purely for debugging! */
-	void printStructure(const QString &prefix);
+	void printStructure(const QString &prefix) const;
 
 	void setData(const RDataStorage &from);
 	void setData(const IntStorage &from);

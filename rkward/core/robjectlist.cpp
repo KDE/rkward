@@ -116,9 +116,9 @@ void RObjectList::updateFromR(RCommandChain *chain) {
 	update_chain = RInterface::startChain(chain);
 
 	RCommand *command = new RCommand(QStringLiteral("list (search (), loadedNamespaces ())"), RCommand::App | RCommand::Sync | RCommand::GetStructuredData);
-	whenCommandFinished(command, [this](RCommand *command) {
+	whenCommandFinished(command, [this](const RCommand *command) {
 		RK_ASSERT(command->getDataType() == RData::StructureVector);
-		const RData::RDataStorage &data = command->structureVector();
+		const auto &data = command->structureVector();
 		RK_ASSERT(data.size() == 2);
 
 		QStringList new_environments = data[0]->stringVector();
@@ -303,7 +303,7 @@ REnvironmentObject *RObjectList::findPackage(const QString &namespacename) const
 	return nullptr;
 }
 
-bool RObjectList::updateStructure(RData *) {
+bool RObjectList::updateStructure(const RData *) {
 	RK_TRACE(OBJECTS);
 
 	RK_ASSERT(false);

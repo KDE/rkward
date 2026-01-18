@@ -116,7 +116,7 @@ void RKVariable::setLength(int len) {
 	dimensions[0] = len;
 }
 
-bool RKVariable::updateType(RData *new_data) {
+bool RKVariable::updateType(const RData *new_data) {
 	RK_TRACE(OBJECTS);
 
 	if (data) {
@@ -214,7 +214,7 @@ void RKVariable::updateDataFromR(RCommandChain *chain) {
 		RK_ASSERT(command->getDataType() == RData::StructureVector);
 		RK_ASSERT(command->getDataLength() == 3);
 
-		RData::RDataStorage top = command->structureVector();
+		const auto top = command->structureVector();
 		const RData *cdata = top.at(0);
 		const RData *levels = top.at(1);
 		const RData *invalids = top.at(2);
@@ -859,11 +859,10 @@ RKVariable::FormattingOptions RKVariable::parseFormattingOptionsString(const QSt
 	formatting_options.precision_mode = FormattingOptions::PrecisionDefault;
 	formatting_options.precision = 0;
 
-	QStringList list = string.split(u'#', Qt::SkipEmptyParts);
-	QString option, parameter;
-	for (QStringList::const_iterator it = list.constBegin(); it != list.constEnd(); ++it) {
-		option = (*it).section(u':', 0, 0);
-		parameter = (*it).section(u':', 1, 1);
+	const QStringList list = string.split(u'#', Qt::SkipEmptyParts);
+	for (const auto &part : list) {
+		const auto option = part.section(u':', 0, 0);
+		const auto parameter = part.section(u':', 1, 1);
 
 		if (parameter.isEmpty()) continue;
 

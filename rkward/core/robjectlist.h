@@ -74,7 +74,7 @@ class RObjectList : public QObject, public RContainerObject {
 	QString renameChildCommand(RObject *object, const QString &new_name) const override;
 	/// reimplemented from RContainerObject to Q_EMIT a change signal
 	void objectsChanged();
-	bool updateStructure(RData *new_data) override;
+	bool updateStructure(const RData *new_data) override;
 	void updateEnvironments(const QStringList &env_names, bool force_globalenv_update);
 	void updateNamespaces(const QStringList &namespace_names);
 

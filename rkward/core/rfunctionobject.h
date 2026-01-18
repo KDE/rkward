@@ -23,7 +23,7 @@ class RFunctionObject : public RObject {
 	~RFunctionObject() override;
 
 	/** reimplemented from RObject to handle function arguments */
-	bool updateStructure(RData *new_data) override;
+	bool updateStructure(const RData *new_data) override;
 	QString printArgs() const;
 	QStringList argumentNames() const { return argnames; }
 	QStringList argumentDefaults() const { return argvalues; }
@@ -31,7 +31,7 @@ class RFunctionObject : public RObject {
   protected:
 	QStringList argnames;
 	QStringList argvalues;
-	bool updateArguments(RData *new_data);
+	bool updateArguments(const RData *new_data);
 };
 
 #endif

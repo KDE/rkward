@@ -269,7 +269,7 @@ void RObject::updateFromR(RCommandChain *chain) {
 		// .rk.get.structure should be reworked to simply not need the value-argument in any case.
 		commandstring = u".rk.get.structure.global ("_s + rQuote(getShortName()) + u')';
 	} else if (isType(Environment)) {
-		REnvironmentObject *env = static_cast<REnvironmentObject *>(this);
+		const auto *env = static_cast<REnvironmentObject *>(this);
 		if (isType(PackageEnv) && RKSettingsModuleObjectBrowser::isPackageBlacklisted(env->packageName())) {
 			KMessageBox::information(
 			    nullptr,
@@ -328,7 +328,7 @@ void RObject::fetchMoreIfNeeded(int levels) {
 	}
 }
 
-bool RObject::updateStructure(RData *new_data) {
+bool RObject::updateStructure(const RData *new_data) {
 	RK_TRACE(OBJECTS);
 	if (new_data->getDataLength() == 0) { // can happen, if the object no longer exists
 		return false;
@@ -343,7 +343,7 @@ bool RObject::updateStructure(RData *new_data) {
 
 	bool properties_change = false;
 
-	RData::RDataStorage new_data_data = new_data->structureVector();
+	const auto &new_data_data = new_data->structureVector();
 	properties_change = updateName(new_data_data.at(StoragePositionName));
 	properties_change |= updateType(new_data_data.at(StoragePositionType));
 	properties_change |= updateClasses(new_data_data.at(StoragePositionClass));
@@ -385,18 +385,18 @@ void RObject::markDataDirty() {
 	}
 }
 
-bool RObject::canAccommodateStructure(RData *new_data) {
+bool RObject::canAccommodateStructure(const RData *new_data) {
 	RK_TRACE(OBJECTS);
 	RK_ASSERT(new_data->getDataLength() >= StorageSizeBasicInfo);
 	RK_ASSERT(new_data->getDataType() == RData::StructureVector);
 
-	RData::RDataStorage new_data_data = new_data->structureVector();
+	const auto &new_data_data = new_data->structureVector();
 	if (!isValidName(new_data_data.at(StoragePositionName))) return false;
 	if (!isValidType(new_data_data.at(StoragePositionType))) return false;
 	return true;
 }
 
-bool RObject::isValidName(RData *new_data) {
+bool RObject::isValidName(const RData *new_data) {
 	RK_TRACE(OBJECTS);
 	RK_ASSERT(new_data->getDataLength() == 1);
 	RK_ASSERT(new_data->getDataType() == RData::StringVector);
@@ -410,7 +410,7 @@ bool RObject::isValidName(RData *new_data) {
 	return true;
 }
 
-bool RObject::updateName(RData *new_data) {
+bool RObject::updateName(const RData *new_data) {
 	RK_TRACE(OBJECTS);
 	RK_ASSERT(new_data->getDataLength() == 1);
 	RK_ASSERT(new_data->getDataType() == RData::StringVector);
@@ -425,7 +425,7 @@ bool RObject::updateName(RData *new_data) {
 	return changed;
 }
 
-bool RObject::isValidType(RData *new_data) const {
+bool RObject::isValidType(const RData *new_data) const {
 	RK_TRACE(OBJECTS);
 	RK_ASSERT(new_data->getDataLength() == 1);
 	RK_ASSERT(new_data->getDataType() == RData::IntVector);
@@ -436,7 +436,7 @@ bool RObject::isValidType(RData *new_data) const {
 	return true;
 }
 
-bool RObject::updateType(RData *new_data) {
+bool RObject::updateType(const RData *new_data) {
 	RK_TRACE(OBJECTS);
 	RK_ASSERT(new_data->getDataLength() == 1);
 	RK_ASSERT(new_data->getDataType() == RData::IntVector);
@@ -453,7 +453,7 @@ bool RObject::updateType(RData *new_data) {
 	return changed;
 }
 
-bool RObject::updateClasses(RData *new_data) {
+bool RObject::updateClasses(const RData *new_data) {
 	RK_TRACE(OBJECTS);
 	RK_ASSERT(new_data->getDataLength() >= 1); // or can there be classless objects in R?
 	RK_ASSERT(new_data->getDataType() == RData::StringVector);
@@ -469,12 +469,12 @@ bool RObject::updateClasses(RData *new_data) {
 	return change;
 }
 
-bool RObject::updateMeta(RData *new_data) {
+bool RObject::updateMeta(const RData *new_data) {
 	RK_TRACE(OBJECTS);
 
 	RK_ASSERT(new_data->getDataType() == RData::StringVector);
 
-	QStringList data = new_data->stringVector();
+	const QStringList data = new_data->stringVector();
 	int len = data.size();
 	bool change = false;
 	if (len) {
@@ -499,7 +499,7 @@ bool RObject::updateMeta(RData *new_data) {
 	return change;
 }
 
-bool RObject::updateDimensions(RData *new_data) {
+bool RObject::updateDimensions(const RData *new_data) {
 	RK_TRACE(OBJECTS);
 	RK_ASSERT(new_data->getDataLength() >= 1);
 	RK_ASSERT(new_data->getDataType() == RData::IntVector);
@@ -522,7 +522,7 @@ bool RObject::updateDimensions(RData *new_data) {
 	return (false);
 }
 
-bool RObject::updateSlots(RData *new_data) {
+bool RObject::updateSlots(const RData *new_data) {
 	RK_TRACE(OBJECTS);
 
 	if (new_data->getDataLength()) {
@@ -648,12 +648,12 @@ void RObject::remove(bool removed_in_workspace) {
 
 	if (isPseudoObject()) {
 		RK_ASSERT(removed_in_workspace);
-		PseudoObjectType type = getPseudoObjectType();
-		if (parent->hasPseudoObject(type)) { // not always true for NamespaceObjects, which the RKOrphanNamespacesObject keeps as regular children!
-			if (type == SlotsObject) slots_objects.remove(parent);
-			else if (type == NamespaceObject) namespace_objects.remove(parent);
-			else if (type == RowNamesObject) rownames_objects.remove(parent);
-			parent->contained_objects -= type;
+		PseudoObjectType potype = getPseudoObjectType();
+		if (parent->hasPseudoObject(potype)) { // not always true for NamespaceObjects, which the RKOrphanNamespacesObject keeps as regular children!
+			if (potype == SlotsObject) slots_objects.remove(parent);
+			else if (potype == NamespaceObject) namespace_objects.remove(parent);
+			else if (potype == RowNamesObject) rownames_objects.remove(parent);
+			parent->contained_objects -= potype;
 			delete this;
 			return;
 		}
@@ -854,7 +854,7 @@ RObject *RObject::globalEnvSymbol() const {
 bool RObject::isInGlobalEnv() const {
 	RK_TRACE(OBJECTS);
 
-	RObject *o = toplevelEnvironment();
+	const RObject *o = toplevelEnvironment();
 	if (o->isType(GlobalEnv)) {
 		if (o != this) return true; // the GlobalEnv is not inside the GlobalEnv!
 	}

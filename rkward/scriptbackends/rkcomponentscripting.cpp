@@ -156,7 +156,7 @@ static QJSValue marshall(QJSEngine *engine, const RData *data) {
 	} else if (data->getDataType() == RData::RealVector) {
 		return (rkJSMakeArray(engine, data->realVector()));
 	} else if (data->getDataType() == RData::StructureVector) {
-		const RData::RDataStorage &rs = data->structureVector();
+		const auto &rs = data->structureVector();
 		QJSValue ret = engine->newArray(rs.size());
 		for (int i = 0; i < rs.size(); ++i) {
 			ret.setProperty(i, marshall(engine, rs[i]));

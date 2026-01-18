@@ -407,7 +407,7 @@ void LoadUnloadWidget::updateInstalledPackages() {
 		if (command->failed()) return;
 		RK_ASSERT(command->getDataLength() == 5);
 
-		RData::RDataStorage data = command->structureVector();
+		const auto data = command->structureVector();
 		QStringList package = data.at(0)->stringVector();
 		QStringList title = data.at(1)->stringVector();
 		QStringList version = data.at(2)->stringVector();
@@ -918,15 +918,15 @@ void RKRPackageInstallationStatus::statusCommandFinished(RCommand *command) {
 	RK_ASSERT(command->getDataType() == RCommand::StructureVector);
 	RK_ASSERT(command->getDataLength() == 5);
 
-	RData::RDataStorage top = command->structureVector();
-	RData::RDataStorage available = top[0]->structureVector();
+	const auto top = command->structureVector();
+	const auto available = top[0]->structureVector();
 	available_packages = available[0]->stringVector();
 	available_titles = available[1]->stringVector();
 	available_versions = available[2]->stringVector();
 	available_repos = available[3]->stringVector();
 	enhance_rk_in_available = available[4]->intVector();
 
-	RData::RDataStorage installed = top[1]->structureVector();
+	const auto installed = top[1]->structureVector();
 	installed_packages = installed[0]->stringVector();
 	installed_titles = installed[1]->stringVector();
 	installed_versions = installed[2]->stringVector();
@@ -935,7 +935,7 @@ void RKRPackageInstallationStatus::statusCommandFinished(RCommand *command) {
 	installed_has_update.fill(false, installed_packages.count());
 
 	new_packages_in_available = top[2]->intVector();
-	RData::RDataStorage updateable = top[3]->structureVector();
+	const auto updateable = top[3]->structureVector();
 	updateable_packages_in_installed = updateable[0]->intVector();
 	updateable_packages_in_available = updateable[1]->intVector();
 
