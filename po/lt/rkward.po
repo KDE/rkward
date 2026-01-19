@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lt\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-01-13 08:38+0000\n"
+"POT-Creation-Date: 2026-01-19 00:39+0000\n"
 "PO-Revision-Date: 2015-06-20 16:39+0300\n"
 "Last-Translator: Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
@@ -3853,33 +3853,33 @@ msgstr "R variklis nulūžo"
 msgid "Graphics Device Number %1"
 msgstr "Grafikos įrenginio Nr. %1"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:657
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:656
 #, fuzzy, kde-format
 #| msgid "%1 (Active)"
 msgctxt "Window title"
 msgid "%1 (Active)"
 msgstr "%1 (aktyvus)"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:659
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:658
 #, fuzzy, kde-format
 #| msgid "%1 (Inactive)"
 msgctxt "Window title"
 msgid "%1 (Inactive)"
 msgstr "%1 (neaktyvus)"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:685
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:684
 #, kde-format
 msgid ""
 "<h2>Locating point(s)</h2><p>Use left mouse button to select point(s). Any "
 "other mouse button to stop.</p>"
 msgstr ""
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:695
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:694
 #, kde-format
 msgid "<p>Press Enter to see next plot, or click 'Cancel' to abort.</p>"
 msgstr ""
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:699
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:698
 #, kde-format
 msgid "Ok to show next plot?"
 msgstr "Pereiti prie tolesnio grafiko?"

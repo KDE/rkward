@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-01-13 08:38+0000\n"
+"POT-Creation-Date: 2026-01-19 00:39+0000\n"
 "PO-Revision-Date: 2026-01-13 15:26+0100\n"
 "Last-Translator: Vincenzo Reale <smart2128vr@gmail.com>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
@@ -4103,19 +4103,19 @@ msgstr "Il motore di R è terminato inaspettatamente"
 msgid "Graphics Device Number %1"
 msgstr "Dispositivo grafico numero %1"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:657
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:656
 #, kde-format
 msgctxt "Window title"
 msgid "%1 (Active)"
 msgstr "%1 (Attivo)"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:659
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:658
 #, kde-format
 msgctxt "Window title"
 msgid "%1 (Inactive)"
 msgstr "%1 (Inattivo)"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:685
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:684
 #, kde-format
 msgid ""
 "<h2>Locating point(s)</h2><p>Use left mouse button to select point(s). Any "
@@ -4124,14 +4124,14 @@ msgstr ""
 "<h2>Individuazione dei punti</h2><p>Usa il pulsante sinistro per selezionare "
 "i punti; interrompi con un qualsiasi altro pulsante del mouse.</p>"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:695
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:694
 #, kde-format
 msgid "<p>Press Enter to see next plot, or click 'Cancel' to abort.</p>"
 msgstr ""
 "<p>Premi Invio per vedere il prossimo grafico, oppure «Annulla» per "
 "interrompere.</p>"
 
-#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:699
+#: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:698
 #, kde-format
 msgid "Ok to show next plot?"
 msgstr "Ok per mostrare il prossimo grafico?"
