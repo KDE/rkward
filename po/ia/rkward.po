@@ -1,14 +1,14 @@
 # Copyright (C) 2024 This file is copyright:
 # This file is distributed under the same license as the rkward package.
 #
-# SPDX-FileCopyrightText: 2024, 2025 giovanni <g.sora@tiscali.it>
+# SPDX-FileCopyrightText: 2024, 2025, 2026 giovanni <g.sora@tiscali.it>
 # giovanni <g.sora@tiscali.it>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-01-19 00:39+0000\n"
-"PO-Revision-Date: 2025-05-27 15:13+0200\n"
+"PO-Revision-Date: 2026-01-26 17:35+0100\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -3102,7 +3102,7 @@ msgstr "Termino"
 #: rkward/plugin/rkinput.cpp:41
 #, kde-format
 msgid "Enter text"
-msgstr ""
+msgstr "Inserta texto"
 
 #: rkward/plugin/rkmatrixinput.cpp:35
 #, kde-format
@@ -3707,10 +3707,9 @@ msgid ""
 msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:76
-#, fuzzy, no-c-format, kde-format
-#| msgid "The file or directory does not exist."
+#, no-c-format, kde-format
 msgid "Target directory '%1' does not exist\n"
-msgstr "Le file o le directorio non existe."
+msgstr "Le directorioobjectivo  '%1' non existe\n"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:82
 #, no-c-format, kde-format
@@ -3778,10 +3777,9 @@ msgid "Leaf menu item %1 cannot be redefined as a submenu."
 msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.output.R:86
-#, fuzzy, kde-format
-#| msgid "Unspecified"
+#, kde-format
 msgid "No file name specified"
-msgstr "Non specificate"
+msgstr "Nulla nomine de file specificate"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.output.R:115
 #, kde-format
@@ -3816,10 +3814,9 @@ msgid "Plot window created"
 msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:145
-#, fuzzy, kde-format
-#| msgid "Do not close"
+#, kde-format
 msgid "Plot window closed"
-msgstr "Non Claude"
+msgstr "Fenestra de Traciar (Plot)  Claudite"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:155
 #, kde-format
@@ -5298,7 +5295,7 @@ msgstr ""
 #: rkward/windows/rkhtmlwindow.cpp:1169
 #, kde-format
 msgid "Dependencies"
-msgstr ""
+msgstr "Dependentias"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:495
 #, kde-format
@@ -5943,17 +5940,15 @@ msgid "Run current statement, and advance"
 msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:183
-#, fuzzy, kde-format
-#| msgid "Preview"
+#, kde-format
 msgctxt "noun: type of preview"
 msgid "<b>Preview Mode</b>"
-msgstr "Vista preliminar"
+msgstr "<b>Modo de Vista preliminar</b>"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:189
-#, fuzzy, kde-format
-#| msgid "<b>Done</b>"
+#, kde-format
 msgid "<b>Options</b>"
-msgstr "<b>Facite</b>"
+msgstr "<b>Optiones</b>"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:411
 #, kde-format
@@ -6066,10 +6061,9 @@ msgid "Preview the script as rendered from RMarkdown format (.Rmd)"
 msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:857
-#, fuzzy, kde-format
-#| msgid "Select format"
+#, kde-format
 msgid "Render format"
-msgstr "Selige formato"
+msgstr "Formato de Rendition"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:858
 #, kde-format
@@ -6082,10 +6076,9 @@ msgid "Render as PDF"
 msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:860
-#, fuzzy, kde-format
-#| msgid "Format"
+#, kde-format
 msgid "Auto Format"
-msgstr "Formato"
+msgstr "Formato Automatic"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:870
 #, kde-format
@@ -6115,22 +6108,19 @@ msgid "Preview the script as if it was run in the interactive R Console"
 msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:888
-#, fuzzy, kde-format
-#| msgid "Previous statement"
+#, kde-format
 msgid "Echo statements"
-msgstr "Previe declaration"
+msgstr "Echoar declarationes"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:889
-#, fuzzy, kde-format
-#| msgid "Continue"
+#, kde-format
 msgid "Continue on error"
-msgstr "Continua"
+msgstr "Continua sur error"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:891
-#, fuzzy, kde-format
-#| msgid "Environment"
+#, kde-format
 msgid "Evaluation environment"
-msgstr "Ambiente"
+msgstr "Ambientede evalutation"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:892
 #, kde-format
@@ -6158,10 +6148,9 @@ msgid ""
 msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:898
-#, fuzzy, kde-format
-#| msgid "Location"
+#, kde-format
 msgid "Local"
-msgstr "Location"
+msgstr "Local"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:899
 #, kde-format
@@ -7042,7 +7031,7 @@ msgstr ""
 #: rkward/windows/rkwindowcatcher.cpp:831
 #, kde-format
 msgid "Make active"
-msgstr ""
+msgstr "Face active"
 
 #: rkward/windows/rkwindowcatcher.cpp:835
 #, kde-format
@@ -7170,7 +7159,7 @@ msgstr "Vista"
 #: rkward/windows/robjectbrowser.cpp:121
 #, kde-format
 msgid "Copy to new symbol"
-msgstr ""
+msgstr "Copia a nove symbolo"
 
 #: rkward/windows/robjectbrowser.cpp:123
 #, kde-format
@@ -7180,27 +7169,27 @@ msgstr ""
 #: rkward/windows/robjectbrowser.cpp:127
 #, kde-format
 msgid "New object from clipboard"
-msgstr ""
+msgstr "Nove objecto ab  area de transferentia"
 
 #: rkward/windows/robjectbrowser.cpp:129
 #, kde-format
 msgid "Unload Package"
-msgstr ""
+msgstr "Discarga pacchetto"
 
 #: rkward/windows/robjectbrowser.cpp:131
 #, kde-format
 msgid "Load / Unload Packages"
-msgstr ""
+msgstr "Carga/Discarga Pacchettos"
 
 #: rkward/windows/robjectbrowser.cpp:185
 #, kde-format
 msgid "Copy object"
-msgstr ""
+msgstr "Copia objecto"
 
 #: rkward/windows/robjectbrowser.cpp:185
 #, kde-format
 msgid "Enter the name to copy to"
-msgstr ""
+msgstr "Inserta le nomine ubi coipiar"
 
 #: rkward/windows/robjectbrowser.cpp:202
 #, kde-format
@@ -7212,7 +7201,7 @@ msgstr ""
 #: rkward/windows/robjectbrowser.cpp:203
 #, kde-format
 msgid "Name already in use"
-msgstr ""
+msgstr "Nomina ja in uso"
 
 #: rkward/windows/robjectbrowser.cpp:233
 #, kde-format
@@ -7222,12 +7211,12 @@ msgstr "Renomina Objecto"
 #: rkward/windows/robjectbrowser.cpp:233
 #, kde-format
 msgid "Enter the new name"
-msgstr ""
+msgstr "Inserta le nove nomine"
 
 #: rkward/windows/robjectbrowser.cpp:256
 #, kde-format
 msgid "View in editor (read-only)"
-msgstr ""
+msgstr "Vide in editor (de sol lectura)"
 
 #~ msgid "Output:"
 #~ msgstr "Egresso:"
