@@ -14,7 +14,6 @@ include:
       - /gitlab-templates/craft-macos-arm64-qt6.yml
       - /gitlab-templates/craft-macos-x86-64-qt6.yml
 #      - /gitlab-templates/flatpak.yml // just a waste of CPU power in the current state
-      - /gitlab-templates/documentation.yml
 
 # NOTE: This is meant to modify the default linux-qt6.yml-job, and currently it does. It will need to be updated once the underlying name changes, though
 suse_tumbleweed_qt610:
