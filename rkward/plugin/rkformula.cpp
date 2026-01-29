@@ -162,11 +162,8 @@ void RKFormula::makeModelString() {
 	} else if (!vlist.empty()) {
 		container = vlist.first()->parentObject();
 	}
-	for (RObject::ObjectList::const_iterator it = vlist.cbegin(); it != vlist.cend(); ++it) {
-		if ((*it)->parentObject() != container) {
-			multitable = true;
-			break;
-		}
+	if (std::find_if(vlist.cbegin(), vlist.cend(), [container](RObject *obj) { return (obj->parentObject() != container); }) != vlist.cend()) {
+		multitable = true;
 	}
 	if (multitable) {
 		table_string = u"data.frame ("_s;
@@ -232,7 +229,7 @@ QString RKFormula::mangleName(const RObject *var) {
 	MangledNames::iterator it;
 	int i = -1;
 	while (((it = mangled_names.find(dummy)) != mangled_names.end()) && (it.value() != var)) {
-		dummy = dummy + QString::number(++i);
+		dummy = dummy2 + QString::number(++i);
 	}
 	mangled_names.insert(dummy, var);
 	return dummy;
@@ -309,15 +306,13 @@ QList<RKFormula::Interaction> RKFormula::makeInteractions(int level, RObject::Ob
 
 	QList<Interaction> ret;
 
-	int start_var;
-
 	// enough vars available for this level of crossing?
 	if (source_vars.count() < (level + 1)) return ret;
 
 	// reached bottom level?
 	if (!level) {
 		// return an list of level 0 interactions (i.e. each var in a single "interaction")
-		for (start_var = 0; start_var < source_vars.count(); ++start_var) {
+		for (int start_var = 0; start_var < source_vars.count(); ++start_var) {
 			Interaction inter;
 			inter.level = 0;
 			inter.vars.append(source_vars[start_var]);

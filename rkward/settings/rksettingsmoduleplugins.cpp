@@ -253,7 +253,6 @@ void RKSettingsModulePlugins::RKPluginMapList::removeObsoleteMaps() {
 			if (!QFile::exists(filename)) {
 				sublist.list.removeAt(i);
 				--i;
-				break;
 			}
 		}
 		if (sublist.list.isEmpty()) ids_to_remove.insert(it.key());
