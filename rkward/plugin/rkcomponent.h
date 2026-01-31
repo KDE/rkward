@@ -114,7 +114,7 @@ class RKComponentBase {
 	 * In general, use isSatisfied() to query the status of components, not isValid(). */
 	virtual bool isValid() { return true; };
 	/** set to required: will only be satisfied if it is valid (and all it's children). Else: always satisfied (but subclasses might override to always be dissatisfied on really bad values. By default RKComponentBase is required at construction */
-	void setRequired(bool require) { required = require; };
+	virtual void setRequired(bool require) { required = require; };
 	/** simple convenience function to add a child to the map of children */
 	virtual void addChild(const QString &id, RKComponentBase *child);
 
@@ -199,7 +199,7 @@ class RKComponent : public QWidget, public RKComponentBase {
 	RKComponentPropertyBool *requirednessProperty() { return requiredness_property; };
 
 	/** convenience call to set requiredness property (and hence requiredness of this component) */
-	void setRequired(bool required);
+	void setRequired(bool required) override;
 
 	/** The parent of this component. Should be notified, whenever isSatisfied () or recursiveStatus () changed. */
 	RKComponent *parentComponent() const { return _parent; };
