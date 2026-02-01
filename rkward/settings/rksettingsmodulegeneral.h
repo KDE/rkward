@@ -49,6 +49,7 @@ class RKSettingsModuleGeneral : public RKSettingsModule {
 	/// returns the directory-name where the logfiles should reside
 	static QString &filesPath() { return files_path; };
 	static bool showHelpOnStartup() { return show_help_on_startup; };
+	static bool disableHardwareRendering() { return disable_hardware_rendering; };
 	static bool openRestoreFileOnLoad() { return autorestore_from_wd; };
 	static WorkplaceSaveMode workplaceSaveMode() { return workplace_save_mode; };
 	/** retrieve the saved workplace description. Meaningful only is workplaceSaveMode () == SaveWorkplaceWithSession */
@@ -107,6 +108,7 @@ class RKSettingsModuleGeneral : public RKSettingsModule {
 	static bool rkward_version_changed;
 	static bool installation_moved;
 	static RKConfigValue<int> num_recent_files;
+	static RKConfigValue<bool> disable_hardware_rendering;
 };
 
 #endif

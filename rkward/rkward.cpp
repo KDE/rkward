@@ -147,6 +147,11 @@ RKWardMainWindow::RKWardMainWindow() : KParts::MainWindow() {
 	connect(partManager(), &KParts::PartManager::activePartChanged, this, &RKWardMainWindow::partChanged);
 
 	readOptions();
+	if (RKSettingsModuleGeneral::disableHardwareRendering()) {
+		auto chromiumflags = qgetenv("QTWEBENGINE_CHROMIUM_FLAGS");
+		chromiumflags = "--disable-gpu " + chromiumflags;
+		qputenv("QTWEBENGINE_CHROMIUM_FLAGS", chromiumflags);
+	}
 	new RKModificationTracker(this);
 	initToolViewsAndR();
 
