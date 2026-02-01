@@ -598,11 +598,7 @@ bool RKHTMLWindow::openURL(const QUrl &url) {
 				page->setHtmlWrapper(QString::fromUtf8(f.readAll()), url.adjusted(QUrl::RemoveFilename));
 				f.close();
 			} else {
-				// NOTE: Quirk in Qt 6.7: When first loading a page, the window is somehow brought to the front, again. In preview windows
-				//       (initially hidden), this leads to a strange pulsing effect. Delay the actual page load until the window is
-				//       actually shown (showEvent(), below).
-				//       With this, the flicker is still there, but feels more "natural"
-				if (isVisible()) page->load(url);
+				page->load(url);
 			}
 			if (!restore_position.isNull()) page->setScrollPositionWhenDone(restore_position);
 		} else {
@@ -641,16 +637,14 @@ bool RKHTMLWindow::openURL(const QUrl &url) {
 void RKHTMLWindow::showEvent(QShowEvent *event) {
 	RK_TRACE(APP);
 	RKMDIWindow::showEvent(event);
-	QTimer::singleShot(2000, this, [this]() {
-		// see comment in openURL, above
-		if (window_mode == HTMLOutputWindow) {
-			page->load(current_url);
-		} else if (page->url().isEmpty() && !current_url.isEmpty() && current_url != page->url()) {
-			QUrl real_url = current_url;
-			current_url.clear();
-			openURL(real_url);
-		}
-	});
+	// see comment in openURL, above
+	if (window_mode == HTMLOutputWindow) {
+		page->load(current_url);
+	} else if (page->url().isEmpty() && !current_url.isEmpty() && current_url != page->url()) {
+		QUrl real_url = current_url;
+		current_url.clear();
+		openURL(real_url);
+	}
 }
 
 void RKHTMLWindow::mimeTypeJobFail(KJob *job) {
