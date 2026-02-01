@@ -641,14 +641,16 @@ bool RKHTMLWindow::openURL(const QUrl &url) {
 void RKHTMLWindow::showEvent(QShowEvent *event) {
 	RK_TRACE(APP);
 	RKMDIWindow::showEvent(event);
-	// see comment in openURL, above
-	if (window_mode == HTMLOutputWindow) {
-		page->load(current_url);
-	} else if (page->url().isEmpty() && !current_url.isEmpty() && current_url != page->url()) {
-		QUrl real_url = current_url;
-		current_url.clear();
-		openURL(real_url);
-	}
+	QTimer::singleShot(2000, this, [this]() {
+		// see comment in openURL, above
+		if (window_mode == HTMLOutputWindow) {
+			page->load(current_url);
+		} else if (page->url().isEmpty() && !current_url.isEmpty() && current_url != page->url()) {
+			QUrl real_url = current_url;
+			current_url.clear();
+			openURL(real_url);
+		}
+	});
 }
 
 void RKHTMLWindow::mimeTypeJobFail(KJob *job) {
