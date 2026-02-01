@@ -98,7 +98,7 @@ class RKSettingsPageGeneral : public RKSettingsModuleWidget {
 
 		main_vbox->addSpacing(2 * RKStyle::spacingHint());
 
-		main_vbox->addWidget(RKCommonFunctions::wordWrappedLabel(i18n("The workplace layout (i.e. which script-, data-, help-windows are open) may be saved (and loaded) per R workspace, or independent of the R workspace. Which do you prefer?")));
+		main_vbox->addWidget(RKCommonFunctions::wordWrappedLabel(i18n("Persistent workplace layout (i.e. which script-, data-, help-windows are open)")));
 
 		auto radio_box = new RKRadioGroup();
 		workplace_save_chooser = radio_box->group();
