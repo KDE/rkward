@@ -71,7 +71,7 @@ RKCodeCompletionSettingsWidget::RKCodeCompletionSettingsWidget(RKSettingsModuleW
 
 	auto tabkey_invokes_completion_box = settings->tabkey_invokes_completion.makeCheckbox(QString(), parent);
 	RKCommonFunctions::setTips(
-	    i18n("Note: Further shortcuts can be assigned, and by default, Ctlr+Space invokes completions, in addition to this. Further, pressing the Tab key, "
+	    i18n("Note: Further shortcuts can be assigned, and by default, Ctrl+Space invokes completions, in addition to this. Further, pressing the Tab key, "
 	         "while completions are shown, performs partial completion (if possible), independent of this setting."),
 	    tabkey_invokes_completion_box);
 	form_layout->addRow(i18n("Tab key invokes code completion"), tabkey_invokes_completion_box);
