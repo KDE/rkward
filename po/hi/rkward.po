@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-01 00:39+0000\n"
+"POT-Creation-Date: 2026-02-02 00:39+0000\n"
 "PO-Revision-Date: 2024-12-15 19:29+0530\n"
 "Last-Translator: kali <skkalwar999@gmail.com>\n"
 "Language-Team: Hindi <kde-i18n-doc@kde.org>\n"
@@ -5358,13 +5358,9 @@ msgstr "प्रति श्रेणी याद रखने के लि�
 #: rkward/settings/rksettingsmodulegeneral.cpp:101
 #, kde-format
 msgid ""
-"The workplace layout (i.e. which script-, data-, help-windows are open) may "
-"be saved (and loaded) per R workspace, or independent of the R workspace. "
-"Which do you prefer?"
+"Persistent workplace layout (i.e. which script-, data-, help-windows are "
+"open)"
 msgstr ""
-"कार्यस्थल लेआउट (यानी कौन सी स्क्रिप्ट-, डेटा-, सहायता-विंडो खुली हैं) को R वर्कस्पेस के "
-"अनुसार सहेजा (और लोड किया) जा सकता है, या R वर्कस्पेस से स्वतंत्र किया जा सकता है। आपको "
-"कौन सा पसंद है?"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:105
 #, kde-format
@@ -7848,6 +7844,15 @@ msgstr "नया नाम दर्ज करें"
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr "संपादक में देखें (केवल पढ़ने के लिए)"
+
+#~ msgid ""
+#~ "The workplace layout (i.e. which script-, data-, help-windows are open) "
+#~ "may be saved (and loaded) per R workspace, or independent of the R "
+#~ "workspace. Which do you prefer?"
+#~ msgstr ""
+#~ "कार्यस्थल लेआउट (यानी कौन सी स्क्रिप्ट-, डेटा-, सहायता-विंडो खुली हैं) को R वर्कस्पेस के "
+#~ "अनुसार सहेजा (और लोड किया) जा सकता है, या R वर्कस्पेस से स्वतंत्र किया जा सकता है। "
+#~ "आपको कौन सा पसंद है?"
 
 #~ msgctxt "Caption: Some software is missing."
 #~ msgid "Missing software"

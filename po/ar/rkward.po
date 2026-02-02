@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-01 00:39+0000\n"
+"POT-Creation-Date: 2026-02-02 00:39+0000\n"
 "PO-Revision-Date: 2026-01-14 07:15+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
@@ -5324,12 +5324,9 @@ msgstr "الحد الأقصى لعدد الملفات المستخدمة حدي�
 #: rkward/settings/rksettingsmodulegeneral.cpp:101
 #, kde-format
 msgid ""
-"The workplace layout (i.e. which script-, data-, help-windows are open) may "
-"be saved (and loaded) per R workspace, or independent of the R workspace. "
-"Which do you prefer?"
+"Persistent workplace layout (i.e. which script-, data-, help-windows are "
+"open)"
 msgstr ""
-"قد يحفظ (ويحمّل) تخطيط مكان العمل (أي أيّ نوافذ نص برمجي، بيانات، دليل مفتوحة) "
-"لكل مساحة عمل R، أو مستقلة عن مساحة عمل R. أيّ تفضل؟"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:105
 #, kde-format
@@ -7780,6 +7777,14 @@ msgstr "أدخل الاسم الجديد"
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr "اعرض في المحرر (للقراءة فقط)"
+
+#~ msgid ""
+#~ "The workplace layout (i.e. which script-, data-, help-windows are open) "
+#~ "may be saved (and loaded) per R workspace, or independent of the R "
+#~ "workspace. Which do you prefer?"
+#~ msgstr ""
+#~ "قد يحفظ (ويحمّل) تخطيط مكان العمل (أي أيّ نوافذ نص برمجي، بيانات، دليل "
+#~ "مفتوحة) لكل مساحة عمل R، أو مستقلة عن مساحة عمل R. أيّ تفضل؟"
 
 #~ msgctxt "Caption: Some software is missing."
 #~ msgid "Missing software"

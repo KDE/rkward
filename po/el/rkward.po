@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: el\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-01 00:39+0000\n"
+"POT-Creation-Date: 2026-02-02 00:39+0000\n"
 "PO-Revision-Date: 2024-09-19 22:25+0300\n"
 "Last-Translator: Antonis Geralis <capoiosct@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -5109,14 +5109,9 @@ msgstr "Μέγιστος αριθμός εμφάνισης στοιχείων σ
 #: rkward/settings/rksettingsmodulegeneral.cpp:101
 #, kde-format
 msgid ""
-"The workplace layout (i.e. which script-, data-, help-windows are open) may "
-"be saved (and loaded) per R workspace, or independent of the R workspace. "
-"Which do you prefer?"
+"Persistent workplace layout (i.e. which script-, data-, help-windows are "
+"open)"
 msgstr ""
-"Η διάταξη του χώρου εργασίας του RKWard (π.χ. εκεί όπου τα παράθυρα "
-"σεναρίων, δεδομένων, βοήθειας ανοίγουν) μπορεί να αποθηκευτούν (και να "
-"ανοιχτούν) για κάθε χώρο εργασίας του R ή ανεξάρτητα του χώρο εργασίας του "
-"R. Τι προτιμάτε;"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:105
 #, kde-format
@@ -7483,6 +7478,16 @@ msgstr "Εισάγετε ένα νέο όνομα"
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr ""
+
+#~ msgid ""
+#~ "The workplace layout (i.e. which script-, data-, help-windows are open) "
+#~ "may be saved (and loaded) per R workspace, or independent of the R "
+#~ "workspace. Which do you prefer?"
+#~ msgstr ""
+#~ "Η διάταξη του χώρου εργασίας του RKWard (π.χ. εκεί όπου τα παράθυρα "
+#~ "σεναρίων, δεδομένων, βοήθειας ανοίγουν) μπορεί να αποθηκευτούν (και να "
+#~ "ανοιχτούν) για κάθε χώρο εργασίας του R ή ανεξάρτητα του χώρο εργασίας "
+#~ "του R. Τι προτιμάτε;"
 
 #, fuzzy
 #~| msgid ""

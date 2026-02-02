@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-01 00:39+0000\n"
+"POT-Creation-Date: 2026-02-02 00:39+0000\n"
 "PO-Revision-Date: 2026-01-13 11:42+0100\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -5438,13 +5438,9 @@ msgstr "Največje število zapomnjenih datotek na kategorijo"
 #: rkward/settings/rksettingsmodulegeneral.cpp:101
 #, kde-format
 msgid ""
-"The workplace layout (i.e. which script-, data-, help-windows are open) may "
-"be saved (and loaded) per R workspace, or independent of the R workspace. "
-"Which do you prefer?"
+"Persistent workplace layout (i.e. which script-, data-, help-windows are "
+"open)"
 msgstr ""
-"Postavitev delovne površine (npr. katera skripta- , podatki-, okna pomoči so "
-"odprta) se lahko shrani (in naloži) na delovni prostor R ali neodvisno od "
-"delovnega prostora R. Kaj vam je ljubše?"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:105
 #, kde-format
@@ -7937,6 +7933,15 @@ msgstr "Vnesite novo ime"
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr "Ogled v urejevalniku (samo za branje)"
+
+#~ msgid ""
+#~ "The workplace layout (i.e. which script-, data-, help-windows are open) "
+#~ "may be saved (and loaded) per R workspace, or independent of the R "
+#~ "workspace. Which do you prefer?"
+#~ msgstr ""
+#~ "Postavitev delovne površine (npr. katera skripta- , podatki-, okna pomoči "
+#~ "so odprta) se lahko shrani (in naloži) na delovni prostor R ali neodvisno "
+#~ "od delovnega prostora R. Kaj vam je ljubše?"
 
 #~ msgctxt "Caption: Some software is missing."
 #~ msgid "Missing software"

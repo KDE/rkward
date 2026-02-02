@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-01 00:39+0000\n"
+"POT-Creation-Date: 2026-02-02 00:39+0000\n"
 "PO-Revision-Date: 2026-01-20 20:58+0100\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
@@ -5431,13 +5431,9 @@ msgstr "Maximalt antal senast använda filer att komma ihåg per kategori"
 #: rkward/settings/rksettingsmodulegeneral.cpp:101
 #, kde-format
 msgid ""
-"The workplace layout (i.e. which script-, data-, help-windows are open) may "
-"be saved (and loaded) per R workspace, or independent of the R workspace. "
-"Which do you prefer?"
+"Persistent workplace layout (i.e. which script-, data-, help-windows are "
+"open)"
 msgstr ""
-"Arbetsytans layout (dvs. vilka skript-, data-, och hjälpfönster som är "
-"öppna) kan sparas (och läsas in) per R-arbetsyta, eller oberoende av R-"
-"arbetsytan. Vilket föredrar du?"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:105
 #, kde-format
@@ -7929,6 +7925,15 @@ msgstr "Ange det nya namnet"
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr "Visa i editor (skrivskyddade)"
+
+#~ msgid ""
+#~ "The workplace layout (i.e. which script-, data-, help-windows are open) "
+#~ "may be saved (and loaded) per R workspace, or independent of the R "
+#~ "workspace. Which do you prefer?"
+#~ msgstr ""
+#~ "Arbetsytans layout (dvs. vilka skript-, data-, och hjälpfönster som är "
+#~ "öppna) kan sparas (och läsas in) per R-arbetsyta, eller oberoende av R-"
+#~ "arbetsytan. Vilket föredrar du?"
 
 #~ msgctxt "Caption: Some software is missing."
 #~ msgid "Missing software"

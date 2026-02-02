@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-01 00:39+0000\n"
+"POT-Creation-Date: 2026-02-02 00:39+0000\n"
 "PO-Revision-Date: 2026-01-14 08:18+0100\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: \n"
@@ -5597,14 +5597,9 @@ msgstr ""
 #: rkward/settings/rksettingsmodulegeneral.cpp:101
 #, kde-format
 msgid ""
-"The workplace layout (i.e. which script-, data-, help-windows are open) may "
-"be saved (and loaded) per R workspace, or independent of the R workspace. "
-"Which do you prefer?"
+"Persistent workplace layout (i.e. which script-, data-, help-windows are "
+"open)"
 msgstr ""
-"La mise en page de l'espace de travail (par exemple, quelles fenêtres de "
-"scripts, de données ou d'aide sont ouvertes) peut être enregistrée (et "
-"rechargée) par espace de travail R ou de façon indépendante de l'espace de "
-"travail de R. Laquelle préférez vous ?"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:105
 #, kde-format
@@ -8165,6 +8160,16 @@ msgstr "Saisissez un nouveau nom"
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr "Affichage dans l'éditeur (Lecture seule)"
+
+#~ msgid ""
+#~ "The workplace layout (i.e. which script-, data-, help-windows are open) "
+#~ "may be saved (and loaded) per R workspace, or independent of the R "
+#~ "workspace. Which do you prefer?"
+#~ msgstr ""
+#~ "La mise en page de l'espace de travail (par exemple, quelles fenêtres de "
+#~ "scripts, de données ou d'aide sont ouvertes) peut être enregistrée (et "
+#~ "rechargée) par espace de travail R ou de façon indépendante de l'espace "
+#~ "de travail de R. Laquelle préférez vous ?"
 
 #~ msgctxt "Caption: Some software is missing."
 #~ msgid "Missing software"

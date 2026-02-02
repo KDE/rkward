@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-01 00:39+0000\n"
-"PO-Revision-Date: 2026-01-14 05:10+0100\n"
+"POT-Creation-Date: 2026-02-02 00:39+0000\n"
+"PO-Revision-Date: 2026-02-01 03:11+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -688,6 +688,15 @@ msgid ""
 "b></p><p>In case this is not possible for some reason, refer to <a href="
 "\"%3\">%3</a> for alternative ways of reporting issues.</p>"
 msgstr ""
+"<p><b>სად უნდა შევატყობინო შეცდომების ან სურვილების შესახებ?</b></"
+"p><p>მადლობა, რომ დროს გამოყოფთ RKWard-ის გასაუმჯობესებლად. თქვენი მოთხოვნის "
+"ეფექტურად დასამუშავებლად, გთხოვთ, გამოაგზავნეთ შეცდომების ანგარიშები ან "
+"სურვილები <a href=\"%1\">KDE-ის ხარვეზების თვალთვალის სისტემაში</a>. "
+"გაითვალისწინეთ, რომ ამისათვის გჭირდებათ მომხმარებლის ანგარიში, რათა შევძლოთ "
+"თქვენთან დაკავშირება დამატებითი კითხვების შემთხვევაში. <b>თუ არ გაქვთ "
+"ანგარიში, ჯერ <a href=\"%2\">შექმენით ის</a>.</b></p><p>იმ შემთხვევაში, თუ "
+"ეს რაიმე მიზეზით შეუძლებელია, იხილეთ <a href=\"%3\">%3</a> პრობლემების "
+"შეტყობინების ალტერნატიული გზებისთვის.</p>"
 
 #: rkward/dialogs/rkerrordialog.cpp:50
 #, kde-format
@@ -698,6 +707,12 @@ msgid ""
 "sure to fill in the missing bits - in English - where indicated, especially "
 "in the \"Comment\" field.</p>"
 msgstr ""
+"<p><b>რა ინფორმაცია უნდა მივაწოდო და როგორ?</b></p>ღილაკზე \"პრობლემის "
+"ანგარიში\" დაჭერა გადაგიყვანთ KDE-ის ხარვეზების თვალთვალის სისტემაში. "
+"ავტორიზაციის შემდეგ, გარკვეული ინფორმაცია უკვე წინასწარ იქნება შევსებული "
+"ანგარიშის ფორმაში. გთხოვთ, დარწმუნდეთ, რომ შეავსებთ გამოტოვებულ ნაწილებს - "
+"ინგლისურ ენაზე - იქ, სადაც მითითებულია, განსაკუთრებით \"კომენტარის\" ველში.</"
+"p>"
 
 #: rkward/dialogs/rkerrordialog.cpp:57
 #, kde-format
@@ -5279,9 +5294,8 @@ msgstr ""
 #: rkward/settings/rksettingsmodulegeneral.cpp:101
 #, kde-format
 msgid ""
-"The workplace layout (i.e. which script-, data-, help-windows are open) may "
-"be saved (and loaded) per R workspace, or independent of the R workspace. "
-"Which do you prefer?"
+"Persistent workplace layout (i.e. which script-, data-, help-windows are "
+"open)"
 msgstr ""
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:105

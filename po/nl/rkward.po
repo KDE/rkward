@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-01 00:39+0000\n"
+"POT-Creation-Date: 2026-02-02 00:39+0000\n"
 "PO-Revision-Date: 2026-01-14 17:09+0100\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
@@ -5479,13 +5479,9 @@ msgstr "Maximum aantal te onthouden recente bestanden per categorie (*)"
 #: rkward/settings/rksettingsmodulegeneral.cpp:101
 #, kde-format
 msgid ""
-"The workplace layout (i.e. which script-, data-, help-windows are open) may "
-"be saved (and loaded) per R workspace, or independent of the R workspace. "
-"Which do you prefer?"
+"Persistent workplace layout (i.e. which script-, data-, help-windows are "
+"open)"
 msgstr ""
-"De indeling van de werkplaats (welke script-, gegevens-, help-vensters zijn "
-"open) kan per R-werkruimte worden opgeslagen (en ingelezen), of "
-"onafhankelijk van de R-werkruimte. Wat heeft uw voorkeur?"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:105
 #, kde-format
@@ -7992,6 +7988,15 @@ msgstr "De nieuwe naam invoeren"
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr "In editor bekijken (alleen-lezen)"
+
+#~ msgid ""
+#~ "The workplace layout (i.e. which script-, data-, help-windows are open) "
+#~ "may be saved (and loaded) per R workspace, or independent of the R "
+#~ "workspace. Which do you prefer?"
+#~ msgstr ""
+#~ "De indeling van de werkplaats (welke script-, gegevens-, help-vensters "
+#~ "zijn open) kan per R-werkruimte worden opgeslagen (en ingelezen), of "
+#~ "onafhankelijk van de R-werkruimte. Wat heeft uw voorkeur?"
 
 #~ msgctxt "Caption: Some software is missing."
 #~ msgid "Missing software"

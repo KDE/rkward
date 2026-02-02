@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-01 00:39+0000\n"
+"POT-Creation-Date: 2026-02-02 00:39+0000\n"
 "PO-Revision-Date: 2025-01-21 17:22+0300\n"
 "Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
 "Language-Team: Basealt Translation Team\n"
@@ -5486,13 +5486,9 @@ msgstr "Максимальное количество сохраняемых п�
 #: rkward/settings/rksettingsmodulegeneral.cpp:101
 #, kde-format
 msgid ""
-"The workplace layout (i.e. which script-, data-, help-windows are open) may "
-"be saved (and loaded) per R workspace, or independent of the R workspace. "
-"Which do you prefer?"
+"Persistent workplace layout (i.e. which script-, data-, help-windows are "
+"open)"
 msgstr ""
-"Компоновку рабочей зоны (то, какие окна сценариев, данных и справки открыты) "
-"можно сохранить (и загрузить) либо для каждой отдельной рабочей области R, "
-"либо независимо от рабочей области R. Какой вариант следует выбрать?"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:105
 #, kde-format
@@ -8023,6 +8019,16 @@ msgstr "Введите новое имя"
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr "Просмотреть в редакторе (только чтение)"
+
+#~ msgid ""
+#~ "The workplace layout (i.e. which script-, data-, help-windows are open) "
+#~ "may be saved (and loaded) per R workspace, or independent of the R "
+#~ "workspace. Which do you prefer?"
+#~ msgstr ""
+#~ "Компоновку рабочей зоны (то, какие окна сценариев, данных и справки "
+#~ "открыты) можно сохранить (и загрузить) либо для каждой отдельной рабочей "
+#~ "области R, либо независимо от рабочей области R. Какой вариант следует "
+#~ "выбрать?"
 
 #~ msgctxt "Caption: Some software is missing."
 #~ msgid "Missing software"

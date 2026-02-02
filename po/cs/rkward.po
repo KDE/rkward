@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-01 00:39+0000\n"
+"POT-Creation-Date: 2026-02-02 00:39+0000\n"
 "PO-Revision-Date: 2024-08-15 17:04+0200\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -5222,13 +5222,9 @@ msgstr ""
 #: rkward/settings/rksettingsmodulegeneral.cpp:101
 #, kde-format
 msgid ""
-"The workplace layout (i.e. which script-, data-, help-windows are open) may "
-"be saved (and loaded) per R workspace, or independent of the R workspace. "
-"Which do you prefer?"
+"Persistent workplace layout (i.e. which script-, data-, help-windows are "
+"open)"
 msgstr ""
-"Rozvržení pracoviště (to jest, která okna se skripty, daty, s nápovědou jsou "
-"otevřená), může být uloženo (a načteno) podle pracovního prostředí R, nebo "
-"na něm nezávisle. Čemu dáváte přednost?"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:105
 #, kde-format
@@ -7567,3 +7563,12 @@ msgstr ""
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr ""
+
+#~ msgid ""
+#~ "The workplace layout (i.e. which script-, data-, help-windows are open) "
+#~ "may be saved (and loaded) per R workspace, or independent of the R "
+#~ "workspace. Which do you prefer?"
+#~ msgstr ""
+#~ "Rozvržení pracoviště (to jest, která okna se skripty, daty, s nápovědou "
+#~ "jsou otevřená), může být uloženo (a načteno) podle pracovního prostředí "
+#~ "R, nebo na něm nezávisle. Čemu dáváte přednost?"

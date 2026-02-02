@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-01 00:39+0000\n"
+"POT-Creation-Date: 2026-02-02 00:39+0000\n"
 "PO-Revision-Date: 2022-11-14 20:26+0100\n"
 "Last-Translator: Mihkel Tõnnov <mihhkel@gmail.com>\n"
 "Language-Team: Estonian <>\n"
@@ -5366,13 +5366,9 @@ msgstr "Maks. näidatavate elementide arv"
 #: rkward/settings/rksettingsmodulegeneral.cpp:101
 #, kde-format
 msgid ""
-"The workplace layout (i.e. which script-, data-, help-windows are open) may "
-"be saved (and loaded) per R workspace, or independent of the R workspace. "
-"Which do you prefer?"
+"Persistent workplace layout (i.e. which script-, data-, help-windows are "
+"open)"
 msgstr ""
-"Tööala paigutust (millised skripti-, andme-, abiaknad on avatud) saab "
-"salvestada (ja laadida) koos R-i töötsooniga või sellest sõltumatult. Kumba "
-"viisi eelistad?"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:105
 #, kde-format
@@ -7898,6 +7894,15 @@ msgstr "Kirjuta uus nimi"
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr "Vaata redaktoris (kirjutuskaitstult)"
+
+#~ msgid ""
+#~ "The workplace layout (i.e. which script-, data-, help-windows are open) "
+#~ "may be saved (and loaded) per R workspace, or independent of the R "
+#~ "workspace. Which do you prefer?"
+#~ msgstr ""
+#~ "Tööala paigutust (millised skripti-, andme-, abiaknad on avatud) saab "
+#~ "salvestada (ja laadida) koos R-i töötsooniga või sellest sõltumatult. "
+#~ "Kumba viisi eelistad?"
 
 #~ msgid ""
 #~ "The software <tt>pandoc</tt>, required to rendering R markdown files, is "
