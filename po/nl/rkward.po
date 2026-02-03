@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-02 00:39+0000\n"
-"PO-Revision-Date: 2026-01-14 17:09+0100\n"
+"POT-Creation-Date: 2026-02-03 00:41+0000\n"
+"PO-Revision-Date: 2026-02-02 13:03+0100\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -5140,9 +5140,14 @@ msgstr ""
 "verandert"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:74
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Note: Further shortcuts can be assigned, and by default, Ctlr+Space "
+#| "invokes completions, in addition to this. Further, pressing the Tab key, "
+#| "while completions are shown, performs partial completion (if possible), "
+#| "independent of this setting."
 msgid ""
-"Note: Further shortcuts can be assigned, and by default, Ctlr+Space invokes "
+"Note: Further shortcuts can be assigned, and by default, Ctrl+Space invokes "
 "completions, in addition to this. Further, pressing the Tab key, while "
 "completions are shown, performs partial completion (if possible), "
 "independent of this setting."
@@ -5482,6 +5487,8 @@ msgid ""
 "Persistent workplace layout (i.e. which script-, data-, help-windows are "
 "open)"
 msgstr ""
+"Blijvende werkplaatsindeling (d.w.z. welke script-, gegevens-, help-vensters "
+"zijn geopend)"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:105
 #, kde-format
