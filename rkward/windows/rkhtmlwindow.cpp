@@ -88,7 +88,7 @@ class RKWebPage : public QWebEnginePage {
 	void load(const QUrl &url) {
 		RK_TRACE(APP);
 		direct_load = true;
-		QWebEnginePage::load(url);
+		//QWebEnginePage::load(url);
 	}
 
 	void setHtmlWrapper(const QString &html, const QUrl &baseurl) {
