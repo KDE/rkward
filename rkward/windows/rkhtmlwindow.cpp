@@ -78,11 +78,13 @@ class RKWebPage : public QWebEnginePage {
 	Q_OBJECT
   public:
 	explicit RKWebPage(RKHTMLWindow *window) : QWebEnginePage(window) {
+		qDebug("ctor start");
 		RK_TRACE(APP);
 		RKWebPage::window = window;
 		direct_load = false;
 		settings()->setFontFamily(QWebEngineSettings::StandardFont, QFontDatabase::systemFont(QFontDatabase::GeneralFont).family());
 		settings()->setFontFamily(QWebEngineSettings::FixedFont, QFontDatabase::systemFont(QFontDatabase::FixedFont).family());
+		qDebug("ctor end");
 	}
 
 	void load(const QUrl &url) {
@@ -180,7 +182,7 @@ class RKWebPage : public QWebEnginePage {
 
 class RKWebView : public QWebEngineView {
   public:
-	explicit RKWebView(QWidget *parent) : QWebEngineView(parent) {};
+	explicit RKWebView(RKWebPage *page, QWidget *parent) : QWebEngineView(page, parent) {};
 	void print(QPrinter *printer) {
 		if (!page()) return;
 		QWebEngineView::forPage(page())->print(printer);
@@ -242,15 +244,19 @@ RKHTMLWindow::RKHTMLWindow(QWidget *parent, WindowMode mode) : RKMDIWindow(paren
 	current_cache_file = nullptr;
 	QVBoxLayout *layout = new QVBoxLayout(this);
 	layout->setContentsMargins(0, 0, 0, 0);
-	view = new RKWebView(this);
-	if (new_window) {
-		page = new_window;
-		page->window = this;
-		new_window = nullptr;
-	} else {
-		page = new RKWebPage(this);
-	}
-	view->setPage(page);
+	qDebug("Before construct page");
+	page = new RKWebPage(this);
+	qDebug("Before construct view");
+	view = new RKWebView(page, this);
+	qDebug("After construct");
+	/*	if (new_window) {
+	        page = new_window;
+	        page->window = this;
+	        new_window = nullptr;
+	    } else {
+	        page = new RKWebPage(this);
+	    }
+	    view->setPage(page); */
 	view->setContextMenuPolicy(Qt::CustomContextMenu);
 	layout->addWidget(view, 1);
 	findbar = new RKFindBar(this, true);
@@ -261,28 +267,28 @@ RKHTMLWindow::RKHTMLWindow(QWidget *parent, WindowMode mode) : RKMDIWindow(paren
 	// Apply current color scheme to page. This needs support in the CSS of the page, so will only work for RKWard help and output pages.
 	// Note that the CSS in those pages also has "automatic" support for dark mode ("prefers-color-scheme: dark"; but see https://bugreports.qt.io/browse/QTBUG-89753), however,
 	// for a seamless appearance, the only option is to set the theme colors dynamically, via javascript.
-	auto scheme = RKStyle::viewScheme();
-	QString color_scheme_js = QStringLiteral("function rksetcolor(name, value) { document.querySelector(':root').style.setProperty(name, value); }\n"
-	                                         "rksetcolor('--regular-text-color', '%1');\n"
-	                                         "rksetcolor('--background-color', '%2');\n"
-	                                         "rksetcolor('--header-color', '%3');\n"
-	                                         "rksetcolor('--anchor-color', '%4');\n"
-	                                         "rksetcolor('--shadow-color', '%5');")
-	                              .arg(scheme->foreground().color().name(), scheme->background().color().name(),
-	                                   scheme->foreground(KColorScheme::VisitedText).color().name(), scheme->foreground(KColorScheme::LinkText).color().name(),
-	                                   scheme->shade(KColorScheme::MidShade).name());
-	auto p = QWebEngineProfile::defaultProfile();
-	QWebEngineScript fix_color_scheme;
-	const QString id = QStringLiteral("fix_color_scheme");
-	const auto scripts = p->scripts()->find(id);
-	for (const auto &script : scripts) {
-		p->scripts()->remove(script); // remove any existing variant of the script. It might have been created for the wrong theme.
-	}
-	fix_color_scheme.setName(id);
-	fix_color_scheme.setInjectionPoint(QWebEngineScript::DocumentReady);
-	fix_color_scheme.setSourceCode(color_scheme_js);
-	p->scripts()->insert(fix_color_scheme);
-	// page->setBackgroundColor(scheme.background().color());  // avoids brief white blink while loading, but is too risky on pages that are not dark scheme aware.
+	/*	auto scheme = RKStyle::viewScheme();
+	    QString color_scheme_js = QStringLiteral("function rksetcolor(name, value) { document.querySelector(':root').style.setProperty(name, value); }\n"
+	                                             "rksetcolor('--regular-text-color', '%1');\n"
+	                                             "rksetcolor('--background-color', '%2');\n"
+	                                             "rksetcolor('--header-color', '%3');\n"
+	                                             "rksetcolor('--anchor-color', '%4');\n"
+	                                             "rksetcolor('--shadow-color', '%5');")
+	                                  .arg(scheme->foreground().color().name(), scheme->background().color().name(),
+	                                       scheme->foreground(KColorScheme::VisitedText).color().name(), scheme->foreground(KColorScheme::LinkText).color().name(),
+	                                       scheme->shade(KColorScheme::MidShade).name());
+	    auto p = QWebEngineProfile::defaultProfile();
+	    QWebEngineScript fix_color_scheme;
+	    const QString id = QStringLiteral("fix_color_scheme");
+	    const auto scripts = p->scripts()->find(id);
+	    for (const auto &script : scripts) {
+	        p->scripts()->remove(script); // remove any existing variant of the script. It might have been created for the wrong theme.
+	    }
+	    fix_color_scheme.setName(id);
+	    fix_color_scheme.setInjectionPoint(QWebEngineScript::DocumentReady);
+	    fix_color_scheme.setSourceCode(color_scheme_js);
+	    p->scripts()->insert(fix_color_scheme);
+	    // page->setBackgroundColor(scheme.background().color());  // avoids brief white blink while loading, but is too risky on pages that are not dark scheme aware. */
 
 	layout->addWidget(findbar);
 	findbar->hide();
