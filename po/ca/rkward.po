@@ -1,5 +1,5 @@
 # Translation of rkward.po to Catalan
-# Copyright (C) 2006-2025 This_file_is_part_of_KDE
+# Copyright (C) 2006-2026 This_file_is_part_of_KDE
 # This file is put in the public domain.
 # 28-11-2006: v 1.00
 #
