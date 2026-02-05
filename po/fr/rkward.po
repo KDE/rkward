@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-02-03 00:41+0000\n"
-"PO-Revision-Date: 2026-01-14 08:18+0100\n"
+"PO-Revision-Date: 2026-02-03 07:41+0100\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -5605,6 +5605,8 @@ msgid ""
 "Persistent workplace layout (i.e. which script-, data-, help-windows are "
 "open)"
 msgstr ""
+"Disposition persistante de l’espace de travail (C’est-à-dire quelles "
+"fenêtres de scripts, données ou d'aide sont ouvertes)"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:105
 #, kde-format
