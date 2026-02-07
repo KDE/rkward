@@ -28,7 +28,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 		<Menu name="view"><text>&amp;View</text>
 			<Action name="zoom_in"/>
 			<Action name="zoom_out"/>
-			<Action name="view_encoding"/>
 			<Separator/>
 			<Action name="output_refresh"/>
 		</Menu>

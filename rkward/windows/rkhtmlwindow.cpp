@@ -20,9 +20,9 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include <QBuffer>
 #include <QCheckBox>
+#include <QClipboard>
 #include <QDir>
 #include <QFileDialog>
-#include <QFontDatabase>
 #include <QGuiApplication>
 #include <QHBoxLayout>
 #include <QHostInfo>
@@ -30,19 +30,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QMenu>
 #include <QMimeDatabase>
 #include <QPrintDialog>
-#include <QStringEncoder>
 #include <QTemporaryFile>
 #include <QTimer>
-#include <QWebEngineFindTextResult>
-#include <QWebEnginePage>
-#include <QWebEngineProfile>
-#include <QWebEngineScript>
-#include <QWebEngineScriptCollection>
-#include <QWebEngineSettings>
-#include <QWebEngineUrlRequestJob>
-#include <QWebEngineUrlSchemeHandler>
-#include <QWebEngineView>
-#include <QWheelEvent>
 #include <qfileinfo.h>
 #include <qlayout.h>
 #include <qwidget.h>
@@ -66,6 +55,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "../settings/rksettings.h"
 #include "../settings/rksettingsmoduleoutput.h"
 #include "../settings/rksettingsmoduler.h"
+#include "../windows/rkhtmlviewer.h"
 #include "../windows/rkworkplace.h"
 #include "../windows/rkworkplaceview.h"
 #include "rkhelpsearchwindow.h"
@@ -74,190 +64,18 @@ QUrl restorableUrl(const QUrl &url) {
 	return QUrl(url.url().replace(RKSettingsModuleR::helpBaseUrl(), QLatin1String("rkward://RHELPBASE")));
 }
 
-class RKWebPage : public QWebEnginePage {
-	Q_OBJECT
-  public:
-	explicit RKWebPage(RKHTMLWindow *window) : QWebEnginePage(window) {
-		RK_TRACE(APP);
-		RKWebPage::window = window;
-		direct_load = false;
-		settings()->setFontFamily(QWebEngineSettings::StandardFont, QFontDatabase::systemFont(QFontDatabase::GeneralFont).family());
-		settings()->setFontFamily(QWebEngineSettings::FixedFont, QFontDatabase::systemFont(QFontDatabase::FixedFont).family());
-	}
-
-	void load(const QUrl &url) {
-		RK_TRACE(APP);
-		direct_load = true;
-		QWebEnginePage::load(url);
-	}
-
-	void setHtmlWrapper(const QString &html, const QUrl &baseurl) {
-		direct_load = true;
-		setHtml(html, baseurl);
-	}
-	bool supportsContentType(const QString &name) {
-		if (name.startsWith(QLatin1String("text"))) return true;
-		return false;
-	}
-	void downloadUrl(const QUrl &url) {
-		download(url);
-	}
-	void setScrollPosition(const QPoint &point) {
-		RK_DEBUG(APP, DL_DEBUG, "scrolling to %d, %d", point.x(), point.y());
-		runJavaScript(QStringLiteral("window.scrollTo(%1, %2);").arg(point.x()).arg(point.y()));
-	}
-	void setScrollPositionWhenDone(const QPoint &pos) {
-		QMetaObject::Connection *const connection = new QMetaObject::Connection;
-		*connection = connect(this, &QWebEnginePage::loadFinished, [this, pos, connection]() {
-			QObject::disconnect(*connection);
-			delete connection;
-			setScrollPosition(pos);
-		});
-	}
-
-  Q_SIGNALS:
-	void pageInternalNavigation(const QUrl &url);
-
-  protected:
-	bool acceptNavigationRequest(const QUrl &navurl, QWebEnginePage::NavigationType type, bool is_main_frame) override {
-		QUrl cururl(url());
-		Q_UNUSED(type);
-
-		RK_TRACE(APP);
-		RK_DEBUG(APP, DL_DEBUG, "Navigation request to %s", qPrintable(navurl.toString()));
-		if (direct_load && (is_main_frame)) {
-			direct_load = false;
-			return true;
-		}
-
-		if (RKHTMLWindow::new_window) {
-			RK_ASSERT(RKHTMLWindow::new_window == this);
-			RK_ASSERT(!window);
-			RKWorkplace::mainWorkplace()->openAnyUrl(restorableUrl(navurl));
-			RKHTMLWindow::new_window = nullptr;
-			if (!window) deleteLater(); // this page was _not_ reused
-			return false;
-		}
-		RK_ASSERT(window);
-
-		if (!is_main_frame) {
-			if (navurl.isLocalFile() && supportsContentType(QMimeDatabase().mimeTypeForUrl(navurl).name())) return true;
-		}
-
-		if (cururl.matches(navurl, QUrl::NormalizePathSegments | QUrl::StripTrailingSlash)) {
-			RK_DEBUG(APP, DL_DEBUG, "Page internal navigation request from %s to %s", qPrintable(cururl.toString()), qPrintable(navurl.toString()));
-			Q_EMIT pageInternalNavigation(navurl);
-			return true;
-		}
-
-		window->openURL(navurl);
-		return false;
-	}
-
-	QWebEnginePage *createWindow(QWebEnginePage::WebWindowType) override {
-		RK_TRACE(APP);
-		RKWebPage *ret = new RKWebPage(nullptr);
-		RKHTMLWindow::new_window = ret; // Don't actually create a full window, until we know which URL we're talking about.
-		// sigh: acceptNavigationRequest() does  not get called on the new page...
-		QMetaObject::Connection *const connection = new QMetaObject::Connection;
-		*connection = connect(ret, &RKWebPage::loadStarted, [ret, connection
-#ifdef _MSC_VER
-		                                                     ,
-		                                                     this // capturing "this" makes MSVC happy
-#endif
-		]() {
-			QObject::disconnect(*connection);
-			delete connection;
-			ret->acceptNavigationRequest(ret->url(), QWebEnginePage::NavigationTypeLinkClicked, true);
-		});
-		return (ret);
-	}
-
-	friend class RKHTMLWindow;
-	RKHTMLWindow *window;
-	bool direct_load;
-};
-
-class RKWebView : public QWebEngineView {
-  public:
-	explicit RKWebView(QWidget *parent) : QWebEngineView(parent) {};
-	void print(QPrinter *printer) {
-		if (!page()) return;
-		QWebEngineView::forPage(page())->print(printer);
-	};
-
-  protected:
-	bool eventFilter(QObject *, QEvent *event) override {
-		if (event->type() == QEvent::Wheel) {
-			QWheelEvent *we = static_cast<QWheelEvent *>(event);
-			if (we->modifiers() & Qt::ControlModifier) {
-				setZoomFactor(zoomFactor() + we->angleDelta().y() / 1200.0);
-				return true;
-			}
-		}
-		return false;
-	}
-	void childEvent(QChildEvent *event) override {
-		if (event->type() == QChildEvent::ChildAdded) {
-			event->child()->installEventFilter(this);
-		}
-	}
-	// NOTE: Code below won't work, due to https://bugreports.qt.io/browse/QTBUG-43602
-	/*	void wheelEvent (QWheelEvent *event) override {
-	        [handle zooming]
-	    } */
-};
-
-class RKWebEngineKIOForwarder : public QWebEngineUrlSchemeHandler {
-  public:
-	explicit RKWebEngineKIOForwarder(QObject *parent) : QWebEngineUrlSchemeHandler(parent) {}
-	void requestStarted(QWebEngineUrlRequestJob *request) override {
-		RK_DEBUG(APP, DL_DEBUG, "new KIO request to %s", qPrintable(request->requestUrl().url()));
-		KIO::StoredTransferJob *job = KIO::storedGet(request->requestUrl(), KIO::NoReload, KIO::HideProgressInfo);
-		connect(job, &KIO::StoredTransferJob::result, this, [this, job]() { kioJobFinished(job); });
-		jobs.insert(job, request);
-	}
-
-  private:
-	void kioJobFinished(KIO::StoredTransferJob *job) {
-		QWebEngineUrlRequestJob *request = jobs.take(job);
-		if (!request) {
-			return;
-		}
-		if (job->error()) {
-			request->fail(QWebEngineUrlRequestJob::UrlInvalid); // TODO
-			return;
-		}
-		QBuffer *buf = new QBuffer(request);
-		buf->setData(job->data());
-		request->reply(QMimeDatabase().mimeTypeForData(job->data()).name().toUtf8(), buf);
-	}
-	QMap<KIO::StoredTransferJob *, QPointer<QWebEngineUrlRequestJob>> jobs;
-};
-
-RKWebPage *RKHTMLWindow::new_window = nullptr;
 RKHTMLWindow::RKHTMLWindow(QWidget *parent, WindowMode mode) : RKMDIWindow(parent, RKMDIWindow::HelpWindow) {
 	RK_TRACE(APP);
 
 	current_cache_file = nullptr;
 	QVBoxLayout *layout = new QVBoxLayout(this);
 	layout->setContentsMargins(0, 0, 0, 0);
-	view = new RKWebView(this);
-	if (new_window) {
-		page = new_window;
-		page->window = this;
-		new_window = nullptr;
-	} else {
-		page = new RKWebPage(this);
-	}
-	view->setPage(page);
+	page = RKHTMLViewer::getNew(this);
+	auto view = page->createWidget(this);
 	view->setContextMenuPolicy(Qt::CustomContextMenu);
 	layout->addWidget(view, 1);
 	findbar = new RKFindBar(this, true);
 	findbar->setPrimaryOptions(QList<QWidget *>() << findbar->getOption(RKFindBar::FindAsYouType) << findbar->getOption(RKFindBar::MatchCase));
-	if (!QWebEngineProfile::defaultProfile()->urlSchemeHandler("help")) {
-		QWebEngineProfile::defaultProfile()->installUrlSchemeHandler("help", new RKWebEngineKIOForwarder(RKWardMainWindow::getMain()));
-	}
 	// Apply current color scheme to page. This needs support in the CSS of the page, so will only work for RKWard help and output pages.
 	// Note that the CSS in those pages also has "automatic" support for dark mode ("prefers-color-scheme: dark"; but see https://bugreports.qt.io/browse/QTBUG-89753), however,
 	// for a seamless appearance, the only option is to set the theme colors dynamically, via javascript.
@@ -271,23 +89,12 @@ RKHTMLWindow::RKHTMLWindow(QWidget *parent, WindowMode mode) : RKMDIWindow(paren
 	                              .arg(scheme->foreground().color().name(), scheme->background().color().name(),
 	                                   scheme->foreground(KColorScheme::VisitedText).color().name(), scheme->foreground(KColorScheme::LinkText).color().name(),
 	                                   scheme->shade(KColorScheme::MidShade).name());
-	auto p = QWebEngineProfile::defaultProfile();
-	QWebEngineScript fix_color_scheme;
-	const QString id = QStringLiteral("fix_color_scheme");
-	const auto scripts = p->scripts()->find(id);
-	for (const auto &script : scripts) {
-		p->scripts()->remove(script); // remove any existing variant of the script. It might have been created for the wrong theme.
-	}
-	fix_color_scheme.setName(id);
-	fix_color_scheme.setInjectionPoint(QWebEngineScript::DocumentReady);
-	fix_color_scheme.setSourceCode(color_scheme_js);
-	p->scripts()->insert(fix_color_scheme);
-	// page->setBackgroundColor(scheme.background().color());  // avoids brief white blink while loading, but is too risky on pages that are not dark scheme aware.
+	page->installPersistentJS(u"fix_color_scheme"_s, color_scheme_js);
+	page->installHelpProtocolHandler();
 
 	layout->addWidget(findbar);
 	findbar->hide();
-	connect(findbar, &RKFindBar::findRequest, this, &RKHTMLWindow::findRequest);
-	have_highlight = false;
+	connect(findbar, &RKFindBar::findRequest, page, &RKHTMLViewer::findRequest);
 
 	part = new RKHTMLWindowPart(this);
 	setPart(part);
@@ -297,19 +104,8 @@ RKHTMLWindow::RKHTMLWindow(QWidget *parent, WindowMode mode) : RKMDIWindow(paren
 	setFocusProxy(view);
 
 	// We have to connect this in order to allow browsing.
-	connect(page, &RKWebPage::pageInternalNavigation, this, &RKHTMLWindow::internalNavigation);
-	connect(page->profile(), &QWebEngineProfile::downloadRequested, this, [this](QWebEngineDownloadRequest *item) {
-		QString defpath;
-		defpath = QDir(item->downloadDirectory()).absoluteFilePath(item->downloadFileName());
-		QString path = QFileDialog::getSaveFileName(this, i18n("Save as"), defpath);
-		if (path.isEmpty()) return;
-		QFileInfo fi(path);
-		item->setDownloadDirectory(fi.absolutePath());
-		item->setDownloadFileName(fi.fileName());
-		item->accept();
-	});
+	connect(page, &RKHTMLViewer::pageInternalNavigation, this, &RKHTMLWindow::internalNavigation);
 
-	connect(page, &RKWebPage::printRequested, this, &RKHTMLWindow::slotPrint);
 	connect(view, &QWidget::customContextMenuRequested, this, &RKHTMLWindow::makeContextMenu);
 
 	current_history_position = -1;
@@ -319,7 +115,7 @@ RKHTMLWindow::RKHTMLWindow(QWidget *parent, WindowMode mode) : RKMDIWindow(paren
 	useMode(mode);
 
 	// needed to enable / disable the run selection action
-	connect(view, &RKWebView::selectionChanged, this, &RKHTMLWindow::selectionChanged);
+	connect(page, &RKHTMLViewer::selectionChanged, this, &RKHTMLWindow::selectionChanged);
 	selectionChanged();
 }
 
@@ -337,13 +133,13 @@ QUrl RKHTMLWindow::restorableUrl() {
 void RKHTMLWindow::makeContextMenu(const QPoint &pos) {
 	RK_TRACE(APP);
 
-	QMenu *menu = QWebEngineView::forPage(page)->createStandardContextMenu();
+	auto menu = page->createContextMenu(pos);
 	menu->addAction(part->run_selection);
-	menu->exec(view->mapToGlobal(pos));
+	menu->exec(mapToGlobal(pos));
 	delete (menu);
 }
 
-void RKHTMLWindow::selectionChanged() {
+void RKHTMLWindow::selectionChanged(bool have_selection) {
 	RK_TRACE(APP);
 
 	if (!(part && part->run_selection)) {
@@ -351,46 +147,24 @@ void RKHTMLWindow::selectionChanged() {
 		return;
 	}
 
-	part->run_selection->setEnabled(view->hasSelection());
+	part->run_selection->setEnabled(have_selection);
 }
 
 void RKHTMLWindow::runSelection() {
 	RK_TRACE(APP);
 
-	RKConsole::pipeUserCommand(view->selectedText());
-}
-
-void RKHTMLWindow::findRequest(const QString &text, bool backwards, const RKFindBar *findbar, bool *found) {
-	RK_TRACE(APP);
-
-	// QWebEngine does not offer highlight all
-	*found = true;
-	QWebEnginePage::FindFlags flags;
-	if (backwards) flags |= QWebEnginePage::FindBackward;
-	if (findbar->isOptionSet(RKFindBar::MatchCase)) flags |= QWebEnginePage::FindCaseSensitively;
-	page->findText(text, flags, [this](QWebEngineFindTextResult result) {
-		if (result.numberOfMatches() == 0) {
-			this->findbar->indicateSearchFail();
-		}
-	});
+	RKConsole::pipeUserCommand(page->selectedText());
 }
 
 void RKHTMLWindow::slotPrint() {
 	RK_TRACE(APP);
-
-	// NOTE: taken from kwebkitpart, with small mods
-	// Make it non-modal, in case a redirection deletes the part
-	QPointer<QPrintDialog> dlg(new QPrintDialog(view));
-	if (dlg->exec() == QPrintDialog::Accepted) {
-		view->print(dlg->printer());
-	}
-	delete dlg;
+	page->print();
 }
 
 void RKHTMLWindow::slotExport() {
 	RK_TRACE(APP);
 
-	page->downloadUrl(page->url());
+	page->exportPage();
 }
 
 void RKHTMLWindow::slotSave() {
@@ -426,11 +200,11 @@ void RKHTMLWindow::openLocationFromHistory(VisitedLocation &loc) {
 	RK_ASSERT(current_history_position <= history_last);
 	QPoint scroll_pos = loc.scroll_position.toPoint();
 	if (loc.url == current_url) {
-		page->setScrollPosition(scroll_pos);
+		page->setScrollPosition(scroll_pos, false);
 	} else {
 		url_change_is_from_history = true;
-		openURL(loc.url); // TODO: merge into restoreBrowserState()?
-		page->setScrollPositionWhenDone(scroll_pos);
+		openURL(loc.url);
+		page->setScrollPosition(scroll_pos, true);
 		url_change_is_from_history = false;
 	}
 
@@ -556,7 +330,7 @@ bool RKHTMLWindow::handleRKWardURL(const QUrl &url, RKHTMLWindow *window) {
 
 void RKHTMLWindow::setContent(const QString &content) {
 	RK_TRACE(APP);
-	page->setHtmlWrapper(content, QUrl());
+	page->setHTML(content, QUrl());
 }
 
 bool RKHTMLWindow::openURL(const QUrl &url) {
@@ -565,7 +339,7 @@ bool RKHTMLWindow::openURL(const QUrl &url) {
 	if (handleRKWardURL(url, this)) return true;
 
 	QPoint restore_position;
-	if (url == current_url) restore_position = page->scrollPosition().toPoint();
+	if (url == current_url) restore_position = page->scrollPosition();
 
 	QMimeType mtype = QMimeDatabase().mimeTypeForUrl(url);
 	if (window_mode == HTMLOutputWindow) {
@@ -595,7 +369,7 @@ bool RKHTMLWindow::openURL(const QUrl &url) {
 				RK_DEBUG(APP, DL_WARNING, "Applying workaround for https://bugs.kde.org/show_bug.cgi?id=405386");
 				QFile f(url.toLocalFile());
 				RK_ASSERT(f.open(QIODevice::ReadOnly));
-				page->setHtmlWrapper(QString::fromUtf8(f.readAll()), url.adjusted(QUrl::RemoveFilename));
+				page->setHTML(QString::fromUtf8(f.readAll()), url.adjusted(QUrl::RemoveFilename));
 				f.close();
 			} else {
 				// NOTE: Quirk in Qt 6.7: When first loading a page, the window is somehow brought to the front, again. In preview windows
@@ -604,11 +378,11 @@ bool RKHTMLWindow::openURL(const QUrl &url) {
 				//       With this, the flicker is still there, but feels more "natural"
 				if (isVisible()) page->load(url);
 			}
-			if (!restore_position.isNull()) page->setScrollPositionWhenDone(restore_position);
+			if (!restore_position.isNull()) page->setScrollPosition(restore_position, true);
 		} else {
 			RK_DEBUG(APP, DL_WARNING, "Attempt to open non-existant local file %s", qPrintable(url.toLocalFile()));
 			if (window_mode == HTMLOutputWindow) {
-				page->setHtmlWrapper(QStringLiteral("<HTML><BODY><H1>") + i18n("RKWard output file %s does not (yet) exist").arg(url.toLocalFile()) + QStringLiteral("</H1>\n</BODY></HTML>"), QUrl());
+				page->setHTML(QStringLiteral("<HTML><BODY><H1>") + i18n("RKWard output file %1 does not (yet) exist").arg(url.toLocalFile()) + QStringLiteral("</H1>\n</BODY></HTML>"), QUrl());
 			} else {
 				fileDoesNotExistMessage();
 			}
@@ -765,8 +539,8 @@ void RKHTMLWindow::refresh() {
 		openRKHPage(url());
 	} else {
 		// NOTE: Special handling for output window, which may not have existed at the time of first "load"
-		if (!view->url().isEmpty()) view->reload();
-		else view->load(url());
+		if (!page->url().isEmpty()) page->reload();
+		else page->load(url());
 	}
 }
 
@@ -774,25 +548,17 @@ void RKHTMLWindow::scrollToBottom() {
 	RK_TRACE(APP);
 
 	RK_ASSERT(window_mode == HTMLOutputWindow);
-	page->runJavaScript(QStringLiteral("{ let se = (document.scrollingElement || document.body); se.scrollTop = se.scrollHeight; }"));
+	page->runJS(QStringLiteral("{ let se = (document.scrollingElement || document.body); se.scrollTop = se.scrollHeight; }"));
 }
 
 void RKHTMLWindow::zoomIn() {
 	RK_TRACE(APP);
-	view->setZoomFactor(view->zoomFactor() * 1.1);
+	page->zoomIn();
 }
 
 void RKHTMLWindow::zoomOut() {
 	RK_TRACE(APP);
-	view->setZoomFactor(view->zoomFactor() / 1.1);
-}
-
-void RKHTMLWindow::setTextEncoding(QStringConverter::Encoding encoding) {
-	RK_TRACE(APP);
-
-	QStringEncoder converter(encoding);
-	page->settings()->setDefaultTextEncoding(QString::fromUtf8(converter.name()));
-	view->reload();
+	page->zoomOut();
 }
 
 void RKHTMLWindow::useMode(WindowMode new_mode) {
@@ -805,8 +571,8 @@ void RKHTMLWindow::useMode(WindowMode new_mode) {
 		setWindowIcon(RKStandardIcons::getIcon(RKStandardIcons::WindowOutput));
 		part->setOutputWindowSkin();
 		setMetaInfo(i18n("Output Window"), QUrl(QStringLiteral("rkward://page/rkward_output")), RKSettingsModuleOutput::page_id);
-		connect(page, &RKWebPage::loadFinished, this, &RKHTMLWindow::scrollToBottom);
-		page->action(RKWebPage::Reload)->setText(i18n("&Refresh Output"));
+		connect(page, &RKHTMLViewer::loadFinished, this, &RKHTMLWindow::scrollToBottom);
+		part->outputRefresh->setText(i18n("&Refresh Output"));
 
 		//	TODO: This would be an interesting extension, but how to deal with concurrent edits?
 		//		page->setContentEditable (true);
@@ -816,7 +582,7 @@ void RKHTMLWindow::useMode(WindowMode new_mode) {
 		type = RKMDIWindow::HelpWindow | RKMDIWindow::DocumentWindow;
 		setWindowIcon(RKStandardIcons::getIcon(RKStandardIcons::WindowHelp));
 		part->setHelpWindowSkin();
-		disconnect(page, &RKWebPage::loadFinished, this, &RKHTMLWindow::scrollToBottom);
+		disconnect(page, &RKHTMLViewer::loadFinished, this, &RKHTMLWindow::scrollToBottom);
 	}
 
 	updateCaption(current_url);
@@ -832,7 +598,7 @@ void RKHTMLWindow::startNewCacheFile() {
 void RKHTMLWindow::fileDoesNotExistMessage() {
 	RK_TRACE(APP);
 
-	page->setHtmlWrapper(u"<html><body><h1>"_s + i18n("Page does not exist or is broken") + u"</h1></body></html>"_s, QUrl());
+	page->setHTML(u"<html><body><h1>"_s + i18n("Page does not exist or is broken") + u"</h1></body></html>"_s, QUrl());
 }
 
 void RKHTMLWindow::flushOutput() {
@@ -878,34 +644,23 @@ RKHTMLWindowPart::RKHTMLWindowPart(RKHTMLWindow *window) : KParts::Part(window) 
 void RKHTMLWindowPart::initActions() {
 	RK_TRACE(APP);
 
-	// We keep our own history.
-	window->page->action(RKWebPage::Back)->setVisible(false);
-	window->page->action(RKWebPage::Forward)->setVisible(false);
-	// For now we won't bother with this one: Does not behave well, in particular (but not only) WRT to rkward://-links
-	window->page->action(RKWebPage::DownloadLinkToDisk)->setVisible(false);
-	// Not really useful for us, and cannot easily be made to work, as all new pages go through RKWorkplace::openAnyUrl()
-	window->page->action(RKWebPage::ViewSource)->setVisible(false);
-	// Well, technically, all our windows are tabs, but we're calling them "window".
-	// At any rate, we don't need both "open link in new tab" and "open link in new window".
-	window->page->action(RKWebPage::OpenLinkInNewTab)->setVisible(false);
-
 	// common actions
-	actionCollection()->addAction(KStandardAction::Copy, QStringLiteral("copy"), window->view->pageAction(RKWebPage::Copy), &QAction::trigger);
+	actionCollection()->addAction(KStandardAction::Copy, QStringLiteral("copy"), window->page, [page = window->page]() {
+		page->runJS(u"{ Window.getSelection(); }"_s, [](const QVariant &res) {
+			const auto txt = res.toString();
+			if (!txt.isEmpty()) {
+				qApp->clipboard()->setText(txt);
+			}
+		});
+	});
 	QAction *zoom_in = actionCollection()->addAction(QStringLiteral("zoom_in"), new QAction(QIcon::fromTheme(QStringLiteral("zoom-in")), i18n("Zoom In"), this));
 	connect(zoom_in, &QAction::triggered, window, &RKHTMLWindow::zoomIn);
 	QAction *zoom_out = actionCollection()->addAction(QStringLiteral("zoom_out"), new QAction(QIcon::fromTheme(QStringLiteral("zoom-out")), i18n("Zoom Out"), this));
 	connect(zoom_out, &QAction::triggered, window, &RKHTMLWindow::zoomOut);
-	actionCollection()->addAction(KStandardAction::SelectAll, QStringLiteral("select_all"), window->view->pageAction(RKWebPage::SelectAll), &QAction::trigger);
-	// unfortunately, this will only affect the default encoding, not necessarily the "real" encoding
-	KCodecAction *encoding = new KCodecAction(QIcon::fromTheme(QStringLiteral("character-set")), i18n("Default &Encoding"), this, true);
-	encoding->setWhatsThis(i18n("Set the encoding to assume in case no explicit encoding has been set in the page or in the HTTP headers."));
-	actionCollection()->addAction(QStringLiteral("view_encoding"), encoding);
-	connect(encoding, &KCodecAction::codecNameTriggered, window, [this](const QByteArray &name) {
-		auto encoding = QStringConverter::encodingForName(name.constData());
-		if (encoding) {
-			window->setTextEncoding(encoding.value());
-		}
+	actionCollection()->addAction(KStandardAction::SelectAll, QStringLiteral("select_all"), window->page, [page = window->page]() {
+		page->runJS(u"{ Document.selectAll(document); }"_s);
 	});
+	// TODO: We used to have an encoding action. Did not seem worth the trouble to port
 
 	print = actionCollection()->addAction(KStandardAction::Print, QStringLiteral("print_html"), window, &RKHTMLWindow::slotPrint);
 	export_page = actionCollection()->addAction(QStringLiteral("save_html"), new QAction(QIcon::fromTheme(QStringLiteral("file-save")), i18n("Export Page as HTML"), this));
@@ -930,7 +685,9 @@ void RKHTMLWindowPart::initActions() {
 	outputFlush->setText(i18n("&Clear Output"));
 	outputFlush->setIcon(QIcon::fromTheme(QStringLiteral("edit-delete")));
 
-	outputRefresh = actionCollection()->addAction(QStringLiteral("output_refresh"), window->page->action(RKWebPage::Reload));
+	outputRefresh = actionCollection()->addAction(QStringLiteral("output_refresh"), window->page, &RKHTMLViewer::reload);
+	outputRefresh->setText(i18n("Reload"));
+	outputRefresh->setIcon(QIcon::fromTheme(QStringLiteral("view-refresh")));
 
 	revert = actionCollection()->addAction(QStringLiteral("output_revert"), window, &RKHTMLWindow::slotRevert);
 	revert->setText(i18n("&Revert to last saved state"));
