@@ -42,7 +42,7 @@ class RKFindBar : public QWidget {
 	void forward();
 	void backward();
   Q_SIGNALS:
-	void findRequest(const QString &text, bool backwards, const RKFindBar *findbar, bool *result);
+	void findRequest(const QString &text, bool backwards, RKFindBar *findbar, bool *result);
   private Q_SLOTS:
 	/** search term _or_ search options changed. Triggers a forward search, if FindAsYouType is active */
 	void searchChanged();
