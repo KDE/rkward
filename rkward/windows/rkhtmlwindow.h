@@ -30,8 +30,7 @@ class QTemporaryFile;
 class RKHTMLWindow;
 class RKFindBar;
 class RCommandChain;
-class RKWebPage;
-class RKWebView;
+class RKHTMLViewer;
 class RKOutputDirectory;
 
 /**
@@ -84,7 +83,7 @@ class RKHTMLWindow : public RKMDIWindow {
 	void slotActivate();
 	void slotForward();
 	void slotBack();
-	void selectionChanged();
+	void selectionChanged(bool have_selection = false);
 	void runSelection();
 	/** flush current output. */
 	void flushOutput();
@@ -92,7 +91,6 @@ class RKHTMLWindow : public RKMDIWindow {
 	void refresh();
 	void zoomIn();
 	void zoomOut();
-	void setTextEncoding(QStringConverter::Encoding encoding);
 	void updateState();
   private Q_SLOTS:
 	void scrollToBottom();
@@ -101,14 +99,11 @@ class RKHTMLWindow : public RKMDIWindow {
 	void mimeTypeJobFail2(KJob *);
 	void internalNavigation(const QUrl &new_url);
 	void makeContextMenu(const QPoint &pos);
-	void findRequest(const QString &text, bool backwards, const RKFindBar *findbar, bool *found);
 
   private:
 	friend class RKHTMLWindowPart;
-	RKWebView *view;
-	RKWebPage *page;
+	RKHTMLViewer *page;
 	RKFindBar *findbar;
-	bool have_highlight;
 	/** In case the part is a khtmlpart: A ready-cast pointer to that. 0 otherwise (if a webkit part is in use) */
 	RKHTMLWindowPart *part;
 	/** update caption according to given URL */
@@ -138,8 +133,6 @@ class RKHTMLWindow : public RKMDIWindow {
 	void saveBrowserState(VisitedLocation *state);
 	/** the RKOutpuDirectory viewed in this window (if any) */
 	RKOutputDirectory *dir;
-	friend class RKWebPage;
-	static RKWebPage *new_window;
 };
 
 class RKHTMLWindowPart : public KParts::Part {
