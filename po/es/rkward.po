@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-02-03 00:41+0000\n"
-"PO-Revision-Date: 2026-01-18 00:16+0100\n"
+"PO-Revision-Date: 2026-02-07 12:30+0100\n"
 "Last-Translator: Víctor Rodrigo Córdoba <vrcordoba@gmail.com>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -5154,12 +5154,7 @@ msgstr ""
 "cambie"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:74
-#, fuzzy, kde-format
-#| msgid ""
-#| "Note: Further shortcuts can be assigned, and by default, Ctlr+Space "
-#| "invokes completions, in addition to this. Further, pressing the Tab key, "
-#| "while completions are shown, performs partial completion (if possible), "
-#| "independent of this setting."
+#, kde-format
 msgid ""
 "Note: Further shortcuts can be assigned, and by default, Ctrl+Space invokes "
 "completions, in addition to this. Further, pressing the Tab key, while "
@@ -5506,6 +5501,8 @@ msgid ""
 "Persistent workplace layout (i.e. which script-, data-, help-windows are "
 "open)"
 msgstr ""
+"Distribución persistente del espacio de trabajo (es decir, que guiones, "
+"datos y ventanas de ayuda aparecen abiertos)"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:105
 #, kde-format
@@ -8032,13 +8029,3 @@ msgstr "Introducir el nuevo nombre"
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr "Mostrar en el editor (solo-lectura)"
-
-#~ msgid ""
-#~ "The workplace layout (i.e. which script-, data-, help-windows are open) "
-#~ "may be saved (and loaded) per R workspace, or independent of the R "
-#~ "workspace. Which do you prefer?"
-#~ msgstr ""
-#~ "La disposición de cada área de trabajo (p. ej. las ventanas de guiones, "
-#~ "datos o ayuda que están abiertas) puede guardarse (y cargarse) para cada "
-#~ "uno de ellos o independientemente del área que se utilice. ¿Cuál opción "
-#~ "prefiere?"
