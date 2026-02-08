@@ -13,6 +13,7 @@ SET(windows_STAT_SRCS
 	rkhtmlwindow.cpp
 	rkhtmlviewer.cpp
 	rkqwebenginewidget.cpp
+	rkqwebview.cpp
 	rkpdfwindow.cpp
 	rcontrolwindow.cpp
 	detachedwindowcontainer.cpp
@@ -35,4 +36,4 @@ SET(windows_STAT_SRCS
 )
 
 ADD_LIBRARY(windows STATIC ${windows_STAT_SRCS})
-TARGET_LINK_LIBRARIES(windows Qt6::Widgets Qt6::PrintSupport Qt6::WebEngineWidgets KF6::TextEditor KF6::Notifications KF6::WindowSystem KF6::KIOFileWidgets KF6::I18n)
+TARGET_LINK_LIBRARIES(windows Qt6::Widgets Qt6::PrintSupport Qt6::WebEngineWidgets Qt6::WebView Qt6::Qml Qt6::Quick Qt6::QuickWidgets KF6::TextEditor KF6::Notifications KF6::WindowSystem KF6::KIOFileWidgets KF6::I18n)

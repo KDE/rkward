@@ -24,4 +24,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 <qresource prefix="/org.kde.syntax-highlighting/syntax-addons">
 	<file alias="rkward.xml">syntax/rkward.xml</file>
 </qresource>
+<qresource prefix="/qml">
+	<file alias="rkqwebview.qml">windows/rkqwebview.qml</file>
+</qresource>
 </RCC>
