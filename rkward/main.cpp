@@ -59,6 +59,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QThread>
 #include <QTime>
 #include <QUrl>
+#include <QtWebView>
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -153,6 +154,7 @@ int main(int argc, char *argv[]) {
 	scheme.setFlags(QWebEngineUrlScheme::LocalAccessAllowed);
 	QWebEngineUrlScheme::registerScheme(scheme);
 	BreezeIcons::initIcons(); // install as fallback theme. Too many issues with missing icons, otherwise
+	QtWebView::initialize();
 	QApplication app(argc, argv);
 	KDSingleApplication app_singleton;
 #if defined(Q_OS_MACOS) || defined(Q_OS_WIN)
