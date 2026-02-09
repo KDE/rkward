@@ -6075,7 +6075,7 @@ msgstr ""
 #, kde-format
 msgctxt "noun: type of preview"
 msgid "Preview Mode"
-msgstr ""
+msgstr "预览模式"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:865
 #, kde-format
