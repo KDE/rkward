@@ -13,10 +13,24 @@ Item {
         visible: true
 
         WebView {
+                signal loaded(url murl, string error, int status)
                 id: webView
                 objectName: "webView"
                 visible: true
                 width: parent.width
                 height: parent.height
+                property string acceptedUrl: ""
+
+                onLoadingChanged: request => {
+                        // give the frontend a chance to intervene, e.g. rewriting rkward:// url, opening in new window, 
+                        // denying external urls, etc.
+                        loaded(request.url, request.error, request.status);
+                        if (request.status == WebView.LoadStartedStatus) {
+                                if (request.url != acceptedUrl) {
+                                        //console.log("Navigation request to " + request.url + "denied");
+                                        url = acceptedUrl;
+                                }
+                        }
+                }
         }
 }
