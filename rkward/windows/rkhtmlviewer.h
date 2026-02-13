@@ -53,6 +53,7 @@ class RKHTMLViewer : public QObject {
 	void pageInternalNavigation(const QUrl &new_url);
 	void selectionChanged(bool has_selection);
 	void loadFinished();
+	void navigationRequest(const QUrl &current_real_url, const QUrl &requested_url, bool is_new_window);
 
   protected:
 	RKHTMLViewer(QObject *parent);

@@ -13,8 +13,10 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "rkhtmlviewer.h"
 
 class QQuickWidget;
+class QQuickItem;
 
 class RKQWebView : public RKHTMLViewer {
+	Q_OBJECT
   public:
 	QWidget *createWidget(QWidget *parent) override;
 	QUrl url() const override;
@@ -38,6 +40,9 @@ class RKQWebView : public RKHTMLViewer {
 	friend class RKHTMLViewer;
 	RKQWebView(RKHTMLWindow *parent);
 	QPointer<QQuickWidget> view;
+  private Q_SLOTS:
+	void onPageLoad(const QUrl &url, const QString &error, int status);
+	QObject *webView() const;
 };
 
 #endif
