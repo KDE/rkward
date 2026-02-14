@@ -22,7 +22,7 @@ class RKHTMLViewer : public QObject {
 	Q_OBJECT
   public:
 	static RKHTMLViewer *getNew(RKHTMLWindow *parent);
-	virtual QWidget *createWidget(QWidget *parent) = 0;
+	virtual QWidget *createWidget() = 0;
 	virtual void reload() {
 		load(url());
 	}

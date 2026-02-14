@@ -71,7 +71,7 @@ RKHTMLWindow::RKHTMLWindow(QWidget *parent, WindowMode mode) : RKMDIWindow(paren
 	QVBoxLayout *layout = new QVBoxLayout(this);
 	layout->setContentsMargins(0, 0, 0, 0);
 	page = RKHTMLViewer::getNew(this);
-	auto view = page->createWidget(this);
+	auto view = page->createWidget();
 	view->setContextMenuPolicy(Qt::CustomContextMenu);
 	layout->addWidget(view, 1);
 	findbar = new RKFindBar(this, true);
