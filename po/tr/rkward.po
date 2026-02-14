@@ -5,21 +5,21 @@
 # Serdar Soytetir <tulliana@gmail.com>, 2007.
 # ertugrulerata <ertugrulerata@gmail.com>, 2007.
 # Volkan Gezer <volkangezer@gmail.com>, 2015.
-# SPDX-FileCopyrightText: 2022, 2023, 2024, 2025 Emir SARI <emir_sari@icloud.com>
+# SPDX-FileCopyrightText: 2022, 2023, 2024, 2025, 2026 Emir SARI <emir_sari@icloud.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: RKWard\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 14:38+0000\n"
-"PO-Revision-Date: 2025-12-30 13:35+0300\n"
-"Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
+"PO-Revision-Date: 2026-02-03 19:26+0300\n"
+"Last-Translator: Emir SARI <emir_sari@îcloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 25.12.0\n"
+"X-Generator: Lokalize 25.12.1\n"
 "X-Launchpad-Export-Date: 2014-09-29 04:56+0000\n"
 
 #, kde-format
@@ -214,7 +214,13 @@ msgstr ""
 "Teknik olarak bu, <i>.GlobalEnv</i> ortamına karşılık gelir."
 
 #: rkward/core/renvironmentobject.cpp:110
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Your workspace contains more than 10.000 top level objects. RKWard is not "
+#| "optimized for this situation, and you may experience lag between R "
+#| "commands. Should this situation constitute a regular use case for your "
+#| "work, please let us know at rkward@kde.org, so we can consider possible "
+#| "solutions."
 msgid ""
 "Your workspace contains more than 10.000 top level objects. RKWard is not "
 "optimized for this situation, and you may experience lag between R commands. "
@@ -224,8 +230,8 @@ msgstr ""
 "Çalışma alanınız 10.000’den fazla üst düzey nesne içeriyor. RKWard bu durum "
 "için eniyilenmemiştir ve R komutları arasında gecikmeler yaşayabilirsiniz. "
 "Bu durumun işiniz için düzenli bir kullanım durumu teşkil etmesi halinde, "
-"lütfen rkward-devel@kde.org adresinden bize bildirin, böylece olası "
-"çözümleri değerlendirebiliriz."
+"lütfen rkward@kde.org adresinden bize bildirin, böylece olası çözümleri "
+"değerlendirebiliriz."
 
 #: rkward/core/renvironmentobject.cpp:110
 #, kde-format
@@ -987,7 +993,12 @@ msgid "Start import dialog"
 msgstr "İçe aktarma iletişim kutusunu başlat"
 
 #: rkward/dialogs/rkimportdialog.cpp:108
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "No further import methods are available at this time. Things you can try, "
+#| "include: <ul><li>Check for the availability of additional import plugins</"
+#| "li><li>Save your data to a different format in the original application</"
+#| "li><li>Ask for advice on rkward@kde.org</li></ul>"
 msgid ""
 "No further import methods are available at this time. Things you can try, "
 "include: <ul><li>Check for the availability of additional import plugins</"
@@ -997,8 +1008,8 @@ msgstr ""
 "Şu anda başka bir içe aktarma yöntemi kullanılabilir değil. "
 "Deneyebileceğiniz şeyler arasında şunlar bulunur: <ul><li>Ek içe aktarma "
 "eklentilerinin kullanılabilirliğini denetle</li><li>Veriyi özgün uygulamada "
-"farklı bir biçimde kaydet</li><li>rkward-users@kde.org adresinden tavsiye "
-"isteyin</li></ul>"
+"farklı bir biçimde kaydet</li><li>rkward@kde.org adresinden tavsiye isteyin</"
+"li></ul>"
 
 #: rkward/dialogs/rkimportdialog.cpp:110
 #, kde-format
@@ -2245,9 +2256,10 @@ msgid "patches and helpful comments"
 msgstr "Yamalar ve yararlı yorumlar"
 
 #: rkward/main.cpp:193
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Many more people on rkward@kde.org"
 msgid "Many more people on rkward-devel@kde.org"
-msgstr "rkward-devel@kde.org posta listesindeki birçok kişi"
+msgstr "rkward@kde.org posta listesindeki birçok kişi"
 
 #: rkward/main.cpp:193
 #, kde-format
@@ -2790,16 +2802,13 @@ msgid "Unhandled output command '%1'"
 msgstr "İşlenmemiş çıktı komutu “%1”"
 
 #: rkward/misc/rkprogresscontrol.cpp:217
-#, fuzzy, kde-format
-#| msgid ""
-#| "There has been an error while trying to load / unload packages. See "
-#| "transcript below for details"
+#, kde-format
 msgid ""
 "<b>There has been an error while running the command. See below for output "
 "details</b>"
 msgstr ""
-"Paketleri yüklemeye/çıkarmaya çalışırken bir hata oluştu. Ayrıntılar için "
-"aşağıdaki yazıdökümüne bakın"
+"<b>Komutu çalıştırırken bir hata oluştu. Çıktı ayrıntıları için aşağıya "
+"bakın.</b>"
 
 #: rkward/misc/rkprogresscontrol.cpp:228
 #: rkward/settings/rksettingsmoduleoutput.cpp:107
@@ -4686,10 +4695,9 @@ msgid "Open as text file and force R highlighting"
 msgstr "Metin dosyası olarak aç ve R vurgulamasını zorla"
 
 #: rkward/rkward.cpp:1024
-#, fuzzy, kde-format
-#| msgid "Open Recent Workspace"
+#, kde-format
 msgid "Open as R workspace"
-msgstr "Son Kullanılan Çalışma Alanını Aç"
+msgstr "R Çalışma Alanı Olarak Aç"
 
 #: rkward/rkward.cpp:1061
 #, kde-format
@@ -4941,7 +4949,12 @@ msgid "(Attempt to) start completion whenever the cursor position changes"
 msgstr "İmleç konumu değiştiğinde tamamlamayı başlat/başlatmaya çalış"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:74
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Note: Further shortcuts can be assigned, and by default, Ctrl+Space "
+#| "invokes completions, in addition to this. Further, pressing the Tab key, "
+#| "while completions are shown, performs partial completion (if possible), "
+#| "independent of this setting."
 msgid ""
 "Note: Further shortcuts can be assigned, and by default, Ctlr+Space invokes "
 "completions, in addition to this. Further, pressing the Tab key, while "
@@ -6244,36 +6257,42 @@ msgstr "Yerel dosya adları"
 #: rkward/windows/rkcodenavigation.cpp:97
 #, kde-format
 msgid "Command 'S' is for R Markdown, only"
-msgstr ""
+msgstr "“S” komutu yalnızca R Markdown içindir"
 
 #: rkward/windows/rkcodenavigation.cpp:110
 #, kde-format
 msgid "Unknown command <tt><b>%1</b></tt>"
-msgstr ""
+msgstr "Bilinmeyen komut <tt><b>%1</b></tt>"
 
 #: rkward/windows/rkcodenavigation.cpp:117
 #, kde-format
 msgctxt "Keep this short"
 msgid "Search hit bottom.<br/><tt><b>c</b></tt> to move to next chunk."
 msgstr ""
+"Arama sona geldi.<br/>Sonraki parçaya geçmek için <tt><b>c</b></tt> "
+"düğmesine basın."
 
 #: rkward/windows/rkcodenavigation.cpp:119
 #, kde-format
 msgctxt "Keep this short"
 msgid "Search hit top.<br/><tt><b>C</b></tt> to move to previous chunk."
 msgstr ""
+"Arama başa geldi.<br/>Sonraki parçaya geçmek için <tt><b>C</b></tt> "
+"düğmesine basın."
 
 #: rkward/windows/rkcodenavigation.cpp:123
 #, kde-format
 msgctxt "Keep this short"
 msgid "Search hit bottom.<br/><tt><b>1</b></tt> to move to top."
 msgstr ""
+"Arama sona geldi.<br/>Yukarı çıkmak için <tt><b>1</b></tt> düğmesine basın."
 
 #: rkward/windows/rkcodenavigation.cpp:125
 #, kde-format
 msgctxt "Keep this short"
 msgid "Search hit top.<br/><tt><b>!</b></tt> to move to bottom."
 msgstr ""
+"Arama başa geldi.<br/>Aşağı inmek için <tt><b>!</b></tt> düğmesine basın."
 
 #: rkward/windows/rkcodenavigation.cpp:196
 #, kde-format
@@ -6281,17 +6300,18 @@ msgid ""
 "<b>Code Navigation</b> (<a href=\"rkward://page/rkward_code_navigation"
 "\">Help</a>)"
 msgstr ""
+"<b>Kod Dolaşımı</b> (<a href=\"rkward://page/rkward_code_navigation"
+"\">Yardım</a>)"
 
 #: rkward/windows/rkcodenavigation.cpp:284
-#, fuzzy, kde-format
-#| msgid "Editor command"
+#, kde-format
 msgid "Enter command"
-msgstr "Düzenleyici komutu"
+msgstr "Komut gir"
 
 #: rkward/windows/rkcodenavigation.cpp:321
 #, kde-format
 msgid "Quick Code Navigation Mode"
-msgstr ""
+msgstr "Tez Kod Dolaşımı Kipi"
 
 #: rkward/windows/rkcodenavigation.cpp:323
 #, kde-format
@@ -6299,6 +6319,8 @@ msgid ""
 "Step through your code using single keystrokes (<a href=\"rkward://page/"
 "rkward_code_navigation\">more info</a>)"
 msgstr ""
+"Tek düğmelere basarak kodunuzda adımlar atın (<a href=\"rkward://page/"
+"rkward_code_navigation\">daha fazla bilgi</a>)"
 
 #: rkward/windows/rkcodenavigation.cpp:324
 #, kde-format
@@ -6306,97 +6328,89 @@ msgid ""
 "Step through your code based on its structure or enter <a href=\"rkward://"
 "page/rkward_code_navigation\">Quick Code Navigation Mode</a>"
 msgstr ""
+"Kodun yapısını kullanarak veya <a href=\"rkward://page/rkward_code_navigation"
+"\">Tez Kod Dolaşımı Kipi</a> ile kodunuzda adımlar atın"
 
 #: rkward/windows/rkcodenavigation.cpp:326
-#, fuzzy, kde-format
-#| msgid "No device integration"
+#, kde-format
 msgid "Code Navigation"
-msgstr "Aygıt tümleşimi yok"
+msgstr "Kod Dolaşımı"
 
 #: rkward/windows/rkcodenavigation.cpp:345
 #, kde-format
 msgctxt "verb: To jump to a different place in the code"
 msgid "Go"
-msgstr ""
+msgstr "Git"
 
 #: rkward/windows/rkcodenavigation.cpp:346
-#, fuzzy, kde-format
-#| msgid "Incomplete statement.\n"
+#, kde-format
 msgid "Next statement"
-msgstr "Tamamlanmamış ifade.\n"
+msgstr "Sonraki ifade"
 
 #: rkward/windows/rkcodenavigation.cpp:347
-#, fuzzy, kde-format
-#| msgid "Previous plot"
+#, kde-format
 msgid "Previous statement"
-msgstr "Önceki Grafik"
+msgstr "Önceki ifade"
 
 #: rkward/windows/rkcodenavigation.cpp:348
 #, kde-format
 msgid "Next (inner) statement"
-msgstr ""
+msgstr "Sonraki (iç) ifade"
 
 #: rkward/windows/rkcodenavigation.cpp:349
 #, kde-format
 msgid "Previous (inner) statement"
-msgstr ""
+msgstr "Önceki (iç) ifade"
 
 #: rkward/windows/rkcodenavigation.cpp:350
-#, fuzzy, kde-format
-#| msgid "Incomplete statement.\n"
+#, kde-format
 msgid "Next outer statement"
-msgstr "Tamamlanmamış ifade.\n"
+msgstr "Sonraki iç ifade"
 
 #: rkward/windows/rkcodenavigation.cpp:351
 #, kde-format
 msgid "Previous outer statement"
-msgstr ""
+msgstr "Önceki dış ifade"
 
 #: rkward/windows/rkcodenavigation.cpp:352
-#, fuzzy, kde-format
-#| msgid "Incomplete statement.\n"
+#, kde-format
 msgid "Next toplevel statement"
-msgstr "Tamamlanmamış ifade.\n"
+msgstr "Sonraki üst düzey ifade"
 
 #: rkward/windows/rkcodenavigation.cpp:353
-#, fuzzy, kde-format
-#| msgid "Incomplete statement.\n"
+#, kde-format
 msgid "Previous toplevel statement"
-msgstr "Tamamlanmamış ifade.\n"
+msgstr "Önceki üst düzey ifade"
 
 #: rkward/windows/rkcodenavigation.cpp:355
 #, kde-format
 msgid "Next code chunk"
-msgstr ""
+msgstr "Sonraki kod parçası"
 
 #: rkward/windows/rkcodenavigation.cpp:356
-#, fuzzy, kde-format
-#| msgid "Previous plot"
+#, kde-format
 msgid "Previous code chunk"
-msgstr "Önceki Grafik"
+msgstr "Önceki kod parçası"
 
 #: rkward/windows/rkcodenavigation.cpp:358
-#, fuzzy, kde-format
-#| msgid "Select parent object"
+#, kde-format
 msgid "Select current statement"
-msgstr "Üst Nesneyi Seç"
+msgstr "Geçerli ifadeyi seç"
 
 #: rkward/windows/rkcodenavigation.cpp:359
-#, fuzzy, kde-format
-#| msgid "Select parent object"
+#, kde-format
 msgid "Select current code chunk"
-msgstr "Üst Nesneyi Seç"
+msgstr "Geçerli kod parçasını seç"
 
 #: rkward/windows/rkcodenavigation.cpp:360
-#, fuzzy, kde-format
-#| msgid "&Run"
+#, kde-format
 msgid "Run"
-msgstr "&Çalıştır"
+msgstr "Çalıştır"
 
 #: rkward/windows/rkcodenavigation.cpp:361
 #, kde-format
 msgid "Run current statement, and advance"
-msgstr ""
+msgstr "Geçerli ifadeyi çalıştır ve ilerle"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:169
 #, kde-format
@@ -6549,10 +6563,9 @@ msgid "Disable preview"
 msgstr "Önizlemeyi Devre Dışı Bırak"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:726
-#, fuzzy, kde-format
-#| msgid "R Markdown (HTML)"
+#, kde-format
 msgid "R Markdown"
-msgstr "R Markdown (HTML)"
+msgstr "R Markdown"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:728
 #, kde-format
@@ -6560,32 +6573,29 @@ msgid "Preview of rendered R Markdown"
 msgstr "Sunulan R Markdown’un önizlemesi"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:729
-#, fuzzy, kde-format
-#| msgid "Preview the script as rendered from RMarkdown format (.Rmd) to HTML."
+#, kde-format
 msgid "Preview the script as rendered from RMarkdown format (.Rmd)"
-msgstr "Betiği, RMarkdown biçiminden (.Rmd) HTML’ye önizleyin."
+msgstr "Betiği, RMarkdown biçiminden (.Rmd) önizleyin."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:733
-#, fuzzy, kde-format
-#| msgid "Select format"
+#, kde-format
 msgid "Render format"
-msgstr "Biçim seç"
+msgstr "Sunum biçimi"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:734
 #, kde-format
 msgid "Render as HTML"
-msgstr ""
+msgstr "HTML Olarak Sun"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:735
 #, kde-format
 msgid "Render as PDF"
-msgstr ""
+msgstr "PDF Olarak Sun"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:736
-#, fuzzy, kde-format
-#| msgid "Format"
+#, kde-format
 msgid "Auto Format"
-msgstr "Biçim"
+msgstr "Kendiliğinden biçimli"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:746
 #, kde-format
@@ -6618,28 +6628,24 @@ msgid "Preview the script as if it was run in the interactive R Console"
 msgstr "Komut dosyasını etkileşimli R Konsolunda çalıştırılmış gibi önizle"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:767
-#, fuzzy, kde-format
-#| msgid "Incomplete statement.\n"
+#, kde-format
 msgid "Echo statements"
-msgstr "Tamamlanmamış ifade.\n"
+msgstr "Yankı ifadeleri"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:770
-#, fuzzy, kde-format
-#| msgid "Convert warnings to errors"
+#, kde-format
 msgid "Continue on error"
-msgstr "Uyarıları hatalara dönüştür"
+msgstr "Hatada sürdür"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:772
-#, fuzzy, kde-format
-#| msgid "Environment"
+#, kde-format
 msgid "Evaluation environment"
-msgstr "Ortam"
+msgstr "Değerlendirme ortamı"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:774
-#, fuzzy, kde-format
-#| msgid "Copy to .GlobalEnv"
+#, kde-format
 msgid ".GlobalEnv"
-msgstr "“.GlobalEnv”e Kopyala"
+msgstr ".GlobalEnv"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:776
 #, kde-format
@@ -6647,11 +6653,14 @@ msgid ""
 "Evaluate code directly in .GlobalEnv. Assignments can access <b>and modify</"
 "b> objects in .GlobalEnv."
 msgstr ""
+"“.GlobalEnv” içinde doğrudan kodu yorumlayın. Atamalar, “.GlobalEnv” içinde "
+"doğrudan nesnelere erişebilir ve onlar üzerinde <b>değişiklik yapabilirler</"
+"b>."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:777
 #, kde-format
 msgid "Scoped"
-msgstr ""
+msgstr "Kapsamlı"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:779
 #, kde-format
@@ -6660,12 +6669,15 @@ msgid ""
 "accessed, but regular assignments using the <tt>&lt;-</tt>-operator will not "
 "modify them. (Other assignment operations could still modify them!)"
 msgstr ""
+"“.GlobalEnv”in bir alt kapsamı içinde kodu yorumlayın. “.GlobalEnv” içindeki "
+"nesnelere erişilebilir; ancak <tt>&lt;-</tt> işlecini kullanan düz atamalar "
+"onlar üzerinde değişiklik yapamazlar (diğer atama işlemleri onlar üzerinde "
+"hâlâ değişiklik yapabilirler)."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:780
-#, fuzzy, kde-format
-#| msgid "Location"
+#, kde-format
 msgid "Local"
-msgstr "Konum"
+msgstr "Yerel"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:781
 #, kde-format
@@ -6675,6 +6687,10 @@ msgid ""
 "<tt>&lt;-</tt>-operator. (Other assignment operations could still modify "
 "them!)"
 msgstr ""
+"Gerçek yerel bir ortamda kodu yorumlayın. “.GlobalEnv” içindeki nesneler "
+"arama yolu üzerinde değildirler ve <tt>&lt;-</tt> işlecini kullanan düz "
+"atamalar tarafından değişikliğe uğramayacaklardır (diğer atama işlemleri "
+"onlar üzerinde hâlâ değişiklik yapabilirler)."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:796
 #, kde-format
@@ -6699,24 +6715,14 @@ msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:813
 #, fuzzy, kde-format
-#| msgid "Preview"
+#| msgctxt "noun: type of preview"
+#| msgid "<b>Preview Mode</b>"
 msgctxt "noun: type of preview"
 msgid "Preview Mode"
-msgstr "Önizleme"
+msgstr "<b>Önizleme Kipi</b>"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:865
-#, fuzzy, kde-format
-#| msgid ""
-#| "<p>The preview feature <b>tries</b> to avoid making any lasting changes "
-#| "to your workspace (technically, by making use of a <i>local()</i> "
-#| "evaluation environment). <b>However, there are cases where using the "
-#| "preview feature may cause unexpected side-effects</b>.</p><p>In "
-#| "particular, this is the case for scripts that contain explicit "
-#| "assignments to <i>globalenv()</i>, or to scripts that alter files on your "
-#| "filesystem. Further, attaching/detaching packages or package namespaces "
-#| "will affect the entire running R session.</p><p>Please keep this in mind "
-#| "when using the preview feature, and especially when using the feature on "
-#| "scripts originating from untrusted sources.</p>"
+#, kde-format
 msgid ""
 "<p>The preview feature <b>tries</b> to avoid making any lasting changes to "
 "your workspace, by default (technically, by making use of a <i>local</i> "
@@ -6730,10 +6736,12 @@ msgid ""
 "especially when using the feature on scripts originating from untrusted "
 "sources.</p>"
 msgstr ""
-"<p>Önizleme özelliği, çalışma alanınızda kalıcı değişiklikler yapmaktan "
-"kaçınmayı <b>dener</b> (teknik olarak, <i>local()</i> değerlendirme ortamını "
-"kullanarak). <b>Ancak önizleme özelliğini kullanmanın beklenmeyen yan "
-"etkilere neden olabileceği durumlar da vardır</b>.</p><p>Bu durum özellikle "
+"<p>Önizleme özelliği, öntanımlı olarak çalışma alanınızda kalıcı "
+"değişiklikler yapmaktan kaçınmayı <b>dener</b> (teknik olarak, <i>local()</"
+"i> değerlendirme ortamını kullanarak kimi önizleme kipleri değerlendirme "
+"ortamı üzerinde isteğe bağlı denetime olanak tanırlar). <b>Ancak, "
+"<b>önizleme özelliğini kullanmanın beklenmeyen yan etkilere neden "
+"olabileceği durumlar</b> da vardır</b>.</p><p>Bu durum özellikle "
 "<i>globalenv()</i>’ye açık atamalar içeren betikler veya dosya "
 "sisteminizdeki dosyaları değiştiren betikler için geçerlidir. Ayrıca "
 "paketleri veya paket ad alanlarını eklemek/çıkarmak, çalışan R oturumunun "
@@ -7019,11 +7027,10 @@ msgid "[Active]"
 msgstr "[Etkin]"
 
 #: rkward/windows/rkhtmlwindow.cpp:754
-#, fuzzy, kde-format
-#| msgid "Output %1"
+#, kde-format
 msgctxt "noun, the output"
 msgid "Output %1"
-msgstr "%1 çıktısı"
+msgstr "Çıktı: %1"
 
 #: rkward/windows/rkhtmlwindow.cpp:807
 #, kde-format
@@ -7841,8 +7848,103 @@ msgstr "Yeni adı girin"
 msgid "View in editor (read-only)"
 msgstr "Düzenleyicide görüntüle (saltokunur)"
 
-#~ msgid "Error opening script file %1"
-#~ msgstr "%1 betik dosyası açılırken hata oluştu"
+#~ msgid "Device type \"%1\" is unknown to RKWard"
+#~ msgstr "RKWard, “%1” aygıt türünü bilmiyor"
+
+#~ msgid ""
+#~ "rk.download_appimage() requires XiMpLe >= 0.11.3, but only found %1. "
+#~ "Please update XiMpLe."
+#~ msgstr ""
+#~ "rk.download_appimage(), 0.11.3’ten daha büyük bir XiMpLe sürümü "
+#~ "gerektiriyor; ancak yalnızca %1 bulundu. XiMpLe’yi güncelleyin."
+
+#~ msgid "Target directory '%1' does not exist\n"
+#~ msgstr "Hedef dizin “%1” yok\n"
+
+#~ msgid ""
+#~ "Target file '%1' already exists, use the \"overwrite\" argument to "
+#~ "replace it:\n"
+#~ msgstr ""
+#~ "Hedef dosya “%1” halihazırda var; onu değiştirmek için “overwrite” "
+#~ "argümanını kullanın:\n"
+
+#~ msgid ""
+#~ "Creating backup of current AppImage: %1\n"
+#~ "  "
+#~ msgstr ""
+#~ "Geçerli AppImage’in yedeği alınamıyor: %1\n"
+#~ "  "
+
+#~ msgid ""
+#~ "Something went wrong with the download! Restored previous AppImage from "
+#~ "backup."
+#~ msgstr ""
+#~ "İndirme sırasında bir hata oluştu. Yedekten bir önceki AppImage geri "
+#~ "yüklendi."
+
+#~ msgid "Something went wrong with the download!"
+#~ msgstr "İndirme sırasında bir hata oluştu!"
+
+#~ msgid "Download successful, setting file permissions."
+#~ msgstr "İndirme başarılı, dosya izinleri ayarlanıyor…"
+
+#~ msgid "Removing backup of previous AppImage."
+#~ msgstr "Önceki AppImage yedekleri kaldırılıyor…"
+
+#~ msgid ""
+#~ "Something went wrong with the download! Restoring previous AppImage from "
+#~ "backup."
+#~ msgstr ""
+#~ "İndirme sırasında bir hata oluştu. Yedekten bir önceki AppImage geri "
+#~ "yükleniyor."
+
+#~ msgid "Failed to copy CSS file '%1' to '%2'"
+#~ msgstr "CSS dosyası “%1”, “%2” konumuna kopyalanamadı"
+
+#~ msgid "Submenu %1 cannot be redefined as a leaf item."
+#~ msgstr "Alt menü %1, bir yaprak ögesi olarak yeniden tanımlanamıyor."
+
+#~ msgid "Menu path %1 is not defined"
+#~ msgstr "Menü yolu %1 tanımlı değil"
+
+#~ msgid "Leaf menu item %1 cannot be redefined as a submenu."
+#~ msgstr "Yaprak menüsü ögesi %1, bir alt menü olarak yeniden tanımlanamıyor."
+
+#~ msgid "No file name specified"
+#~ msgstr "Belirtilen dosya adı yok"
+
+#~ msgid "Invalid output id. Use rk.output() to obtain a valid output handle."
+#~ msgstr ""
+#~ "Geçersiz çıktı kimliği. Geçerli bir çıktı tutacı almak için rk.output() "
+#~ "yöntemini kullanın."
+
+#~ msgid "Plot window created"
+#~ msgstr "Çizim penceresi değiştirildi"
+
+#~ msgid "Plot window closed"
+#~ msgstr "Çizim penceresi kapatıldı"
+
+#~ msgid "Plot updated (click to show)"
+#~ msgstr "Çizim güncellendi (göstermek için tıkla)"
+
+#~ msgid "Please install package R2HTML to enable output!"
+#~ msgstr "Çıktıyı etkinleştirmek için R2HTML paketini kurun!"
+
+#~ msgid "Unnamed parameter lists are deprecated in rk.header()"
+#~ msgstr "Adsız parametre listeleri rk.header() içinde artık kullanılmıyor"
+
+#~ msgid "Printing object of class '%1' is not implemented"
+#~ msgstr "“%1” sınıfının nesnesini yazdırma henüz gerçeklenmemiş"
+
+#~ msgid ""
+#~ "Persistent workplace layout (i.e. which script-, data-, help-windows are "
+#~ "open)"
+#~ msgstr ""
+#~ "Kalıcı çalışma alanı yerleşimi (hangi betiğin, verinin, yardım "
+#~ "pencerelerinin açık olduğu)"
+
+#~ msgid "<b>Options</b>"
+#~ msgstr "<b>Seçenekler</b>"
 
 #~ msgid "R Markdown (auto)"
 #~ msgstr "R Markdown (Kendiliğinden)"
@@ -7853,6 +7955,9 @@ msgstr "Düzenleyicide görüntüle (saltokunur)"
 #~ msgstr ""
 #~ "Betiği RMarkdown Biçiminden (.rmd) belge üstbilgisinde belirtilen biçime "
 #~ "önizleyin."
+
+#~ msgid "Error opening script file %1"
+#~ msgstr "%1 betik dosyası açılırken hata oluştu"
 
 #~ msgid ""
 #~ "<b>There have been errors and / or warnings. See below for a transcript</"

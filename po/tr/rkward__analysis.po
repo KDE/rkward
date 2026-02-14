@@ -944,7 +944,7 @@ msgid ""
 "reported."
 msgstr ""
 "İşaretlenirse (iki taraflı) önem değerlerini içeren ek bir tablo hesaplanır "
-"ve yazdırılır. Çok serili/çok düzeyli korelasyonlar için, iki değişkenli "
+"ve yazdırılır. Çok serili/çok düzeyli korelasyonlar için iki değişkenli "
 "normalliğin Ki-kare testleri yapılır ve ayrıca standart hatalar raporlanır."
 
 #. i18n: ectx: (Loaded from Correlation matrix) <settings> <setting> (refers to element labelled "Method")
