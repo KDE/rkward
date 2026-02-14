@@ -215,7 +215,7 @@ RKQWebEngineWidget::RKQWebEngineWidget(RKHTMLWindow *parent) : RKHTMLViewer(pare
 	}
 }
 
-QWidget *RKQWebEngineWidget::createWidget(QWidget *parent) {
+QWidget *RKQWebEngineWidget::createWidget() {
 	RK_TRACE(APP);
 
 	// We keep our own history.
@@ -245,7 +245,7 @@ QWidget *RKQWebEngineWidget::createWidget(QWidget *parent) {
 	});
 
 	RK_ASSERT(!view);
-	view = new QWebEngineView(page, parent);
+	view = new QWebEngineView(page);
 	connect(view, &QWebEngineView::selectionChanged, this, [this]() {
 		Q_EMIT selectionChanged(view->hasSelection());
 	});

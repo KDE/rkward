@@ -39,9 +39,9 @@ void RKQWebView::onPageLoad(const QUrl &_url, const QString &error, int status) 
 	}
 }
 
-QWidget *RKQWebView::createWidget(QWidget *parent) {
+QWidget *RKQWebView::createWidget() {
 	RK_TRACE(APP);
-	view = new QQuickWidget(parent);
+	view = new QQuickWidget();
 	view->setSource(QUrl(QStringLiteral("qrc:/qml/rkqwebview.qml")));
 	view->setResizeMode(QQuickWidget::SizeRootObjectToView);
 	connect(webView(), SIGNAL(loaded(const QUrl &, const QString &, int)), this, SLOT(onPageLoad(const QUrl &, const QString &, int)));
