@@ -17,7 +17,7 @@ class QWebEngineView;
 
 class RKQWebEngineWidget : public RKHTMLViewer {
   public:
-	QWidget *createWidget(QWidget *parent) override;
+	QWidget *createWidget() override;
 	void reload() override;
 	QUrl url() const override;
 	void load(const QUrl &url) override;

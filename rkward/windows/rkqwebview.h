@@ -18,7 +18,7 @@ class QQuickItem;
 class RKQWebView : public RKHTMLViewer {
 	Q_OBJECT
   public:
-	QWidget *createWidget(QWidget *parent) override;
+	QWidget *createWidget() override;
 	QUrl url() const override;
 	void load(const QUrl &url) override;
 	void print() override;
