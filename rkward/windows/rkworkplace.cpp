@@ -403,7 +403,13 @@ void RKWorkplace::namedWindowOwnerDestroyed(QObject *owner) {
 void RKWorkplace::openRKWardUrl(const QUrl &url) {
 	RK_TRACE(APP);
 	RK_ASSERT(url.scheme() == QLatin1String("rkward"));
-	RKHTMLWindow::handleRKWardURL(url);
+	if (url != suppressed_rkward_url) RKHTMLWindow::handleRKWardURL(url);
+	suppressed_rkward_url.clear();
+}
+
+void RKWorkplace::suppressRKWardUrlHandling(const QUrl &url) {
+	RK_TRACE(APP);
+	suppressed_rkward_url = url;
 }
 
 bool RKWorkplace::openAnyUrl(const QUrl &url, const QString &known_mimetype, bool force_external) {

@@ -89,7 +89,7 @@ RKHTMLWindow::RKHTMLWindow(QWidget *parent, WindowMode mode) : RKMDIWindow(paren
 	                              .arg(scheme->foreground().color().name(), scheme->background().color().name(),
 	                                   scheme->foreground(KColorScheme::VisitedText).color().name(), scheme->foreground(KColorScheme::LinkText).color().name(),
 	                                   scheme->shade(KColorScheme::MidShade).name());
-	page->installPersistentJS(u"fix_color_scheme"_s, color_scheme_js);
+	page->installPersistentJS(color_scheme_js, u"fix_color_scheme"_s);
 	page->installHelpProtocolHandler();
 
 	layout->addWidget(findbar);
