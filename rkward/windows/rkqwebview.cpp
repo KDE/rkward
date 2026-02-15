@@ -11,7 +11,9 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QQuickItem>
 #include <QQuickWidget>
 
+#include "../misc/rkfindbar.h"
 #include "rkhtmlwindow.h"
+#include "rkworkplace.h"
 
 #include "../debug.h"
 
@@ -19,38 +21,54 @@ RKQWebView::RKQWebView(RKHTMLWindow *parent) : RKHTMLViewer(parent), view(nullpt
 	RK_TRACE(APP);
 }
 
-void RKQWebView::onPageLoad(const QUrl &_url, const QString &error, int status) {
-	RK_DEBUG(APP, DL_WARNING, "loading %s %d", qPrintable(_url.toString()), status);
+QUrl RKQWebView::currentAcceptedUrl() const {
+	return webView()->property("acceptedUrl").toUrl();
+}
+
+void RKQWebView::onUrlChanged(const QUrl &_url, const QString &error, int status) {
+	RK_DEBUG(APP, DL_DEBUG, "webview url changed to %s status %d, msg %s", qPrintable(_url.toString()), status, qPrintable(error));
+	bool new_window = false;
+	Q_EMIT navigationRequest(currentAcceptedUrl(), _url, new_window);
+	// we may be redirected via the above signal
+	if (_url != url()) {
+		RK_DEBUG(APP, DL_DEBUG, "redirecting %s to %s", qPrintable(_url.toString()), qPrintable(url().toString()));
+	}
+	if (status == 0 && _url.scheme() == u"rkward") {
+		// Some QWebView plugins will also trigger openRKWardURl() via QDesktopServices::setUrlHandler()
+		// Others won't. In either case, we've handled it from here.
+		RKWorkplace::mainWorkplace()->suppressRKWardUrlHandling(_url);
+	}
+}
+
+void RKQWebView::onLoadFinished(const QUrl &url) {
+	RK_TRACE(APP);
+	RK_ASSERT(currentAcceptedUrl() == url);
+	for (const auto &script : std::as_const(persistentScripts)) {
+		RKHTMLViewer::runJS(script);
+	}
+	Q_EMIT loadFinished();
+}
+
+QWidget *RKQWebView::createWidget() {
+	RK_TRACE(APP);
+	view = new QQuickWidget();
+	view->setResizeMode(QQuickWidget::SizeRootObjectToView);
+	view->setSource(QUrl(QStringLiteral("qrc:/qml/rkqwebview.qml")));
+	connect(webView(), SIGNAL(pageUrlChanged(const QUrl &, const QString &, int)), this, SLOT(onUrlChanged(const QUrl &, const QString &, int)));
+	connect(webView(), SIGNAL(loadFinished(const QUrl &)), this, SLOT(onLoadFinished(const QUrl &)));
+	connect(webView(), SIGNAL(runJSResult(const QVariant &)), this, SLOT(onRunJSResult(const QVariant &)));
 	/* TODO: we may need to inject a script similar for handling target=new
 	    and page internal navigation?
 	RKHTMLViewer::runJS(u"document.addEventListener('click', e => {"
 	    "  const origin = e.target.closest('a');"
 	    "  if (origin) alert(origin.href);"
 	    "})\n"_s); */
-	if (status == 0) {
-		bool new_window = false;
-		Q_EMIT navigationRequest(webView()->property("acceptedUrl").toUrl(), _url, new_window);
-		// we may be redirected via the above signal
-		if (_url != url()) {
-			RK_DEBUG(APP, DL_DEBUG, "redirecting %s to %s", qPrintable(_url.toString()), qPrintable(url().toString()));
-		}
-	} else if (status == 2) {
-		Q_EMIT loadFinished();
-	}
-}
-
-QWidget *RKQWebView::createWidget() {
-	RK_TRACE(APP);
-	view = new QQuickWidget();
-	view->setSource(QUrl(QStringLiteral("qrc:/qml/rkqwebview.qml")));
-	view->setResizeMode(QQuickWidget::SizeRootObjectToView);
-	connect(webView(), SIGNAL(loaded(const QUrl &, const QString &, int)), this, SLOT(onPageLoad(const QUrl &, const QString &, int)));
 	return view;
 }
 
 QObject *RKQWebView::webView() const {
-	// TODO: we have some premature calls to this function. Find and fix them
 	if (!view) {
+		// could happen (happened in the past) due to premature calls to this function.
 		RK_ASSERT(view);
 		return nullptr;
 	}
@@ -77,20 +95,31 @@ void RKQWebView::load(const QUrl &url) {
 
 void RKQWebView::print() {
 	RK_TRACE(APP);
+	// TODO: Doesn't work. Why?
 	RKHTMLViewer::runJS(u"window.print()"_s);
 }
 
 void RKQWebView::installPersistentJS(const QString &script, const QString &id) {
 	RK_TRACE(APP);
+	persistentScripts[id] = script;
 }
 
 void RKQWebView::runJS(const QString &script, std::function<void(const QVariant &)> callback) {
 	RK_TRACE(APP);
-	QMetaObject::invokeMethod(webView(), "runJavaScript", Q_ARG(QString, script), Q_ARG(QJSValue, QJSValue()));
+	RK_ASSERT(runjs_callback == nullptr); // no nested calls, please!
+	runjs_callback = callback;
+	QMetaObject::invokeMethod(webView(), "runJSWrapper", Q_ARG(QString, script));
 }
 
-void RKQWebView::setHTML(const QString &html, const QUrl &url) {
+void RKQWebView::onRunJSResult(const QVariant &result) {
 	RK_TRACE(APP);
+	if (runjs_callback != nullptr) runjs_callback(result);
+	runjs_callback = std::function<void(const QVariant &)>();
+}
+
+void RKQWebView::setHTML(const QString &html, const QUrl &_url) {
+	RK_TRACE(APP);
+	QMetaObject::invokeMethod(webView(), "loadHtml", Q_ARG(QString, html), Q_ARG(QUrl, _url));
 }
 
 bool RKQWebView::installHelpProtocolHandler() {
@@ -100,6 +129,16 @@ bool RKQWebView::installHelpProtocolHandler() {
 
 void RKQWebView::findRequest(const QString &text, bool backwards, RKFindBar *findbar, bool *found) {
 	RK_TRACE(APP);
+
+	*found = true; // real result is not available, synchronously
+	auto _txt = text;
+	// NOTE: window.find() is marked as not standardized at the time of this writing!
+	QString script = u"window.find('%1', %2, %3, true)"_s.arg(_txt.replace(u"'"_s, u"\\'"_s),
+	                                                          (findbar->isOptionSet(RKFindBar::MatchCase) ? u"true"_s : u"false"_s),
+	                                                          (backwards ? u"true"_s : u"false"_s));
+	runJS(script, [findbar](const QVariant &res) {
+		if (!res.toBool()) findbar->indicateSearchFail();
+	});
 }
 
 QMenu *RKQWebView::createContextMenu(const QPoint &clickpos) {

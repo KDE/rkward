@@ -154,8 +154,8 @@ int main(int argc, char *argv[]) {
 	scheme.setFlags(QWebEngineUrlScheme::LocalAccessAllowed);
 	QWebEngineUrlScheme::registerScheme(scheme);
 	BreezeIcons::initIcons(); // install as fallback theme. Too many issues with missing icons, otherwise
-	QtWebView::initialize();
 	QApplication app(argc, argv);
+	QtWebView::initialize();
 	KDSingleApplication app_singleton;
 #if defined(Q_OS_MACOS) || defined(Q_OS_WIN)
 	// Follow the example of kate, and use breeze theme on Windows and Mac, which appears to work best

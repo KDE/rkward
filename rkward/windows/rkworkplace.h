@@ -229,6 +229,8 @@ class RKWorkplace : public QWidget {
 	/** Inform the workplace that this window is handled outside the regular attached/detached mechanisms (such as preview windows). Internally, this just sets the window to detached, without giving it a DetachedWindowContainer.
 	This seems good enough for now, but may be something to revisit in case of unexpected problems. */
 	void setWindowNotManaged(RKMDIWindow *window);
+	/** Used from RKQWebView */
+	void suppressRKWardUrlHandling(const QUrl &url);
   Q_SIGNALS:
 	/** emitted when the workspace Url has changed */
 	void workspaceUrlChanged(const QUrl &url);
@@ -284,6 +286,7 @@ class RKWorkplace : public QWidget {
 	RKMDIWindow::State window_placement_override;
 	QString window_name_override;
 	QString window_style_override;
+	QUrl suppressed_rkward_url;
 };
 
 #endif
