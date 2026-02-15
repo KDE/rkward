@@ -13,7 +13,13 @@ Item {
         visible: true
 
         WebView {
-                signal loaded(url murl, string error, int status)
+                signal pageUrlChanged(url murl, string error, int status)
+                signal loadFinished(url murl)
+                signal runJSResult(variant result)
+
+                function runJSWrapper(script: string) {
+                        runJavaScript(script, runJSResult)
+                }
                 id: webView
                 objectName: "webView"
                 visible: true
@@ -22,14 +28,16 @@ Item {
                 property string acceptedUrl: ""
 
                 onLoadingChanged: request => {
-                        // give the frontend a chance to intervene, e.g. rewriting rkward:// url, opening in new window, 
-                        // denying external urls, etc.
-                        loaded(request.url, request.error, request.status);
-                        if (request.status == WebView.LoadStartedStatus) {
-                                if (request.url != acceptedUrl) {
-                                        //console.log("Navigation request to " + request.url + "denied");
-                                        url = acceptedUrl;
-                                }
+                        // notify frontend of any url changes, giving it a chance to intervene (e.g. rewriting
+                        // rkward:// urls etc.)
+                        // Note that the semantics of just when loadingChanged is emitted differ between the QWebView
+                        // plugins. E.g. for webengine, we get a LoadStartedStatus, then LoadFailedStatus for rkward://-urls,
+                        // while for webview2, we only get LoadFailedStatus.
+                        if (request.url != acceptedUrl) {
+                                pageUrlChanged(request.url, request.error, request.status);
+                        }
+                        if (request.status == WebView.LoadSucceededStatus) {
+                                loadFinished(request.url);
                         }
                 }
         }
