@@ -26,6 +26,7 @@ Item {
                 width: parent.width
                 height: parent.height
                 property string acceptedUrl: ""
+                property string requestedUrl: ""
 
                 onLoadingChanged: request => {
                         // notify frontend of any url changes, giving it a chance to intervene (e.g. rewriting
@@ -35,6 +36,11 @@ Item {
                         // while for webview2, we only get LoadFailedStatus.
                         if (request.url != acceptedUrl) {
                                 pageUrlChanged(request.url, request.error, request.status);
+                                // if request did not get accepted: stay
+                                if (requestedUrl != acceptedUrl) {
+                                        // TODO: save and restore scroll position
+                                        url = acceptedUrl;
+                                }
                         }
                         if (request.status == WebView.LoadSucceededStatus) {
                                 loadFinished(request.url);
