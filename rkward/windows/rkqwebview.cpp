@@ -26,14 +26,16 @@ QUrl RKQWebView::currentAcceptedUrl() const {
 }
 
 void RKQWebView::onUrlChanged(const QUrl &_url, const QString &error, int status) {
-	RK_DEBUG(APP, DL_DEBUG, "webview url changed to %s status %d, msg %s", qPrintable(_url.toString()), status, qPrintable(error));
+	// WebView status enum: 0: LoadStarted, 2: LoadFinished, 3: Error.
+	// I do not actually know, what status==1 is, but it does get sent in some cases. I assume it's "aborted"
+	RK_DEBUG(APP, DL_WARNING, "webview %p url changed to %s status %d, msg %s", this, qPrintable(_url.toString()), status, qPrintable(error));
 	bool new_window = false;
 	Q_EMIT navigationRequest(currentAcceptedUrl(), _url, new_window);
 	// we may be redirected via the above signal
 	if (_url != url()) {
 		RK_DEBUG(APP, DL_DEBUG, "redirecting %s to %s", qPrintable(_url.toString()), qPrintable(url().toString()));
 	}
-	if (status == 0 && _url.scheme() == u"rkward") {
+	if (status == 0 && _url.scheme() == u"rkward"_s) {
 		// Some QWebView plugins will also trigger openRKWardURl() via QDesktopServices::setUrlHandler()
 		// Others won't. In either case, we've handled it from here.
 		RKWorkplace::mainWorkplace()->suppressRKWardUrlHandling(_url);
@@ -57,7 +59,7 @@ QWidget *RKQWebView::createWidget() {
 	connect(webView(), SIGNAL(pageUrlChanged(const QUrl &, const QString &, int)), this, SLOT(onUrlChanged(const QUrl &, const QString &, int)));
 	connect(webView(), SIGNAL(loadFinished(const QUrl &)), this, SLOT(onLoadFinished(const QUrl &)));
 	connect(webView(), SIGNAL(runJSResult(const QVariant &)), this, SLOT(onRunJSResult(const QVariant &)));
-	/* TODO: we may need to inject a script similar for handling target=new
+	/* TODO: we may need to inject a script along the lines below for handling target=new
 	    and page internal navigation?
 	RKHTMLViewer::runJS(u"document.addEventListener('click', e => {"
 	    "  const origin = e.target.closest('a');"
