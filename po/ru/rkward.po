@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the rkward package.
 #
 # Alexander Potashev <aspotashev@gmail.com>, 2018.
-# SPDX-FileCopyrightText: 2024, 2025 Olesya Gerasimenko <translation-team@basealt.ru>
+# SPDX-FileCopyrightText: 2024, 2025, 2026 Olesya Gerasimenko <translation-team@basealt.ru>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 14:38+0000\n"
-"PO-Revision-Date: 2025-01-21 17:22+0300\n"
-"Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
+"PO-Revision-Date: 2026-03-02 15:33+0300\n"
+"Last-Translator: Olesya Gerasimenko <goa@altlinux.org>\n"
 "Language-Team: Basealt Translation Team\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -6336,6 +6336,8 @@ msgid ""
 "<b>Code Navigation</b> (<a href=\"rkward://page/rkward_code_navigation"
 "\">Help</a>)"
 msgstr ""
+"<b>Навигация по коду</b> (<a href=\"rkward://page/rkward_code_navigation"
+"\">Справка</a>)"
 
 #: rkward/windows/rkcodenavigation.cpp:284
 #, fuzzy, kde-format
@@ -6346,7 +6348,7 @@ msgstr "Команда редактора"
 #: rkward/windows/rkcodenavigation.cpp:321
 #, kde-format
 msgid "Quick Code Navigation Mode"
-msgstr ""
+msgstr "Режим быстрой навигации по коду"
 
 #: rkward/windows/rkcodenavigation.cpp:323
 #, kde-format
@@ -6363,10 +6365,9 @@ msgid ""
 msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:326
-#, fuzzy, kde-format
-#| msgid "No device integration"
+#, kde-format
 msgid "Code Navigation"
-msgstr "Без интеграции устройств"
+msgstr "Навигация по коду"
 
 #: rkward/windows/rkcodenavigation.cpp:345
 #, kde-format
