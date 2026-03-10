@@ -1,13 +1,13 @@
 # Copyright (C) 2024 This file is copyright:
 # This file is distributed under the same license as the rkward package.
 #
-# SPDX-FileCopyrightText: 2024, 2025 Emir SARI <emir_sari@icloud.com>
+# SPDX-FileCopyrightText: 2024, 2025, 2026 Emir SARI <emir_sari@icloud.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 08:59+0000\n"
-"PO-Revision-Date: 2025-03-13 15:51+0300\n"
+"PO-Revision-Date: 2026-03-09 22:09+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 25.07.70\n"
+"X-Generator: Lokalize 25.12.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -245,7 +245,7 @@ msgstr ""
 "öğrenmek ve çalışmanızı RKWard kullanıcılarıyla paylaşma üzerine bilgi almak "
 "için <link href=\"help:/rkwardplugins/index.html\">RKWard için Eklenti "
 "Yazımına Giriş</link> (<link href=\"https://rkward.kde.org/doc/rkwardplugins/"
-"\">çevrimiçi güncel sürüm</link>) belgesine bir göz atın. Betik yazımı ve "
+"\">çevrim içi güncel sürüm</link>) belgesine bir göz atın. Betik yazımı ve "
 "geliştirme üzerine RKWard’a özel işlevleri öğrenmek için <link href="
 "\"rkward://rhelp/rkward-package\">RKWard Paketlerine Genel Bakış</link> "
 "belgesine bakabilirsiniz."
@@ -2002,7 +2002,7 @@ msgstr ""
 "pek çok sorun vardır. Ancak fark ettiğiniz bazı şeyler RKWard’ın doğasından "
 "değil, R’den veya başka bir şeyden kaynaklanmaktadır. Bu bölümde bazı yaygın "
 "sorunları ele almaya çalışacağız. Ayrıca <link href=\"https://rkward.kde.org/"
-"faq\">çevrimiçi SSS</link> bölümüne de bakın."
+"faq\">çevrim içi SSS</link> bölümüne de bakın."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:12
