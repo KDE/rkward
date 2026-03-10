@@ -1,21 +1,21 @@
 # Copyright (C) 2024 This file is copyright:
 # This file is distributed under the same license as the rkward package.
 #
-# SPDX-FileCopyrightText: 2024, 2025 Emir SARI <emir_sari@icloud.com>
+# SPDX-FileCopyrightText: 2024, 2025, 2026 Emir SARI <emir_sari@icloud.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 11:48+0000\n"
-"PO-Revision-Date: 2025-05-28 13:30+0300\n"
-"Last-Translator: Emir SARI <emir_sari@îcloud.com>\n"
+"PO-Revision-Date: 2026-03-09 21:29+0300\n"
+"Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 25.04.1\n"
+"X-Generator: Lokalize 25.12.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -245,7 +245,7 @@ msgstr ""
 "öğrenmek ve çalışmanızı RKWard kullanıcılarıyla paylaşma üzerine bilgi almak "
 "için <link href=\"help:/rkwardplugins/index.html\">RKWard için Eklenti "
 "Yazımına Giriş</link> (<link href=\"https://rkward.kde.org/doc/rkwardplugins/"
-"\">çevrimiçi güncel sürüm</link>) belgesine bir göz atın. Betik yazımı ve "
+"\">çevrim içi güncel sürüm</link>) belgesine bir göz atın. Betik yazımı ve "
 "geliştirme üzerine RKWard’a özel işlevleri öğrenmek için <link href="
 "\"rkward://rhelp/rkward-package\">RKWard Paketlerine Genel Bakış</link> "
 "belgesine bakabilirsiniz."
@@ -2170,8 +2170,8 @@ msgid ""
 "link>."
 msgstr ""
 "Bu sayfa, RKWard’ı kullanırken karşılaşabileceğiniz bazı yaygın görülen "
-"sorunları ele alır. Ayrıca <link href=\"https://rkward.kde.org/faq"
-"\">çevrimiçi SSS</link> bölümüne de bakabilirsiniz."
+"sorunları ele alır. Ayrıca <link href=\"https://rkward.kde.org/faq\">çevrim "
+"içi SSS</link> bölümüne de bakabilirsiniz."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:12
