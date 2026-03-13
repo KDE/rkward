@@ -10,6 +10,8 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QMenu>
 #include <QQuickItem>
 #include <QQuickWidget>
+#include <QWebSocket>
+#include <QWebSocketServer>
 
 #include "../misc/rkfindbar.h"
 #include "rkhtmlwindow.h"
@@ -17,8 +19,69 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "../debug.h"
 
+class RKQWebViewCallbackServer {
+  public:
+	static void initConnection(RKQWebView *window) {
+		static QWebSocketServer *server = nullptr;
+		if (!server) {
+			server = new QWebSocketServer(QString(), QWebSocketServer::NonSecureMode);
+			server->listen(QHostAddress::LocalHost);
+			QObject::connect(server, &QWebSocketServer::newConnection, server, [server]() {
+				auto con = server->nextPendingConnection();
+				const auto url = con->requestUrl().url();
+				auto win = windows.value(url);
+				RK_DEBUG(APP, DL_WARNING, "New connection at %s from window %p", qPrintable(url), win); // TODO
+				if (!win) {
+					con->abort();
+				}
+
+				// TODO handle connection lifetime
+
+				QObject::connect(con, &QWebSocket::textMessageReceived, win, [win](const QString &message) {
+					win->receivedCallbackMessage(message);
+				});
+			});
+		}
+
+		// Window may already be in our map. We need to re-init on every url change
+		auto key = windows.key(window);
+		if (key.isEmpty()) {
+			key = server->serverUrl().url() + u"/"_s + QUuid::createUuid().toString(QUuid::Id128);
+			windows.insert(key, window);
+			QObject::connect(window, &QObject::destroyed, server, [key]() {
+				windows.remove(key);
+			});
+		}
+
+		window->runJS(u"let __rkward = new WebSocket('%1');\n"
+		              "function __rkward_sendMessage(msg) {\n"
+		              "  if (__rkward.readyState == WebSocket.CONNECTING) {\n"
+		              "    setTimeout(__rkward_sendMessage.bind(null, msg), 10);\n"
+		              "  } else {\n"
+		              "    __rkward.send(msg);\n"
+		              "  }\n"
+		              "}\n"_s.arg(key));
+	}
+
+  protected:
+	static QHash<QString, RKQWebView *> windows;
+};
+QHash<QString, RKQWebView *> RKQWebViewCallbackServer::windows;
+
 RKQWebView::RKQWebView(RKHTMLWindow *parent) : RKHTMLViewer(parent), view(nullptr) {
 	RK_TRACE(APP);
+	installPersistentJS(u"function __rkward_debounce(fun) {\n"
+	                    "  let to = null;\n"
+	                    "  return function() {\n"
+	                    "    clearTimeout(to);\n"
+	                    "    to = setTimeout(function() { fun(); }, 20);\n"
+	                    "  }\n"
+	                    "}\n"_s,
+	                    u"__debounce"_s);
+	installPersistentJS(u"document.onselectionchange = __rkward_debounce(function() {\n"
+	                    "  __rkward_sendMessage(JSON.stringify({command: 'selchanged', sel: document.getSelection().toString()}));\n"
+	                    "});"_s,
+	                    u"__sel"_s);
 }
 
 QUrl RKQWebView::currentAcceptedUrl() const {
@@ -45,6 +108,8 @@ void RKQWebView::onUrlChanged(const QUrl &_url, const QString &error, int status
 void RKQWebView::onLoadFinished(const QUrl &url) {
 	RK_TRACE(APP);
 	RK_ASSERT(currentAcceptedUrl() == url);
+	selected_text.clear();
+	RKQWebViewCallbackServer::initConnection(this);
 	for (const auto &script : std::as_const(persistentScripts)) {
 		RKHTMLViewer::runJS(script);
 	}
@@ -108,7 +173,8 @@ void RKQWebView::installPersistentJS(const QString &script, const QString &id) {
 
 void RKQWebView::runJS(const QString &script, std::function<void(const QVariant &)> callback) {
 	RK_TRACE(APP);
-	RK_ASSERT(runjs_callback == nullptr); // no nested calls, please!
+	RK_ASSERT(runjs_callback == nullptr); // no nested calls, please!  // TODO: This fails. we need to be able to queue up js commands
+	                                      //                              but we also need to discard pending scripts on page load?
 	runjs_callback = callback;
 	QMetaObject::invokeMethod(webView(), "runJSWrapper", Q_ARG(QString, script));
 }
@@ -151,7 +217,21 @@ QMenu *RKQWebView::createContextMenu(const QPoint &clickpos) {
 QString RKQWebView::selectedText() const {
 	RK_TRACE(APP);
 
-	return QString();
+	return selected_text;
+}
+
+void RKQWebView::receivedCallbackMessage(const QString &message) {
+	RK_TRACE(APP);
+	const auto mo = QJsonDocument::fromJson(message.toUtf8()).object();
+	if (mo["command"_L1] == "selchanged"_L1) {
+		const auto sel = mo["sel"_L1].toString();
+		if (sel != selected_text) {
+			selected_text = sel;
+			Q_EMIT selectionChanged(!sel.isEmpty());
+		}
+	} else {
+		RK_DEBUG(APP, DL_WARNING, "Received message %s", qPrintable(message)); // TODO
+	}
 }
 
 void RKQWebView::exportPage() {

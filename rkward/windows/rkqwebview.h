@@ -41,11 +41,14 @@ class RKQWebView : public RKHTMLViewer {
 
   private:
 	friend class RKHTMLViewer;
+	friend class RKQWebViewCallbackServer;
 	RKQWebView(RKHTMLWindow *parent);
 	QPointer<QQuickWidget> view;
 	QUrl currentAcceptedUrl() const;
 	QMap<QString, QString> persistentScripts;
 	std::function<void(const QVariant &)> runjs_callback;
+	void receivedCallbackMessage(const QString &message);
+	QString selected_text;
   private Q_SLOTS:
 	void onUrlChanged(const QUrl &url, const QString &error, int status);
 	void onLoadFinished(const QUrl &url);
