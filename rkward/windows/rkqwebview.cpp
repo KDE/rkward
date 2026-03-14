@@ -30,13 +30,16 @@ class RKQWebViewCallbackServer {
 			QObject::connect(server, &QWebSocketServer::newConnection, server, [server]() {
 				auto con = server->nextPendingConnection();
 				const auto url = con->requestUrl().url();
-				auto win = windows.value(url);
-				RK_DEBUG(APP, DL_WARNING, "New connection at %s from window %p", qPrintable(url), win); // TODO
+				auto win = entrypoints.value(url);
+				entrypoints.remove(url);
+				RK_DEBUG(APP, DL_DEBUG, "New connection at %s from window %p", qPrintable(url), win);
 				if (!win) {
 					con->abort();
 				}
 
-				// TODO handle connection lifetime
+				QObject::connect(con, &QWebSocket::disconnected, win, [con, win]() {
+					con->deleteLater();
+				});
 
 				QObject::connect(con, &QWebSocket::textMessageReceived, win, [win](const QString &message) {
 					win->receivedCallbackMessage(message);
@@ -45,12 +48,12 @@ class RKQWebViewCallbackServer {
 		}
 
 		// Window may already be in our map. We need to re-init on every url change
-		auto key = windows.key(window);
+		auto key = entrypoints.key(window);
 		if (key.isEmpty()) {
 			key = server->serverUrl().url() + u"/"_s + QUuid::createUuid().toString(QUuid::Id128);
-			windows.insert(key, window);
+			entrypoints.insert(key, window);
 			QObject::connect(window, &QObject::destroyed, server, [key]() {
-				windows.remove(key);
+				entrypoints.remove(key);
 			});
 		}
 
@@ -58,9 +61,9 @@ class RKQWebViewCallbackServer {
 	}
 
   protected:
-	static QHash<QString, RKQWebView *> windows;
+	static QHash<QString, RKQWebView *> entrypoints;
 };
-QHash<QString, RKQWebView *> RKQWebViewCallbackServer::windows;
+QHash<QString, RKQWebView *> RKQWebViewCallbackServer::entrypoints;
 
 RKQWebView::RKQWebView(RKHTMLWindow *parent) : RKHTMLViewer(parent), view(nullptr), running_script(false) {
 	RK_TRACE(APP);
@@ -183,6 +186,7 @@ void RKQWebView::setHTML(const QString &html, const QUrl &_url) {
 
 bool RKQWebView::installHelpProtocolHandler() {
 	RK_TRACE(APP);
+	// TODO
 	return false;
 }
 
@@ -234,6 +238,7 @@ void RKQWebView::receivedCallbackMessage(const QString &message) {
 
 void RKQWebView::exportPage() {
 	RK_TRACE(APP);
+	// TODO
 }
 
 QPoint RKQWebView::scrollPosition() const {
