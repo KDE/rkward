@@ -112,12 +112,6 @@ QWidget *RKQWebView::createWidget() {
 	connect(webView(), SIGNAL(pageUrlChanged(const QUrl &, const QString &, int)), this, SLOT(onUrlChanged(const QUrl &, const QString &, int)));
 	connect(webView(), SIGNAL(loadFinished(const QUrl &)), this, SLOT(onLoadFinished(const QUrl &)));
 	connect(webView(), SIGNAL(runJSResult(const QVariant &)), this, SLOT(onRunJSResult(const QVariant &)));
-	/* TODO: we may need to inject a script along the lines below for handling target=new
-	    and page internal navigation?
-	RKHTMLViewer::runJS(u"document.addEventListener('click', e => {"
-	    "  const origin = e.target.closest('a');"
-	    "  if (origin) alert(origin.href);"
-	    "})\n"_s); */
 	return view;
 }
 
@@ -208,6 +202,7 @@ void RKQWebView::findRequest(const QString &text, bool backwards, RKFindBar *fin
 
 QMenu *RKQWebView::createContextMenu(const QPoint &clickpos) {
 	RK_TRACE(APP);
+	// TODO
 	return new QMenu();
 }
 
@@ -228,6 +223,10 @@ void RKQWebView::receivedCallbackMessage(const QString &message) {
 			selected_text = sel;
 			Q_EMIT selectionChanged(!sel.isEmpty());
 		}
+	} else if (msg == "scroll"_L1) {
+		scroll_pos = QPoint(args["x"_L1].toInt(), args["y"_L1].toInt());
+	} else if (msg == "pageInternalNav"_L1) {
+		Q_EMIT pageInternalNavigation(QUrl(args["href"_L1].toString()));
 	} else {
 		RK_DEBUG(APP, DL_ERROR, "Non-recognized message %s", qPrintable(message));
 	}
@@ -239,22 +238,26 @@ void RKQWebView::exportPage() {
 
 QPoint RKQWebView::scrollPosition() const {
 	RK_TRACE(APP);
-	return QPoint();
+	return scroll_pos;
 }
 
 void RKQWebView::setScrollPosition(const QPoint &pos, bool wait_for_load) {
 	RK_TRACE(APP);
+	runJS(u"window.scroll({top: %1, left: %2, behavior: 'instant'});"_s.arg(pos.y(), pos.x()));
 }
 
 bool RKQWebView::supportsContentType(const QString &mimename) {
 	RK_TRACE(APP);
+	// TODO
 	return true;
 }
 
 void RKQWebView::zoomIn() {
 	RK_TRACE(APP);
+	// TODO
 }
 
 void RKQWebView::zoomOut() {
 	RK_TRACE(APP);
+	// TODO
 }

@@ -9,6 +9,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #define RKQWEBVIEW_H
 
 #include <QMap>
+#include <QPoint>
 #include <QPointer>
 
 #include "rkhtmlviewer.h"
@@ -55,6 +56,7 @@ class RKQWebView : public RKHTMLViewer {
 	void tryRunNextScript();
 	void receivedCallbackMessage(const QString &message);
 	QString selected_text;
+	QPoint scroll_pos;
   private Q_SLOTS:
 	void onUrlChanged(const QUrl &url, const QString &error, int status);
 	void onLoadFinished(const QUrl &url);
