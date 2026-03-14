@@ -11,6 +11,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QDir>
 #include <QFileDialog>
 #include <QFontDatabase>
+#include <QMenu>
 #include <QMimeDatabase>
 #include <QPrintDialog>
 #include <QWebEngineFindTextResult>
@@ -249,6 +250,15 @@ QWidget *RKQWebEngineWidget::createWidget() {
 	connect(view, &QWebEngineView::selectionChanged, this, [this]() {
 		Q_EMIT selectionChanged(view->hasSelection());
 	});
+	view->setContextMenuPolicy(Qt::CustomContextMenu);
+	connect(view, &QWidget::customContextMenuRequested, this, [this](const QPoint &pos) {
+		auto v = QWebEngineView::forPage(page);
+		auto menu = v->createStandardContextMenu();
+		Q_EMIT aboutToShowContextMenu(menu);
+		menu->exec(v->mapToGlobal(pos));
+		delete menu;
+	});
+
 	return view;
 }
 
@@ -369,11 +379,6 @@ void RKQWebEngineWidget::findRequest(const QString &text, bool backwards, RKFind
 			findbar->indicateSearchFail();
 		}
 	});
-}
-
-QMenu *RKQWebEngineWidget::createContextMenu(const QPoint &clickpos) {
-	RK_TRACE(APP);
-	return (QWebEngineView::forPage(page)->createStandardContextMenu());
 }
 
 #include "rkqwebenginewidget.moc"

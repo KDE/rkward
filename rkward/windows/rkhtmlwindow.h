@@ -98,7 +98,6 @@ class RKHTMLWindow : public RKMDIWindow {
 	void mimeTypeJobFail(KJob *);
 	void mimeTypeJobFail2(KJob *);
 	void internalNavigation(const QUrl &new_url);
-	void makeContextMenu(const QPoint &pos);
 
   private:
 	friend class RKHTMLWindowPart;

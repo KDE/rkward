@@ -43,7 +43,6 @@ class RKHTMLViewer : public QObject {
 	virtual void setScrollPosition(const QPoint &pos, bool wait_for_load) = 0;
 	// TODO: Could be implemented in base-class as JS call
 	virtual void findRequest(const QString &text, bool backwards, RKFindBar *findbar, bool *found) = 0;
-	virtual QMenu *createContextMenu(const QPoint &clickpos) = 0;
 	virtual QString selectedText() const = 0;
 	virtual bool supportsContentType(const QString &mimename) = 0;
 	virtual void zoomIn() = 0;
@@ -54,6 +53,7 @@ class RKHTMLViewer : public QObject {
 	void selectionChanged(bool has_selection);
 	void loadFinished();
 	void navigationRequest(const QUrl &current_real_url, const QUrl &requested_url, bool is_new_window);
+	void aboutToShowContextMenu(QMenu *menu);
 
   protected:
 	RKHTMLViewer(QObject *parent);
