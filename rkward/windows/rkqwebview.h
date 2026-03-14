@@ -46,7 +46,13 @@ class RKQWebView : public RKHTMLViewer {
 	QPointer<QQuickWidget> view;
 	QUrl currentAcceptedUrl() const;
 	QMap<QString, QString> persistentScripts;
-	std::function<void(const QVariant &)> runjs_callback;
+	struct Script {
+		QString script;
+		std::function<void(const QVariant &)> callback;
+	};
+	QList<Script> runjs_queue;
+	bool running_script;
+	void tryRunNextScript();
 	void receivedCallbackMessage(const QString &message);
 	QString selected_text;
   private Q_SLOTS:
