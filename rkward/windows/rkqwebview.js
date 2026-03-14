@@ -31,4 +31,18 @@ document.addEventListener('click', e => {
 	const origin = e.target.closest('a');
 	if (origin && origin.href.startswith('#')) {
 		__rkward_sendMessage("pageInternalNav", { url: origin.href });
+		e.preventDefault();
+	}
+});
+
+document.addEventListener('contextmenu', e => {
+	let params = { x: e.screenX, y: e.screenY };
+	try {
+		params.url = e.target.closest('a').href;
+	} catch {}
+	try {
+		params.src = e.target.closest('img').src;
+	} catch {}
+	__rkward_sendMessage("contextMenu", params);
+	e.preventDefault();
 });

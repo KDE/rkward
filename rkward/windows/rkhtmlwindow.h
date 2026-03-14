@@ -75,6 +75,7 @@ class RKHTMLWindow : public RKMDIWindow {
 
 	WindowMode mode() { return window_mode; };
   public Q_SLOTS:
+	void slotCopy();
 	void slotPrint();
 	void slotExport();
 	void slotSave();
@@ -98,7 +99,6 @@ class RKHTMLWindow : public RKMDIWindow {
 	void mimeTypeJobFail(KJob *);
 	void mimeTypeJobFail2(KJob *);
 	void internalNavigation(const QUrl &new_url);
-	void makeContextMenu(const QPoint &pos);
 
   private:
 	friend class RKHTMLWindowPart;
