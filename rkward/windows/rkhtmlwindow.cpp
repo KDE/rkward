@@ -72,7 +72,6 @@ RKHTMLWindow::RKHTMLWindow(QWidget *parent, WindowMode mode) : RKMDIWindow(paren
 	layout->setContentsMargins(0, 0, 0, 0);
 	page = RKHTMLViewer::getNew(this);
 	auto view = page->createWidget();
-	view->setContextMenuPolicy(Qt::CustomContextMenu);
 	layout->addWidget(view, 1);
 	findbar = new RKFindBar(this, true);
 	findbar->setPrimaryOptions(QList<QWidget *>() << findbar->getOption(RKFindBar::FindAsYouType) << findbar->getOption(RKFindBar::MatchCase));
@@ -108,8 +107,9 @@ RKHTMLWindow::RKHTMLWindow(QWidget *parent, WindowMode mode) : RKMDIWindow(paren
 	connect(page, &RKHTMLViewer::navigationRequest, this, [this](const QUrl &current_real_url, const QUrl &requested_url, bool is_new_window) {
 		openURL(requested_url);
 	});
-
-	connect(view, &QWidget::customContextMenuRequested, this, &RKHTMLWindow::makeContextMenu);
+	connect(page, &RKHTMLViewer::aboutToShowContextMenu, this, [this](QMenu *menu) {
+		menu->addAction(part->run_selection);
+	});
 
 	current_history_position = -1;
 	url_change_is_from_history = false;
@@ -131,15 +131,6 @@ RKHTMLWindow::~RKHTMLWindow() {
 QUrl RKHTMLWindow::restorableUrl() {
 	RK_TRACE(APP);
 	return ::restorableUrl(current_url);
-}
-
-void RKHTMLWindow::makeContextMenu(const QPoint &pos) {
-	RK_TRACE(APP);
-
-	auto menu = page->createContextMenu(pos);
-	menu->addAction(part->run_selection);
-	menu->exec(mapToGlobal(pos));
-	delete (menu);
 }
 
 void RKHTMLWindow::selectionChanged(bool have_selection) {

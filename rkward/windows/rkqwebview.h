@@ -31,7 +31,6 @@ class RKQWebView : public RKHTMLViewer {
 	void setHTML(const QString &html, const QUrl &url) override;
 	bool installHelpProtocolHandler() override;
 	void findRequest(const QString &text, bool backwards, RKFindBar *findbar, bool *found) override;
-	QMenu *createContextMenu(const QPoint &clickpos) override;
 	QString selectedText() const override;
 	void exportPage() override;
 	QPoint scrollPosition() const override;

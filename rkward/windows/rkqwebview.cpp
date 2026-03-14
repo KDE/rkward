@@ -204,12 +204,6 @@ void RKQWebView::findRequest(const QString &text, bool backwards, RKFindBar *fin
 	});
 }
 
-QMenu *RKQWebView::createContextMenu(const QPoint &clickpos) {
-	RK_TRACE(APP);
-	// TODO
-	return new QMenu();
-}
-
 QString RKQWebView::selectedText() const {
 	RK_TRACE(APP);
 
@@ -229,6 +223,23 @@ void RKQWebView::receivedCallbackMessage(const QString &message) {
 		}
 	} else if (msg == "scroll"_L1) {
 		scroll_pos = QPoint(args["x"_L1].toInt(), args["y"_L1].toInt());
+	} else if (msg == "contextMenu"_L1) {
+		// TODO: some actions we probably want:
+		// back, forward, reload, copy, copy link address, open in new tab, open in external browser
+		// most to all could/should probably be handled in the RKHTMLWindow?
+		QMenu menu;
+		const auto url = args["url"_L1].toString();
+		if (!url.isEmpty()) {
+			menu.addAction(new QAction(args["url"_L1].toString())); // TODO
+
+			auto a = new QAction(u"Open in new tab"_s);
+			connect(a, &QAction::triggered, this, [url]() {
+				RKWorkplace::mainWorkplace()->openAnyUrl(QUrl(url));
+			});
+			menu.addAction(a);
+		}
+		Q_EMIT aboutToShowContextMenu(&menu);
+		menu.exec((QPoint(args["x"_L1].toInt(), args["y"_L1].toInt()) - scroll_pos));
 	} else if (msg == "pageInternalNav"_L1) {
 		Q_EMIT pageInternalNavigation(QUrl(args["href"_L1].toString()));
 	} else {
