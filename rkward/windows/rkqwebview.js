@@ -15,6 +15,10 @@ document.onselectionchange = __rkward_debounce(function() {
 	__rkward_sendMessage("selChanged", { sel: document.getSelection().toString() });
 });
 
+document.onscroll = __rkward_debounce(function() {
+	__rkward_sendMessage("scroll", { x: window.scrollX, y: window.scrollY });
+});
+
 function __rkward_sendMessage(msg, args) {
 	if (__rkward.readyState == WebSocket.CONNECTING) {
 		setTimeout(__rkward_sendMessage.bind(null, msg, args), 10);
@@ -22,3 +26,9 @@ function __rkward_sendMessage(msg, args) {
 		__rkward.send(JSON.stringify({msg, args}));
 	}
 }
+
+document.addEventListener('click', e => {
+	const origin = e.target.closest('a');
+	if (origin && origin.href.startswith('#')) {
+		__rkward_sendMessage("pageInternalNav", { url: origin.href });
+});
