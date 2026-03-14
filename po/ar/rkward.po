@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-03 00:41+0000\n"
+"POT-Creation-Date: 2026-03-14 00:39+0000\n"
 "PO-Revision-Date: 2026-02-05 11:06+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
@@ -121,7 +121,7 @@ msgstr ""
 msgid "Overwrite File?"
 msgstr "أأكتب فوق الملفّ؟"
 
-#: rkward/agents/rksaveagent.cpp:63 rkward/rkward.cpp:903
+#: rkward/agents/rksaveagent.cpp:63 rkward/rkward.cpp:908
 #, kde-format
 msgid "R Workspace Files [%1](%1);;All files [*](*)"
 msgstr "ملفات مساحة عمل R [%1](%1);;جميع الملفات [*](*)"
@@ -4314,7 +4314,7 @@ msgstr "&عرض"
 msgid "&Run"
 msgstr "&شغّل"
 
-#: rkward/rkward.cpp:321
+#: rkward/rkward.cpp:326
 #, kde-format
 msgid ""
 "<p>You are about to start an RKWard dialog from outside of RKWard, probably "
@@ -4338,17 +4338,17 @@ msgstr ""
 "p><p><i>ملاحظة</i>: تحديد 'لا تسأل مرة أخرى' سيكبت هذه الرسالة لبقية هذه "
 "الجلسة فقط."
 
-#: rkward/rkward.cpp:322
+#: rkward/rkward.cpp:327
 #, kde-format
 msgid "A note on external links"
 msgstr "ملاحظة حول الروابط الخارجية"
 
-#: rkward/rkward.cpp:334
+#: rkward/rkward.cpp:339
 #, kde-format
 msgid "Setting up plugins..."
 msgstr "جاري إعداد الملحقات..."
 
-#: rkward/rkward.cpp:368
+#: rkward/rkward.cpp:373
 #, kde-format
 msgid ""
 "New RKWard plugin packs (listed below) have been found, and have been "
@@ -4358,12 +4358,12 @@ msgstr ""
 "عُثر على حزم ملحقات أر كي وارد جديدة (المدرجة أدناه)، وجرى تفعيلها آليًا. "
 "لإلغاء تفعيل حزم ملحقات محددة، استخدم إعدادات->اضبط أر كي وارد->ملحقات."
 
-#: rkward/rkward.cpp:368
+#: rkward/rkward.cpp:373
 #, kde-format
 msgid "New plugins found"
 msgstr "عُثر على ملحقات جديدة"
 
-#: rkward/rkward.cpp:372
+#: rkward/rkward.cpp:377
 #, kde-format
 msgid ""
 "The following RKWard pluginmap files could not be loaded, and have been "
@@ -4375,12 +4375,12 @@ msgstr ""
 "لأنها معطوبة، أو غير متوافقة مع هذا الإصدار من أر كي وارد، أو لم يُقصَد "
 "تحميلها مباشرة (راجع 'التفاصيل' لمزيد من المعلومات). جرى تعطيلها."
 
-#: rkward/rkward.cpp:372 rkward/rkward.cpp:376
+#: rkward/rkward.cpp:377 rkward/rkward.cpp:381
 #, kde-format
 msgid "Failed to load some plugin maps"
 msgstr "فشل في تحميل بعض خرائط الملحقات"
 
-#: rkward/rkward.cpp:376
+#: rkward/rkward.cpp:381
 #, kde-format
 msgid ""
 "Some errors were encountered while loading the following RKWard pluginmap "
@@ -4392,7 +4392,7 @@ msgstr ""
 "هذا بسبب أن الملحقات الفردية معطوبة أو غير متوافقة مع هذا الإصدار من أر كي "
 "وارد (راجع 'التفاصيل' لمزيد من المعلومات). ومع ذلك، حُمِّلت ملحقات أخرى بنجاح."
 
-#: rkward/rkward.cpp:376
+#: rkward/rkward.cpp:381
 #, kde-format
 msgid ""
 "Note: You will not be warned about these pluginmap files again, until you "
@@ -4402,210 +4402,210 @@ msgstr ""
 "ملاحظة: لن يجري تحذيرك بشأن ملفات خريطة الملحقات هذه مرة أخرى، حتى ترقّي أر "
 "كي وارد، أو تُزيلها وتعيد إضافتها في إعدادات->اضبط أر كي وارد->ملحقات."
 
-#: rkward/rkward.cpp:438
+#: rkward/rkward.cpp:443
 #, kde-format
 msgid "Carbon Copy Settings"
 msgstr "إعدادات نسخة كربونية"
 
-#: rkward/rkward.cpp:456 rkward/settings/rksettingsmoduleobjectbrowser.cpp:36
+#: rkward/rkward.cpp:461 rkward/settings/rksettingsmoduleobjectbrowser.cpp:36
 #, kde-format
 msgid "Workspace"
 msgstr "مساحة العمل"
 
-#: rkward/rkward.cpp:465
+#: rkward/rkward.cpp:470
 #, kde-format
 msgid "Files"
 msgstr "الملفات"
 
-#: rkward/rkward.cpp:469
+#: rkward/rkward.cpp:474
 #, kde-format
 msgid "Pending Jobs"
 msgstr "مهامّ مرجأة"
 
-#: rkward/rkward.cpp:481
+#: rkward/rkward.cpp:486
 #, kde-format
 msgid "Debugger Frames"
 msgstr "إطارات المُصحّح"
 
-#: rkward/rkward.cpp:486
+#: rkward/rkward.cpp:491
 #, kde-format
 msgid "Debugger Console"
 msgstr "وحدة تحكم المُصحّح"
 
-#: rkward/rkward.cpp:490
+#: rkward/rkward.cpp:495
 #, kde-format
 msgid "RKWard Debug Messages"
 msgstr "رسائل تصحيح أر كي وارد"
 
-#: rkward/rkward.cpp:502
+#: rkward/rkward.cpp:507
 #, kde-format
 msgid "Dataset"
 msgstr "مجموعة البيانات"
 
-#: rkward/rkward.cpp:504
+#: rkward/rkward.cpp:509
 #, kde-format
 msgid "Creates new empty dataset and opens it for editing"
 msgstr "ينشئ مجموعة بيانات فارغة جديدة ويفتحها للتحرير"
 
-#: rkward/rkward.cpp:507
+#: rkward/rkward.cpp:512
 #, kde-format
 msgid "Script File"
 msgstr "ملف نص برمجي"
 
-#: rkward/rkward.cpp:511
+#: rkward/rkward.cpp:516
 #, kde-format
 msgid "Output document"
 msgstr "مستند الإخراج"
 
-#: rkward/rkward.cpp:513
+#: rkward/rkward.cpp:518
 #, kde-format
 msgid "Creates and activates a new output document"
 msgstr "ينشئ مستند إخراج جديدًا ويفعّله"
 
-#: rkward/rkward.cpp:518
+#: rkward/rkward.cpp:523
 #, kde-format
 msgid "Open R Script File..."
 msgstr "افتح ملف نص برمجي R..."
 
-#: rkward/rkward.cpp:522
+#: rkward/rkward.cpp:527
 #, kde-format
 msgid "Open RKWard Output File..."
 msgstr "افتح ملف إخراج أر كي وارد..."
 
-#: rkward/rkward.cpp:526
+#: rkward/rkward.cpp:531
 #, kde-format
 msgid "Open any File..."
 msgstr "افتح أي ملف..."
 
-#: rkward/rkward.cpp:531
+#: rkward/rkward.cpp:536
 #, kde-format
 msgid "Open Recent R Script File"
 msgstr "افتح ملف نص برمجي R حديث"
 
-#: rkward/rkward.cpp:535
+#: rkward/rkward.cpp:540
 #, kde-format
 msgid "Import Assistant"
 msgstr "مساعد الاستيراد"
 
-#: rkward/rkward.cpp:536
+#: rkward/rkward.cpp:541
 #, kde-format
 msgid ""
 "Assistant to find the best method to import data from a variety of formats"
 msgstr ""
 "مساعد للعثور على أفضل طريقة لاستيراد البيانات من مجموعة متنوعة من التنسيقات"
 
-#: rkward/rkward.cpp:540
+#: rkward/rkward.cpp:545
 #, kde-format
 msgid "Open Workspace..."
 msgstr "افتح مساحة عمل..."
 
-#: rkward/rkward.cpp:542
+#: rkward/rkward.cpp:547
 #, kde-format
 msgid "Opens an existing document"
 msgstr "يفتح مستندًا موجودًا"
 
-#: rkward/rkward.cpp:547
+#: rkward/rkward.cpp:552
 #, kde-format
 msgid "Open Recent Workspace"
 msgstr "افتح مساحة عمل حديثة"
 
-#: rkward/rkward.cpp:548
+#: rkward/rkward.cpp:553
 #, kde-format
 msgid "Opens a recently used file"
 msgstr "يفتح ملفًّا مستخدم مؤخّرًا"
 
-#: rkward/rkward.cpp:551
+#: rkward/rkward.cpp:556
 #, kde-format
 msgid "Save Workspace"
 msgstr "احفظ مساحة العمل"
 
-#: rkward/rkward.cpp:553
+#: rkward/rkward.cpp:558
 #, kde-format
 msgid "Saves the actual document"
 msgstr "يحفظ المستند الفعلي"
 
-#: rkward/rkward.cpp:557
+#: rkward/rkward.cpp:562
 #, kde-format
 msgid "Save Workspace As"
 msgstr "احفظ مساحة العمل باسم"
 
-#: rkward/rkward.cpp:558
+#: rkward/rkward.cpp:563
 #, kde-format
 msgid "Saves the actual document as..."
 msgstr "يحفظ المستند الفعلي باسم..."
 
-#: rkward/rkward.cpp:561
+#: rkward/rkward.cpp:566
 #, kde-format
 msgid "Quits the application"
 msgstr "ينهي التَّطبيق"
 
-#: rkward/rkward.cpp:564
+#: rkward/rkward.cpp:569
 #, kde-format
 msgid "Interrupt all commands"
 msgstr "اقطَع كل الأوامر"
 
-#: rkward/rkward.cpp:570
+#: rkward/rkward.cpp:575
 #, kde-format
 msgid "CC commands to output..."
 msgstr "أوامر نسخة كربونية إلى الإخراج..."
 
-#: rkward/rkward.cpp:574 rkward/rkward.cpp:578
+#: rkward/rkward.cpp:579 rkward/rkward.cpp:583
 #, kde-format
 msgid "Manage R packages and plugins..."
 msgstr "أدِر حزم وملحقات R..."
 
-#: rkward/rkward.cpp:585
+#: rkward/rkward.cpp:590
 #, kde-format
 msgid "Close All Data"
 msgstr "أغلِق كل البيانات"
 
-#: rkward/rkward.cpp:586
+#: rkward/rkward.cpp:591
 #, kde-format
 msgid "Closes all open data editors"
 msgstr "يغلق كل محررات البيانات المفتوحة"
 
-#: rkward/rkward.cpp:591
+#: rkward/rkward.cpp:596
 #, kde-format
 msgid "Close All"
 msgstr "أغلق الكل"
 
-#: rkward/rkward.cpp:595 rkward/windows/rktoolwindowbar.cpp:304
+#: rkward/rkward.cpp:600 rkward/windows/rktoolwindowbar.cpp:304
 #: rkward/windows/rkworkplaceview.cpp:96
 #, kde-format
 msgid "Detach"
 msgstr "افصل"
 
-#: rkward/rkward.cpp:599
+#: rkward/rkward.cpp:604
 #, kde-format
 msgid "Check installation"
 msgstr "تأكد من التثبيت"
 
-#: rkward/rkward.cpp:603
+#: rkward/rkward.cpp:608
 #, kde-format
 msgid "[No actions available for current view]"
 msgstr "[لا توجد إجراءات متاحة للعرض الحالي]"
 
-#: rkward/rkward.cpp:610
+#: rkward/rkward.cpp:615
 #, kde-format
 msgid "Open..."
 msgstr "افتح..."
 
-#: rkward/rkward.cpp:624
+#: rkward/rkward.cpp:629
 #, kde-format
 msgid "Create..."
 msgstr "أنشئ..."
 
-#: rkward/rkward.cpp:631
+#: rkward/rkward.cpp:636
 #, kde-format
 msgid "Save..."
 msgstr "احفظ..."
 
-#: rkward/rkward.cpp:647
+#: rkward/rkward.cpp:652
 #, kde-format
 msgid "Restart R Backend"
 msgstr "أعِد تشغيل الواجهة الخلفية لـ R"
 
-#: rkward/rkward.cpp:655
+#: rkward/rkward.cpp:660
 #, kde-format
 msgid ""
 "<p><b>Restarting the backend will discard all unsaved data in this workspace!"
@@ -4616,12 +4616,12 @@ msgstr ""
 "مساحة العمل هذه!</b> ستُغلَق جميع محررات البيانات ونوافذ الرسوميات.</p><p>هل "
 "أنت متأكد من أنك تريد المتابعة؟</p>"
 
-#: rkward/rkward.cpp:656
+#: rkward/rkward.cpp:661
 #, kde-format
 msgid "Restart R backend"
 msgstr "أعِد تشغيل الواجهة الخلفية لـ R"
 
-#: rkward/rkward.cpp:663
+#: rkward/rkward.cpp:668
 #, kde-format
 msgid ""
 "<p>One or more operations are pending.</p><p>If you have recently chosen to "
@@ -4632,82 +4632,82 @@ msgstr ""
 "هذه الرسالة، <b>فقد لا تكون بياناتك محفوظة بعد!</b></p><p>كيف تريد المتابعة؟"
 "</p>"
 
-#: rkward/rkward.cpp:664
+#: rkward/rkward.cpp:669
 #, kde-format
 msgid "R commands still pending"
 msgstr "أوامر R لا تزال معلقة"
 
-#: rkward/rkward.cpp:664
+#: rkward/rkward.cpp:669
 #, kde-format
 msgid "Force restart now"
 msgstr "أفرِض إعادة التشغيل الآن"
 
-#: rkward/rkward.cpp:664
+#: rkward/rkward.cpp:669
 #, kde-format
 msgid "Check again"
 msgstr "تحقق مجددًا"
 
-#: rkward/rkward.cpp:664
+#: rkward/rkward.cpp:669
 #, kde-format
 msgid "Cancel restarting"
 msgstr "ألغِ إعادة التشغيل"
 
-#: rkward/rkward.cpp:801
+#: rkward/rkward.cpp:806
 #, kde-format
 msgid "Current working directory"
 msgstr "مجلد العمل الحالي"
 
-#: rkward/rkward.cpp:819 rkward/windows/rcontrolwindow.cpp:41
+#: rkward/rkward.cpp:824 rkward/windows/rcontrolwindow.cpp:41
 #, kde-format
 msgid "Configure R backend"
 msgstr "اضبط الواجهة الخلفية لـ R"
 
-#: rkward/rkward.cpp:870
+#: rkward/rkward.cpp:875
 #, kde-format
 msgid "Exiting..."
 msgstr "يخرج…"
 
-#: rkward/rkward.cpp:888
+#: rkward/rkward.cpp:893
 #, kde-format
 msgid "New dataset"
 msgstr "مجموعة بيانات جديدة"
 
-#: rkward/rkward.cpp:888
+#: rkward/rkward.cpp:893
 #, kde-format
 msgid "Enter name for the new dataset"
 msgstr "أَدْخِل اسم مجموعة البيانات الجديدة"
 
-#: rkward/rkward.cpp:900
+#: rkward/rkward.cpp:905
 #, kde-format
 msgid "Opening workspace..."
 msgstr "جاري فتح مساحة العمل..."
 
-#: rkward/rkward.cpp:903
+#: rkward/rkward.cpp:908
 #, kde-format
 msgid "Select workspace to open..."
 msgstr "اختر مساحة العمل لفتحها..."
 
-#: rkward/rkward.cpp:974
+#: rkward/rkward.cpp:979
 #, kde-format
 msgid "The <b>R</b> engine is busy."
 msgstr "محرك <b>R</b> مشغول."
 
-#: rkward/rkward.cpp:978
+#: rkward/rkward.cpp:983
 #, kde-format
 msgid "The <b>R</b> engine is idle."
 msgstr "محرك <b>R</b> خاملاً."
 
-#: rkward/rkward.cpp:987
+#: rkward/rkward.cpp:992
 #, kde-format
 msgid "The <b>R</b> engine is being initialized."
 msgstr "محرك <b>R</b> قيد التهيئة."
 
-#: rkward/rkward.cpp:990
+#: rkward/rkward.cpp:995
 #, kde-format
 msgid "The <b>R</b> engine is unavailable."
 msgstr "محرك <b>R</b> غير متاح."
 
-#: rkward/rkward.cpp:996
+#: rkward/rkward.cpp:1001
 #, kde-format
 msgid ""
 "R engine unavailable. See <a href=\"rkward://page/rkward_trouble_shooting"
@@ -4716,52 +4716,52 @@ msgstr ""
 "محرك R غير متاح. راجع <a href=\"rkward://page/rkward_trouble_shooting"
 "\">استكشاف الأخطاء وإصلاحها</a> لحلول محتملة."
 
-#: rkward/rkward.cpp:1028
+#: rkward/rkward.cpp:1033
 #, kde-format
 msgid "Open"
 msgstr "افتح"
 
-#: rkward/rkward.cpp:1032
+#: rkward/rkward.cpp:1037
 #, kde-format
 msgid "Opening mode:"
 msgstr "وضع الفتح:"
 
-#: rkward/rkward.cpp:1034
+#: rkward/rkward.cpp:1039
 #, kde-format
 msgid "Guess file type, automatically"
 msgstr "خَمِّن نوع الملف، آليًا"
 
-#: rkward/rkward.cpp:1034
+#: rkward/rkward.cpp:1039
 #, kde-format
 msgid "Open as text / script file"
 msgstr "افتح كملف نص / نص برمجي"
 
-#: rkward/rkward.cpp:1035
+#: rkward/rkward.cpp:1040
 #, kde-format
 msgid "Open as text file and force R highlighting"
 msgstr "افتح كملف نص وافرِض تمييز R"
 
-#: rkward/rkward.cpp:1035
+#: rkward/rkward.cpp:1040
 #, kde-format
 msgid "Open as R workspace"
 msgstr "افتح كمساحة عمل R"
 
-#: rkward/rkward.cpp:1072
+#: rkward/rkward.cpp:1077
 #, kde-format
 msgid "Select RKWard Output file to open..."
 msgstr "اختر ملف إخراج أر كي وارد لفتحه..."
 
-#: rkward/rkward.cpp:1072
+#: rkward/rkward.cpp:1077
 #, kde-format
 msgid "RKWard Output Files [*.rko](*.rko);;All files [*](*)"
 msgstr "ملفات إخراج أر كي وارد [*.rko](*.rko);;كل الملفات [*](*)"
 
-#: rkward/rkward.cpp:1081
+#: rkward/rkward.cpp:1086
 #, kde-format
 msgid "Open script file(s)"
 msgstr "افتح ملف (ملفات) نص برمجي"
 
-#: rkward/rkward.cpp:1095
+#: rkward/rkward.cpp:1100
 #, kde-format
 msgid "[Unnamed Workspace]"
 msgstr "[مساحة عمل غير مُسمّاة]"
@@ -5237,12 +5237,12 @@ msgstr "مهلة الأوامر"
 msgid "<i>Note:</i> Debug output is written to %1"
 msgstr "<i>ملاحظة:</i> مخرجات التصحيح اكتبها إلى %1"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:59
+#: rkward/settings/rksettingsmodulegeneral.cpp:60
 #, kde-format
 msgid "General"
 msgstr "عامّ"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:63
+#: rkward/settings/rksettingsmodulegeneral.cpp:64
 #, kde-format
 msgid ""
 "Directory where rkward may store files (setting takes effect after "
@@ -5250,54 +5250,75 @@ msgid ""
 msgstr ""
 "مجلد يخزّن فيه أر كي وارد الملفات (يسري الإعداد بعد إعادة تشغيل أر كي وارد)"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:69
+#: rkward/settings/rksettingsmodulegeneral.cpp:70
 #, kde-format
 msgid "Startup behavior"
 msgstr "سلوك الإقلاع"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:71
+#: rkward/settings/rksettingsmodulegeneral.cpp:72
 #, kde-format
 msgid ""
 "Load .RData-file from startup directory, if available (R option '--restore')"
 msgstr "حمّل ملف .RData من مجلد بدء التشغيل، إذا توفر (خيار R '--restore')"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:72
+#: rkward/settings/rksettingsmodulegeneral.cpp:73
 #, kde-format
 msgid "Show RKWard Help on Startup"
 msgstr "اعرض دليل أر كي وارد عند بدء التشغيل"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:74
-#: rkward/settings/rksettingsmodulegeneral.cpp:83
+#, fuzzy, kde-format
+#| msgid ""
+#| "Directory where rkward may store files (setting takes effect after "
+#| "restarting RKWard)"
+msgid ""
+"Disable HTML hardware rendering (setting takes effect after restarting "
+"RKWard)"
+msgstr ""
+"مجلد يخزّن فيه أر كي وارد الملفات (يسري الإعداد بعد إعادة تشغيل أر كي وارد)"
+
+#: rkward/settings/rksettingsmodulegeneral.cpp:75
+#, kde-format
+msgid ""
+"The use of hardware accelaration for HTML rendering (e.g. help pages and "
+"plugin output) is known to cause instability in some installations, and is "
+"not generally needed for the - usually simple - content shown in RKWard. It "
+"is recommended to leave hardware accelaration disabled, unless you "
+"experience performance problems while viewing HTML content inside RKWard."
+msgstr ""
+
+#: rkward/settings/rksettingsmodulegeneral.cpp:78
+#: rkward/settings/rksettingsmodulegeneral.cpp:87
 #, kde-format
 msgid "Initial working directory"
 msgstr "مجلد العمل مبدئي"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:76
+#: rkward/settings/rksettingsmodulegeneral.cpp:80
 #, kde-format
 msgid "Do not change current directory on startup"
 msgstr "لا تغيّر المجلد الحالي عند بدء التشغيل"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:77
+#: rkward/settings/rksettingsmodulegeneral.cpp:81
 #, kde-format
 msgid "RKWard files directory (as specified, above)"
 msgstr "مجلد ملفات أر كي وارد (كما هو محدد، أعلاه)"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:78
+#: rkward/settings/rksettingsmodulegeneral.cpp:82
 #, kde-format
 msgid "User home directory"
 msgstr "مجلد منزل المستخدم"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:79
+#: rkward/settings/rksettingsmodulegeneral.cpp:83
 #, kde-format
 msgid "Last used directory"
 msgstr "آخر مجلد اُستخدم"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:80
+#: rkward/settings/rksettingsmodulegeneral.cpp:84
 #, kde-format
 msgid "The following directory (please specify):"
 msgstr "المجلد التالي (حدد من فضلك):"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:88
+#: rkward/settings/rksettingsmodulegeneral.cpp:92
 #, kde-format
 msgid ""
 "<p>The initial working directory to use. Note that if you are loading a "
@@ -5308,7 +5329,7 @@ msgstr ""
 "و ضبط أر كي وارد للتغيير إلى مجلد مساحات العمل المحملة، سيعطى هذا المجلد "
 "الأولوية.</p>"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:95
+#: rkward/settings/rksettingsmodulegeneral.cpp:99
 #, kde-format
 msgid ""
 "<p>The number of recent files to remember (in the Open Recent R Script File "
@@ -5316,24 +5337,24 @@ msgid ""
 msgstr ""
 "<p>عدد الملفات الحديثة لتذكرها (في قائمة افتح ملف نص R البرمجي الحديث).</p>"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:96
+#: rkward/settings/rksettingsmodulegeneral.cpp:100
 #, kde-format
 msgid "Maximum number of recently used files to remember per category"
 msgstr "الحد الأقصى لعدد الملفات المستخدمة حديثًا لتذكرها لكل فئة"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:101
+#: rkward/settings/rksettingsmodulegeneral.cpp:105
 #, kde-format
 msgid ""
 "Persistent workplace layout (i.e. which script-, data-, help-windows are "
 "open)"
 msgstr "تخطيط ثابت لمكان العمل (أي النصوص والبيانات ونوافذ المساعدة المفتوحة)"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:105
+#: rkward/settings/rksettingsmodulegeneral.cpp:109
 #, kde-format
 msgid "Save/restore with R workspace, when saving/loading R workspace"
 msgstr "احفظ/استعد مع مساحة عمل R، عند حفظ/تحميل مساحة عمل R"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:106
+#: rkward/settings/rksettingsmodulegeneral.cpp:110
 #, kde-format
 msgid ""
 "Save/restore independent of R workspace (save at end of RKWard session, "
@@ -5342,34 +5363,34 @@ msgstr ""
 "احفظ/استعد مستقلًا عن مساحة عمل R (احفظ في نهاية جلسة أر كي وارد، استعد عند "
 "البدء التالي)"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:107
+#: rkward/settings/rksettingsmodulegeneral.cpp:111
 #, kde-format
 msgid "Do not save/restore workplace layout"
 msgstr "لا تحفظ/تستعد تخطيط مكان العمل"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:114
+#: rkward/settings/rksettingsmodulegeneral.cpp:118
 #, kde-format
 msgid "When loading a workspace, change to the corresponding directory."
 msgstr "عند تحميل مساحة عمل، غيّر إلى المجلد الموافق."
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:118
+#: rkward/settings/rksettingsmodulegeneral.cpp:122
 #, kde-format
 msgid ""
 "Warn when editing objects with more than this number of fields (0 for no "
 "limit):"
 msgstr "حذّر عند تحرير الكائنات بأكثر من هذا العدد من الحقول (0 بلا حد):"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:123
+#: rkward/settings/rksettingsmodulegeneral.cpp:127
 #, kde-format
 msgid "MDI window focus behavior"
 msgstr "سلوك تركيز نافذة MDI"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:124
+#: rkward/settings/rksettingsmodulegeneral.cpp:128
 #, kde-format
 msgid "Click to focus"
 msgstr "انقر للتركيز"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:125
+#: rkward/settings/rksettingsmodulegeneral.cpp:129
 #, kde-format
 msgid "Focus follows mouse"
 msgstr "التركيز يتبع الفأرة"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-03 00:41+0000\n"
+"POT-Creation-Date: 2026-03-14 00:39+0000\n"
 "PO-Revision-Date: 2026-03-03 15:57+0300\n"
 "Last-Translator: Olesya Gerasimenko <goa@altlinux.org>\n"
 "Language-Team: Basealt Translation Team\n"
@@ -126,7 +126,7 @@ msgstr ""
 msgid "Overwrite File?"
 msgstr "Заменить файл?"
 
-#: rkward/agents/rksaveagent.cpp:63 rkward/rkward.cpp:903
+#: rkward/agents/rksaveagent.cpp:63 rkward/rkward.cpp:908
 #, kde-format
 msgid "R Workspace Files [%1](%1);;All files [*](*)"
 msgstr "Рабочие области R [%1](%1);;Все файлы [*](*)"
@@ -4439,7 +4439,7 @@ msgstr "&Вид"
 msgid "&Run"
 msgstr "&Запуск"
 
-#: rkward/rkward.cpp:321
+#: rkward/rkward.cpp:326
 #, kde-format
 msgid ""
 "<p>You are about to start an RKWard dialog from outside of RKWard, probably "
@@ -4464,17 +4464,17 @@ msgstr ""
 "R).</p><p><i>Примечание</i>: установка флажка «Больше не спрашивать» "
 "приведёт к подавлению этого сообщения только до конца текущего сеанса."
 
-#: rkward/rkward.cpp:322
+#: rkward/rkward.cpp:327
 #, kde-format
 msgid "A note on external links"
 msgstr "Примечание о внешних ссылках"
 
-#: rkward/rkward.cpp:334
+#: rkward/rkward.cpp:339
 #, kde-format
 msgid "Setting up plugins..."
 msgstr "Настройка модулей…"
 
-#: rkward/rkward.cpp:368
+#: rkward/rkward.cpp:373
 #, kde-format
 msgid ""
 "New RKWard plugin packs (listed below) have been found, and have been "
@@ -4485,12 +4485,12 @@ msgstr ""
 "приведён ниже). Чтобы отключить выбранные пакеты модулей, воспользуйтесь "
 "пунктом меню «Настройка -> Настроить RKWard -> Модули»."
 
-#: rkward/rkward.cpp:368
+#: rkward/rkward.cpp:373
 #, kde-format
 msgid "New plugins found"
 msgstr "Найдены новые модули"
 
-#: rkward/rkward.cpp:372
+#: rkward/rkward.cpp:377
 #, kde-format
 msgid ""
 "The following RKWard pluginmap files could not be loaded, and have been "
@@ -4503,12 +4503,12 @@ msgstr ""
 "прямой загрузки (просмотрите «Подробности», чтобы получить больше "
 "информации). Соответствующие карты модулей были отключены."
 
-#: rkward/rkward.cpp:372 rkward/rkward.cpp:376
+#: rkward/rkward.cpp:377 rkward/rkward.cpp:381
 #, kde-format
 msgid "Failed to load some plugin maps"
 msgstr "Не удалось загрузить некоторые карты модулей"
 
-#: rkward/rkward.cpp:376
+#: rkward/rkward.cpp:381
 #, kde-format
 msgid ""
 "Some errors were encountered while loading the following RKWard pluginmap "
@@ -4521,7 +4521,7 @@ msgstr ""
 "RKWard (просмотрите «Подробности», чтобы получить больше информации). "
 "Остальные модули были успешно загружены."
 
-#: rkward/rkward.cpp:376
+#: rkward/rkward.cpp:381
 #, kde-format
 msgid ""
 "Note: You will not be warned about these pluginmap files again, until you "
@@ -4532,210 +4532,210 @@ msgstr ""
 "в том случае, если будет выполнено обновление RKWard или удаление и "
 "повторное добавление этих карт («Настройка -> Настроить RKWard -> Модули»)."
 
-#: rkward/rkward.cpp:438
+#: rkward/rkward.cpp:443
 #, kde-format
 msgid "Carbon Copy Settings"
 msgstr "Параметры копирования"
 
-#: rkward/rkward.cpp:456 rkward/settings/rksettingsmoduleobjectbrowser.cpp:36
+#: rkward/rkward.cpp:461 rkward/settings/rksettingsmoduleobjectbrowser.cpp:36
 #, kde-format
 msgid "Workspace"
 msgstr "Рабочая область"
 
-#: rkward/rkward.cpp:465
+#: rkward/rkward.cpp:470
 #, kde-format
 msgid "Files"
 msgstr "Обзор файловой системы"
 
-#: rkward/rkward.cpp:469
+#: rkward/rkward.cpp:474
 #, kde-format
 msgid "Pending Jobs"
 msgstr "Задания в очереди"
 
-#: rkward/rkward.cpp:481
+#: rkward/rkward.cpp:486
 #, kde-format
 msgid "Debugger Frames"
 msgstr "Фреймы отладчика"
 
-#: rkward/rkward.cpp:486
+#: rkward/rkward.cpp:491
 #, kde-format
 msgid "Debugger Console"
 msgstr "Консоль отладчика"
 
-#: rkward/rkward.cpp:490
+#: rkward/rkward.cpp:495
 #, kde-format
 msgid "RKWard Debug Messages"
 msgstr "Сообщения отладки RKWard"
 
-#: rkward/rkward.cpp:502
+#: rkward/rkward.cpp:507
 #, kde-format
 msgid "Dataset"
 msgstr "Набор данных"
 
-#: rkward/rkward.cpp:504
+#: rkward/rkward.cpp:509
 #, kde-format
 msgid "Creates new empty dataset and opens it for editing"
 msgstr "Создаёт новый пустой набор данных и открывает его для редактирования"
 
-#: rkward/rkward.cpp:507
+#: rkward/rkward.cpp:512
 #, kde-format
 msgid "Script File"
 msgstr "Файл сценария"
 
-#: rkward/rkward.cpp:511
+#: rkward/rkward.cpp:516
 #, kde-format
 msgid "Output document"
 msgstr "Выходной документ"
 
-#: rkward/rkward.cpp:513
+#: rkward/rkward.cpp:518
 #, kde-format
 msgid "Creates and activates a new output document"
 msgstr "Создаёт и активирует новый выходной документ"
 
-#: rkward/rkward.cpp:518
+#: rkward/rkward.cpp:523
 #, kde-format
 msgid "Open R Script File..."
 msgstr "Открыть сценарий R…"
 
-#: rkward/rkward.cpp:522
+#: rkward/rkward.cpp:527
 #, kde-format
 msgid "Open RKWard Output File..."
 msgstr "Открыть файл вывода RKWard…"
 
-#: rkward/rkward.cpp:526
+#: rkward/rkward.cpp:531
 #, kde-format
 msgid "Open any File..."
 msgstr "Открыть любой файл…"
 
-#: rkward/rkward.cpp:531
+#: rkward/rkward.cpp:536
 #, kde-format
 msgid "Open Recent R Script File"
 msgstr "Последние сценарии R"
 
-#: rkward/rkward.cpp:535
+#: rkward/rkward.cpp:540
 #, kde-format
 msgid "Import Assistant"
 msgstr "Помощник по импорту"
 
-#: rkward/rkward.cpp:536
+#: rkward/rkward.cpp:541
 #, kde-format
 msgid ""
 "Assistant to find the best method to import data from a variety of formats"
 msgstr ""
 "Помощник для поиска наилучшего способа импорта данных различного формата"
 
-#: rkward/rkward.cpp:540
+#: rkward/rkward.cpp:545
 #, kde-format
 msgid "Open Workspace..."
 msgstr "Открыть рабочую область…"
 
-#: rkward/rkward.cpp:542
+#: rkward/rkward.cpp:547
 #, kde-format
 msgid "Opens an existing document"
 msgstr "Открывает существующий документ"
 
-#: rkward/rkward.cpp:547
+#: rkward/rkward.cpp:552
 #, kde-format
 msgid "Open Recent Workspace"
 msgstr "Последние рабочие области"
 
-#: rkward/rkward.cpp:548
+#: rkward/rkward.cpp:553
 #, kde-format
 msgid "Opens a recently used file"
 msgstr "Открывает один из последних файлов"
 
-#: rkward/rkward.cpp:551
+#: rkward/rkward.cpp:556
 #, kde-format
 msgid "Save Workspace"
 msgstr "Сохранить рабочую область"
 
-#: rkward/rkward.cpp:553
+#: rkward/rkward.cpp:558
 #, kde-format
 msgid "Saves the actual document"
 msgstr "Сохраняет текущий документ"
 
-#: rkward/rkward.cpp:557
+#: rkward/rkward.cpp:562
 #, kde-format
 msgid "Save Workspace As"
 msgstr "Сохранить рабочую область как"
 
-#: rkward/rkward.cpp:558
+#: rkward/rkward.cpp:563
 #, kde-format
 msgid "Saves the actual document as..."
 msgstr "Сохраняет текущий документ как…"
 
-#: rkward/rkward.cpp:561
+#: rkward/rkward.cpp:566
 #, kde-format
 msgid "Quits the application"
 msgstr "Выход из программы"
 
-#: rkward/rkward.cpp:564
+#: rkward/rkward.cpp:569
 #, kde-format
 msgid "Interrupt all commands"
 msgstr "Прервать все команды"
 
-#: rkward/rkward.cpp:570
+#: rkward/rkward.cpp:575
 #, kde-format
 msgid "CC commands to output..."
 msgstr "Скопировать команды в вывод…"
 
-#: rkward/rkward.cpp:574 rkward/rkward.cpp:578
+#: rkward/rkward.cpp:579 rkward/rkward.cpp:583
 #, kde-format
 msgid "Manage R packages and plugins..."
 msgstr "Управление пакетами и модулями R…"
 
-#: rkward/rkward.cpp:585
+#: rkward/rkward.cpp:590
 #, kde-format
 msgid "Close All Data"
 msgstr "Закрыть все данные"
 
-#: rkward/rkward.cpp:586
+#: rkward/rkward.cpp:591
 #, kde-format
 msgid "Closes all open data editors"
 msgstr "Закрывает все открытые редакторы данных"
 
-#: rkward/rkward.cpp:591
+#: rkward/rkward.cpp:596
 #, kde-format
 msgid "Close All"
 msgstr "Закрыть все"
 
-#: rkward/rkward.cpp:595 rkward/windows/rktoolwindowbar.cpp:304
+#: rkward/rkward.cpp:600 rkward/windows/rktoolwindowbar.cpp:304
 #: rkward/windows/rkworkplaceview.cpp:96
 #, kde-format
 msgid "Detach"
 msgstr "Отсоединить"
 
-#: rkward/rkward.cpp:599
+#: rkward/rkward.cpp:604
 #, kde-format
 msgid "Check installation"
 msgstr "Проверить установку"
 
-#: rkward/rkward.cpp:603
+#: rkward/rkward.cpp:608
 #, kde-format
 msgid "[No actions available for current view]"
 msgstr "[Для текущего представления нет доступных действий]"
 
-#: rkward/rkward.cpp:610
+#: rkward/rkward.cpp:615
 #, kde-format
 msgid "Open..."
 msgstr "Открыть…"
 
-#: rkward/rkward.cpp:624
+#: rkward/rkward.cpp:629
 #, kde-format
 msgid "Create..."
 msgstr "Создать…"
 
-#: rkward/rkward.cpp:631
+#: rkward/rkward.cpp:636
 #, kde-format
 msgid "Save..."
 msgstr "Сохранить…"
 
-#: rkward/rkward.cpp:647
+#: rkward/rkward.cpp:652
 #, kde-format
 msgid "Restart R Backend"
 msgstr "Перезапустить серверное приложение R"
 
-#: rkward/rkward.cpp:655
+#: rkward/rkward.cpp:660
 #, kde-format
 msgid ""
 "<p><b>Restarting the backend will discard all unsaved data in this workspace!"
@@ -4746,12 +4746,12 @@ msgstr ""
 "данные в этой рабочей области!</b> Будут закрыты все редакторы данных и "
 "графические окна.</p><p>Продолжить?</p>"
 
-#: rkward/rkward.cpp:656
+#: rkward/rkward.cpp:661
 #, kde-format
 msgid "Restart R backend"
 msgstr "Перезапустить серверное приложение R"
 
-#: rkward/rkward.cpp:663
+#: rkward/rkward.cpp:668
 #, kde-format
 msgid ""
 "<p>One or more operations are pending.</p><p>If you have recently chosen to "
@@ -4762,82 +4762,82 @@ msgstr ""
 "получила команду сохранить рабочую область и появилось это сообщение, <b>то "
 "данные, возможно, ещё не сохранены!</b></p><p>Что следует сделать?</p>"
 
-#: rkward/rkward.cpp:664
+#: rkward/rkward.cpp:669
 #, kde-format
 msgid "R commands still pending"
 msgstr "В очереди есть команды R"
 
-#: rkward/rkward.cpp:664
+#: rkward/rkward.cpp:669
 #, kde-format
 msgid "Force restart now"
 msgstr "Выполнить принудительный перезапуск сейчас"
 
-#: rkward/rkward.cpp:664
+#: rkward/rkward.cpp:669
 #, kde-format
 msgid "Check again"
 msgstr "Проверить ещё раз"
 
-#: rkward/rkward.cpp:664
+#: rkward/rkward.cpp:669
 #, kde-format
 msgid "Cancel restarting"
 msgstr "Отменить перезапуск"
 
-#: rkward/rkward.cpp:801
+#: rkward/rkward.cpp:806
 #, kde-format
 msgid "Current working directory"
 msgstr "Текущий рабочий каталог"
 
-#: rkward/rkward.cpp:819 rkward/windows/rcontrolwindow.cpp:41
+#: rkward/rkward.cpp:824 rkward/windows/rcontrolwindow.cpp:41
 #, kde-format
 msgid "Configure R backend"
 msgstr "Настроить серверное приложение R"
 
-#: rkward/rkward.cpp:870
+#: rkward/rkward.cpp:875
 #, kde-format
 msgid "Exiting..."
 msgstr "Выход…"
 
-#: rkward/rkward.cpp:888
+#: rkward/rkward.cpp:893
 #, kde-format
 msgid "New dataset"
 msgstr "Новый набор данных"
 
-#: rkward/rkward.cpp:888
+#: rkward/rkward.cpp:893
 #, kde-format
 msgid "Enter name for the new dataset"
 msgstr "Введите название нового набора данных"
 
-#: rkward/rkward.cpp:900
+#: rkward/rkward.cpp:905
 #, kde-format
 msgid "Opening workspace..."
 msgstr "Открытие рабочей области…"
 
-#: rkward/rkward.cpp:903
+#: rkward/rkward.cpp:908
 #, kde-format
 msgid "Select workspace to open..."
 msgstr "Рабочая область для открытия…"
 
-#: rkward/rkward.cpp:974
+#: rkward/rkward.cpp:979
 #, kde-format
 msgid "The <b>R</b> engine is busy."
 msgstr "Движок <b>R</b> занят."
 
-#: rkward/rkward.cpp:978
+#: rkward/rkward.cpp:983
 #, kde-format
 msgid "The <b>R</b> engine is idle."
 msgstr "Движок <b>R</b> бездействует."
 
-#: rkward/rkward.cpp:987
+#: rkward/rkward.cpp:992
 #, kde-format
 msgid "The <b>R</b> engine is being initialized."
 msgstr "Движок <b>R</b> инициализируется."
 
-#: rkward/rkward.cpp:990
+#: rkward/rkward.cpp:995
 #, kde-format
 msgid "The <b>R</b> engine is unavailable."
 msgstr "Движок <b>R</b> недоступен."
 
-#: rkward/rkward.cpp:996
+#: rkward/rkward.cpp:1001
 #, kde-format
 msgid ""
 "R engine unavailable. See <a href=\"rkward://page/rkward_trouble_shooting"
@@ -4846,52 +4846,52 @@ msgstr ""
 "Движок R недоступен. Возможные решения доступны в разделе <a href=\"rkward://"
 "page/rkward_trouble_shooting\">устранение неисправностей</a>."
 
-#: rkward/rkward.cpp:1028
+#: rkward/rkward.cpp:1033
 #, kde-format
 msgid "Open"
 msgstr "Открыть"
 
-#: rkward/rkward.cpp:1032
+#: rkward/rkward.cpp:1037
 #, kde-format
 msgid "Opening mode:"
 msgstr "Режим открытия:"
 
-#: rkward/rkward.cpp:1034
+#: rkward/rkward.cpp:1039
 #, kde-format
 msgid "Guess file type, automatically"
 msgstr "Автоматически определить тип файла"
 
-#: rkward/rkward.cpp:1034
+#: rkward/rkward.cpp:1039
 #, kde-format
 msgid "Open as text / script file"
 msgstr "Открыть как текстовый файл или сценарий"
 
-#: rkward/rkward.cpp:1035
+#: rkward/rkward.cpp:1040
 #, kde-format
 msgid "Open as text file and force R highlighting"
 msgstr "Открыть как текстовый файл и принудительно применить подсветку R"
 
-#: rkward/rkward.cpp:1035
+#: rkward/rkward.cpp:1040
 #, kde-format
 msgid "Open as R workspace"
 msgstr "Открыть как рабочую область R…"
 
-#: rkward/rkward.cpp:1072
+#: rkward/rkward.cpp:1077
 #, kde-format
 msgid "Select RKWard Output file to open..."
 msgstr "Файл вывода RKWard для открытия…"
 
-#: rkward/rkward.cpp:1072
+#: rkward/rkward.cpp:1077
 #, kde-format
 msgid "RKWard Output Files [*.rko](*.rko);;All files [*](*)"
 msgstr "Файлы вывода RKWard [*.rko](*.rko);;Все файлы [*](*)"
 
-#: rkward/rkward.cpp:1081
+#: rkward/rkward.cpp:1086
 #, kde-format
 msgid "Open script file(s)"
 msgstr "Открыть файлы сценариев"
 
-#: rkward/rkward.cpp:1095
+#: rkward/rkward.cpp:1100
 #, kde-format
 msgid "[Unnamed Workspace]"
 msgstr "[Безымянная рабочая область]"
@@ -5378,12 +5378,12 @@ msgstr "Тайм-аут команды"
 msgid "<i>Note:</i> Debug output is written to %1"
 msgstr "<i>Примечание:</i> вывод отладки записывается в %1"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:59
+#: rkward/settings/rksettingsmodulegeneral.cpp:60
 #, kde-format
 msgid "General"
 msgstr "Основное"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:63
+#: rkward/settings/rksettingsmodulegeneral.cpp:64
 #, kde-format
 msgid ""
 "Directory where rkward may store files (setting takes effect after "
@@ -5392,12 +5392,12 @@ msgstr ""
 "Каталог, где rkward может хранить файлы (параметр вступает в силу после "
 "перезапуска RKWard)"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:69
+#: rkward/settings/rksettingsmodulegeneral.cpp:70
 #, kde-format
 msgid "Startup behavior"
 msgstr "Поведение при запуске"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:71
+#: rkward/settings/rksettingsmodulegeneral.cpp:72
 #, kde-format
 msgid ""
 "Load .RData-file from startup directory, if available (R option '--restore')"
@@ -5405,43 +5405,65 @@ msgstr ""
 "Загрузить файл .RData из каталога запуска, если он имеется (параметр R «--"
 "restore»)"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:72
+#: rkward/settings/rksettingsmodulegeneral.cpp:73
 #, kde-format
 msgid "Show RKWard Help on Startup"
 msgstr "Показать справку по RKWard при запуске"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:74
-#: rkward/settings/rksettingsmodulegeneral.cpp:83
+#, fuzzy, kde-format
+#| msgid ""
+#| "Directory where rkward may store files (setting takes effect after "
+#| "restarting RKWard)"
+msgid ""
+"Disable HTML hardware rendering (setting takes effect after restarting "
+"RKWard)"
+msgstr ""
+"Каталог, где rkward может хранить файлы (параметр вступает в силу после "
+"перезапуска RKWard)"
+
+#: rkward/settings/rksettingsmodulegeneral.cpp:75
+#, kde-format
+msgid ""
+"The use of hardware accelaration for HTML rendering (e.g. help pages and "
+"plugin output) is known to cause instability in some installations, and is "
+"not generally needed for the - usually simple - content shown in RKWard. It "
+"is recommended to leave hardware accelaration disabled, unless you "
+"experience performance problems while viewing HTML content inside RKWard."
+msgstr ""
+
+#: rkward/settings/rksettingsmodulegeneral.cpp:78
+#: rkward/settings/rksettingsmodulegeneral.cpp:87
 #, kde-format
 msgid "Initial working directory"
 msgstr "Начальный рабочий каталог"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:76
+#: rkward/settings/rksettingsmodulegeneral.cpp:80
 #, kde-format
 msgid "Do not change current directory on startup"
 msgstr "Не менять текущий каталог при запуске"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:77
+#: rkward/settings/rksettingsmodulegeneral.cpp:81
 #, kde-format
 msgid "RKWard files directory (as specified, above)"
 msgstr "Каталог файлов RKWard (как указано выше)"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:78
+#: rkward/settings/rksettingsmodulegeneral.cpp:82
 #, kde-format
 msgid "User home directory"
 msgstr "Домашний каталог пользователя"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:79
+#: rkward/settings/rksettingsmodulegeneral.cpp:83
 #, kde-format
 msgid "Last used directory"
 msgstr "Последний использовавшийся каталог"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:80
+#: rkward/settings/rksettingsmodulegeneral.cpp:84
 #, kde-format
 msgid "The following directory (please specify):"
 msgstr "Следующий каталог (необходимо указать):"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:88
+#: rkward/settings/rksettingsmodulegeneral.cpp:92
 #, kde-format
 msgid ""
 "<p>The initial working directory to use. Note that if you are loading a "
@@ -5453,7 +5475,7 @@ msgstr ""
 "программа RKWard настроена на смену каталога на каталог загруженных рабочих "
 "областей, такой каталог будет иметь приоритет.</p>"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:95
+#: rkward/settings/rksettingsmodulegeneral.cpp:99
 #, kde-format
 msgid ""
 "<p>The number of recent files to remember (in the Open Recent R Script File "
@@ -5462,26 +5484,26 @@ msgstr ""
 "<p>Количество сохраняемых последних файлов (в меню «Последние сценарии R»).</"
 "p>"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:96
+#: rkward/settings/rksettingsmodulegeneral.cpp:100
 #, kde-format
 msgid "Maximum number of recently used files to remember per category"
 msgstr "Максимальное количество сохраняемых последних файлов на категорию"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:101
+#: rkward/settings/rksettingsmodulegeneral.cpp:105
 #, kde-format
 msgid ""
 "Persistent workplace layout (i.e. which script-, data-, help-windows are "
 "open)"
 msgstr ""
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:105
+#: rkward/settings/rksettingsmodulegeneral.cpp:109
 #, kde-format
 msgid "Save/restore with R workspace, when saving/loading R workspace"
 msgstr ""
 "Выполнять сохранение и восстановление с рабочей областью R при её сохранении "
 "и загрузке"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:106
+#: rkward/settings/rksettingsmodulegeneral.cpp:110
 #, kde-format
 msgid ""
 "Save/restore independent of R workspace (save at end of RKWard session, "
@@ -5490,17 +5512,17 @@ msgstr ""
 "Выполнять сохранение и восстановление независимо от рабочей области R "
 "(сохранить в конце сеанса RKWard, восстановить при следующем запуске)"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:107
+#: rkward/settings/rksettingsmodulegeneral.cpp:111
 #, kde-format
 msgid "Do not save/restore workplace layout"
 msgstr "Не сохранять и не восстанавливать компоновку рабочей зоны"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:114
+#: rkward/settings/rksettingsmodulegeneral.cpp:118
 #, kde-format
 msgid "When loading a workspace, change to the corresponding directory."
 msgstr "При загрузке рабочей области сменить каталог на указанный."
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:118
+#: rkward/settings/rksettingsmodulegeneral.cpp:122
 #, kde-format
 msgid ""
 "Warn when editing objects with more than this number of fields (0 for no "
@@ -5509,17 +5531,17 @@ msgstr ""
 "Предупреждать при редактировании объектов, количество полей которых "
 "превышает указанное (0 — без ограничений):"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:123
+#: rkward/settings/rksettingsmodulegeneral.cpp:127
 #, kde-format
 msgid "MDI window focus behavior"
 msgstr "Фокус в окне многодокументного интерфейса"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:124
+#: rkward/settings/rksettingsmodulegeneral.cpp:128
 #, kde-format
 msgid "Click to focus"
 msgstr "Фокус по щелчку"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:125
+#: rkward/settings/rksettingsmodulegeneral.cpp:129
 #, kde-format
 msgid "Focus follows mouse"
 msgstr "Фокус следует за мышью"
