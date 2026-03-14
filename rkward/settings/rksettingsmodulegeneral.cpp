@@ -72,7 +72,7 @@ class RKSettingsPageGeneral : public RKSettingsModuleWidget {
 		vbox->addWidget(RKSettingsModuleGeneral::autorestore_from_wd.makeCheckbox(i18n("Load .RData-file from startup directory, if available (R option '--restore')"), this));
 		vbox->addWidget(RKSettingsModuleGeneral::show_help_on_startup.makeCheckbox(i18n("Show RKWard Help on Startup"), this));
 		auto cb = RKSettingsModuleGeneral::disable_hardware_rendering.makeCheckbox(i18n("Disable HTML hardware rendering (setting takes effect after restarting RKWard)"), this);
-		RKCommonFunctions::setTips(i18n("The use of hardware accelaration for HTML rendering (e.g. help pages and plugin output) is known to cause instability in some installations, and is not generally needed for the - usually simple - content shown in RKWard. It is recommended to leave hardware accelaration disabled, unless you experience performance problems while viewing HTML content inside RKWard."), cb);
+		RKCommonFunctions::setTips(i18n("The use of hardware acceleration for HTML rendering (e.g. help pages and plugin output) is known to cause instability in some installations, and is not generally needed for the - usually simple - content shown in RKWard. It is recommended to leave hardware acceleration disabled, unless you experience performance problems while viewing HTML content inside RKWard."), cb);
 		vbox->addWidget(cb);
 
 		QGroupBox *group_box = new QGroupBox(i18n("Initial working directory"), this);
