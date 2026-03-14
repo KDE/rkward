@@ -7,6 +7,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "rkqwebview.h"
 
+#include <QFile>
 #include <QMenu>
 #include <QQuickItem>
 #include <QQuickWidget>
@@ -53,14 +54,7 @@ class RKQWebViewCallbackServer {
 			});
 		}
 
-		window->runJS(u"let __rkward = new WebSocket('%1');\n"
-		              "function __rkward_sendMessage(msg) {\n"
-		              "  if (__rkward.readyState == WebSocket.CONNECTING) {\n"
-		              "    setTimeout(__rkward_sendMessage.bind(null, msg), 10);\n"
-		              "  } else {\n"
-		              "    __rkward.send(msg);\n"
-		              "  }\n"
-		              "}\n"_s.arg(key));
+		window->runJS(u"let __rkward = new WebSocket('%1');"_s.arg(key));
 	}
 
   protected:
@@ -68,20 +62,14 @@ class RKQWebViewCallbackServer {
 };
 QHash<QString, RKQWebView *> RKQWebViewCallbackServer::windows;
 
-RKQWebView::RKQWebView(RKHTMLWindow *parent) : RKHTMLViewer(parent), view(nullptr) {
+RKQWebView::RKQWebView(RKHTMLWindow *parent) : RKHTMLViewer(parent), view(nullptr), running_script(false) {
 	RK_TRACE(APP);
-	installPersistentJS(u"function __rkward_debounce(fun) {\n"
-	                    "  let to = null;\n"
-	                    "  return function() {\n"
-	                    "    clearTimeout(to);\n"
-	                    "    to = setTimeout(function() { fun(); }, 20);\n"
-	                    "  }\n"
-	                    "}\n"_s,
-	                    u"__debounce"_s);
-	installPersistentJS(u"document.onselectionchange = __rkward_debounce(function() {\n"
-	                    "  __rkward_sendMessage(JSON.stringify({command: 'selchanged', sel: document.getSelection().toString()}));\n"
-	                    "});"_s,
-	                    u"__sel"_s);
+	QFile file(u":/js/rkqwebview.js"_s);
+	if (file.open(QIODevice::ReadOnly)) {
+		installPersistentJS(QString::fromUtf8(file.readAll()), file.fileName());
+	} else {
+		RK_ASSERT(false);
+	}
 }
 
 QUrl RKQWebView::currentAcceptedUrl() const {
@@ -173,16 +161,25 @@ void RKQWebView::installPersistentJS(const QString &script, const QString &id) {
 
 void RKQWebView::runJS(const QString &script, std::function<void(const QVariant &)> callback) {
 	RK_TRACE(APP);
-	RK_ASSERT(runjs_callback == nullptr); // no nested calls, please!  // TODO: This fails. we need to be able to queue up js commands
-	                                      //                              but we also need to discard pending scripts on page load?
-	runjs_callback = callback;
-	QMetaObject::invokeMethod(webView(), "runJSWrapper", Q_ARG(QString, script));
+	runjs_queue.append({script, callback});
+	tryRunNextScript();
+}
+
+void RKQWebView::tryRunNextScript() {
+	RK_TRACE(APP);
+	if (running_script) return;
+	if (runjs_queue.isEmpty()) return;
+	running_script = true;
+	QMetaObject::invokeMethod(webView(), "runJSWrapper", Q_ARG(QString, runjs_queue.first().script));
 }
 
 void RKQWebView::onRunJSResult(const QVariant &result) {
 	RK_TRACE(APP);
-	if (runjs_callback != nullptr) runjs_callback(result);
-	runjs_callback = std::function<void(const QVariant &)>();
+	RK_ASSERT(!runjs_queue.isEmpty());
+	running_script = false;
+	const auto callback = runjs_queue.takeFirst().callback;
+	if (callback != nullptr) callback(result);
+	tryRunNextScript();
 }
 
 void RKQWebView::setHTML(const QString &html, const QUrl &_url) {
@@ -223,14 +220,16 @@ QString RKQWebView::selectedText() const {
 void RKQWebView::receivedCallbackMessage(const QString &message) {
 	RK_TRACE(APP);
 	const auto mo = QJsonDocument::fromJson(message.toUtf8()).object();
-	if (mo["command"_L1] == "selchanged"_L1) {
-		const auto sel = mo["sel"_L1].toString();
+	const auto msg = mo["msg"_L1].toString();
+	const auto args = mo["args"_L1];
+	if (msg == "selChanged"_L1) {
+		const auto sel = args["sel"_L1].toString();
 		if (sel != selected_text) {
 			selected_text = sel;
 			Q_EMIT selectionChanged(!sel.isEmpty());
 		}
 	} else {
-		RK_DEBUG(APP, DL_WARNING, "Received message %s", qPrintable(message)); // TODO
+		RK_DEBUG(APP, DL_ERROR, "Non-recognized message %s", qPrintable(message));
 	}
 }
 
