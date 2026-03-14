@@ -207,6 +207,7 @@ void RKSettingsModuleGeneral::syncConfig(KConfig *config, RKConfigBase::ConfigSy
 	show_help_on_startup.syncConfig(cg, a);
 	num_recent_files.syncConfig(cg, a);
 	initial_dir.syncConfig(cg, a);
+	disable_hardware_rendering.syncConfig(cg, a);
 	if ((a == RKConfigBase::SaveConfig) && (initial_dir == LastUsedDirectory)) {
 		cg.writeEntry(initial_dir_specification.key(), QDir::currentPath());
 	} else {
