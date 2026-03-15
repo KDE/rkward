@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-03-14 00:39+0000\n"
-"PO-Revision-Date: 2026-02-01 03:11+0100\n"
+"POT-Creation-Date: 2026-03-15 00:40+0000\n"
+"PO-Revision-Date: 2026-03-14 06:36+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -5238,24 +5238,21 @@ msgid "Show RKWard Help on Startup"
 msgstr "გაშვებისას RKWard-ის დახმარების ჩვენება"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:74
-#, fuzzy, kde-format
-#| msgid ""
-#| "Directory where rkward may store files (setting takes effect after "
-#| "restarting RKWard)"
+#, kde-format
 msgid ""
 "Disable HTML hardware rendering (setting takes effect after restarting "
 "RKWard)"
 msgstr ""
-"საქაღალდე, სადაც rkward-ს ფაილების შენახვა შეუძლია (ამ პარამეტრის ცვლილება, "
-"მხოლოდ, RKWard-ის გადატვირთვის შემდეგ შევა ძალაში)"
+"გამორთავს HTML-ის აპარატურულ რენდერს (ძალაში RKWard-ის გადატვირთვის შემდეგ "
+"შევა)"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:75
 #, kde-format
 msgid ""
-"The use of hardware accelaration for HTML rendering (e.g. help pages and "
+"The use of hardware acceleration for HTML rendering (e.g. help pages and "
 "plugin output) is known to cause instability in some installations, and is "
 "not generally needed for the - usually simple - content shown in RKWard. It "
-"is recommended to leave hardware accelaration disabled, unless you "
+"is recommended to leave hardware acceleration disabled, unless you "
 "experience performance problems while viewing HTML content inside RKWard."
 msgstr ""
 
@@ -5319,6 +5316,8 @@ msgid ""
 "Persistent workplace layout (i.e. which script-, data-, help-windows are "
 "open)"
 msgstr ""
+"სამუშაო სივრცის მუდმივი განლაგება (ანუ, რომელი სკრიპტის, მონაცემების და "
+"დახმარების ფანჯრებია ღია)"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:109
 #, kde-format

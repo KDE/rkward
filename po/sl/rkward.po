@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-03-14 00:39+0000\n"
-"PO-Revision-Date: 2026-02-03 07:22+0100\n"
+"POT-Creation-Date: 2026-03-15 00:40+0000\n"
+"PO-Revision-Date: 2026-03-14 07:44+0100\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -5379,26 +5379,35 @@ msgid "Show RKWard Help on Startup"
 msgstr "Pokaži pomoč za RKWard pri zagonu"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:74
-#, fuzzy, kde-format
-#| msgid ""
-#| "Directory where rkward may store files (setting takes effect after "
-#| "restarting RKWard)"
+#, kde-format
 msgid ""
 "Disable HTML hardware rendering (setting takes effect after restarting "
 "RKWard)"
 msgstr ""
-"Imenik kamor lahko rkward shranjuje datoteke (nastavitev je uveljavljena po "
-"ponovnem zagonu RKWarda)"
+"Onemogoči strojno upodabljanje HTML-ja (nastavitev začne veljati po ponovnem "
+"zagonu RKWard-a)"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:75
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "The use of hardware accelaration for HTML rendering (e.g. help pages and "
+#| "plugin output) is known to cause instability in some installations, and "
+#| "is not generally needed for the - usually simple - content shown in "
+#| "RKWard. It is recommended to leave hardware accelaration disabled, unless "
+#| "you experience performance problems while viewing HTML content inside "
+#| "RKWard."
 msgid ""
-"The use of hardware accelaration for HTML rendering (e.g. help pages and "
+"The use of hardware acceleration for HTML rendering (e.g. help pages and "
 "plugin output) is known to cause instability in some installations, and is "
 "not generally needed for the - usually simple - content shown in RKWard. It "
-"is recommended to leave hardware accelaration disabled, unless you "
+"is recommended to leave hardware acceleration disabled, unless you "
 "experience performance problems while viewing HTML content inside RKWard."
 msgstr ""
+"Znano je, da uporaba strojne pospešitve za upodabljanje HTML-ja (npr. strani "
+"s pomočjo in izpis vtičnikov) v nekaterih namestitvah povzroča nestabilnost "
+"in običajno ni potrebna za – običajno preprosto – vsebino, prikazano v "
+"RKWardu. Priporočljivo je, da strojno pospešitev pustite onemogočeno, razen "
+"če med ogledovanjem vsebine HTML v RKWardu pride do težav z zmogljivostjo."
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:78
 #: rkward/settings/rksettingsmodulegeneral.cpp:87

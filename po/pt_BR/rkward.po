@@ -11,16 +11,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-03-14 00:39+0000\n"
-"PO-Revision-Date: 2026-02-03 00:46-0300\n"
-"Last-Translator: Guilherme Marçal Silva <guimarcalsilva@gmail.com>\n"
+"POT-Creation-Date: 2026-03-15 00:40+0000\n"
+"PO-Revision-Date: 2026-03-14 09:54-0300\n"
+"Last-Translator: Marcus Gama <marcus.gama@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 25.12.1\n"
+"X-Generator: Lokalize 25.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -5422,26 +5422,36 @@ msgid "Show RKWard Help on Startup"
 msgstr "Mostrar a Ajuda do RKWard ao iniciar"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:74
-#, fuzzy, kde-format
-#| msgid ""
-#| "Directory where rkward may store files (setting takes effect after "
-#| "restarting RKWard)"
+#, kde-format
 msgid ""
 "Disable HTML hardware rendering (setting takes effect after restarting "
 "RKWard)"
 msgstr ""
-"Pasta onde o rkward pode armazenar arquivos (a configuração entra em vigor "
-"após reiniciar o RKWard)"
+"Desativar renderização de hardware HTML (a configuração entra em vigor após "
+"a reinicialização do RKWard)"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:75
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "The use of hardware accelaration for HTML rendering (e.g. help pages and "
+#| "plugin output) is known to cause instability in some installations, and "
+#| "is not generally needed for the - usually simple - content shown in "
+#| "RKWard. It is recommended to leave hardware accelaration disabled, unless "
+#| "you experience performance problems while viewing HTML content inside "
+#| "RKWard."
 msgid ""
-"The use of hardware accelaration for HTML rendering (e.g. help pages and "
+"The use of hardware acceleration for HTML rendering (e.g. help pages and "
 "plugin output) is known to cause instability in some installations, and is "
 "not generally needed for the - usually simple - content shown in RKWard. It "
-"is recommended to leave hardware accelaration disabled, unless you "
+"is recommended to leave hardware acceleration disabled, unless you "
 "experience performance problems while viewing HTML content inside RKWard."
 msgstr ""
+"O uso da aceleração de hardware para renderização de HTML (por exemplo, "
+"páginas de ajuda e saída de plugins) pode causar instabilidade em algumas "
+"instalações e geralmente não é necessário para o conteúdo - geralmente "
+"simples - exibido no RKWard. Recomenda-se manter a aceleração de hardware "
+"desativada, a menos que você esteja enfrentando problemas de desempenho ao "
+"visualizar conteúdo HTML dentro do RKWard."
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:78
 #: rkward/settings/rksettingsmodulegeneral.cpp:87
