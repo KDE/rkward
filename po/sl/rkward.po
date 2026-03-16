@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-03-15 00:40+0000\n"
-"PO-Revision-Date: 2026-03-14 07:44+0100\n"
+"PO-Revision-Date: 2026-03-15 08:21+0100\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -5388,14 +5388,7 @@ msgstr ""
 "zagonu RKWard-a)"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:75
-#, fuzzy, kde-format
-#| msgid ""
-#| "The use of hardware accelaration for HTML rendering (e.g. help pages and "
-#| "plugin output) is known to cause instability in some installations, and "
-#| "is not generally needed for the - usually simple - content shown in "
-#| "RKWard. It is recommended to leave hardware accelaration disabled, unless "
-#| "you experience performance problems while viewing HTML content inside "
-#| "RKWard."
+#, kde-format
 msgid ""
 "The use of hardware acceleration for HTML rendering (e.g. help pages and "
 "plugin output) is known to cause instability in some installations, and is "
@@ -5407,7 +5400,7 @@ msgstr ""
 "s pomočjo in izpis vtičnikov) v nekaterih namestitvah povzroča nestabilnost "
 "in običajno ni potrebna za – običajno preprosto – vsebino, prikazano v "
 "RKWardu. Priporočljivo je, da strojno pospešitev pustite onemogočeno, razen "
-"če med ogledovanjem vsebine HTML v RKWardu pride do težav z zmogljivostjo."
+"če pride do težav z zmogljivostjo med ogledovanjem vsebine HTML v RKWardu."
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:78
 #: rkward/settings/rksettingsmodulegeneral.cpp:87

@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-03-15 00:40+0000\n"
-"PO-Revision-Date: 2026-02-05 11:06+0400\n"
+"PO-Revision-Date: 2026-03-15 09:23+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -5267,15 +5267,13 @@ msgid "Show RKWard Help on Startup"
 msgstr "اعرض دليل أر كي وارد عند بدء التشغيل"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:74
-#, fuzzy, kde-format
-#| msgid ""
-#| "Directory where rkward may store files (setting takes effect after "
-#| "restarting RKWard)"
+#, kde-format
 msgid ""
 "Disable HTML hardware rendering (setting takes effect after restarting "
 "RKWard)"
 msgstr ""
-"مجلد يخزّن فيه أر كي وارد الملفات (يسري الإعداد بعد إعادة تشغيل أر كي وارد)"
+"عطّل عرض HTML بتسريع العتاد (يصبح الإعداد ساري المفعول بعد إعادة تشغيل أر كي "
+"وارد)"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:75
 #, kde-format
