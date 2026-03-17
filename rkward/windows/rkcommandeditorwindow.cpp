@@ -517,6 +517,7 @@ RKCommandEditorWindow::RKCommandEditorWindow(QWidget *parent, const QUrl &_url, 
 
 	connect(&autosave_timer, &QTimer::timeout, this, &RKCommandEditorWindow::doAutoSave);
 	connect(&preview_timer, &QTimer::timeout, this, &RKCommandEditorWindow::doRenderPreview);
+	preview_timer.setSingleShot(true);
 
 	urlChanged(); // initialize
 }
