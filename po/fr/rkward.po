@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-03-15 00:40+0000\n"
-"PO-Revision-Date: 2026-02-04 12:33+0100\n"
+"PO-Revision-Date: 2026-03-15 17:43+0100\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Accelerator-Marker: &\n"
 "X-Environment: kde\n"
-"X-Generator: Lokalize 25.12.1\n"
+"X-Generator: Lokalize 25.12.3\n"
 "X-Text-Markup: kde4\n"
 
 #, kde-format
@@ -5538,16 +5538,13 @@ msgid "Show RKWard Help on Startup"
 msgstr "Afficher l'aide de RKWard au démarrage"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:74
-#, fuzzy, kde-format
-#| msgid ""
-#| "Directory where rkward may store files (setting takes effect after "
-#| "restarting RKWard)"
+#, kde-format
 msgid ""
 "Disable HTML hardware rendering (setting takes effect after restarting "
 "RKWard)"
 msgstr ""
-"Dossier dans lequel RKWard peut enregistrer des fichiers (les modifications "
-"de configuration prendront effet après un re-démarrage de RKWard)"
+"Désactiver le rendu matériel du format « HTML » (Les modifications de "
+"configuration ne prendront effet qu'après un re-démarrage de RKWard)"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:75
 #, kde-format
