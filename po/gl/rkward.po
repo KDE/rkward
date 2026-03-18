@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-03-15 00:40+0000\n"
+"POT-Creation-Date: 2026-03-18 00:40+0000\n"
 "PO-Revision-Date: 2025-06-22 05:58+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.gal>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
@@ -3610,7 +3610,7 @@ msgid "Enter value:"
 msgstr "Insira o valor:"
 
 #: rkward/plugin/rkpreviewbox.cpp:50
-#: rkward/windows/rkcommandeditorwindow.cpp:617
+#: rkward/windows/rkcommandeditorwindow.cpp:618
 #, kde-format
 msgid "Preview"
 msgstr "Vista previa"
@@ -4316,7 +4316,7 @@ msgstr ""
 msgid "'katepart' component could not be found"
 msgstr "Non foi posíbel atopar o compoñente «katepart»"
 
-#: rkward/rkconsole.cpp:114 rkward/windows/rkcommandeditorwindow.cpp:884
+#: rkward/rkconsole.cpp:114 rkward/windows/rkcommandeditorwindow.cpp:885
 #, kde-format
 msgid "R Console"
 msgstr "Consola de R"
@@ -6675,43 +6675,43 @@ msgstr "Non foi posíbel abrir o ficheiro de ordes"
 msgid "Script Editor"
 msgstr "Editor de guións"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:593
+#: rkward/windows/rkcommandeditorwindow.cpp:594
 #, kde-format
 msgid "Insert line break and run"
 msgstr "Inserir un salto de liña e executar"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:600
+#: rkward/windows/rkcommandeditorwindow.cpp:601
 #, kde-format
 msgid "Run block"
 msgstr "Executar o bloque"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:604
+#: rkward/windows/rkcommandeditorwindow.cpp:605
 #, kde-format
 msgid "Mark selection as block"
 msgstr "Marcar a selección como bloque"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:607
+#: rkward/windows/rkcommandeditorwindow.cpp:608
 #, kde-format
 msgid "Unmark block"
 msgstr "Desmarcar o bloque"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:612
+#: rkward/windows/rkcommandeditorwindow.cpp:613
 #, kde-format
 msgid "CD to script directory"
 msgstr "Abrir o cartafol do guión"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:613
+#: rkward/windows/rkcommandeditorwindow.cpp:614
 #, kde-format
 msgid "Change the working directory to the directory of this script"
 msgstr "Cambiar o cartafol de traballo ao cartafol deste guión"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:619
+#: rkward/windows/rkcommandeditorwindow.cpp:620
 #, kde-format
 msgctxt "Checkable action: the preview gets updated while typing"
 msgid "Update as you type"
 msgstr "Actualizar a medida que escribe"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:622
+#: rkward/windows/rkcommandeditorwindow.cpp:623
 #, kde-format
 msgid ""
 "When this option is enabled, an update of the preview will be triggered "
@@ -6722,54 +6722,54 @@ msgstr ""
 "modifique o guión. Cando a opción está desactivada, a vista previa só se "
 "activará cando garde o guión."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:632
+#: rkward/windows/rkcommandeditorwindow.cpp:633
 #, kde-format
 msgid "Save Script..."
 msgstr "Gardar o guión…"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:634
+#: rkward/windows/rkcommandeditorwindow.cpp:635
 #, kde-format
 msgid "Save Script As..."
 msgstr "Gardar o guión como…"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:714
-#: rkward/windows/rkcommandeditorwindow.cpp:1133
+#: rkward/windows/rkcommandeditorwindow.cpp:715
+#: rkward/windows/rkcommandeditorwindow.cpp:1134
 #, kde-format
 msgid " [modified]"
 msgstr "(modificado)"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:721
+#: rkward/windows/rkcommandeditorwindow.cpp:722
 #, kde-format
 msgid "The document \"%1\" has been modified. Close it anyway?"
 msgstr "O documento «%1» modificouse. Quere pechalo aínda así?"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:721
+#: rkward/windows/rkcommandeditorwindow.cpp:722
 #, kde-format
 msgid "File not saved"
 msgstr "Ficheiro non gardado"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:845
+#: rkward/windows/rkcommandeditorwindow.cpp:846
 #, kde-format
 msgid "No preview"
 msgstr "Non hai vista previa"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:846
+#: rkward/windows/rkcommandeditorwindow.cpp:847
 #, kde-format
 msgid "Disable preview"
 msgstr "Desactivar a vista previa"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:852
+#: rkward/windows/rkcommandeditorwindow.cpp:853
 #, fuzzy, kde-format
 #| msgid "R Markdown (HTML)"
 msgid "R Markdown"
 msgstr "Markdown de R (HTML)"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:854
+#: rkward/windows/rkcommandeditorwindow.cpp:855
 #, kde-format
 msgid "Preview of rendered R Markdown"
 msgstr "Vista previa de Markdown de R renderizado"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:855
+#: rkward/windows/rkcommandeditorwindow.cpp:856
 #, fuzzy, kde-format
 #| msgid "Preview the script as rendered from RMarkdown format (.Rmd) to HTML."
 msgid "Preview the script as rendered from RMarkdown format (.Rmd)"
@@ -6777,39 +6777,39 @@ msgstr ""
 "Obter unha vista previa do guión como se renderiza de formato RMarkdown (."
 "Rmd) a HTML."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:857
+#: rkward/windows/rkcommandeditorwindow.cpp:858
 #, fuzzy, kde-format
 #| msgid "Select format"
 msgid "Render format"
 msgstr "Seleccionar o formato"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:858
+#: rkward/windows/rkcommandeditorwindow.cpp:859
 #, kde-format
 msgid "Render as HTML"
 msgstr ""
 
-#: rkward/windows/rkcommandeditorwindow.cpp:859
+#: rkward/windows/rkcommandeditorwindow.cpp:860
 #, kde-format
 msgid "Render as PDF"
 msgstr ""
 
-#: rkward/windows/rkcommandeditorwindow.cpp:860
+#: rkward/windows/rkcommandeditorwindow.cpp:861
 #, fuzzy, kde-format
 #| msgid "Format"
 msgid "Auto Format"
 msgstr "Formato"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:870
+#: rkward/windows/rkcommandeditorwindow.cpp:871
 #, kde-format
 msgid "RKWard Output"
 msgstr "Saída de RKWard"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:872
+#: rkward/windows/rkcommandeditorwindow.cpp:873
 #, kde-format
 msgid "Preview of generated RKWard output"
 msgstr "Vista previa da saída de RKWard xerada"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:873
+#: rkward/windows/rkcommandeditorwindow.cpp:874
 #, kde-format
 msgid ""
 "Preview any output to the RKWard Output Window. This preview will be empty, "
@@ -6819,55 +6819,55 @@ msgstr ""
 "vista previa estará baleira se non hai chamadas a <i>rk.print()</i> ou "
 "outras ordes de saída de RKWard."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:886
+#: rkward/windows/rkcommandeditorwindow.cpp:887
 #, kde-format
 msgid "Preview of script running in interactive R Console"
 msgstr "Vista previa do guión executándose na consola interactiva de R"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:887
+#: rkward/windows/rkcommandeditorwindow.cpp:888
 #, kde-format
 msgid "Preview the script as if it was run in the interactive R Console"
 msgstr ""
 "Obter unha vista previa do guión como se se executase nunha consola "
 "interactiva de R"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:888
+#: rkward/windows/rkcommandeditorwindow.cpp:889
 #, fuzzy, kde-format
 #| msgid "Next statement"
 msgid "Echo statements"
 msgstr "Seguinte sentenza"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:889
+#: rkward/windows/rkcommandeditorwindow.cpp:890
 #, fuzzy, kde-format
 #| msgid "Convert warnings to errors"
 msgid "Continue on error"
 msgstr "Converter os avisos en erros"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:891
+#: rkward/windows/rkcommandeditorwindow.cpp:892
 #, fuzzy, kde-format
 #| msgid "Environment"
 msgid "Evaluation environment"
 msgstr "Ambiente"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:892
+#: rkward/windows/rkcommandeditorwindow.cpp:893
 #, fuzzy, kde-format
 #| msgid "Copy to .GlobalEnv"
 msgid ".GlobalEnv"
 msgstr "Copiar en .GlobalEnv"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:894
+#: rkward/windows/rkcommandeditorwindow.cpp:895
 #, kde-format
 msgid ""
 "Evaluate code directly in .GlobalEnv. Assignments can access <b>and modify</"
 "b> objects in .GlobalEnv."
 msgstr ""
 
-#: rkward/windows/rkcommandeditorwindow.cpp:895
+#: rkward/windows/rkcommandeditorwindow.cpp:896
 #, kde-format
 msgid "Scoped"
 msgstr ""
 
-#: rkward/windows/rkcommandeditorwindow.cpp:897
+#: rkward/windows/rkcommandeditorwindow.cpp:898
 #, kde-format
 msgid ""
 "Evaluate code in a child scope of .GlobalEnv. Objects in .GlobalEnv can be "
@@ -6875,13 +6875,13 @@ msgid ""
 "modify them. (Other assignment operations could still modify them!)"
 msgstr ""
 
-#: rkward/windows/rkcommandeditorwindow.cpp:898
+#: rkward/windows/rkcommandeditorwindow.cpp:899
 #, fuzzy, kde-format
 #| msgid "Location"
 msgid "Local"
 msgstr "Lugar"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:899
+#: rkward/windows/rkcommandeditorwindow.cpp:900
 #, kde-format
 msgid ""
 "Evaluate code in true local environment. Objects in .GlobalEnv are not on "
@@ -6890,17 +6890,17 @@ msgid ""
 "them!)"
 msgstr ""
 
-#: rkward/windows/rkcommandeditorwindow.cpp:914
+#: rkward/windows/rkcommandeditorwindow.cpp:915
 #, kde-format
 msgid "Plot"
 msgstr "Representar"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:916
+#: rkward/windows/rkcommandeditorwindow.cpp:917
 #, kde-format
 msgid "Preview of generated plot"
 msgstr "Vista previa da gráfica xerada"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:917
+#: rkward/windows/rkcommandeditorwindow.cpp:918
 #, kde-format
 msgid ""
 "Preview any onscreen graphics produced by running this script. This preview "
@@ -6912,7 +6912,7 @@ msgstr ""
 "<i>plot()</i> ou outras ordes gráficas."
 
 # skip-rule: trasno-remove_reverse
-#: rkward/windows/rkcommandeditorwindow.cpp:940
+#: rkward/windows/rkcommandeditorwindow.cpp:941
 #, fuzzy, kde-format
 #| msgid ""
 #| "<p>The preview feature <b>tries</b> to avoid making any lasting changes "
@@ -6950,12 +6950,12 @@ msgstr ""
 "funcionalidade con scripts que proveñan de fontes que non sexan de confianza."
 "</p>"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:940
+#: rkward/windows/rkcommandeditorwindow.cpp:941
 #, kde-format
 msgid "Potential side-effects of previews"
 msgstr "Efectos secundarios potenciais das vistas previas"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1058
+#: rkward/windows/rkcommandeditorwindow.cpp:1059
 #, kde-format
 msgid ""
 "An error occurred while trying to create an autosave of the script file '%1':"
@@ -6963,17 +6963,17 @@ msgstr ""
 "Produciuse un erro ao intentar crear un gradado automático do ficheiro de "
 "guionización «%1»:"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1132
+#: rkward/windows/rkcommandeditorwindow.cpp:1133
 #, kde-format
 msgid "Unnamed"
 msgstr "Sen nome"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1265
+#: rkward/windows/rkcommandeditorwindow.cpp:1266
 #, kde-format
 msgid "%1 (Active)"
 msgstr "%1 (activo)"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1284
+#: rkward/windows/rkcommandeditorwindow.cpp:1285
 #, kde-format
 msgid "%1 (Unused)"
 msgstr "%1 (sen usar)"

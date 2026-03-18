@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-03-15 00:40+0000\n"
+"POT-Creation-Date: 2026-03-18 00:40+0000\n"
 "PO-Revision-Date: 2026-03-15 11:58+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
@@ -3632,7 +3632,7 @@ msgid "Enter value:"
 msgstr "Введіть значення:"
 
 #: rkward/plugin/rkpreviewbox.cpp:50
-#: rkward/windows/rkcommandeditorwindow.cpp:617
+#: rkward/windows/rkcommandeditorwindow.cpp:618
 #, kde-format
 msgid "Preview"
 msgstr "Перегляд"
@@ -4344,7 +4344,7 @@ msgstr ""
 msgid "'katepart' component could not be found"
 msgstr "Не вдалося виявити компонент «katepart»"
 
-#: rkward/rkconsole.cpp:114 rkward/windows/rkcommandeditorwindow.cpp:884
+#: rkward/rkconsole.cpp:114 rkward/windows/rkcommandeditorwindow.cpp:885
 #, kde-format
 msgid "R Console"
 msgstr "Консоль R"
@@ -6692,43 +6692,43 @@ msgstr "Не вдалося відкрити файл команд"
 msgid "Script Editor"
 msgstr "Редактор скриптів"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:593
+#: rkward/windows/rkcommandeditorwindow.cpp:594
 #, kde-format
 msgid "Insert line break and run"
 msgstr "Вставити розрив рядка і запустити"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:600
+#: rkward/windows/rkcommandeditorwindow.cpp:601
 #, kde-format
 msgid "Run block"
 msgstr "Виконати блок"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:604
+#: rkward/windows/rkcommandeditorwindow.cpp:605
 #, kde-format
 msgid "Mark selection as block"
 msgstr "Вважати позначене блоком"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:607
+#: rkward/windows/rkcommandeditorwindow.cpp:608
 #, kde-format
 msgid "Unmark block"
 msgstr "Зняти позначення блоку"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:612
+#: rkward/windows/rkcommandeditorwindow.cpp:613
 #, kde-format
 msgid "CD to script directory"
 msgstr "Перейти до каталогу скрипту"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:613
+#: rkward/windows/rkcommandeditorwindow.cpp:614
 #, kde-format
 msgid "Change the working directory to the directory of this script"
 msgstr "Змінити робочий каталог на каталог цього скрипту"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:619
+#: rkward/windows/rkcommandeditorwindow.cpp:620
 #, kde-format
 msgctxt "Checkable action: the preview gets updated while typing"
 msgid "Update as you type"
 msgstr "Оновлення під час введення коду"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:622
+#: rkward/windows/rkcommandeditorwindow.cpp:623
 #, kde-format
 msgid ""
 "When this option is enabled, an update of the preview will be triggered "
@@ -6740,88 +6740,88 @@ msgstr ""
 "не позначено, оновлення відбуватиметься лише у відповідь на команду зберегти "
 "дані скрипту."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:632
+#: rkward/windows/rkcommandeditorwindow.cpp:633
 #, kde-format
 msgid "Save Script..."
 msgstr "Зберегти скрипт…"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:634
+#: rkward/windows/rkcommandeditorwindow.cpp:635
 #, kde-format
 msgid "Save Script As..."
 msgstr "Зберегти скрипт як…"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:714
-#: rkward/windows/rkcommandeditorwindow.cpp:1133
+#: rkward/windows/rkcommandeditorwindow.cpp:715
+#: rkward/windows/rkcommandeditorwindow.cpp:1134
 #, kde-format
 msgid " [modified]"
 msgstr " [змінено]"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:721
+#: rkward/windows/rkcommandeditorwindow.cpp:722
 #, kde-format
 msgid "The document \"%1\" has been modified. Close it anyway?"
 msgstr "До документа «%1» внесено зміни. Закрити його без збереження цих змін?"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:721
+#: rkward/windows/rkcommandeditorwindow.cpp:722
 #, kde-format
 msgid "File not saved"
 msgstr "Файл не збережено"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:845
+#: rkward/windows/rkcommandeditorwindow.cpp:846
 #, kde-format
 msgid "No preview"
 msgstr "Без перегляду"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:846
+#: rkward/windows/rkcommandeditorwindow.cpp:847
 #, kde-format
 msgid "Disable preview"
 msgstr "Вимкнути перегляд"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:852
+#: rkward/windows/rkcommandeditorwindow.cpp:853
 #, kde-format
 msgid "R Markdown"
 msgstr "Розмітка R"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:854
+#: rkward/windows/rkcommandeditorwindow.cpp:855
 #, kde-format
 msgid "Preview of rendered R Markdown"
 msgstr "Попередній перегляд створеного файла розмітки R"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:855
+#: rkward/windows/rkcommandeditorwindow.cpp:856
 #, kde-format
 msgid "Preview the script as rendered from RMarkdown format (.Rmd)"
 msgstr "Попередній перегляд скрипту на основі обробки формату RMarkdown (.Rmd)"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:857
+#: rkward/windows/rkcommandeditorwindow.cpp:858
 #, kde-format
 msgid "Render format"
 msgstr "Формат обробки"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:858
+#: rkward/windows/rkcommandeditorwindow.cpp:859
 #, kde-format
 msgid "Render as HTML"
 msgstr "Обробити у HTML"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:859
+#: rkward/windows/rkcommandeditorwindow.cpp:860
 #, kde-format
 msgid "Render as PDF"
 msgstr "Обробити у PDF"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:860
+#: rkward/windows/rkcommandeditorwindow.cpp:861
 #, kde-format
 msgid "Auto Format"
 msgstr "Автоформатування"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:870
+#: rkward/windows/rkcommandeditorwindow.cpp:871
 #, kde-format
 msgid "RKWard Output"
 msgstr "Виведення даних у RKWard"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:872
+#: rkward/windows/rkcommandeditorwindow.cpp:873
 #, kde-format
 msgid "Preview of generated RKWard output"
 msgstr "Попередній перегляд даних, які виведено RKWard"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:873
+#: rkward/windows/rkcommandeditorwindow.cpp:874
 #, kde-format
 msgid ""
 "Preview any output to the RKWard Output Window. This preview will be empty, "
@@ -6831,40 +6831,40 @@ msgstr ""
 "попередній перегляд буде порожнім, якщо у скрипті немає викликів <i>rk."
 "print()</i> або інших команд виведення RKWard."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:886
+#: rkward/windows/rkcommandeditorwindow.cpp:887
 #, kde-format
 msgid "Preview of script running in interactive R Console"
 msgstr ""
 "Попередній перегляд скрипту, який виконується у інтерактивній консолі R"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:887
+#: rkward/windows/rkcommandeditorwindow.cpp:888
 #, kde-format
 msgid "Preview the script as if it was run in the interactive R Console"
 msgstr ""
 "Попередній перегляд скрипту так, наче він виконується в інтерактивній "
 "консолі R"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:888
+#: rkward/windows/rkcommandeditorwindow.cpp:889
 #, kde-format
 msgid "Echo statements"
 msgstr "Повторювати інструкції"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:889
+#: rkward/windows/rkcommandeditorwindow.cpp:890
 #, kde-format
 msgid "Continue on error"
 msgstr "Продовжувати при помилці"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:891
+#: rkward/windows/rkcommandeditorwindow.cpp:892
 #, kde-format
 msgid "Evaluation environment"
 msgstr "Середовище обробки"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:892
+#: rkward/windows/rkcommandeditorwindow.cpp:893
 #, kde-format
 msgid ".GlobalEnv"
 msgstr ".GlobalEnv"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:894
+#: rkward/windows/rkcommandeditorwindow.cpp:895
 #, kde-format
 msgid ""
 "Evaluate code directly in .GlobalEnv. Assignments can access <b>and modify</"
@@ -6873,12 +6873,12 @@ msgstr ""
 "Обробити код безпосередньо до .GlobalEnv. Надання значень може призводити до "
 "доступу <b>і зміни</b> об'єктів у .GlobalEnv."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:895
+#: rkward/windows/rkcommandeditorwindow.cpp:896
 #, kde-format
 msgid "Scoped"
 msgstr "В області"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:897
+#: rkward/windows/rkcommandeditorwindow.cpp:898
 #, kde-format
 msgid ""
 "Evaluate code in a child scope of .GlobalEnv. Objects in .GlobalEnv can be "
@@ -6890,12 +6890,12 @@ msgstr ""
 "<tt>&lt;-</tt> не змінюватимуть їх. (Втім, інші способи надання значень "
 "можуть вносити зміни!)"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:898
+#: rkward/windows/rkcommandeditorwindow.cpp:899
 #, kde-format
 msgid "Local"
 msgstr "Локально"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:899
+#: rkward/windows/rkcommandeditorwindow.cpp:900
 #, kde-format
 msgid ""
 "Evaluate code in true local environment. Objects in .GlobalEnv are not on "
@@ -6908,17 +6908,17 @@ msgstr ""
 "значень за допомогою оператора <tt>&lt;-</tt>. (Втім, інші способи надання "
 "значень можуть вносити зміни!)"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:914
+#: rkward/windows/rkcommandeditorwindow.cpp:915
 #, kde-format
 msgid "Plot"
 msgstr "Креслення"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:916
+#: rkward/windows/rkcommandeditorwindow.cpp:917
 #, kde-format
 msgid "Preview of generated plot"
 msgstr "Попередній перегляд створеного креслення"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:917
+#: rkward/windows/rkcommandeditorwindow.cpp:918
 #, kde-format
 msgid ""
 "Preview any onscreen graphics produced by running this script. This preview "
@@ -6929,7 +6929,7 @@ msgstr ""
 "скрипту. Цей попередній перегляд буде порожнім, якщо у скрипті немає "
 "викликів <i>plot()</i> або інших команд побудови графіків."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:940
+#: rkward/windows/rkcommandeditorwindow.cpp:941
 #, kde-format
 msgid ""
 "<p>The preview feature <b>tries</b> to avoid making any lasting changes to "
@@ -6957,12 +6957,12 @@ msgstr ""
 "користуєтеся можливістю попереднього перегляду, особливо, коли користуєтеся "
 "нею для скриптів, які можуть походити з ненадійних джерел.</p>"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:940
+#: rkward/windows/rkcommandeditorwindow.cpp:941
 #, kde-format
 msgid "Potential side-effects of previews"
 msgstr "Потенційні побіжні ефекти попереднього перегляду"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1058
+#: rkward/windows/rkcommandeditorwindow.cpp:1059
 #, kde-format
 msgid ""
 "An error occurred while trying to create an autosave of the script file '%1':"
@@ -6970,17 +6970,17 @@ msgstr ""
 "Під час спроби створення резервної копії файла скрипту «%1» у автоматичному "
 "режимі сталася помилка:"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1132
+#: rkward/windows/rkcommandeditorwindow.cpp:1133
 #, kde-format
 msgid "Unnamed"
 msgstr "Без назви"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1265
+#: rkward/windows/rkcommandeditorwindow.cpp:1266
 #, kde-format
 msgid "%1 (Active)"
 msgstr "%1 (активний)"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1284
+#: rkward/windows/rkcommandeditorwindow.cpp:1285
 #, kde-format
 msgid "%1 (Unused)"
 msgstr "%1 (не використовується)"
