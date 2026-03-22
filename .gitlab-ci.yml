@@ -77,3 +77,37 @@ check_warnings:
   script:
     - "if [[ $(cat build/make.error | grep warning -i) ]]; then cat build/make.error; exit 1; fi"
   allow_failure: true
+
+# R does *not* have strong promise of backwards compatibility, we encounter breakage quite frequently for new minor releases
+# Check occiasionally, what kind of breakage has already happened
+build_r_devel:
+  stage: build
+  image: debian:stable
+  tags:
+    - Linux
+  rules:
+    - when: manual
+      allow_failure: true
+  before_script:
+    - apt-get update
+    - apt-get install --yes eatmydata
+    # r-base build depends. It might be possible to remove a few more of these. We're already building without X and java
+    - eatmydata apt-get install --yes gcc g++ gfortran libblas-dev liblapack-dev tcl8.6-dev tk8.6-dev bison groff-base libncurses-dev libreadline-dev texinfo libbz2-dev liblzma-dev libpcre2-dev libcurl4-openssl-dev xdg-utils zlib1g-dev libpng-dev libjpeg-dev libpango1.0-dev libcairo2-dev libtiff-dev mpack bash-completion libtirpc-dev
+    - eatmydata apt-get install --yes wget
+    # try to build R before installing rkward deps
+    - mkdir -p rdir && cd rdir
+    - wget https://cran.r-project.org/src/base-prerelease/R-devel.tar.xz
+    - tar -xJf R-devel.tar.xz
+    - mkdir install
+    - mkdir build && cd build
+    - ../R-devel/configure --enable-R-shlib --with-x=no --with-recommended-packages=no
+    - make -j 9 && make install
+    - cd ../..
+    # rkward deps, next:
+    - eatmydata apt-get install --yes --no-install-recommends cmake extra-cmake-modules qt6-webengine-dev libkf6notifications-dev gettext libkf6coreaddons-dev libkf6crash-dev libkf6guiaddons-dev libkf6i18n-dev libkf6iconthemes-dev libkf6breezeicons-dev libkf6texteditor-dev libkf6textwidgets-dev libkf6windowsystem-dev libkf6xmlgui-dev
+  script:
+    - mkdir -p build && cd build
+    - cmake ..
+    - make -j 9
+    - make test
+
