@@ -305,7 +305,7 @@ int RReadConsole(const char *prompt, unsigned char *buf, int buflen, int hist) {
 					// fully transmitted, but R is still asking for more, without signalling R_Busy? This looks like an incomplete statement.
 					// HOWEVER: It may also have been a (trailing) empty statement such as "\n", so let's check whether the prompt looks like a "continue" prompt
 					RBusy(1); // Mark command as "running"
-					if (RKTextCodec::fromNative(prompt) == RKRSupport::SEXPToString(RFn::Rf_GetOption(RFn::Rf_install("continue"), ROb(R_BaseEnv)))) {
+					if (RKTextCodec::fromNative(prompt) == RKRSupport::SEXPToString(RFn::Rf_GetOption1(RFn::Rf_install("continue")))) {
 						RKRBackend::this_pointer->current_command->status |= RCommand::Failed | RCommand::ErrorIncomplete;
 						RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::ReplIterationKilled;
 						RK_doIntr(); // to discard the buffer

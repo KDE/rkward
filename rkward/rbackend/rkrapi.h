@@ -99,18 +99,19 @@ available as a config option.
 #	undef R_LEGACY_RCOMPLEX
 #endif
 
-// Common includes
+// Common includes. NOTE: not includable in arbitrary order -> clang-format off
+// clang-format off
 #include <R.h>
-#include <R_ext/Callbacks.h>
+#include <Rdefines.h>
 #include <R_ext/Parse.h>
 #include <R_ext/Rdynload.h>
 #include <R_ext/Riconv.h>
-#include <Rdefines.h>
 #include <Rembedded.h>
 #include <Rinternals.h>
 #include <Rversion.h>
 #define R_USE_PROTOTPYES 1
 #include <R_ext/GraphicsEngine.h>
+// clang-format on
 
 // rcolor typedef added in R 3.0.0
 #ifndef rcolor
@@ -228,7 +229,6 @@ class RFn : public QObject {
 	IMPORT_R_API(R_registerRoutines);
 	IMPORT_R_API(R_removeVarFromFrame);
 	IMPORT_R_API(R_tryEval);
-	IMPORT_R_API(Rf_GetOption);
 	IMPORT_R_API(Rf_GetOption1);
 	IMPORT_R_API(Rf_KillAllDevices);
 	IMPORT_R_API(Rf_ScalarInteger);
