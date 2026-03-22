@@ -56,7 +56,7 @@ class RKHTMLViewer : public QObject {
 	void aboutToShowContextMenu(QMenu *menu);
 
   protected:
-	RKHTMLViewer(QObject *parent);
+	RKHTMLViewer(RKHTMLWindow *parent);
 	RKHTMLWindow *window;
 };
 

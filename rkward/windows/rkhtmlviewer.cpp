@@ -7,12 +7,13 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "rkhtmlviewer.h"
 
+#include "rkhtmlwindow.h"
 #include "rkqwebenginewidget.h"
 #include "rkqwebview.h"
 
 #include "../debug.h"
 
-RKHTMLViewer::RKHTMLViewer(QObject *parent) : QObject(parent) {
+RKHTMLViewer::RKHTMLViewer(RKHTMLWindow *parent) : QObject(parent), window(parent) {
 	RK_TRACE(APP);
 }
 

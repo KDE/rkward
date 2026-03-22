@@ -75,6 +75,7 @@ class RKHTMLWindow : public RKMDIWindow {
 
 	WindowMode mode() { return window_mode; };
   public Q_SLOTS:
+	void slotCopy();
 	void slotPrint();
 	void slotExport();
 	void slotSave();

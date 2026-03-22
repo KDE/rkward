@@ -25,6 +25,7 @@ Item {
                 visible: true
                 width: parent.width
                 height: parent.height
+                transformOrigin: Item.TopLeft
                 property string acceptedUrl: ""
                 property string requestedUrl: ""
 
@@ -45,6 +46,11 @@ Item {
                         if (request.status == WebView.LoadSucceededStatus) {
                                 loadFinished(request.url);
                         }
+                }
+                function doZoom(dir: int) {
+                        scale += dir * .1;
+                        width = parent.width / scale;
+                        height = parent.height / scale;
                 }
         }
 }

@@ -36,10 +36,13 @@ document.addEventListener('click', e => {
 });
 
 document.addEventListener('contextmenu', e => {
-	let href = null;
+	let params = { x: e.screenX, y: e.screenY };
 	try {
-		href = e.target.closest('a').href;
+		params.url = e.target.closest('a').href;
 	} catch {}
-	__rkward_sendMessage("contextMenu", { url: href, x: e.screenX, y: e.screenY });
+	try {
+		params.src = e.target.closest('img').src;
+	} catch {}
+	__rkward_sendMessage("contextMenu", params);
 	e.preventDefault();
 });

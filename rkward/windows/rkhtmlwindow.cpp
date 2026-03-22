@@ -105,7 +105,11 @@ RKHTMLWindow::RKHTMLWindow(QWidget *parent, WindowMode mode) : RKMDIWindow(paren
 	// We have to connect this in order to allow browsing.
 	connect(page, &RKHTMLViewer::pageInternalNavigation, this, &RKHTMLWindow::internalNavigation);
 	connect(page, &RKHTMLViewer::navigationRequest, this, [this](const QUrl &current_real_url, const QUrl &requested_url, bool is_new_window) {
-		openURL(requested_url);
+		if (is_new_window) {
+			RKWorkplace::mainWorkplace()->openAnyUrl(requested_url);
+		} else {
+			openURL(requested_url);
+		}
 	});
 	connect(page, &RKHTMLViewer::aboutToShowContextMenu, this, [this](QMenu *menu) {
 		menu->addAction(part->run_selection);
@@ -148,6 +152,11 @@ void RKHTMLWindow::runSelection() {
 	RK_TRACE(APP);
 
 	RKConsole::pipeUserCommand(page->selectedText());
+}
+
+void RKHTMLWindow::slotCopy() {
+	RK_TRACE(APP);
+	qApp->clipboard()->setText(page->selectedText());
 }
 
 void RKHTMLWindow::slotPrint() {
@@ -639,14 +648,7 @@ void RKHTMLWindowPart::initActions() {
 	RK_TRACE(APP);
 
 	// common actions
-	actionCollection()->addAction(KStandardAction::Copy, QStringLiteral("copy"), window->page, [page = window->page]() {
-		page->runJS(u"{ Window.getSelection(); }"_s, [](const QVariant &res) {
-			const auto txt = res.toString();
-			if (!txt.isEmpty()) {
-				qApp->clipboard()->setText(txt);
-			}
-		});
-	});
+	actionCollection()->addAction(KStandardAction::Copy, QStringLiteral("copy"), window, &RKHTMLWindow::slotCopy);
 	QAction *zoom_in = actionCollection()->addAction(QStringLiteral("zoom_in"), new QAction(QIcon::fromTheme(QStringLiteral("zoom-in")), i18n("Zoom In"), this));
 	connect(zoom_in, &QAction::triggered, window, &RKHTMLWindow::zoomIn);
 	QAction *zoom_out = actionCollection()->addAction(QStringLiteral("zoom_out"), new QAction(QIcon::fromTheme(QStringLiteral("zoom-out")), i18n("Zoom Out"), this));

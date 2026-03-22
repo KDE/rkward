@@ -43,6 +43,7 @@ class RKQWebView : public RKHTMLViewer {
 	friend class RKHTMLViewer;
 	friend class RKQWebViewCallbackServer;
 	RKQWebView(RKHTMLWindow *parent);
+	virtual ~RKQWebView();
 	QPointer<QQuickWidget> view;
 	QUrl currentAcceptedUrl() const;
 	QMap<QString, QString> persistentScripts;
@@ -56,6 +57,7 @@ class RKQWebView : public RKHTMLViewer {
 	void receivedCallbackMessage(const QString &message);
 	QString selected_text;
 	QPoint scroll_pos;
+	QMenu *context_menu;
   private Q_SLOTS:
 	void onUrlChanged(const QUrl &url, const QString &error, int status);
 	void onLoadFinished(const QUrl &url);

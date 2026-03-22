@@ -7,6 +7,10 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "rkqwebview.h"
 
+#include <KLocalizedString>
+#include <KStandardActions>
+
+#include <QClipboard>
 #include <QFile>
 #include <QMenu>
 #include <QQuickItem>
@@ -23,11 +27,11 @@ SPDX-License-Identifier: GPL-2.0-or-later
 class RKQWebViewCallbackServer {
   public:
 	static void initConnection(RKQWebView *window) {
-		static QWebSocketServer *server = nullptr;
 		if (!server) {
 			server = new QWebSocketServer(QString(), QWebSocketServer::NonSecureMode);
 			server->listen(QHostAddress::LocalHost);
-			QObject::connect(server, &QWebSocketServer::newConnection, server, [server]() {
+			QObject::connect(server, &QWebSocketServer::newConnection, server, []() {
+				auto server = RKQWebViewCallbackServer::server;
 				auto con = server->nextPendingConnection();
 				const auto url = con->requestUrl().url();
 				auto win = entrypoints.value(url);
@@ -62,10 +66,12 @@ class RKQWebViewCallbackServer {
 
   protected:
 	static QHash<QString, RKQWebView *> entrypoints;
+	static QWebSocketServer *server;
 };
 QHash<QString, RKQWebView *> RKQWebViewCallbackServer::entrypoints;
+QWebSocketServer *RKQWebViewCallbackServer::server = nullptr;
 
-RKQWebView::RKQWebView(RKHTMLWindow *parent) : RKHTMLViewer(parent), view(nullptr), running_script(false) {
+RKQWebView::RKQWebView(RKHTMLWindow *parent) : RKHTMLViewer(parent), view(nullptr), running_script(false), context_menu(nullptr) {
 	RK_TRACE(APP);
 	QFile file(u":/js/rkqwebview.js"_s);
 	if (file.open(QIODevice::ReadOnly)) {
@@ -73,6 +79,11 @@ RKQWebView::RKQWebView(RKHTMLWindow *parent) : RKHTMLViewer(parent), view(nullpt
 	} else {
 		RK_ASSERT(false);
 	}
+}
+
+RKQWebView::~RKQWebView() {
+	RK_TRACE(APP);
+	delete context_menu;
 }
 
 QUrl RKQWebView::currentAcceptedUrl() const {
@@ -147,8 +158,15 @@ void RKQWebView::load(const QUrl &url) {
 
 void RKQWebView::print() {
 	RK_TRACE(APP);
-	// TODO: Doesn't work. Why?
+	// TODO: Doesn't do anything (no error, either). Why?
 	RKHTMLViewer::runJS(u"window.print()"_s);
+
+	/* This is not really a useful alternative...
+	QPointer<QPrintDialog> dlg(new QPrintDialog(view));
+	if (dlg->exec() == QPrintDialog::Accepted) {
+	    view->render(dlg->printer(), QPoint(), QRegion(), QWidget::DrawChildren);
+	}
+	delete dlg; */
 }
 
 void RKQWebView::installPersistentJS(const QString &script, const QString &id) {
@@ -225,21 +243,42 @@ void RKQWebView::receivedCallbackMessage(const QString &message) {
 		scroll_pos = QPoint(args["x"_L1].toInt(), args["y"_L1].toInt());
 	} else if (msg == "contextMenu"_L1) {
 		// TODO: some actions we probably want:
-		// back, forward, reload, copy, copy link address, open in new tab, open in external browser
-		// most to all could/should probably be handled in the RKHTMLWindow?
-		QMenu menu;
-		const auto url = args["url"_L1].toString();
-		if (!url.isEmpty()) {
-			menu.addAction(new QAction(args["url"_L1].toString())); // TODO
-
-			auto a = new QAction(u"Open in new tab"_s);
-			connect(a, &QAction::triggered, this, [url]() {
-				RKWorkplace::mainWorkplace()->openAnyUrl(QUrl(url));
+		// back, forward, reload, copy, copy link address, open in new tab, open in external browser,
+		// save image as
+		// TODO most to all of these actions could/should probably be handled in the RKHTMLWindow?
+		if (!context_menu) {
+			context_menu = new QMenu;
+			auto a = new QAction(i18n("Open link in new tab"), this);
+			a->setObjectName("open_new");
+			connect(a, &QAction::triggered, this, [a, this]() {
+				Q_EMIT navigationRequest(url(), QUrl(a->property("_url").toString()), true);
 			});
-			menu.addAction(a);
+			context_menu->addAction(a);
+
+			// NOTE copy is already present as an action in the main window, but we want a separate
+			// one that we can show/hide
+			a = KStandardActions::copy(window, &RKHTMLWindow::slotCopy, this);
+			a->setObjectName("copy");
+			context_menu->addAction(a);
+
+			a = new QAction(i18n("Copy link address"), this);
+			connect(a, &QAction::triggered, this, [a]() {
+				qApp->clipboard()->setText(a->property("_url").toString());
+			});
+			a->setObjectName("copy_link");
+			context_menu->addAction(a);
 		}
-		Q_EMIT aboutToShowContextMenu(&menu);
-		menu.exec((QPoint(args["x"_L1].toInt(), args["y"_L1].toInt()) - scroll_pos));
+		const auto url = args["url"_L1].toString();
+		auto a = findChild<QAction *>("open_new", Qt::FindDirectChildrenOnly);
+		a->setVisible(!url.isEmpty());
+		a->setProperty("_url", url);
+		a = findChild<QAction *>("copy_link", Qt::FindDirectChildrenOnly);
+		a->setVisible(!url.isEmpty());
+		a->setProperty("_url", url);
+		a = findChild<QAction *>("copy", Qt::FindDirectChildrenOnly);
+		a->setVisible(!selected_text.isEmpty());
+		Q_EMIT aboutToShowContextMenu(context_menu);
+		context_menu->exec((QPoint(args["x"_L1].toInt(), args["y"_L1].toInt()) - scroll_pos));
 	} else if (msg == "pageInternalNav"_L1) {
 		Q_EMIT pageInternalNavigation(QUrl(args["href"_L1].toString()));
 	} else {
@@ -270,10 +309,10 @@ bool RKQWebView::supportsContentType(const QString &mimename) {
 
 void RKQWebView::zoomIn() {
 	RK_TRACE(APP);
-	// TODO
+	QMetaObject::invokeMethod(webView(), "doZoom", Q_ARG(int, 1));
 }
 
 void RKQWebView::zoomOut() {
 	RK_TRACE(APP);
-	// TODO
+	QMetaObject::invokeMethod(webView(), "doZoom", Q_ARG(int, -1));
 }
