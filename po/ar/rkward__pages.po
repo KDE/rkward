@@ -547,7 +547,7 @@ msgid ""
 "on."
 msgstr ""
 "يؤدي الضغط على F2 (أو اختيار \"مرجع الدالة\" من قائمة السياق) إلى محاولة "
-"البحث عن صفحة مساعدة R لأي كلمة رئيسية يقف عليها المؤشر حالياً."
+"البحث عن صفحة مساعدة R لأي كلمة رئيسة يقف عليها المؤشر حالياً."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
 #: rkward/pages/rkward_console.rkh:41
@@ -1006,7 +1006,7 @@ msgid ""
 "Briefly explains the main components of RKWard, assuming the user is already "
 "familiar with basic concepts of R."
 msgstr ""
-"يشرح بإيجاز المكونات الرئيسية لـأر كي وارد، بافتراض أن المستخدم على دراية "
+"يشرح بإيجاز المكونات الرئيسة لـأر كي وارد، بافتراض أن المستخدم على دراية "
 "مسبقة بالمفاهيم الأساسية لـR."
 
 #. i18n: ectx: (RKWard for R Users) <section title="...">
@@ -1109,7 +1109,7 @@ msgid ""
 "(the area of the window, that you are most likely reading this text, in). "
 "You can open any number of script editor windows at the same time."
 msgstr ""
-"ستلاحظ أن المحرر يفتح في نافذة جديدة في مساحة العمل الرئيسية (المنطقة من "
+"ستلاحظ أن المحرر يفتح في نافذة جديدة في مساحة العمل الرئيسة (المنطقة من "
 "النافذة، التي تقرأ فيها هذا النص على الأرجح). يمكنك فتح أي عدد من نوافذ محرر "
 "السكربت في نفس الوقت."
 
@@ -1223,9 +1223,9 @@ msgid ""
 "level window using Windows->Detach. Similarly, detached windows can be "
 "attached to the main workplace using Window->Attach to main window."
 msgstr ""
-"يمكن فصل كل النوافذ المعروضة في منطقة العرض الرئيسية إلى نافذة منفصلة على "
+"يمكن فصل كل النوافذ المعروضة في منطقة العرض الرئيسة إلى نافذة منفصلة على "
 "المستوى الأعلى باستخدام نوافذ->فصل. وبالمثل، يمكن إرفاق النوافذ المنفصلة "
-"بمساحة العمل الرئيسية باستخدام نافذة->إرفاق بالنافذة الرئيسية."
+"بمساحة العمل الرئيسة باستخدام نافذة->إرفاق بالنافذة الرئيسة."
 
 #. i18n: ectx: (RKWard for R Users) <section title="Window management">
 #: rkward/pages/rkward_for_r_users.rkh:44
@@ -1412,7 +1412,7 @@ msgid ""
 "link>."
 msgstr ""
 "لمزيد من المعلومات حول الإصدارات المتاحة، والمزيد من معلومات استكشاف الأخطاء "
-"وإصلاحها، انظر <link href=\"https://rkward.kde.org\">صفحة مشروع الرئيسية</"
+"وإصلاحها، انظر <link href=\"https://rkward.kde.org\">صفحة مشروع الرئيسة</"
 "link>."
 
 #. i18n: ectx: (Version incompatibilities) <section title="...">
@@ -2011,7 +2011,7 @@ msgstr "طرق العرض المقسّمة"
 msgid ""
 "Split views can be used to partition the main window into several view areas."
 msgstr ""
-"يمكن استخدام طرق العرض المقسّمة لتقسيم النافذة الرئيسية إلى عدة مناطق عرض."
+"يمكن استخدام طرق العرض المقسّمة لتقسيم النافذة الرئيسة إلى عدة مناطق عرض."
 
 #. i18n: ectx: (Split views) <summary>
 #: rkward/pages/rkward_split_views.rkh:10
@@ -2040,12 +2040,12 @@ msgid ""
 "window. When splitting other windows (such as onscreen graphics devices), "
 "the new view area will be initialized to show this help page."
 msgstr ""
-"تقسيم طرق العرض مدعوم حاليًا للنافذة الرئيسية فقط. استخدم نافذة -> تقسيم "
-"عمودي أو نافذة -> تقسيم أفقي لتقسيم منطقة العرض الحالية عموديًا أو أفقيًا. "
-"بالنسبة للنوافذ التي تدعم ذلك (مثل السكربتات، صفحات المساعدة)، ستحتوي منطقة "
-"العرض التي أ ن ش ئ ت حديثًا على نسخة من النافذة الحالية. عند تقسيم النوافذ "
-"الأخرى (مثل أجهزة الرسوميات على الشاشة)، س ت ه ي أ منطقة العرض الجديدة لعرض "
-"صفحة المساعدة هذه."
+"تقسيم طرق العرض مدعوم حاليًا للنافذة الرئيسة فقط. استخدم نافذة -> تقسيم عمودي "
+"أو نافذة -> تقسيم أفقي لتقسيم منطقة العرض الحالية عموديًا أو أفقيًا. بالنسبة "
+"للنوافذ التي تدعم ذلك (مثل السكربتات، صفحات المساعدة)، ستحتوي منطقة العرض "
+"التي أ ن ش ئ ت حديثًا على نسخة من النافذة الحالية. عند تقسيم النوافذ الأخرى "
+"(مثل أجهزة الرسوميات على الشاشة)، س ت ه ي أ منطقة العرض الجديدة لعرض صفحة "
+"المساعدة هذه."
 
 #. i18n: ectx: (Split views) <section title="Splitting views">
 #: rkward/pages/rkward_split_views.rkh:16
@@ -2572,8 +2572,8 @@ msgid ""
 "External links: <link href=\"https://rkward.kde.org/\">project homepage</"
 "link>"
 msgstr ""
-"روابط خارجية: <link href=\"https://rkward.kde.org/\">الصفحة الرئيسية "
-"للمشروع</link>"
+"روابط خارجية: <link href=\"https://rkward.kde.org/\">الصفحة الرئيسة للمشروع</"
+"link>"
 
 #. i18n: ectx: (Workspace Browser) <title>
 #: rkward/pages/rkward_workspace_browser.rkh:8

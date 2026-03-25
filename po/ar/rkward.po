@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-03-18 00:40+0000\n"
-"PO-Revision-Date: 2026-03-15 09:23+0400\n"
+"PO-Revision-Date: 2026-03-24 11:05+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -3341,7 +3341,7 @@ msgstr "نموذج كامل"
 #: rkward/plugin/rkformula.cpp:64
 #, kde-format
 msgid "Main Effects only"
-msgstr "التأثيرات الرئيسية فقط"
+msgstr "التأثيرات الرئيسة فقط"
 
 #: rkward/plugin/rkformula.cpp:66
 #, kde-format
@@ -5284,6 +5284,11 @@ msgid ""
 "is recommended to leave hardware acceleration disabled, unless you "
 "experience performance problems while viewing HTML content inside RKWard."
 msgstr ""
+"من المعروف أن استخدام التسريع بالعتاد لعرض HTML (مثل صفحات المساعدة ومخرجات "
+"المكونات الإضافية) يتسبب في عدم الاستقرار في بعض التثبيتات، كما أنه غير "
+"ضروري عمومًا للمحتوى — الذي عادةً ما يكون بسيطًا — المعروض في أر كي وارد. يُنصح "
+"بإبقاء التسريع بالعتاد معطلاً، ما لم تواجه مشاكل في الأداء أثناء عرض محتوى "
+"HTML داخل أر كي وارد."
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:78
 #: rkward/settings/rksettingsmodulegeneral.cpp:87
@@ -6175,7 +6180,7 @@ msgstr "الحد الأقصى لعدد الفقرات/السطور للعرض ف
 #: rkward/windows/detachedwindowcontainer.cpp:36
 #, kde-format
 msgid "Attach to main window"
-msgstr "أرفق بالنافذة الرئيسية"
+msgstr "أرفق بالنافذة الرئيسة"
 
 #. i18n: ectx: Menu (device)
 #: rkward/windows/detachedwindowcontainer.rc:13
@@ -7696,12 +7701,12 @@ msgstr "النافذة اليمنى"
 #: rkward/windows/rkworkplaceview.cpp:255
 #, kde-format
 msgid "Split Ve&rtical"
-msgstr "اقسم رأ&سيًّا"
+msgstr "اقسم &عموديًا"
 
 #: rkward/windows/rkworkplaceview.cpp:258
 #, kde-format
 msgid "Split the currently active view into two views, vertically."
-msgstr "اقسم العرض النشط حاليًا إلى عرضين، رأسيًا."
+msgstr "اقسم العرض النشط حاليًا إلى عرضين، عموديًا."
 
 #: rkward/windows/rkworkplaceview.cpp:262
 #, kde-format
