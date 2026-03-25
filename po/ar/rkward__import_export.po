@@ -2157,7 +2157,7 @@ msgstr "مصدر ملف R"
 #: rkward/plugins/00saveload/import/source.xml:20
 #, kde-format
 msgid "Main options"
-msgstr "خيارات رئيسية"
+msgstr "خيارات رئيسة"
 
 #. i18n: ectx: (Source an R file) <dialog label="Source an R file"> <tab label="Main options"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/source.xml:22

@@ -1,13 +1,13 @@
 # Copyright (C) 2025 This file is copyright:
 # This file is distributed under the same license as the rkward package.
-# SPDX-FileCopyrightText: 2025 Zayed Al-Saidi <zayed.alsaidi@gmail.com>
+# SPDX-FileCopyrightText: 2025, 2026 Zayed Al-Saidi <zayed.alsaidi@gmail.com>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 08:59+0000\n"
-"PO-Revision-Date: 2025-10-01 18:58+0400\n"
+"PO-Revision-Date: 2026-03-24 11:07+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -2632,7 +2632,7 @@ msgstr "دائمًا عمودي على المحور "
 #: rkward/plugins/distributions/../plots/plot_options.xml:138
 #, kde-format
 msgid "Always vertical "
-msgstr "دائمًا رأسي "
+msgstr "دائمًا عمودي "
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Axis Annotations"> <input label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:141
@@ -2680,7 +2680,7 @@ msgstr "ارسم نقطًا متراكبة بخطوط "
 #: rkward/plugins/distributions/../plots/plot_options.xml:156
 #, kde-format
 msgid "Plot vertical lines from points to the zero axis (high-density)"
-msgstr "ارسم خطوطًا رأسية من النقط إلى المحور صفر (كثافة عالية)"
+msgstr "ارسم خطوطًا عمودية من النقط إلى المحور صفر (كثافة عالية)"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Points / Lines"> <dropdown label="Type of points/lines"> <option label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:157
@@ -2812,7 +2812,7 @@ msgid ""
 "lines are NOT to be drawn."
 msgstr ""
 "هذا هو الوسيط <i>verticals</i>. أزل علامة من هذا الخيار إذا كان لا يجب رسم "
-"الخطوط الرأسية."
+"الخطوط العمودية."
 
 #. i18n: ectx: (Loaded from Step function plot options) <settings> <setting> (refers to element labelled "Color")
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:21
@@ -2928,13 +2928,13 @@ msgstr "خطوط أفقية"
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:56
 #, kde-format
 msgid "Vertical lines"
-msgstr "خطوط رأسية"
+msgstr "خطوط عمودية"
 
 #. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Vertical lines"> <checkbox label="...">
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:57
 #, kde-format
 msgid "Draw vertical lines"
-msgstr "ارسم خطوطًا رأسية"
+msgstr "ارسم خطوطًا عمودية"
 
 #. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="...">
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:62
@@ -2996,9 +2996,9 @@ msgid ""
 "vertical lines. Select 'Specify below' to provide a specified (to be "
 "specified below) number of vertical lines in the grid."
 msgstr ""
-"هذا هو الوسيط <i>nx</i>. مبدئيًا هو NULL، وفي هذه الحالة، تُرسم الخطوط الرأسية "
-"عند علامات تدريج المحور x. اختر 'بلا' لكي لا ترسم الخطوط الرأسية. اختر 'حدد "
-"أدناه' لتوفير عدد محدد (يُحدد أدناه) من الخطوط الرأسية في الشبكة."
+"هذا هو الوسيط <i>nx</i>. مبدئيًا هو NULL، وفي هذه الحالة، تُرسم الخطوط "
+"العمودية عند علامات تدريج المحور x. اختر 'بلا' لكي لا ترسم الخطوط العمودية. "
+"اختر 'حدد أدناه' لتوفير عدد محدد (يُحدد أدناه) من الخطوط العمودية في الشبكة."
 
 #. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "X Cells")
 #: rkward/plugins/distributions/../x11device/grid.rkh:16
