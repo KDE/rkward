@@ -33,6 +33,7 @@ RKEditorDataFrame::RKEditorDataFrame(RContainerObject *object, QWidget *parent) 
 	setGlobalContextProperty(QStringLiteral("current_dataframe"), object->getFullName());
 
 	RKVarEditDataFrameModel *model = new RKVarEditDataFrameModel(object, this);
+	RKEditor::object = model->getObject();
 	initTable(model, object);
 	connect(model, &RKVarEditDataFrameModel::modelObjectDestroyed, this, &RKEditorDataFrame::detachModel);
 
