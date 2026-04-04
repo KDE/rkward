@@ -7,10 +7,11 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #ifndef RKQWEBENGINEWIDGET_H
 #define RKQWEBENGINEWIDGET_H
+#if RK_WITH_QWEBENGINE
 
-#include <QPointer>
+#	include <QPointer>
 
-#include "rkhtmlviewer.h"
+#	include "rkhtmlviewer.h"
 
 class RKWebPage;
 class QWebEngineView;
@@ -42,4 +43,5 @@ class RKQWebEngineWidget : public RKHTMLViewer {
 	QPointer<QWebEngineView> view;
 };
 
+#endif
 #endif

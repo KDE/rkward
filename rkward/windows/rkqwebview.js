@@ -12,11 +12,11 @@ function __rkward_debounce(fun) {
 }
 
 document.onselectionchange = __rkward_debounce(function() {
-	__rkward_sendMessage("selChanged", { sel: document.getSelection().toString() });
+	__rkward_sendMessage("selChanged", {sel : document.getSelection().toString()});
 });
 
 document.onscroll = __rkward_debounce(function() {
-	__rkward_sendMessage("scroll", { x: window.scrollX, y: window.scrollY });
+	__rkward_sendMessage("scroll", {x : window.scrollX, y : window.scrollY});
 });
 
 function __rkward_sendMessage(msg, args) {
@@ -30,19 +30,21 @@ function __rkward_sendMessage(msg, args) {
 document.addEventListener('click', e => {
 	const origin = e.target.closest('a');
 	if (origin && origin.href.startswith('#')) {
-		__rkward_sendMessage("pageInternalNav", { url: origin.href });
+		__rkward_sendMessage("pageInternalNav", {url : origin.href});
 		e.preventDefault();
 	}
 });
 
 document.addEventListener('contextmenu', e => {
-	let params = { x: e.screenX, y: e.screenY };
+	let params = {x : e.screenX, y : e.screenY};
 	try {
 		params.url = e.target.closest('a').href;
-	} catch {}
+	} catch {
+	}
 	try {
 		params.src = e.target.closest('img').src;
-	} catch {}
+	} catch {
+	}
 	__rkward_sendMessage("contextMenu", params);
 	e.preventDefault();
 });

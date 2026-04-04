@@ -7,12 +7,13 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #ifndef RKQWEBVIEW_H
 #define RKQWEBVIEW_H
+#if RK_WITH_QWEBVIEW
 
-#include <QMap>
-#include <QPoint>
-#include <QPointer>
+#	include <QMap>
+#	include <QPoint>
+#	include <QPointer>
 
-#include "rkhtmlviewer.h"
+#	include "rkhtmlviewer.h"
 
 class QQuickWidget;
 class QQuickItem;
@@ -65,4 +66,5 @@ class RKQWebView : public RKHTMLViewer {
 	QObject *webView() const;
 };
 
+#endif
 #endif

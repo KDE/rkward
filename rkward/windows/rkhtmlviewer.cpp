@@ -7,6 +7,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "rkhtmlviewer.h"
 
+#include "../settings/rksettingsmodulegeneral.h"
 #include "rkhtmlwindow.h"
 #include "rkqwebenginewidget.h"
 #include "rkqwebview.h"
@@ -19,8 +20,25 @@ RKHTMLViewer::RKHTMLViewer(RKHTMLWindow *parent) : QObject(parent), window(paren
 
 RKHTMLViewer *RKHTMLViewer::getNew(RKHTMLWindow *parent) {
 	RK_TRACE(APP);
-	//return new RKQWebEngineWidget(parent);
+	const auto engine = RKSettingsModuleGeneral::htmlEngine();
+#if RK_WITH_QWEBENGINE
+	if (engine == RKSettingsModuleGeneral::QWebEngineRenderingEngine) {
+		return new RKQWebEngineWidget(parent);
+	}
+#endif
+#if RK_WITH_QWEBVIEW
+	if (engine == RKSettingsModuleGeneral::QWebViewRenderingEngine) {
+		return new RKQWebView(parent);
+	}
+#endif
+	// default to QWebEngine on Linux (where it mostly works), but to QWebView
+	// everywhere else (if possible)
+#if defined(Q_OS_LINUX) && RK_WITH_QWEBENGINE
+	return new RKQWebEngineWidget(parent);
+#endif
+#if RK_WITH_QWEBVIEW
 	return new RKQWebView(parent);
+#else
+	return new RKQWebEngineWidget(parent);
+#endif
 }
-
-#include "rkhtmlviewer.moc"

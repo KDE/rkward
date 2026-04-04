@@ -42,6 +42,12 @@ class RKSettingsModuleGeneral : public RKSettingsModule {
 		RKMDIFocusFollowsMouse = 1
 	};
 
+	enum HTMLEngine {
+		DefaultRenderingEngine,
+		QWebEngineRenderingEngine,
+		QWebViewRenderingEngine
+	};
+
 	void syncConfig(KConfig *config, RKConfigBase::ConfigSyncAction) override;
 	void createPages(RKSettings *parent) override;
 	static constexpr PageId page_id = QLatin1String("general");
@@ -50,6 +56,7 @@ class RKSettingsModuleGeneral : public RKSettingsModule {
 	static QString &filesPath() { return files_path; };
 	static bool showHelpOnStartup() { return show_help_on_startup; };
 	static bool disableHardwareRendering() { return disable_hardware_rendering; };
+	static HTMLEngine htmlEngine() { return html_engine; };
 	static bool openRestoreFileOnLoad() { return autorestore_from_wd; };
 	static WorkplaceSaveMode workplaceSaveMode() { return workplace_save_mode; };
 	/** retrieve the saved workplace description. Meaningful only is workplaceSaveMode () == SaveWorkplaceWithSession */
@@ -109,6 +116,7 @@ class RKSettingsModuleGeneral : public RKSettingsModule {
 	static bool installation_moved;
 	static RKConfigValue<int> num_recent_files;
 	static RKConfigValue<bool> disable_hardware_rendering;
+	static RKConfigValue<HTMLEngine, int> html_engine;
 };
 
 #endif
