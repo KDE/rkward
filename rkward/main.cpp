@@ -59,7 +59,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QThread>
 #include <QTime>
 #include <QUrl>
-#include <QtWebView>
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -136,11 +135,10 @@ void RKDebug(int flags, int level, const char *fmt, ...) {
 	}
 }
 
-#include <QWebEngineUrlScheme>
-
-int main(int argc, char *argv[]) {
-	RK_Debug::RK_Debug_Level = DL_WARNING;
-#if defined(Q_OS_MACOS)
+#if RK_WITH_QWEBENGINE
+#	include <QWebEngineUrlScheme>
+static void setupWebEngine() {
+#	if defined(Q_OS_MACOS)
 	// TODO: This is just a hackish workaround. See https://invent.kde.org/education/rkward/-/issues/28
 	const char *chromiumflags = "QTWEBENGINE_CHROMIUM_FLAGS";
 	if (!qEnvironmentVariableIsSet(chromiumflags)) {
@@ -153,9 +151,26 @@ int main(int argc, char *argv[]) {
 	scheme.setSyntax(QWebEngineUrlScheme::Syntax::Path);
 	scheme.setFlags(QWebEngineUrlScheme::LocalAccessAllowed);
 	QWebEngineUrlScheme::registerScheme(scheme);
+}
+#else
+static void setupWebEngine() {}
+#endif
+
+#if RK_WITH_QWEBVIEW
+#	include <QtWebView>
+static void setupWebView() {
+	QtWebView::initialize();
+}
+#else
+static void setupWebView() {}
+#endif
+
+int main(int argc, char *argv[]) {
+	RK_Debug::RK_Debug_Level = DL_WARNING;
+	setupWebEngine();
+	setupWebView();
 	BreezeIcons::initIcons(); // install as fallback theme. Too many issues with missing icons, otherwise
 	QApplication app(argc, argv);
-	QtWebView::initialize();
 	KDSingleApplication app_singleton;
 #if defined(Q_OS_MACOS) || defined(Q_OS_WIN)
 	// Follow the example of kate, and use breeze theme on Windows and Mac, which appears to work best

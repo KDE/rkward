@@ -1,4 +1,5 @@
 --- Version 0.8.3 - UNRELEASED
+- Added: Support HTML rendering with QWebView, which allows to use native renderers on some platforms
 - Fixed: Crash when splitting view on a data.frame editor window
 - Fixed: Allow compilation with the upcoming R 4.6
 - Fixed: Horizontal text alignment would be inaccurate for some symbols in RK() device

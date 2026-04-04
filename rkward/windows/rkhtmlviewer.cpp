@@ -22,5 +22,3 @@ RKHTMLViewer *RKHTMLViewer::getNew(RKHTMLWindow *parent) {
 	//return new RKQWebEngineWidget(parent);
 	return new RKQWebView(parent);
 }
-
-#include "rkhtmlviewer.moc"

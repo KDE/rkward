@@ -8,9 +8,6 @@ ENDIF(NOT ${PROJECT_NAME} STREQUAL "rkward")
 
 INCLUDE(SetVersionNumber.cmake)
 
-OPTION(DLOPEN_RLIB "dlopen the R library at runtime rather than linking it" ON)
-ADD_FEATURE_INFO("DLOPEN_RLIB: dlopen() R library" DLOPEN_RLIB "This feature allows more flexibility in using a different R installation at runtime than at compile time.")
-
 ADD_SUBDIRECTORY( dataeditor )
 ADD_SUBDIRECTORY( settings )
 ADD_SUBDIRECTORY( plugin )
@@ -55,6 +52,8 @@ ADD_EXECUTABLE(rkward ${RKWard_App_Sources})
 TARGET_COMPILE_DEFINITIONS(rkward PUBLIC -DINSTALL_PATH="${CMAKE_INSTALL_PREFIX}")
 FILE(RELATIVE_PATH RelPathToData /${KDE_INSTALL_BINDIR} /${KDE_INSTALL_DATADIR})
 TARGET_COMPILE_DEFINITIONS(rkward PUBLIC -DREL_PATH_TO_DATA="${RelPathToData}")
+TARGET_COMPILE_DEFINITIONS(rkward PUBLIC ${RK_QWEBENGINE_FLAGS} ${RK_QWEBVIEW_FLAGS})
+TARGET_COMPILE_DEFINITIONS(rkward_lib PUBLIC ${RK_QWEBENGINE_FLAGS} ${RK_QWEBVIEW_FLAGS})
 TARGET_LINK_LIBRARIES(rkward rkward_lib)
 IF(KF6Crash_FOUND)
 	TARGET_LINK_LIBRARIES(rkward KF6::Crash)

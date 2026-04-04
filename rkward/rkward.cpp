@@ -185,7 +185,7 @@ RKWardMainWindow::RKWardMainWindow() : KParts::MainWindow() {
 	RKComponentMap::initialize();
 
 	// stuff which should wait until the event loop is running
-#if defined(Q_OS_WIN)
+#if RK_WITH_QWEBENGINE && defined(Q_OS_WIN)
 	// HACK FIXME
 	// This is a very bad workaround around a very hideous QtWebEngine bug on Windows. Surfaced for us with the switch to Qt 6.9:
 	// crash in the QWebEnginePage c'tor, if that is invoked too soon after start *and* application was not started from the
