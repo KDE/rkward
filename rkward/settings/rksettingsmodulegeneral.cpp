@@ -50,6 +50,7 @@ bool RKSettingsModuleGeneral::rkward_version_changed;
 bool RKSettingsModuleGeneral::installation_moved = false;
 QString RKSettingsModuleGeneral::previous_rkward_data_dir;
 RKConfigValue<int> RKSettingsModuleGeneral::num_recent_files{"Max number of recent files", 8};
+RKConfigValue<RKSettingsModuleGeneral::HTMLEngine, int> RKSettingsModuleGeneral::html_engine("HTML rendering engine", DefaultRenderingEngine);
 RKConfigValue<bool> RKSettingsModuleGeneral::disable_hardware_rendering{"disable_hardware_rendering", true};
 
 class RKSettingsPageGeneral : public RKSettingsModuleWidget {
@@ -71,9 +72,6 @@ class RKSettingsPageGeneral : public RKSettingsModuleWidget {
 		auto vbox = new QVBoxLayout(group);
 		vbox->addWidget(RKSettingsModuleGeneral::autorestore_from_wd.makeCheckbox(i18n("Load .RData-file from startup directory, if available (R option '--restore')"), this));
 		vbox->addWidget(RKSettingsModuleGeneral::show_help_on_startup.makeCheckbox(i18n("Show RKWard Help on Startup"), this));
-		auto cb = RKSettingsModuleGeneral::disable_hardware_rendering.makeCheckbox(i18n("Disable HTML hardware rendering (setting takes effect after restarting RKWard)"), this);
-		RKCommonFunctions::setTips(i18n("The use of hardware acceleration for HTML rendering (e.g. help pages and plugin output) is known to cause instability in some installations, and is not generally needed for the - usually simple - content shown in RKWard. It is recommended to leave hardware acceleration disabled, unless you experience performance problems while viewing HTML content inside RKWard."), cb);
-		vbox->addWidget(cb);
 
 		QGroupBox *group_box = new QGroupBox(i18n("Initial working directory"), this);
 		QHBoxLayout *hlayout = new QHBoxLayout(group_box);
@@ -91,6 +89,26 @@ class RKSettingsPageGeneral : public RKSettingsModuleWidget {
 		hlayout->addWidget(initial_dir_custom_chooser);
 		RKCommonFunctions::setTips(i18n("<p>The initial working directory to use. Note that if you are loading a workspace on startup, and you have configured RKWard to change to the directory of loaded workspaces, that directory will take precedence.</p>"), group_box, initial_dir_chooser, initial_dir_custom_chooser);
 		vbox->addWidget(group_box);
+		main_vbox->addWidget(group);
+
+		group = new QGroupBox(i18n("HTML rendering (setings take effect after restarting RKWard)"));
+		hlayout = new QHBoxLayout(group);
+		hlayout->addWidget(new QLabel(i18n("Engine:")));
+		auto dd = RKSettingsModuleGeneral::html_engine.makeDropDown(RKConfigBase::LabelList({{RKSettingsModuleGeneral::DefaultRenderingEngine, i18n("Platform default")},
+#if RK_WITH_QWEBENGINE
+		                                                                                     {RKSettingsModuleGeneral::QWebEngineRenderingEngine, i18n("QWebEngine")},
+#endif
+#if RK_WITH_QWEBVIEW
+		                                                                                     { RKSettingsModuleGeneral::QWebViewRenderingEngine,
+			                                                                                   i18n("QWebView") }
+#endif
+		                                                            }),
+		                                                            this);
+		hlayout->addWidget(dd);
+		hlayout->addStretch();
+		auto cb = RKSettingsModuleGeneral::disable_hardware_rendering.makeCheckbox(i18n("Disable hardware acceleration"), this);
+		RKCommonFunctions::setTips(i18n("The use of hardware acceleration for HTML rendering (e.g. help pages and plugin output) is known to cause instability in some installations, and is not generally needed for the - usually simple - content shown in RKWard. It is recommended to leave hardware acceleration disabled, unless you experience performance problems while viewing HTML content inside RKWard."), cb);
+		hlayout->addWidget(cb);
 		main_vbox->addWidget(group);
 
 		main_vbox->addSpacing(2 * RKStyle::spacingHint());
@@ -208,6 +226,7 @@ void RKSettingsModuleGeneral::syncConfig(KConfig *config, RKConfigBase::ConfigSy
 	num_recent_files.syncConfig(cg, a);
 	initial_dir.syncConfig(cg, a);
 	disable_hardware_rendering.syncConfig(cg, a);
+	html_engine.syncConfig(cg, a);
 	if ((a == RKConfigBase::SaveConfig) && (initial_dir == LastUsedDirectory)) {
 		cg.writeEntry(initial_dir_specification.key(), QDir::currentPath());
 	} else {

@@ -5,36 +5,37 @@ SPDX-FileContributor: The RKWard Team <rkward@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#include "rkqwebenginewidget.h"
+#if RK_WITH_QWEBENGINE
+#	include "rkqwebenginewidget.h"
 
-#include <QBuffer>
-#include <QDir>
-#include <QFileDialog>
-#include <QFontDatabase>
-#include <QMenu>
-#include <QMimeDatabase>
-#include <QPrintDialog>
-#include <QWebEngineFindTextResult>
-#include <QWebEnginePage>
-#include <QWebEngineProfile>
-#include <QWebEngineScript>
-#include <QWebEngineScriptCollection>
-#include <QWebEngineSettings>
-#include <QWebEngineUrlRequestJob>
-#include <QWebEngineUrlSchemeHandler>
-#include <QWebEngineView>
-#include <QWheelEvent>
+#	include <QBuffer>
+#	include <QDir>
+#	include <QFileDialog>
+#	include <QFontDatabase>
+#	include <QMenu>
+#	include <QMimeDatabase>
+#	include <QPrintDialog>
+#	include <QWebEngineFindTextResult>
+#	include <QWebEnginePage>
+#	include <QWebEngineProfile>
+#	include <QWebEngineScript>
+#	include <QWebEngineScriptCollection>
+#	include <QWebEngineSettings>
+#	include <QWebEngineUrlRequestJob>
+#	include <QWebEngineUrlSchemeHandler>
+#	include <QWebEngineView>
+#	include <QWheelEvent>
 
-#include <KIO/StoredTransferJob>
-#include <KLocalizedString>
+#	include <KIO/StoredTransferJob>
+#	include <KLocalizedString>
 
-#include "../misc/rkfindbar.h"
-#include "../rkward.h"
-#include "../settings/rksettingsmoduler.h"
-#include "rkhtmlwindow.h"
-#include "rkworkplace.h"
+#	include "../misc/rkfindbar.h"
+#	include "../rkward.h"
+#	include "../settings/rksettingsmoduler.h"
+#	include "rkhtmlwindow.h"
+#	include "rkworkplace.h"
 
-#include "../debug.h"
+#	include "../debug.h"
 
 // TODO: remove dupe
 static QUrl restorableUrl(const QUrl &url) {
@@ -128,10 +129,10 @@ class RKWebPage : public QWebEnginePage {
 		// sigh: acceptNavigationRequest() does  not get called on the new page...
 		QMetaObject::Connection *const connection = new QMetaObject::Connection;
 		*connection = connect(ret, &RKWebPage::loadStarted, [ret, connection
-#ifdef _MSC_VER
+#	ifdef _MSC_VER
 		                                                     ,
 		                                                     this // capturing "this" makes MSVC happy
-#endif
+#	endif
 		]() {
 			QObject::disconnect(*connection);
 			delete connection;
@@ -209,8 +210,8 @@ RKQWebEngineWidget::RKQWebEngineWidget(RKHTMLWindow *parent) : RKHTMLViewer(pare
 
 	if (RKWebPage::opened_as_new) {
 		page = RKWebPage::opened_as_new;
-		RKWebPage::opened_as_new = nullptr;
 		RKWebPage::opened_as_new->window = parent;
+		RKWebPage::opened_as_new = nullptr;
 	} else {
 		page = new RKWebPage(parent);
 	}
@@ -381,4 +382,5 @@ void RKQWebEngineWidget::findRequest(const QString &text, bool backwards, RKFind
 	});
 }
 
-#include "rkqwebenginewidget.moc"
+#	include "rkqwebenginewidget.moc"
+#endif

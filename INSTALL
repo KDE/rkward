@@ -43,9 +43,16 @@ In some cases you may want to set the following options:
 -DUSE_BINARY_PACKAGES
 	Currently only interpreted on Mac OS: If RKWard should default to installing binary R packages (if available) use
 	-DUSE_BINARY_PACKAGE=1. Otherwise, RKWard will default to building R packages from source.
--DDLOPEN_RLIB
+-DDLOPEN_RLIB=OFF
 	By default, the backend code is loaded using dlopen() to avoid certain runtime conflicts, esp. in distributed AppImages. This, however, makes it hard to
 	get at proper debug symbol information. For debugging purposes it may thus be useful to set this to "0", explictly
+-DFORCE_WITH_QWEBENGINE=ON
+	RKWard supports two HTML rendering libraries, QWebEngine or QWebView. By default, either - or both - will be selected automatically, based on the
+	presence of the required libaries. Use this (and/or -DFORCE_WOTH_QWEBVIEW) to override the automatic selction. Setting either öf these options to ON
+	will disable building against the other library *unless* that is also specified with FORCE_WITH_XYZ.
+	Packagers please note that, on Linux, using QWebView currently still requires a runtime dependency on QWebEngine, as no native rendering plugin is
+	available in Qt at the time of this writing.
+-DFORCE_WITH_QWEBVIEW=ON
 
 Further generic options are listed on http://www.cmake.org/Wiki/CMake_Useful_Variables .
 

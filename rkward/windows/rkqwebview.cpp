@@ -5,24 +5,25 @@ SPDX-FileContributor: The RKWard Team <rkward@kde.org>
 SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#include "rkqwebview.h"
+#if RK_WITH_QWEBVIEW
+#	include "rkqwebview.h"
 
-#include <KLocalizedString>
-#include <KStandardActions>
+#	include <KLocalizedString>
+#	include <KStandardActions>
 
-#include <QClipboard>
-#include <QFile>
-#include <QMenu>
-#include <QQuickItem>
-#include <QQuickWidget>
-#include <QWebSocket>
-#include <QWebSocketServer>
+#	include <QClipboard>
+#	include <QFile>
+#	include <QMenu>
+#	include <QQuickItem>
+#	include <QQuickWidget>
+#	include <QWebSocket>
+#	include <QWebSocketServer>
 
-#include "../misc/rkfindbar.h"
-#include "rkhtmlwindow.h"
-#include "rkworkplace.h"
+#	include "../misc/rkfindbar.h"
+#	include "rkhtmlwindow.h"
+#	include "rkworkplace.h"
 
-#include "../debug.h"
+#	include "../debug.h"
 
 class RKQWebViewCallbackServer {
   public:
@@ -316,3 +317,4 @@ void RKQWebView::zoomOut() {
 	RK_TRACE(APP);
 	QMetaObject::invokeMethod(webView(), "doZoom", Q_ARG(int, -1));
 }
+#endif
