@@ -375,7 +375,7 @@ void RKQWebEngineWidget::findRequest(const QString &text, bool backwards, RKFind
 	QWebEnginePage::FindFlags flags;
 	if (backwards) flags |= QWebEnginePage::FindBackward;
 	if (findbar->isOptionSet(RKFindBar::MatchCase)) flags |= QWebEnginePage::FindCaseSensitively;
-	page->findText(text, flags, [this, findbar](QWebEngineFindTextResult result) {
+	page->findText(text, flags, [findbar](QWebEngineFindTextResult result) {
 		if (result.numberOfMatches() == 0) {
 			findbar->indicateSearchFail();
 		}

@@ -20,7 +20,7 @@ RKHTMLViewer::RKHTMLViewer(RKHTMLWindow *parent) : QObject(parent), window(paren
 
 RKHTMLViewer *RKHTMLViewer::getNew(RKHTMLWindow *parent) {
 	RK_TRACE(APP);
-	const auto engine = RKSettingsModuleGeneral::htmlEngine();
+	const auto engine = RKSettingsModuleGeneral::htmlEngine(); // cppcheck-suppress unreadVariable
 #if RK_WITH_QWEBENGINE
 	if (engine == RKSettingsModuleGeneral::QWebEngineRenderingEngine) {
 		return new RKQWebEngineWidget(parent);
