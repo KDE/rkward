@@ -60,11 +60,40 @@ void testLog(const char *fmt, ...) {
 	va_end(ap);
 }
 
+void listBackendLog() {
+	testLog("Listing (new) contents of /tmp/rkward.rbackend");
+	QByteArray output, oldoutput;
+	QFile f(QDir::tempPath() + u"/rkward.rbackend"_s);
+	if (f.open(QIODevice::ReadOnly)) {
+		output = f.readAll();
+		f.close();
+	}
+
+	QFile fl(QDir::tempPath() + u"/rkward.rbackend.listed"_s);
+	if (fl.open(QIODevice::ReadOnly)) {
+		oldoutput = fl.readAll();
+		fl.close();
+	}
+
+	if (fl.open(QIODevice::ReadWrite | QIODevice::Truncate)) {
+		fl.write(output);
+		fl.close();
+	}
+
+	if (output.startsWith(oldoutput)) {
+		output = output.sliced(oldoutput.length());
+	}
+	testLog("%s", qPrintable(QString::fromLocal8Bit(output)));
+}
+
 void RKDebug(int, int level, const char *fmt, ...) {
 	va_list ap;
 	va_start(ap, fmt);
 	testLog(fmt, ap);
-	if (level >= DL_ERROR) QFAIL("error message during test (see above)");
+	if (level >= DL_ERROR) {
+		listBackendLog();
+		QFAIL("error message during test (see above)");
+	}
 	va_end(ap);
 }
 
@@ -126,32 +155,6 @@ class RKWardCoreTest : public QObject {
 
 	void cleanGlobalenv() {
 		RInterface::issueCommand(new RCommand(QStringLiteral("rm(list=ls(all.names=TRUE))"), RCommand::User));
-	}
-
-	void listBackendLog() {
-		testLog("Listing (new) contents of /tmp/rkward.rbackend");
-		QByteArray output, oldoutput;
-		QFile f(QDir::tempPath() + u"/rkward.rbackend"_s);
-		if (f.open(QIODevice::ReadOnly)) {
-			output = f.readAll();
-			f.close();
-		}
-
-		QFile fl(QDir::tempPath() + u"/rkward.rbackend.listed"_s);
-		if (fl.open(QIODevice::ReadOnly)) {
-			oldoutput = fl.readAll();
-			fl.close();
-		}
-
-		if (fl.open(QIODevice::ReadWrite | QIODevice::Truncate)) {
-			fl.write(output);
-			fl.close();
-		}
-
-		if (output.startsWith(oldoutput)) {
-			output = output.sliced(oldoutput.length());
-		}
-		testLog("%s", qPrintable(QString::fromLocal8Bit(output)));
 	}
 
 	void waitForBackendStarted() {

@@ -77,3 +77,32 @@ check_warnings:
   script:
     - "if [[ $(cat build/make.error | grep warning -i) ]]; then cat build/make.error; exit 1; fi"
   allow_failure: true
+
+# R does *not* have strong promise of backwards compatibility, we encounter breakage quite frequently for new minor releases
+# Check occasionally, what kind of breakage has already happened
+build_r_devel:
+ extends:
+  - .ci_linux_base
+  - .suse_tumbleweed_qt6stable
+ rules:
+  # only run on the scheduled interval, or manual
+  - if: $R_DEVEL_PIPELINE == "1"
+    allow_failure: false
+  - when: manual
+    allow_failure: true
+ script:
+    # fetch and build R devel version
+    - mkdir -p $CI_PROJECT_DIR/rdir && cd $CI_PROJECT_DIR/rdir
+    - wget https://cran.r-project.org/src/base-prerelease/R-devel.tar.xz
+    - tar -xJf R-devel.tar.xz
+    - mkdir install
+    - mkdir build && cd build
+    - ../R-devel/configure --prefix=$CI_PROJECT_DIR/rdir/install --enable-R-shlib --with-x=no --with-recommended-packages=no
+    - make -j 9 && make install
+    - cd ../..
+    # build rkward, next
+    - git config --global --add safe.directory $CI_PROJECT_DIR
+    # no dlopen() loading, to get at better symbol information for the backend process from ASAN
+    - python3 -u ci-utilities/run-ci-build.py --project $CI_PROJECT_NAME --branch $CI_COMMIT_REF_NAME --platform Linux/Qt6/Shared --extra-cmake-args=-DR_EXECUTABLE=$CI_PROJECT_DIR/rdir/install/bin/R --extra-cmake-args=-DDLOPEN_RLIB=0
+ after_script:
+    - ci-utilities/run-collect-crashes.py
