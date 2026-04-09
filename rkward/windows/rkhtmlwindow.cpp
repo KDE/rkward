@@ -105,6 +105,7 @@ RKHTMLWindow::RKHTMLWindow(QWidget *parent, WindowMode mode) : RKMDIWindow(paren
 	// We have to connect this in order to allow browsing.
 	connect(page, &RKHTMLViewer::pageInternalNavigation, this, &RKHTMLWindow::internalNavigation);
 	connect(page, &RKHTMLViewer::navigationRequest, this, [this](const QUrl &current_real_url, const QUrl &requested_url, bool is_new_window) {
+		Q_UNUSED(current_real_url);
 		if (is_new_window) {
 			RKWorkplace::mainWorkplace()->openAnyUrl(requested_url);
 		} else {
