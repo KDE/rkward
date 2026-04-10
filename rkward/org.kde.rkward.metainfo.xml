@@ -104,6 +104,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
     <p xml:lang="pt-BR">O RKWard visa se tornar um frontend transparente e fácil de usar para o R, um sistema poderoso para computação estatística e gráficos. Além de uma GUI conveniente para as funções estatísticas mais importantes, versões futuras também fornecerão integração perfeita com uma suite de escritório.</p>
     <p xml:lang="ru">Программа RKWard — простой в использовании и прозрачный интерфейс к R, многофункциональная система для статистических расчётов и построения графиков. Помимо удобного графического интерфейса пользователя к наиболее важным статистическим функциям, в будущих версиях будет реализована бесшовная интеграция с наборами офисных программ.</p>
     <p xml:lang="sa">आरकेवार्डस्य उद्देश्यं भवति यत् सांख्यिकगणनायाः चित्रलेखानां च शक्तिशालिनः प्रणाली R कृते उपयोगाय सुलभः, पारदर्शी अग्रभागः भवितुम् अर्हति । महत्त्वपूर्णसांख्यिकीयकार्यस्य कृते सुविधाजनकस्य GUI इत्यस्य अतिरिक्तं भविष्यस्य संस्करणाः कार्यालय-सुइट् इत्यनेन सह निर्बाधं एकीकरणं अपि प्रदास्यन्ति ।</p>
+    <p xml:lang="sk">RKWard sa snaží stať sa ľahko použiteľným a transparentným rozhraním pre R, výkonný systém pre štatistické výpočty a grafiku. Okrem pohodlného grafického rozhrania pre najdôležitejšie štatistické funkcie budú budúce verzie poskytovať aj bezproblémovú integráciu s kancelárskym balíkom.</p>
     <p xml:lang="sl">Cilj RKWard-a je postati preprosto za uporabo in pregledno začelje za R, zmogljivsistem za izračunavanje statistike in grafiko. Poleg priročnega grafičnega vmesnika za najpomembnejše statistične funkcije bodo tudi prihodnje različice zagotavljale brezhibno integracijo s pisarniškim paketom.</p>
     <p xml:lang="sv">RKward har som mål att bli ett lättanvänt, transparent gränssnitt till R, ett kraftfullt system för statistiska beräkningar och grafik. Förutom ett praktiskt grafiskt användargränssnitt för de viktigaste statistikfunktionerna, kommer framtida versioner också att tillhandahålla sömlös integrering med en kontorssvit.</p>
     <p xml:lang="tr">RKWard, istatistiksel hesaplama ve grafikler için güçlü bir sistem olan R için kullanımı kolay, saydam bir ön uç olmayı hedefler. En önemli istatistiksel işlevler için uygun bir kullanıcı arayüzünün yanı sıra, gelecekteki sürümler ayrıca bir ofis paketiyle sorunsuz tümleşim sağlayacaktır.</p>
@@ -140,6 +141,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
       <caption xml:lang="pt-BR">Janela principal, com editor de dados, navegador de objetos, console R interativo e outras janelas de ferramentas.</caption>
       <caption xml:lang="ru">Главное окно (с редактором данных, областью просмотра объектов, интерактивной консолью R и другими инструментами)</caption>
       <caption xml:lang="sa">मुख्यविण्डो, दत्तांशसम्पादकः, वस्तुब्राउजरः, अन्तरक्रियाशीलः R कन्सोल्, अपि च अग्रे साधनविण्डोभिः सह ।</caption>
+      <caption xml:lang="sk">Hlavné okno s editorom dát, prehliadačom objektov, interaktívnou konzolou R a ďalšími oknami nástrojov.</caption>
       <caption xml:lang="sl">Glavno okno z urejevalnikom podatkov, brskalnik po predmetih, interaktivna konzola R in druga okenska orodja.</caption>
       <caption xml:lang="sv">Huvudfönster, med dataeditor, objektbläddrare, interaktiv R-terminal och ytterligare verktygsfönster.</caption>
       <caption xml:lang="tr">Veri düzenleyicisi, nesne tarayıcısı, etkileşimli R konsolu ve diğer araç pencereleri ile ana pencere.</caption>
@@ -174,6 +176,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
       <caption xml:lang="pt-BR">Editor de script com visualização ativa</caption>
       <caption xml:lang="ru">Редактор сценариев с активным предварительным просмотром</caption>
       <caption xml:lang="sa">सक्रियपूर्वावलोकनसहितं स्क्रिप्टसम्पादकः</caption>
+      <caption xml:lang="sk">Editor skriptov s aktívnym náhľadom</caption>
       <caption xml:lang="sl">Urejevalnik skriptov z aktivnim predogledom</caption>
       <caption xml:lang="sv">Skripteditor med aktiv förhandsgranskning</caption>
       <caption xml:lang="tr">Önizleme etkinken betik düzenleyicisi</caption>
@@ -240,6 +243,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
       <caption xml:lang="pt-BR">Pesquisar objetos por nome, pesquisar páginas de ajuda e visualizador de ajuda no aplicativo</caption>
       <caption xml:lang="ru">Поиск объектов по имени, поиск страниц справки, а также встроенное в программу средство просмотра справки</caption>
       <caption xml:lang="sa">नामद्वारा वस्तुनां अन्वेषणं, सहायतापृष्ठानां अन्वेषणं, एप्-अन्तर्गत-सहायकदर्शकस्य च अन्वेषणम्</caption>
+      <caption xml:lang="sk">Vyhľadávanie objektov podľa názvu, vyhľadávanie stránok pomocníka a vstavaný prehliadač pomocníka</caption>
       <caption xml:lang="sl">Iskanje predmetov po imenu, iskanje strani s pomočjo in pregledovalnik pomoči v aplikaciji</caption>
       <caption xml:lang="sv">Sökning efter objekt enligt namn, sökning efter hjälpsidor, och hjälpvisning i programmet</caption>
       <caption xml:lang="tr">Nesneleri ada göre arama, yardım sayfalarını arama ve uygulama içi yardım görüntüleyicisi</caption>
