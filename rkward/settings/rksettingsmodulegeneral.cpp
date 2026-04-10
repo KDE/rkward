@@ -91,7 +91,7 @@ class RKSettingsPageGeneral : public RKSettingsModuleWidget {
 		vbox->addWidget(group_box);
 		main_vbox->addWidget(group);
 
-		group = new QGroupBox(i18n("HTML rendering (setings take effect after restarting RKWard)"));
+		group = new QGroupBox(i18n("HTML rendering (settings take effect after restarting RKWard)"));
 		hlayout = new QHBoxLayout(group);
 		hlayout->addWidget(new QLabel(i18n("Engine:")));
 		auto dd = RKSettingsModuleGeneral::html_engine.makeDropDown(RKConfigBase::LabelList({{RKSettingsModuleGeneral::DefaultRenderingEngine, i18n("Platform default")},
