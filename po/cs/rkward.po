@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-03-28 00:39+0000\n"
+"POT-Creation-Date: 2026-04-10 00:40+0000\n"
 "PO-Revision-Date: 2024-08-15 17:04+0200\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -1933,239 +1933,239 @@ msgstr ""
 msgid "No R packages to install"
 msgstr "Není třeba instalovat žádný balíček R"
 
-#: rkward/main.cpp:172
+#: rkward/main.cpp:189
 #, kde-format
 msgid "RKWard"
 msgstr "RKWard"
 
-#: rkward/main.cpp:172
+#: rkward/main.cpp:189
 #, kde-format
 msgid "Frontend to the R statistics language"
 msgstr "Rozhraní pro statistický jazyk R"
 
-#: rkward/main.cpp:172
+#: rkward/main.cpp:189
 #, kde-format
 msgid "(c) 2002 - 2025"
 msgstr ""
 
-#: rkward/main.cpp:173
+#: rkward/main.cpp:190
 #, kde-format
 msgid "Thomas Friedrichsmeier"
 msgstr "Thomas Friedrichsmeier"
 
-#: rkward/main.cpp:173
+#: rkward/main.cpp:190
 #, kde-format
 msgid "Project leader / main developer"
 msgstr "Vedoucí projektu / hlavní vývojář"
 
-#: rkward/main.cpp:174
+#: rkward/main.cpp:191
 #, kde-format
 msgid "Pierre Ecochard"
 msgstr "Pierre Ecochard"
 
-#: rkward/main.cpp:174
+#: rkward/main.cpp:191
 #, kde-format
 msgid "C++ developer between 2004 and 2007"
 msgstr "Vývojář v C++ mezi roky 2004 a 2007"
 
-#: rkward/main.cpp:175
+#: rkward/main.cpp:192
 #, kde-format
 msgid "Prasenjit Kapat"
 msgstr "Prasenjit Kapat"
 
-#: rkward/main.cpp:175
+#: rkward/main.cpp:192
 #, kde-format
 msgid "Many plugins, suggestions, plot history feature"
 msgstr "Mnoho přídavných modulů, návrhy, funkce historie nákresu"
 
-#: rkward/main.cpp:176
+#: rkward/main.cpp:193
 #, kde-format
 msgid "Meik Michalke"
 msgstr "Meik Michalke"
 
-#: rkward/main.cpp:176
+#: rkward/main.cpp:193
 #, kde-format
 msgid "Many plugins, suggestions, rkwarddev package"
 msgstr "Mnoho přídavných modulů, návrhy, balíček rkwarddev"
 
-#: rkward/main.cpp:177
+#: rkward/main.cpp:194
 #, kde-format
 msgid "Stefan Roediger"
 msgstr "Stefan Roediger"
 
-#: rkward/main.cpp:177
+#: rkward/main.cpp:194
 #, kde-format
 msgid "Many plugins, suggestions, marketing, translations"
 msgstr "Mnohé přídavné moduly, návrhy, marketing a překlady"
 
-#: rkward/main.cpp:178
+#: rkward/main.cpp:195
 #, kde-format
 msgid "Contributors in alphabetical order"
 msgstr "Přispěvatelé podle abecedního pořadí"
 
-#: rkward/main.cpp:179
+#: rkward/main.cpp:196
 #, kde-format
 msgid "Björn Balazs"
 msgstr "Björn Balazs"
 
-#: rkward/main.cpp:179 rkward/main.cpp:181
+#: rkward/main.cpp:196 rkward/main.cpp:198
 #, kde-format
 msgid "Extensive usability feedback"
 msgstr ""
 
-#: rkward/main.cpp:180
+#: rkward/main.cpp:197
 #, kde-format
 msgid "Aaron Batty"
 msgstr "Aaron Batty"
 
-#: rkward/main.cpp:180
+#: rkward/main.cpp:197
 #, kde-format
 msgid "Wealth of feedback, hardware donations"
 msgstr ""
 
-#: rkward/main.cpp:181
+#: rkward/main.cpp:198
 #, kde-format
 msgid "Jan Dittrich"
 msgstr "Jan Dittrich"
 
-#: rkward/main.cpp:182
+#: rkward/main.cpp:199
 #, kde-format
 msgid "Philippe Grosjean"
 msgstr "Philippe Grosjean"
 
-#: rkward/main.cpp:182
+#: rkward/main.cpp:199
 #, kde-format
 msgid "Several helpful comments and discussions"
 msgstr "Několik užitečných komentářů a rozhovorů"
 
-#: rkward/main.cpp:183
+#: rkward/main.cpp:200
 #, kde-format
 msgid "Adrien d'Hardemare"
 msgstr "Adrien d'Hardemare"
 
-#: rkward/main.cpp:183
+#: rkward/main.cpp:200
 #, kde-format
 msgid "Plugins and patches"
 msgstr "Moduly a změny"
 
-#: rkward/main.cpp:184
+#: rkward/main.cpp:201
 #, kde-format
 msgid "Yves Jacolin"
 msgstr "Yves Jacolin"
 
-#: rkward/main.cpp:184
+#: rkward/main.cpp:201
 #, kde-format
 msgid "New website"
 msgstr "Nové stránky"
 
-#: rkward/main.cpp:185
+#: rkward/main.cpp:202
 #, kde-format
 msgid "Germán Márquez Mejía"
 msgstr "Germán Márquez Mejía"
 
-#: rkward/main.cpp:185
+#: rkward/main.cpp:202
 #, kde-format
 msgid "HP filter plugin, spanish translation"
 msgstr "Filtrovací přídavný modul HP, překlad do španělštiny"
 
-#: rkward/main.cpp:186
+#: rkward/main.cpp:203
 #, kde-format
 msgid "Marco Martin"
 msgstr "Marco Martin"
 
-#: rkward/main.cpp:186
+#: rkward/main.cpp:203
 #, kde-format
 msgid "A cool icon"
 msgstr "Skvělá ikona"
 
-#: rkward/main.cpp:187
+#: rkward/main.cpp:204
 #, kde-format
 msgid "Daniele Medri"
 msgstr "Daniele Medri"
 
-#: rkward/main.cpp:187
+#: rkward/main.cpp:204
 #, kde-format
 msgid "RKWard logo, many suggestions, help on wording"
 msgstr "Logo pro RKWard, četné návrhy, pomoc s textem"
 
-#: rkward/main.cpp:188
+#: rkward/main.cpp:205
 #, kde-format
 msgid "David Sibai"
 msgstr "David Sibai"
 
-#: rkward/main.cpp:188
+#: rkward/main.cpp:205
 #, kde-format
 msgid "Several valuable comments, hints and patches"
 msgstr "Několik užitečných komentářů, rad a úprav"
 
-#: rkward/main.cpp:189
+#: rkward/main.cpp:206
 #, kde-format
 msgid "Ilias Soumpasis"
 msgstr "Ilias Soumpasis"
 
-#: rkward/main.cpp:189
+#: rkward/main.cpp:206
 #, kde-format
 msgid "Translation, Suggestions, plugins"
 msgstr "Překlady, návrhy a přídavné moduly"
 
-#: rkward/main.cpp:190
+#: rkward/main.cpp:207
 #, kde-format
 msgid "Ralf Tautenhahn"
 msgstr "Ralf Tautenhahn"
 
-#: rkward/main.cpp:190
+#: rkward/main.cpp:207
 #, kde-format
 msgid "Many comments, useful suggestions, and bug reports"
 msgstr "Mnoho komentářů, užitečných doporučení a nahlášených chyb"
 
-#: rkward/main.cpp:191
+#: rkward/main.cpp:208
 #, kde-format
 msgid "Jannis Vajen"
 msgstr "Jannis Vajen"
 
-#: rkward/main.cpp:191
+#: rkward/main.cpp:208
 #, kde-format
 msgid "German Translation, bug reports"
 msgstr "Překlad do němčiny, hlášení chyb"
 
-#: rkward/main.cpp:192
+#: rkward/main.cpp:209
 #, kde-format
 msgid "Roland Vollgraf"
 msgstr "Roland Vollgraf"
 
-#: rkward/main.cpp:192
+#: rkward/main.cpp:209
 #, kde-format
 msgid "Some patches"
 msgstr "Některé změny"
 
-#: rkward/main.cpp:193
+#: rkward/main.cpp:210
 #, kde-format
 msgid "Roy Qu"
 msgstr "Roy Qu"
 
-#: rkward/main.cpp:193
+#: rkward/main.cpp:210
 #, kde-format
 msgid "patches and helpful comments"
 msgstr "úpravy a užitečné komentáře"
 
-#: rkward/main.cpp:194
+#: rkward/main.cpp:211
 #, kde-format
 msgid "Many more people on rkward@kde.org"
 msgstr ""
 
-#: rkward/main.cpp:194
+#: rkward/main.cpp:211
 #, kde-format
 msgid "Sorry, if we forgot to list you. Please contact us to get added"
 msgstr ""
 "Prominutí, pokud jste zde nebyli zmíněni. Prosím, spojte se s námi, abychom "
 "vás sem mohli přidat"
 
-#: rkward/main.cpp:195
+#: rkward/main.cpp:212
 #, kde-format
 msgid "How to cite:"
 msgstr ""
 
-#: rkward/main.cpp:195
+#: rkward/main.cpp:212
 #, kde-format
 msgid "Peer-reviewed article in the Journal of Statistical Software"
 msgstr ""
@@ -2398,7 +2398,7 @@ msgstr "Hledat dopředu (další výskyt hledaného pojmu)"
 msgid "Match case"
 msgstr "Rozlišovat malá/VELKÁ"
 
-#: rkward/misc/rkfindbar.cpp:92 rkward/windows/rkhtmlwindow.cpp:945
+#: rkward/misc/rkfindbar.cpp:92 rkward/windows/rkhtmlwindow.cpp:699
 #, kde-format
 msgid "Find as you type"
 msgstr "Hledat při psaní"
@@ -5130,12 +5130,12 @@ msgstr "Časový interval příkazu"
 msgid "<i>Note:</i> Debug output is written to %1"
 msgstr "<i>Poznámka:</i> Výstup ladění je zapsán do %1"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:60
+#: rkward/settings/rksettingsmodulegeneral.cpp:61
 #, kde-format
 msgid "General"
 msgstr "Obecné"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:64
+#: rkward/settings/rksettingsmodulegeneral.cpp:65
 #, kde-format
 msgid ""
 "Directory where rkward may store files (setting takes effect after "
@@ -5144,12 +5144,12 @@ msgstr ""
 "Adresář, v němž by RKWard může uchovávat soubory (změna nastavení bude "
 "vyžadovat restart RKWardu)."
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:70
+#: rkward/settings/rksettingsmodulegeneral.cpp:71
 #, kde-format
 msgid "Startup behavior"
 msgstr "Chování při spuštění"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:72
+#: rkward/settings/rksettingsmodulegeneral.cpp:73
 #, kde-format
 msgid ""
 "Load .RData-file from startup directory, if available (R option '--restore')"
@@ -5157,65 +5157,43 @@ msgstr ""
 "Načíst soubor .RData z počátečního pracovního adresáře, je-li dostupný "
 "(volba R '--restore')"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:73
+#: rkward/settings/rksettingsmodulegeneral.cpp:74
 #, kde-format
 msgid "Show RKWard Help on Startup"
 msgstr "Ukázat nápovědu k RKWardu při spuštění"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:74
-#, fuzzy, kde-format
-#| msgid ""
-#| "Directory where rkward may store files (setting takes effect after "
-#| "restarting RKWard)"
-msgid ""
-"Disable HTML hardware rendering (setting takes effect after restarting "
-"RKWard)"
-msgstr ""
-"Adresář, v němž by RKWard může uchovávat soubory (změna nastavení bude "
-"vyžadovat restart RKWardu)."
-
-#: rkward/settings/rksettingsmodulegeneral.cpp:75
-#, kde-format
-msgid ""
-"The use of hardware acceleration for HTML rendering (e.g. help pages and "
-"plugin output) is known to cause instability in some installations, and is "
-"not generally needed for the - usually simple - content shown in RKWard. It "
-"is recommended to leave hardware acceleration disabled, unless you "
-"experience performance problems while viewing HTML content inside RKWard."
-msgstr ""
-
-#: rkward/settings/rksettingsmodulegeneral.cpp:78
-#: rkward/settings/rksettingsmodulegeneral.cpp:87
+#: rkward/settings/rksettingsmodulegeneral.cpp:76
+#: rkward/settings/rksettingsmodulegeneral.cpp:85
 #, kde-format
 msgid "Initial working directory"
 msgstr "Počáteční pracovní adresář"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:80
+#: rkward/settings/rksettingsmodulegeneral.cpp:78
 #, kde-format
 msgid "Do not change current directory on startup"
 msgstr "Při spuštění neměnit nynější adresář"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:81
+#: rkward/settings/rksettingsmodulegeneral.cpp:79
 #, kde-format
 msgid "RKWard files directory (as specified, above)"
 msgstr "Adresář se soubory RKWard (jak je určen výše)"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:82
+#: rkward/settings/rksettingsmodulegeneral.cpp:80
 #, kde-format
 msgid "User home directory"
 msgstr "Uživatelův domovský adresář"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:83
+#: rkward/settings/rksettingsmodulegeneral.cpp:81
 #, kde-format
 msgid "Last used directory"
 msgstr "Naposledy použitý adresář"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:84
+#: rkward/settings/rksettingsmodulegeneral.cpp:82
 #, kde-format
 msgid "The following directory (please specify):"
 msgstr "Následující adresář (prosím, zadejte):"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:92
+#: rkward/settings/rksettingsmodulegeneral.cpp:90
 #, kde-format
 msgid ""
 "<p>The initial working directory to use. Note that if you are loading a "
@@ -5227,7 +5205,54 @@ msgstr ""
 "udělal změnu na adresář načtených pracovních ploch, bude mít tento adresář "
 "přednost.</p>"
 
+#: rkward/settings/rksettingsmodulegeneral.cpp:94
+#, fuzzy, kde-format
+#| msgid ""
+#| "Directory where rkward may store files (setting takes effect after "
+#| "restarting RKWard)"
+msgid "HTML rendering (setings take effect after restarting RKWard)"
+msgstr ""
+"Adresář, v němž by RKWard může uchovávat soubory (změna nastavení bude "
+"vyžadovat restart RKWardu)."
+
+#: rkward/settings/rksettingsmodulegeneral.cpp:96
+#, kde-format
+msgid "Engine:"
+msgstr ""
+
+#: rkward/settings/rksettingsmodulegeneral.cpp:97
+#, fuzzy, kde-format
+#| msgid "Platform default device"
+msgid "Platform default"
+msgstr "Výchozí zařízení systému"
+
 #: rkward/settings/rksettingsmodulegeneral.cpp:99
+#, kde-format
+msgid "QWebEngine"
+msgstr ""
+
+#: rkward/settings/rksettingsmodulegeneral.cpp:103
+#, fuzzy, kde-format
+#| msgid "View"
+msgid "QWebView"
+msgstr "Pohled"
+
+#: rkward/settings/rksettingsmodulegeneral.cpp:109
+#, kde-format
+msgid "Disable hardware acceleration"
+msgstr ""
+
+#: rkward/settings/rksettingsmodulegeneral.cpp:110
+#, kde-format
+msgid ""
+"The use of hardware acceleration for HTML rendering (e.g. help pages and "
+"plugin output) is known to cause instability in some installations, and is "
+"not generally needed for the - usually simple - content shown in RKWard. It "
+"is recommended to leave hardware acceleration disabled, unless you "
+"experience performance problems while viewing HTML content inside RKWard."
+msgstr ""
+
+#: rkward/settings/rksettingsmodulegeneral.cpp:117
 #, kde-format
 msgid ""
 "<p>The number of recent files to remember (in the Open Recent R Script File "
@@ -5236,26 +5261,26 @@ msgstr ""
 "<p>Počet nedávných souborů k zapamatování (v nabídce Otevřít nedávný soubor "
 "skriptu R).</p>"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:100
+#: rkward/settings/rksettingsmodulegeneral.cpp:118
 #, kde-format
 msgid "Maximum number of recently used files to remember per category"
 msgstr ""
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:105
+#: rkward/settings/rksettingsmodulegeneral.cpp:123
 #, kde-format
 msgid ""
 "Persistent workplace layout (i.e. which script-, data-, help-windows are "
 "open)"
 msgstr ""
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:109
+#: rkward/settings/rksettingsmodulegeneral.cpp:127
 #, kde-format
 msgid "Save/restore with R workspace, when saving/loading R workspace"
 msgstr ""
 "Uložit/Obnovit společně s pracovním prostředím R, když je ukládáno/načítáno "
 "pracovní prostředí"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:110
+#: rkward/settings/rksettingsmodulegeneral.cpp:128
 #, kde-format
 msgid ""
 "Save/restore independent of R workspace (save at end of RKWard session, "
@@ -5264,18 +5289,18 @@ msgstr ""
 "Uložit/Obnovit nezávisle na pracovním prostředí R (bude uloženo na konci "
 "sezení RKWardu, obnoveno při novém spuštění)"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:111
+#: rkward/settings/rksettingsmodulegeneral.cpp:129
 #, kde-format
 msgid "Do not save/restore workplace layout"
 msgstr "Neukládat/neobnovovat rozvržení pracoviště"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:118
+#: rkward/settings/rksettingsmodulegeneral.cpp:136
 #, kde-format
 msgid "When loading a workspace, change to the corresponding directory."
 msgstr ""
 "Při načtení pracovního prostředí se přepnout do odpovídajícího adresáře."
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:122
+#: rkward/settings/rksettingsmodulegeneral.cpp:140
 #, kde-format
 msgid ""
 "Warn when editing objects with more than this number of fields (0 for no "
@@ -5284,17 +5309,17 @@ msgstr ""
 "Upozornit, když by byly upravovány objekty s více než tímto počtem polí (0 "
 "pro bez omezení):"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:127
+#: rkward/settings/rksettingsmodulegeneral.cpp:145
 #, kde-format
 msgid "MDI window focus behavior"
 msgstr "Chování při zaměření na okno MDI"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:128
+#: rkward/settings/rksettingsmodulegeneral.cpp:146
 #, kde-format
 msgid "Click to focus"
 msgstr "Klikněte pro zaměření"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:129
+#: rkward/settings/rksettingsmodulegeneral.cpp:147
 #, kde-format
 msgid "Focus follows mouse"
 msgstr "Zaměření následuje myš"
@@ -5644,7 +5669,7 @@ msgid ""
 msgstr ""
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:471
-#: rkward/windows/rkhtmlwindow.cpp:1169
+#: rkward/windows/rkhtmlwindow.cpp:923
 #, kde-format
 msgid "Dependencies"
 msgstr "Závislosti"
@@ -6803,133 +6828,123 @@ msgstr "Téma"
 msgid "Package"
 msgstr "Balíček"
 
-#: rkward/windows/rkhtmlwindow.cpp:304
-#, kde-format
-msgid "Save as"
-msgstr "Uložit jako"
-
-#: rkward/windows/rkhtmlwindow.cpp:611
-#, kde-format
-msgid "RKWard output file %s does not (yet) exist"
+#: rkward/windows/rkhtmlwindow.cpp:389
+#, fuzzy, kde-format
+#| msgid "RKWard output file %s does not (yet) exist"
+msgid "RKWard output file %1 does not (yet) exist"
 msgstr "Výstupní soubor RKward %s (zatím) neexistuje."
 
-#: rkward/windows/rkhtmlwindow.cpp:743
+#: rkward/windows/rkhtmlwindow.cpp:521
 #: rkward/windows/rktoplevelwindowgui.cpp:264
 #, kde-format
 msgid "[Active]"
 msgstr "[Aktivní]"
 
-#: rkward/windows/rkhtmlwindow.cpp:754
+#: rkward/windows/rkhtmlwindow.cpp:532
 #, kde-format
 msgctxt "noun, the output"
 msgid "Output %1"
 msgstr ""
 
-#: rkward/windows/rkhtmlwindow.cpp:807
+#: rkward/windows/rkhtmlwindow.cpp:577
 #, kde-format
 msgid "Output Window"
 msgstr "Výstupní okno"
 
-#: rkward/windows/rkhtmlwindow.cpp:809
+#: rkward/windows/rkhtmlwindow.cpp:579
 #, kde-format
 msgid "&Refresh Output"
 msgstr ""
 
-#: rkward/windows/rkhtmlwindow.cpp:835
+#: rkward/windows/rkhtmlwindow.cpp:605
 #, kde-format
 msgid "Page does not exist or is broken"
 msgstr ""
 
-#: rkward/windows/rkhtmlwindow.cpp:848
+#: rkward/windows/rkhtmlwindow.cpp:618
 #, kde-format
 msgid ""
 "Do you really want to clear the output? This will also remove all image "
 "files used in the output. It will not be possible to restore it."
 msgstr ""
 
-#: rkward/windows/rkhtmlwindow.cpp:849
+#: rkward/windows/rkhtmlwindow.cpp:619
 #, kde-format
 msgid "Flush output?"
 msgstr ""
 
-#: rkward/windows/rkhtmlwindow.cpp:854
+#: rkward/windows/rkhtmlwindow.cpp:624
 #, kde-format
 msgid "Flushing output"
 msgstr ""
 
-#: rkward/windows/rkhtmlwindow.cpp:894
+#: rkward/windows/rkhtmlwindow.cpp:653
 #, kde-format
 msgid "Zoom In"
 msgstr "Přiblížit"
 
-#: rkward/windows/rkhtmlwindow.cpp:896
+#: rkward/windows/rkhtmlwindow.cpp:655
 #, kde-format
 msgid "Zoom Out"
 msgstr "Oddálit"
 
-#: rkward/windows/rkhtmlwindow.cpp:900
-#, kde-format
-msgid "Default &Encoding"
-msgstr "Výchozí &kódování"
-
-#: rkward/windows/rkhtmlwindow.cpp:901
-#, kde-format
-msgid ""
-"Set the encoding to assume in case no explicit encoding has been set in the "
-"page or in the HTTP headers."
-msgstr ""
-
-#: rkward/windows/rkhtmlwindow.cpp:911
+#: rkward/windows/rkhtmlwindow.cpp:663
 #, kde-format
 msgid "Export Page as HTML"
 msgstr "Exportovat soubor do HTML"
 
-#: rkward/windows/rkhtmlwindow.cpp:925
+#: rkward/windows/rkhtmlwindow.cpp:677
 #, kde-format
 msgid "Save Output"
 msgstr "Uložit výstup"
 
-#: rkward/windows/rkhtmlwindow.cpp:927
+#: rkward/windows/rkhtmlwindow.cpp:679
 #, kde-format
 msgid "Save Output As"
 msgstr "Uložit výstup jako"
 
-#: rkward/windows/rkhtmlwindow.cpp:930
+#: rkward/windows/rkhtmlwindow.cpp:682
 #, kde-format
 msgid "&Clear Output"
 msgstr "&Vyprázdnit výstup"
 
-#: rkward/windows/rkhtmlwindow.cpp:936
+#: rkward/windows/rkhtmlwindow.cpp:686
+#, fuzzy, kde-format
+#| msgid "Unload"
+msgid "Reload"
+msgstr "Zrušit načtení"
+
+#: rkward/windows/rkhtmlwindow.cpp:690
 #, kde-format
 msgid "&Revert to last saved state"
 msgstr "V&rátit na poslední uložený stav"
 
-#: rkward/windows/rkhtmlwindow.cpp:940
+#: rkward/windows/rkhtmlwindow.cpp:694
 #, kde-format
 msgid "Set Output as &Active"
 msgstr "Nastavit výstup jako &aktivní"
 
-#: rkward/windows/rkhtmlwindow.cpp:942
+#: rkward/windows/rkhtmlwindow.cpp:696
 #, kde-format
 msgid "Set this output as the file to append output to."
 msgstr ""
 
-#: rkward/windows/rkhtmlwindow.cpp:964
+#: rkward/windows/rkhtmlwindow.cpp:718
 #, kde-format
 msgid "Print output"
 msgstr "Vytisknout výstup"
 
-#: rkward/windows/rkhtmlwindow.cpp:972
+#: rkward/windows/rkhtmlwindow.cpp:726
 #, kde-format
 msgid "Print page"
 msgstr "Vytisknout stránku"
 
-#: rkward/windows/rkhtmlwindow.cpp:1029
+#: rkward/windows/rkhtmlwindow.cpp:783
 #, kde-format
 msgid "No Title"
 msgstr "Bez názvu"
 
-#: rkward/windows/rkhtmlwindow.cpp:1045
+#: rkward/windows/rkhtmlwindow.cpp:799
 #, kde-format
 msgid ""
 "<h1>Help page missing</h1>\n"
@@ -6937,62 +6952,62 @@ msgid ""
 "Please consider contributing it.</p>\n"
 msgstr ""
 
-#: rkward/windows/rkhtmlwindow.cpp:1051
+#: rkward/windows/rkhtmlwindow.cpp:805
 #, kde-format
 msgid "Use %1 now"
 msgstr ""
 
-#: rkward/windows/rkhtmlwindow.cpp:1068
+#: rkward/windows/rkhtmlwindow.cpp:822
 #, kde-format
 msgid "Summary"
 msgstr "Shrnutí"
 
-#: rkward/windows/rkhtmlwindow.cpp:1075
+#: rkward/windows/rkhtmlwindow.cpp:829
 #, kde-format
 msgid "Usage"
 msgstr "Využití"
 
-#: rkward/windows/rkhtmlwindow.cpp:1104
+#: rkward/windows/rkhtmlwindow.cpp:858
 #, kde-format
 msgid "Choose another file"
 msgstr "Vybrat jiný soubor"
 
-#: rkward/windows/rkhtmlwindow.cpp:1127
+#: rkward/windows/rkhtmlwindow.cpp:881
 #, kde-format
 msgid "GUI settings"
 msgstr "Nastavení uživatelského rozhraní"
 
-#: rkward/windows/rkhtmlwindow.cpp:1152
+#: rkward/windows/rkhtmlwindow.cpp:906
 #, kde-format
 msgid "Related functions and pages"
 msgstr ""
 
-#: rkward/windows/rkhtmlwindow.cpp:1160
+#: rkward/windows/rkhtmlwindow.cpp:914
 #, kde-format
 msgid "Technical details"
 msgstr "Technické podrobnosti"
 
-#: rkward/windows/rkhtmlwindow.cpp:1183
+#: rkward/windows/rkhtmlwindow.cpp:937
 #, kde-format
 msgid "About"
 msgstr "O aplikaci"
 
-#: rkward/windows/rkhtmlwindow.cpp:1190
+#: rkward/windows/rkhtmlwindow.cpp:944
 #, kde-format
 msgid "<h1>On this page:</h1>"
 msgstr ""
 
-#: rkward/windows/rkhtmlwindow.cpp:1213
+#: rkward/windows/rkhtmlwindow.cpp:967
 #, kde-format
 msgid "Unnamed GUI element"
 msgstr ""
 
-#: rkward/windows/rkhtmlwindow.cpp:1287
+#: rkward/windows/rkhtmlwindow.cpp:1041
 #, kde-format
 msgid "R Reference on '%1'"
 msgstr ""
 
-#: rkward/windows/rkhtmlwindow.cpp:1299
+#: rkward/windows/rkhtmlwindow.cpp:1053
 #, kde-format
 msgid "BROKEN REFERENCE"
 msgstr ""
@@ -7011,6 +7026,21 @@ msgstr "Nastavit %1"
 #, kde-format
 msgid "No PDF viewer component found"
 msgstr "Žádná komponenta prohlížeče PDF nebyla nalezena"
+
+#: rkward/windows/rkqwebenginewidget.cpp:238
+#, kde-format
+msgid "Save as"
+msgstr "Uložit jako"
+
+#: rkward/windows/rkqwebview.cpp:252
+#, kde-format
+msgid "Open link in new tab"
+msgstr ""
+
+#: rkward/windows/rkqwebview.cpp:265
+#, kde-format
+msgid "Copy link address"
+msgstr ""
 
 #: rkward/windows/rktexthints.cpp:34
 #, kde-format
@@ -7419,7 +7449,7 @@ msgstr "Duplikovat"
 msgid "Stop interaction"
 msgstr ""
 
-#: rkward/windows/rkworkplace.cpp:445
+#: rkward/windows/rkworkplace.cpp:451
 #, kde-format
 msgid ""
 "The url you are trying to open ('%1') is not a local file or the filetype is "
@@ -7429,17 +7459,17 @@ msgstr ""
 "URL, kterou chcete otevřít  ('%1') není lokální soubor nebo typ souboru "
 "RKWard nepodporuje. Chcete otevřít odkaz ve výchozí aplikaci?"
 
-#: rkward/windows/rkworkplace.cpp:445
+#: rkward/windows/rkworkplace.cpp:451
 #, kde-format
 msgid "Open in default application?"
 msgstr ""
 
-#: rkward/windows/rkworkplace.cpp:533
+#: rkward/windows/rkworkplace.cpp:539
 #, kde-format
 msgid "Failed to open output file. Error message was '%1'"
 msgstr ""
 
-#: rkward/windows/rkworkplace.cpp:642
+#: rkward/windows/rkworkplace.cpp:648
 #, kde-format
 msgid ""
 "You are about to edit object \"%1\", which is very large (%2 fields). RKWard "
@@ -7454,17 +7484,17 @@ msgid ""
 "Really edit object?"
 msgstr ""
 
-#: rkward/windows/rkworkplace.cpp:642
+#: rkward/windows/rkworkplace.cpp:648
 #, kde-format
 msgid "About to edit very large object"
 msgstr ""
 
-#: rkward/windows/rkworkplace.cpp:982
+#: rkward/windows/rkworkplace.cpp:988
 #, kde-format
 msgid "Save Workplace layout"
 msgstr ""
 
-#: rkward/windows/rkworkplace.cpp:991
+#: rkward/windows/rkworkplace.cpp:997
 #, kde-format
 msgid "Restore Workplace layout"
 msgstr ""
@@ -7585,6 +7615,9 @@ msgstr ""
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr ""
+
+#~ msgid "Default &Encoding"
+#~ msgstr "Výchozí &kódování"
 
 #~ msgid ""
 #~ "The workplace layout (i.e. which script-, data-, help-windows are open) "

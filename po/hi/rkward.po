@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-03-28 00:39+0000\n"
+"POT-Creation-Date: 2026-04-10 00:40+0000\n"
 "PO-Revision-Date: 2024-12-15 19:29+0530\n"
 "Last-Translator: kali <skkalwar999@gmail.com>\n"
 "Language-Team: Hindi <kde-i18n-doc@kde.org>\n"
@@ -2000,239 +2000,239 @@ msgstr ""
 msgid "No R packages to install"
 msgstr "स्थापित करने के लिए कोई R पैकेज नहीं"
 
-#: rkward/main.cpp:172
+#: rkward/main.cpp:189
 #, kde-format
 msgid "RKWard"
 msgstr "आरकेवार्ड"
 
-#: rkward/main.cpp:172
+#: rkward/main.cpp:189
 #, kde-format
 msgid "Frontend to the R statistics language"
 msgstr "आर सांख्यिकी भाषा का फ्रंटएंड"
 
-#: rkward/main.cpp:172
+#: rkward/main.cpp:189
 #, fuzzy, kde-format
 #| msgid "(c) 2002 - 2024"
 msgid "(c) 2002 - 2025"
 msgstr "(सी) 2002 - 2024"
 
-#: rkward/main.cpp:173
+#: rkward/main.cpp:190
 #, kde-format
 msgid "Thomas Friedrichsmeier"
 msgstr "थॉमस फ्रेडरिकस्मीयर"
 
-#: rkward/main.cpp:173
+#: rkward/main.cpp:190
 #, kde-format
 msgid "Project leader / main developer"
 msgstr "परियोजना नेता / मुख्य डेवलपर"
 
-#: rkward/main.cpp:174
+#: rkward/main.cpp:191
 #, kde-format
 msgid "Pierre Ecochard"
 msgstr "पियरे इकोकार्ड"
 
-#: rkward/main.cpp:174
+#: rkward/main.cpp:191
 #, kde-format
 msgid "C++ developer between 2004 and 2007"
 msgstr "2004 से 2007 के बीच C++ डेवलपर"
 
-#: rkward/main.cpp:175
+#: rkward/main.cpp:192
 #, kde-format
 msgid "Prasenjit Kapat"
 msgstr "Prasenjit Kapat"
 
-#: rkward/main.cpp:175
+#: rkward/main.cpp:192
 #, kde-format
 msgid "Many plugins, suggestions, plot history feature"
 msgstr "कई प्लगइन्स, सुझाव, प्लॉट इतिहास सुविधा"
 
-#: rkward/main.cpp:176
+#: rkward/main.cpp:193
 #, kde-format
 msgid "Meik Michalke"
 msgstr "मिक माइकल्के"
 
-#: rkward/main.cpp:176
+#: rkward/main.cpp:193
 #, kde-format
 msgid "Many plugins, suggestions, rkwarddev package"
 msgstr "कई प्लगइन्स, सुझाव, rkwarddev पैकेज"
 
-#: rkward/main.cpp:177
+#: rkward/main.cpp:194
 #, kde-format
 msgid "Stefan Roediger"
 msgstr "स्टीफ़न रोएडिगर"
 
-#: rkward/main.cpp:177
+#: rkward/main.cpp:194
 #, kde-format
 msgid "Many plugins, suggestions, marketing, translations"
 msgstr "कई प्लगइन्स, सुझाव, मार्केटिंग, अनुवाद"
 
-#: rkward/main.cpp:178
+#: rkward/main.cpp:195
 #, kde-format
 msgid "Contributors in alphabetical order"
 msgstr "योगदानकर्ता वर्णानुक्रम में"
 
-#: rkward/main.cpp:179
+#: rkward/main.cpp:196
 #, kde-format
 msgid "Björn Balazs"
 msgstr "ब्योर्न बालाज़"
 
-#: rkward/main.cpp:179 rkward/main.cpp:181
+#: rkward/main.cpp:196 rkward/main.cpp:198
 #, kde-format
 msgid "Extensive usability feedback"
 msgstr "व्यापक प्रयोज्यता प्रतिक्रिया"
 
-#: rkward/main.cpp:180
+#: rkward/main.cpp:197
 #, kde-format
 msgid "Aaron Batty"
 msgstr "आरोन बैटी"
 
-#: rkward/main.cpp:180
+#: rkward/main.cpp:197
 #, kde-format
 msgid "Wealth of feedback, hardware donations"
 msgstr "भरपूर फीडबैक, हार्डवेयर दान"
 
-#: rkward/main.cpp:181
+#: rkward/main.cpp:198
 #, kde-format
 msgid "Jan Dittrich"
 msgstr "जान डिट्रिच"
 
-#: rkward/main.cpp:182
+#: rkward/main.cpp:199
 #, kde-format
 msgid "Philippe Grosjean"
 msgstr "फिलिप ग्रोसजेन"
 
-#: rkward/main.cpp:182
+#: rkward/main.cpp:199
 #, kde-format
 msgid "Several helpful comments and discussions"
 msgstr "कई उपयोगी टिप्पणियाँ और चर्चाएँ"
 
-#: rkward/main.cpp:183
+#: rkward/main.cpp:200
 #, kde-format
 msgid "Adrien d'Hardemare"
 msgstr "एड्रियन डी'हार्डेमारे"
 
-#: rkward/main.cpp:183
+#: rkward/main.cpp:200
 #, kde-format
 msgid "Plugins and patches"
 msgstr "प्लगइन्स और पैच"
 
-#: rkward/main.cpp:184
+#: rkward/main.cpp:201
 #, kde-format
 msgid "Yves Jacolin"
 msgstr "यवेस जैकोलिन"
 
-#: rkward/main.cpp:184
+#: rkward/main.cpp:201
 #, kde-format
 msgid "New website"
 msgstr "नई वेबसाइट"
 
-#: rkward/main.cpp:185
+#: rkward/main.cpp:202
 #, kde-format
 msgid "Germán Márquez Mejía"
 msgstr "जर्मन मार्केज़ मेजिया"
 
-#: rkward/main.cpp:185
+#: rkward/main.cpp:202
 #, kde-format
 msgid "HP filter plugin, spanish translation"
 msgstr "एचपी फ़िल्टर प्लगइन, स्पेनिश अनुवाद"
 
-#: rkward/main.cpp:186
+#: rkward/main.cpp:203
 #, kde-format
 msgid "Marco Martin"
 msgstr "मार्को मार्टिन"
 
-#: rkward/main.cpp:186
+#: rkward/main.cpp:203
 #, kde-format
 msgid "A cool icon"
 msgstr "एक अच्छा आइकन"
 
-#: rkward/main.cpp:187
+#: rkward/main.cpp:204
 #, kde-format
 msgid "Daniele Medri"
 msgstr "डेनियल मेद्री"
 
-#: rkward/main.cpp:187
+#: rkward/main.cpp:204
 #, kde-format
 msgid "RKWard logo, many suggestions, help on wording"
 msgstr "आरकेवार्ड लोगो, कई सुझाव, शब्दों पर सहायता"
 
-#: rkward/main.cpp:188
+#: rkward/main.cpp:205
 #, kde-format
 msgid "David Sibai"
 msgstr "डेविड सिबाई"
 
-#: rkward/main.cpp:188
+#: rkward/main.cpp:205
 #, kde-format
 msgid "Several valuable comments, hints and patches"
 msgstr "कई मूल्यवान टिप्पणियाँ, संकेत और पैच"
 
-#: rkward/main.cpp:189
+#: rkward/main.cpp:206
 #, kde-format
 msgid "Ilias Soumpasis"
 msgstr "इलियास सौम्पासिस"
 
-#: rkward/main.cpp:189
+#: rkward/main.cpp:206
 #, kde-format
 msgid "Translation, Suggestions, plugins"
 msgstr "अनुवाद, सुझाव, प्लगइन्स"
 
-#: rkward/main.cpp:190
+#: rkward/main.cpp:207
 #, kde-format
 msgid "Ralf Tautenhahn"
 msgstr "राल्फ ताउतेन्हाह्न"
 
-#: rkward/main.cpp:190
+#: rkward/main.cpp:207
 #, kde-format
 msgid "Many comments, useful suggestions, and bug reports"
 msgstr "अनेक टिप्पणियाँ, उपयोगी सुझाव और बग रिपोर्ट"
 
-#: rkward/main.cpp:191
+#: rkward/main.cpp:208
 #, kde-format
 msgid "Jannis Vajen"
 msgstr "जनीस वाजेन"
 
-#: rkward/main.cpp:191
+#: rkward/main.cpp:208
 #, kde-format
 msgid "German Translation, bug reports"
 msgstr "जर्मन अनुवाद, बग रिपोर्ट"
 
-#: rkward/main.cpp:192
+#: rkward/main.cpp:209
 #, kde-format
 msgid "Roland Vollgraf"
 msgstr "रोलैंड वोलग्राफ"
 
-#: rkward/main.cpp:192
+#: rkward/main.cpp:209
 #, kde-format
 msgid "Some patches"
 msgstr "कुछ पैच"
 
-#: rkward/main.cpp:193
+#: rkward/main.cpp:210
 #, kde-format
 msgid "Roy Qu"
 msgstr "रॉय क्व"
 
-#: rkward/main.cpp:193
+#: rkward/main.cpp:210
 #, kde-format
 msgid "patches and helpful comments"
 msgstr "पैच और सहायक टिप्पणियाँ"
 
-#: rkward/main.cpp:194
+#: rkward/main.cpp:211
 #, fuzzy, kde-format
 #| msgid "Many more people on rkward-devel@kde.org"
 msgid "Many more people on rkward@kde.org"
 msgstr "rkward-devel@kde.org पर बहुत से लोग"
 
-#: rkward/main.cpp:194
+#: rkward/main.cpp:211
 #, kde-format
 msgid "Sorry, if we forgot to list you. Please contact us to get added"
 msgstr "क्षमा करें, यदि हम आपको सूचीबद्ध करना भूल गए हैं। कृपया हमसे जुड़ने के लिए संपर्क करें"
 
-#: rkward/main.cpp:195
+#: rkward/main.cpp:212
 #, kde-format
 msgid "How to cite:"
 msgstr "उद्धृत कैसे करें:"
 
-#: rkward/main.cpp:195
+#: rkward/main.cpp:212
 #, kde-format
 msgid "Peer-reviewed article in the Journal of Statistical Software"
 msgstr "जर्नल ऑफ स्टैटिस्टिकल सॉफ्टवेयर में समकक्षों द्वारा समीक्षित लेख"
@@ -2473,7 +2473,7 @@ msgstr "आगे की खोज (खोज शब्द की अगली �
 msgid "Match case"
 msgstr "मामले मिलाएं"
 
-#: rkward/misc/rkfindbar.cpp:92 rkward/windows/rkhtmlwindow.cpp:945
+#: rkward/misc/rkfindbar.cpp:92 rkward/windows/rkhtmlwindow.cpp:699
 #, kde-format
 msgid "Find as you type"
 msgstr "टाइप करते समय खोजें"
@@ -5274,12 +5274,12 @@ msgstr "कमांड टाइमआउट"
 msgid "<i>Note:</i> Debug output is written to %1"
 msgstr "<i>नोट:</i> डीबग आउटपुट %1 पर लिखा जाता है"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:60
+#: rkward/settings/rksettingsmodulegeneral.cpp:61
 #, kde-format
 msgid "General"
 msgstr "सामान्य"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:64
+#: rkward/settings/rksettingsmodulegeneral.cpp:65
 #, kde-format
 msgid ""
 "Directory where rkward may store files (setting takes effect after "
@@ -5288,77 +5288,55 @@ msgstr ""
 "निर्देशिका जहां rkward फ़ाइलें संग्रहीत कर सकता है (सेटिंग RKWard को पुनः आरंभ करने के बाद "
 "प्रभावी होती है)"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:70
+#: rkward/settings/rksettingsmodulegeneral.cpp:71
 #, kde-format
 msgid "Startup behavior"
 msgstr "स्टार्टअप व्यवहार"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:72
+#: rkward/settings/rksettingsmodulegeneral.cpp:73
 #, kde-format
 msgid ""
 "Load .RData-file from startup directory, if available (R option '--restore')"
 msgstr ""
 "यदि उपलब्ध हो तो स्टार्टअप निर्देशिका से .RData-फ़ाइल लोड करें (R विकल्प '--restore')"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:73
+#: rkward/settings/rksettingsmodulegeneral.cpp:74
 #, kde-format
 msgid "Show RKWard Help on Startup"
 msgstr "स्टार्टअप पर RKWard सहायता दिखाएं"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:74
-#, fuzzy, kde-format
-#| msgid ""
-#| "Directory where rkward may store files (setting takes effect after "
-#| "restarting RKWard)"
-msgid ""
-"Disable HTML hardware rendering (setting takes effect after restarting "
-"RKWard)"
-msgstr ""
-"निर्देशिका जहां rkward फ़ाइलें संग्रहीत कर सकता है (सेटिंग RKWard को पुनः आरंभ करने के बाद "
-"प्रभावी होती है)"
-
-#: rkward/settings/rksettingsmodulegeneral.cpp:75
-#, kde-format
-msgid ""
-"The use of hardware acceleration for HTML rendering (e.g. help pages and "
-"plugin output) is known to cause instability in some installations, and is "
-"not generally needed for the - usually simple - content shown in RKWard. It "
-"is recommended to leave hardware acceleration disabled, unless you "
-"experience performance problems while viewing HTML content inside RKWard."
-msgstr ""
-
-#: rkward/settings/rksettingsmodulegeneral.cpp:78
-#: rkward/settings/rksettingsmodulegeneral.cpp:87
+#: rkward/settings/rksettingsmodulegeneral.cpp:76
+#: rkward/settings/rksettingsmodulegeneral.cpp:85
 #, kde-format
 msgid "Initial working directory"
 msgstr "प्रारंभिक कार्य निर्देशिका"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:80
+#: rkward/settings/rksettingsmodulegeneral.cpp:78
 #, kde-format
 msgid "Do not change current directory on startup"
 msgstr "स्टार्टअप पर वर्तमान निर्देशिका को न बदलें"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:81
+#: rkward/settings/rksettingsmodulegeneral.cpp:79
 #, kde-format
 msgid "RKWard files directory (as specified, above)"
 msgstr "RKWard फ़ाइल निर्देशिका (जैसा कि ऊपर निर्दिष्ट किया गया है)"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:82
+#: rkward/settings/rksettingsmodulegeneral.cpp:80
 #, kde-format
 msgid "User home directory"
 msgstr "उपयोगकर्ता होम निर्देशिका"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:83
+#: rkward/settings/rksettingsmodulegeneral.cpp:81
 #, kde-format
 msgid "Last used directory"
 msgstr "अंतिम प्रयुक्त निर्देशिका"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:84
+#: rkward/settings/rksettingsmodulegeneral.cpp:82
 #, kde-format
 msgid "The following directory (please specify):"
 msgstr "निम्नलिखित निर्देशिका (कृपया निर्दिष्ट करें):"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:92
+#: rkward/settings/rksettingsmodulegeneral.cpp:90
 #, kde-format
 msgid ""
 "<p>The initial working directory to use. Note that if you are loading a "
@@ -5369,7 +5347,54 @@ msgstr ""
 "कार्यस्थान लोड कर रहे हैं, और आपने RKWard को लोड किए गए कार्यस्थानों की निर्देशिका में "
 "बदलने के लिए कॉन्फ़िगर किया है, तो उस निर्देशिका को प्राथमिकता दी जाएगी।</p>"
 
+#: rkward/settings/rksettingsmodulegeneral.cpp:94
+#, fuzzy, kde-format
+#| msgid ""
+#| "Directory where rkward may store files (setting takes effect after "
+#| "restarting RKWard)"
+msgid "HTML rendering (setings take effect after restarting RKWard)"
+msgstr ""
+"निर्देशिका जहां rkward फ़ाइलें संग्रहीत कर सकता है (सेटिंग RKWard को पुनः आरंभ करने के बाद "
+"प्रभावी होती है)"
+
+#: rkward/settings/rksettingsmodulegeneral.cpp:96
+#, kde-format
+msgid "Engine:"
+msgstr ""
+
+#: rkward/settings/rksettingsmodulegeneral.cpp:97
+#, fuzzy, kde-format
+#| msgid "Platform default device"
+msgid "Platform default"
+msgstr "प्लेटफ़ॉर्म डिफ़ॉल्ट डिवाइस"
+
 #: rkward/settings/rksettingsmodulegeneral.cpp:99
+#, kde-format
+msgid "QWebEngine"
+msgstr ""
+
+#: rkward/settings/rksettingsmodulegeneral.cpp:103
+#, fuzzy, kde-format
+#| msgid "View"
+msgid "QWebView"
+msgstr "देखना"
+
+#: rkward/settings/rksettingsmodulegeneral.cpp:109
+#, kde-format
+msgid "Disable hardware acceleration"
+msgstr ""
+
+#: rkward/settings/rksettingsmodulegeneral.cpp:110
+#, kde-format
+msgid ""
+"The use of hardware acceleration for HTML rendering (e.g. help pages and "
+"plugin output) is known to cause instability in some installations, and is "
+"not generally needed for the - usually simple - content shown in RKWard. It "
+"is recommended to leave hardware acceleration disabled, unless you "
+"experience performance problems while viewing HTML content inside RKWard."
+msgstr ""
+
+#: rkward/settings/rksettingsmodulegeneral.cpp:117
 #, kde-format
 msgid ""
 "<p>The number of recent files to remember (in the Open Recent R Script File "
@@ -5377,24 +5402,24 @@ msgid ""
 msgstr ""
 "<p>याद रखने योग्य हाल की फ़ाइलों की संख्या (ओपन रीसेंट आर स्क्रिप्ट फ़ाइल मेनू में).</p>"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:100
+#: rkward/settings/rksettingsmodulegeneral.cpp:118
 #, kde-format
 msgid "Maximum number of recently used files to remember per category"
 msgstr "प्रति श्रेणी याद रखने के लिए हाल ही में उपयोग की गई फ़ाइलों की अधिकतम संख्या"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:105
+#: rkward/settings/rksettingsmodulegeneral.cpp:123
 #, kde-format
 msgid ""
 "Persistent workplace layout (i.e. which script-, data-, help-windows are "
 "open)"
 msgstr ""
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:109
+#: rkward/settings/rksettingsmodulegeneral.cpp:127
 #, kde-format
 msgid "Save/restore with R workspace, when saving/loading R workspace"
 msgstr "R वर्कस्पेस को सहेजते/लोड करते समय, R वर्कस्पेस के साथ सहेजें/पुनर्स्थापित करें"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:110
+#: rkward/settings/rksettingsmodulegeneral.cpp:128
 #, kde-format
 msgid ""
 "Save/restore independent of R workspace (save at end of RKWard session, "
@@ -5403,17 +5428,17 @@ msgstr ""
 "R कार्यस्थान से स्वतंत्र सहेजें/पुनर्स्थापित करें (RKWard सत्र के अंत में सहेजें, अगली शुरुआत पर "
 "पुनर्स्थापित करें)"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:111
+#: rkward/settings/rksettingsmodulegeneral.cpp:129
 #, kde-format
 msgid "Do not save/restore workplace layout"
 msgstr "कार्यस्थल लेआउट को सहेजें/पुनर्स्थापित न करें"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:118
+#: rkward/settings/rksettingsmodulegeneral.cpp:136
 #, kde-format
 msgid "When loading a workspace, change to the corresponding directory."
 msgstr "कार्यस्थान लोड करते समय, संबंधित निर्देशिका में बदलें."
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:122
+#: rkward/settings/rksettingsmodulegeneral.cpp:140
 #, kde-format
 msgid ""
 "Warn when editing objects with more than this number of fields (0 for no "
@@ -5422,17 +5447,17 @@ msgstr ""
 "इस संख्या से अधिक फ़ील्ड वाले ऑब्जेक्ट को संपादित करते समय चेतावनी दें (0 अर्थात कोई सीमा "
 "नहीं):"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:127
+#: rkward/settings/rksettingsmodulegeneral.cpp:145
 #, kde-format
 msgid "MDI window focus behavior"
 msgstr "MDI विंडो फोकस व्यवहार"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:128
+#: rkward/settings/rksettingsmodulegeneral.cpp:146
 #, kde-format
 msgid "Click to focus"
 msgstr "ध्यान केंद्रित करने के लिए क्लिक करें"
 
-#: rkward/settings/rksettingsmodulegeneral.cpp:129
+#: rkward/settings/rksettingsmodulegeneral.cpp:147
 #, kde-format
 msgid "Focus follows mouse"
 msgstr "फोकस माउस का अनुसरण करता है"
@@ -5798,7 +5823,7 @@ msgstr ""
 "कॉन्फ़िगर कर सकते हैं।</p>"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:471
-#: rkward/windows/rkhtmlwindow.cpp:1169
+#: rkward/windows/rkhtmlwindow.cpp:923
 #, kde-format
 msgid "Dependencies"
 msgstr "निर्भरताएं"
@@ -7040,45 +7065,41 @@ msgstr "विषय"
 msgid "Package"
 msgstr "पैकेट"
 
-#: rkward/windows/rkhtmlwindow.cpp:304
-#, kde-format
-msgid "Save as"
-msgstr "के रूप रक्षित करें"
-
-#: rkward/windows/rkhtmlwindow.cpp:611
-#, kde-format
-msgid "RKWard output file %s does not (yet) exist"
+#: rkward/windows/rkhtmlwindow.cpp:389
+#, fuzzy, kde-format
+#| msgid "RKWard output file %s does not (yet) exist"
+msgid "RKWard output file %1 does not (yet) exist"
 msgstr "RKWard आउटपुट फ़ाइल %s (अभी तक) मौजूद नहीं है"
 
-#: rkward/windows/rkhtmlwindow.cpp:743
+#: rkward/windows/rkhtmlwindow.cpp:521
 #: rkward/windows/rktoplevelwindowgui.cpp:264
 #, kde-format
 msgid "[Active]"
 msgstr "[सक्रिय]"
 
-#: rkward/windows/rkhtmlwindow.cpp:754
+#: rkward/windows/rkhtmlwindow.cpp:532
 #, fuzzy, kde-format
 #| msgid "Output %1"
 msgctxt "noun, the output"
 msgid "Output %1"
 msgstr "आउटपुट %1"
 
-#: rkward/windows/rkhtmlwindow.cpp:807
+#: rkward/windows/rkhtmlwindow.cpp:577
 #, kde-format
 msgid "Output Window"
 msgstr "आउटपुट विंडो"
 
-#: rkward/windows/rkhtmlwindow.cpp:809
+#: rkward/windows/rkhtmlwindow.cpp:579
 #, kde-format
 msgid "&Refresh Output"
 msgstr "&आउटपुट ताज़ा करें"
 
-#: rkward/windows/rkhtmlwindow.cpp:835
+#: rkward/windows/rkhtmlwindow.cpp:605
 #, kde-format
 msgid "Page does not exist or is broken"
 msgstr "पेज मौजूद नहीं है या टूटा हुआ है"
 
-#: rkward/windows/rkhtmlwindow.cpp:848
+#: rkward/windows/rkhtmlwindow.cpp:618
 #, kde-format
 msgid ""
 "Do you really want to clear the output? This will also remove all image "
@@ -7087,91 +7108,83 @@ msgstr ""
 "क्या आप वाकई आउटपुट को साफ़ करना चाहते हैं? इससे आउटपुट में इस्तेमाल की गई सभी इमेज फ़ाइलें "
 "भी हट जाएँगी। इसे रीस्टोर करना संभव नहीं होगा।"
 
-#: rkward/windows/rkhtmlwindow.cpp:849
+#: rkward/windows/rkhtmlwindow.cpp:619
 #, kde-format
 msgid "Flush output?"
 msgstr "फ्लश आउटपुट?"
 
-#: rkward/windows/rkhtmlwindow.cpp:854
+#: rkward/windows/rkhtmlwindow.cpp:624
 #, kde-format
 msgid "Flushing output"
 msgstr "फ्लशिंग आउटपुट"
 
-#: rkward/windows/rkhtmlwindow.cpp:894
+#: rkward/windows/rkhtmlwindow.cpp:653
 #, kde-format
 msgid "Zoom In"
 msgstr "ज़ूम इन"
 
-#: rkward/windows/rkhtmlwindow.cpp:896
+#: rkward/windows/rkhtmlwindow.cpp:655
 #, kde-format
 msgid "Zoom Out"
 msgstr "ज़ूम आउट"
 
-#: rkward/windows/rkhtmlwindow.cpp:900
-#, kde-format
-msgid "Default &Encoding"
-msgstr "डिफ़ॉल्ट &एन्कोडिंग"
-
-#: rkward/windows/rkhtmlwindow.cpp:901
-#, kde-format
-msgid ""
-"Set the encoding to assume in case no explicit encoding has been set in the "
-"page or in the HTTP headers."
-msgstr ""
-"यदि पृष्ठ या HTTP हेडर में कोई स्पष्ट एन्कोडिंग सेट नहीं की गई है, तो उस स्थिति में ग्रहण की "
-"जाने वाली एन्कोडिंग सेट करें।"
-
-#: rkward/windows/rkhtmlwindow.cpp:911
+#: rkward/windows/rkhtmlwindow.cpp:663
 #, kde-format
 msgid "Export Page as HTML"
 msgstr "पृष्ठ को HTML के रूप में निर्यात करें"
 
-#: rkward/windows/rkhtmlwindow.cpp:925
+#: rkward/windows/rkhtmlwindow.cpp:677
 #, kde-format
 msgid "Save Output"
 msgstr "आउटपुट सहेजें"
 
-#: rkward/windows/rkhtmlwindow.cpp:927
+#: rkward/windows/rkhtmlwindow.cpp:679
 #, kde-format
 msgid "Save Output As"
 msgstr "आउटपुट को इस रूप में सहेजें"
 
-#: rkward/windows/rkhtmlwindow.cpp:930
+#: rkward/windows/rkhtmlwindow.cpp:682
 #, kde-format
 msgid "&Clear Output"
 msgstr "&आउटपुट साफ़ करें"
 
-#: rkward/windows/rkhtmlwindow.cpp:936
+#: rkward/windows/rkhtmlwindow.cpp:686
+#, fuzzy, kde-format
+#| msgid "Unload"
+msgid "Reload"
+msgstr "अनलोड"
+
+#: rkward/windows/rkhtmlwindow.cpp:690
 #, kde-format
 msgid "&Revert to last saved state"
 msgstr "&अंतिम सहेजी गई स्थिति पर वापस लौटें"
 
-#: rkward/windows/rkhtmlwindow.cpp:940
+#: rkward/windows/rkhtmlwindow.cpp:694
 #, kde-format
 msgid "Set Output as &Active"
 msgstr "आउटपुट को &सक्रिय के रूप में सेट करें"
 
-#: rkward/windows/rkhtmlwindow.cpp:942
+#: rkward/windows/rkhtmlwindow.cpp:696
 #, kde-format
 msgid "Set this output as the file to append output to."
 msgstr "इस आउटपुट को आउटपुट जोड़ने हेतु फ़ाइल के रूप में सेट करें।"
 
-#: rkward/windows/rkhtmlwindow.cpp:964
+#: rkward/windows/rkhtmlwindow.cpp:718
 #, kde-format
 msgid "Print output"
 msgstr "प्रिंट आउटपुट"
 
-#: rkward/windows/rkhtmlwindow.cpp:972
+#: rkward/windows/rkhtmlwindow.cpp:726
 #, kde-format
 msgid "Print page"
 msgstr "पेज प्रिंट करें"
 
-#: rkward/windows/rkhtmlwindow.cpp:1029
+#: rkward/windows/rkhtmlwindow.cpp:783
 #, kde-format
 msgid "No Title"
 msgstr "कोई शीर्षक नहीं"
 
-#: rkward/windows/rkhtmlwindow.cpp:1045
+#: rkward/windows/rkhtmlwindow.cpp:799
 #, kde-format
 msgid ""
 "<h1>Help page missing</h1>\n"
@@ -7181,62 +7194,62 @@ msgstr ""
 "<h1>सहायता पृष्ठ गायब है</h1><p> इस घटक के लिए सहायता पृष्ठ अभी तक नहीं लिखा गया है "
 "(या टूटा हुआ है)। कृपया इसमें योगदान देने पर विचार करें।</p>\n"
 
-#: rkward/windows/rkhtmlwindow.cpp:1051
+#: rkward/windows/rkhtmlwindow.cpp:805
 #, kde-format
 msgid "Use %1 now"
 msgstr "अभी %1 का उपयोग करें"
 
-#: rkward/windows/rkhtmlwindow.cpp:1068
+#: rkward/windows/rkhtmlwindow.cpp:822
 #, kde-format
 msgid "Summary"
 msgstr "सारांश"
 
-#: rkward/windows/rkhtmlwindow.cpp:1075
+#: rkward/windows/rkhtmlwindow.cpp:829
 #, kde-format
 msgid "Usage"
 msgstr "प्रयोग"
 
-#: rkward/windows/rkhtmlwindow.cpp:1104
+#: rkward/windows/rkhtmlwindow.cpp:858
 #, kde-format
 msgid "Choose another file"
 msgstr "कोई अन्य फ़ाइल चुनें"
 
-#: rkward/windows/rkhtmlwindow.cpp:1127
+#: rkward/windows/rkhtmlwindow.cpp:881
 #, kde-format
 msgid "GUI settings"
 msgstr "जीयूआई सेटिंग्स"
 
-#: rkward/windows/rkhtmlwindow.cpp:1152
+#: rkward/windows/rkhtmlwindow.cpp:906
 #, kde-format
 msgid "Related functions and pages"
 msgstr "संबंधित कार्य और पृष्ठ"
 
-#: rkward/windows/rkhtmlwindow.cpp:1160
+#: rkward/windows/rkhtmlwindow.cpp:914
 #, kde-format
 msgid "Technical details"
 msgstr "टेक्निकल डिटेल"
 
-#: rkward/windows/rkhtmlwindow.cpp:1183
+#: rkward/windows/rkhtmlwindow.cpp:937
 #, kde-format
 msgid "About"
 msgstr "के बारे में"
 
-#: rkward/windows/rkhtmlwindow.cpp:1190
+#: rkward/windows/rkhtmlwindow.cpp:944
 #, kde-format
 msgid "<h1>On this page:</h1>"
 msgstr "<h1>इस पृष्ठ पर:</h1>"
 
-#: rkward/windows/rkhtmlwindow.cpp:1213
+#: rkward/windows/rkhtmlwindow.cpp:967
 #, kde-format
 msgid "Unnamed GUI element"
 msgstr "अनाम GUI तत्व"
 
-#: rkward/windows/rkhtmlwindow.cpp:1287
+#: rkward/windows/rkhtmlwindow.cpp:1041
 #, kde-format
 msgid "R Reference on '%1'"
 msgstr "'%1' पर R संदर्भ"
 
-#: rkward/windows/rkhtmlwindow.cpp:1299
+#: rkward/windows/rkhtmlwindow.cpp:1053
 #, kde-format
 msgid "BROKEN REFERENCE"
 msgstr "टूटा हुआ संदर्भ"
@@ -7255,6 +7268,21 @@ msgstr "%1कॉन्फ़िगर करें"
 #, kde-format
 msgid "No PDF viewer component found"
 msgstr "कोई PDF व्यूअर घटक नहीं मिला"
+
+#: rkward/windows/rkqwebenginewidget.cpp:238
+#, kde-format
+msgid "Save as"
+msgstr "के रूप रक्षित करें"
+
+#: rkward/windows/rkqwebview.cpp:252
+#, kde-format
+msgid "Open link in new tab"
+msgstr ""
+
+#: rkward/windows/rkqwebview.cpp:265
+#, kde-format
+msgid "Copy link address"
+msgstr ""
 
 #: rkward/windows/rktexthints.cpp:34
 #, kde-format
@@ -7693,7 +7721,7 @@ msgstr "डुप्लिकेट"
 msgid "Stop interaction"
 msgstr "बातचीत बंद करें"
 
-#: rkward/windows/rkworkplace.cpp:445
+#: rkward/windows/rkworkplace.cpp:451
 #, kde-format
 msgid ""
 "The url you are trying to open ('%1') is not a local file or the filetype is "
@@ -7704,17 +7732,17 @@ msgstr ""
 "प्रकार RKWard द्वारा समर्थित नहीं है। क्या आप यूआरएल को डिफ़ॉल्ट एप्लिकेशन में खोलना चाहते "
 "हैं?"
 
-#: rkward/windows/rkworkplace.cpp:445
+#: rkward/windows/rkworkplace.cpp:451
 #, kde-format
 msgid "Open in default application?"
 msgstr "डिफ़ॉल्ट अनुप्रयोग में खोलें?"
 
-#: rkward/windows/rkworkplace.cpp:533
+#: rkward/windows/rkworkplace.cpp:539
 #, kde-format
 msgid "Failed to open output file. Error message was '%1'"
 msgstr "आउटपुट फ़ाइल खोलने में विफल। त्रुटि संदेश '%1' था"
 
-#: rkward/windows/rkworkplace.cpp:642
+#: rkward/windows/rkworkplace.cpp:648
 #, kde-format
 msgid ""
 "You are about to edit object \"%1\", which is very large (%2 fields). RKWard "
@@ -7738,17 +7766,17 @@ msgstr ""
 "अंतर्गत कॉन्फ़िगर कर सकते हैं (या इसे पूरी तरह से बंद कर सकते हैं)।\n"
 "क्या वाकई ऑब्जेक्ट संपादित करें?"
 
-#: rkward/windows/rkworkplace.cpp:642
+#: rkward/windows/rkworkplace.cpp:648
 #, kde-format
 msgid "About to edit very large object"
 msgstr "बहुत बड़ी वस्तु को संपादित करने वाला हूँ"
 
-#: rkward/windows/rkworkplace.cpp:982
+#: rkward/windows/rkworkplace.cpp:988
 #, kde-format
 msgid "Save Workplace layout"
 msgstr "कार्यस्थल लेआउट सहेजें"
 
-#: rkward/windows/rkworkplace.cpp:991
+#: rkward/windows/rkworkplace.cpp:997
 #, kde-format
 msgid "Restore Workplace layout"
 msgstr "कार्यस्थल लेआउट पुनर्स्थापित करें"
@@ -7871,6 +7899,16 @@ msgstr "नया नाम दर्ज करें"
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr "संपादक में देखें (केवल पढ़ने के लिए)"
+
+#~ msgid "Default &Encoding"
+#~ msgstr "डिफ़ॉल्ट &एन्कोडिंग"
+
+#~ msgid ""
+#~ "Set the encoding to assume in case no explicit encoding has been set in "
+#~ "the page or in the HTTP headers."
+#~ msgstr ""
+#~ "यदि पृष्ठ या HTTP हेडर में कोई स्पष्ट एन्कोडिंग सेट नहीं की गई है, तो उस स्थिति में ग्रहण "
+#~ "की जाने वाली एन्कोडिंग सेट करें।"
 
 #~ msgid ""
 #~ "The workplace layout (i.e. which script-, data-, help-windows are open) "
