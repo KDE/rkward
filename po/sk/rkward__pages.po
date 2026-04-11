@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: rkward__pages\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 08:59+0000\n"
-"PO-Revision-Date: 2023-12-17 14:58+0100\n"
+"PO-Revision-Date: 2026-04-10 12:00+0200\n"
 "Last-Translator: Roman Paholik <wizzardsk@gmail.com>\n"
 "Language-Team: Slovak <kde-sk@linux.sk>\n"
 "Language: sk\n"
@@ -265,6 +265,9 @@ msgid ""
 "The console can - by default - be found at the bottom of the application "
 "window. Press the tool button labelled \"R Console\" to invoke it."
 msgstr ""
+"Konzola sa – v predvolenom nastavení – nachádza v spodnej časti okna "
+"aplikácie. Na jej vyvolanie stlačte tlačidlo nástroja s označením \"R Console"
+"\"."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
 #: rkward/pages/rkward_console.rkh:15
@@ -1303,6 +1306,13 @@ msgid ""
 "integration\". Then you can use the vanille onscreen devices (X11() or "
 "Windows() or Quartz()), for plotting."
 msgstr ""
+"Toto je najčastejší druh nekompatibility verzií. Platí rovnaké odporúčanie "
+"ako vyššie, t.j. nainštalujte aktualizovanú verziu RKWard. Ak však nie je "
+"okamžite dostupná žiadna aktualizácia a súčasne potrebujete pokračovať v "
+"práci, nastavte <link href=\"rkward://settings/graphics\">Nastavenia-"
+">Grafika na obrazovke</link>->\"Integrácia štandardného zariadenia R\" na "
+"\"Bez integrácie\". Potom môžete na vykresľovanie používať štandardné "
+"zariadenia na obrazovke (X11() alebo Windows() alebo Quartz())."
 
 #. i18n: ectx: (RKWard Output) <title>
 #: rkward/pages/rkward_output.rkh:8
@@ -1505,6 +1515,17 @@ msgid ""
 "corresponding position in the history. For the usual \"linear browsing\" see "
 "first / previous / next / last actions below."
 msgstr ""
+"<b>Prejsť na graf</b>: Poskytuje rozbaľovací zoznam _všetkých_ grafov "
+"uložených v histórii, čo umožňuje jednoducho prístupný \"skok\" na graf. "
+"RKWard sa snaží identifikovať príslušné volania grafov, ale nie vždy je to "
+"možné. V takých prípadoch sa vykoná ďalší pokus o identifikáciu <i>označenia "
+"X</i>, <i>označenia Y</i> a <i>hlavného</i> nadpisu grafu a zobrazený "
+"reťazec vyzerá ako \"<b>X:</b> <i>xlab</i>; <b>Y:</b> <i>ylab</i>; <i>main</"
+"i>\". Niekedy ani to nie je možné (označené ako <b><Neznáme></b>). Grafy "
+"čakajúce na uloženie sú označené ako <b><Neuložený graf></b>. Zobrazené "
+"reťazce majú predpísanú zodpovedajúcu pozíciu v histórii. Pre bežné "
+"\"lineárne prechádzanie\" pozri akcie prvý / predchádzajúci / nasledujúci / "
+"posledný nižšie."
 
 #. i18n: ectx: (Screen device history) <section title="Available actions">
 #: rkward/pages/rkward_plot_history.rkh:16
@@ -1953,6 +1974,11 @@ msgid ""
 "common issues. See also <link href=\"https://rkward.kde.org/faq\">the online "
 "FAQ</link>."
 msgstr ""
+"RKWard zdáleka nie je kompletný a určite existuje mnoho problémov, ktoré "
+"treba opraviť. Niektoré veci, ktoré si všimnete, však nie sú spôsobené "
+"RKWard, ale R alebo niečím iným. Táto sekcia sa pokúsi pokryť niektoré bežné "
+"problémy. Pozrite tiež <link href=\"https://rkward.kde.org/faq\">online FAQ</"
+"link>."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:12
@@ -2334,6 +2360,8 @@ msgid ""
 "‎<link href=\"rkward://settings/addons\">Further add-on related settings (e."
 "g., git/project integration)‎</link>"
 msgstr ""
+"‎<link href=\"rkward://settings/addons\">Ďalšie nastavenia súvisiace s "
+"doplnkami (napr. integrácia git/projektu)‎</link>"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Useful settings">
 #: rkward/pages/rkward_welcome.rkh:23
@@ -2342,6 +2370,8 @@ msgid ""
 "‎<link href=\"rkward://settings/general\">Startup options</link> (including "
 "this page)‎"
 msgstr ""
+"‎<link href=\"rkward://settings/general\">Možnosti spustenia</link> (vrátane "
+"tejto stránky)‎"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="...">
 #: rkward/pages/rkward_welcome.rkh:31

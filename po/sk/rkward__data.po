@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: rkward__data\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 08:59+0000\n"
-"PO-Revision-Date: 2016-09-01 20:28+0100\n"
+"PO-Revision-Date: 2026-04-10 12:00+0200\n"
 "Last-Translator: Roman Paholik <wizzardsk@gmail.com>\n"
 "Language-Team: Slovak <kde-sk@linux.sk>\n"
 "Language: sk\n"
@@ -744,6 +744,8 @@ msgid ""
 "Whether the minimum value is contained in the range to check against (i.e. "
 "compare 'larger or equal (>=)')."
 msgstr ""
+"Určuje, či je minimálna hodnota obsiahnutá v rozsahu na porovnanie (t.j. "
+"porovnanie 'väčší alebo rovný (>=)')."
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Maximum (or empty)")
 #: rkward/plugins/data/subset_dataframe.rkh:45
@@ -758,6 +760,8 @@ msgid ""
 "Whether the maximum value is contained in the range to check against (i.e. "
 "compare 'smaller or equal (<=)')."
 msgstr ""
+"Určuje, či je maximálna hodnota obsiahnutá v rozsahu na porovnanie (t.j. "
+"porovnanie 'menší alebo rovný (<=)')."
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Expression (or empty)")
 #: rkward/plugins/data/subset_dataframe.rkh:52
@@ -768,6 +772,10 @@ msgid ""
 "combined by logical 'and' (&). Leave empty, if you do not want to filter on "
 "a custom expression."
 msgstr ""
+"Môžete tiež filtrovať riadky / prípady vlastným výrazom R. Ak to používate v "
+"kombinácii s filtrovaním podľa stĺpca (pozri vyššie), obe podmienky sa "
+"skombinujú logickým 'a' (&). Nechajte prázdne, ak nechcete filtrovať podľa "
+"vlastného výrazu."
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Only use a subset of variables")
 #: rkward/plugins/data/subset_dataframe.rkh:56

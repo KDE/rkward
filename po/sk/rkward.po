@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 08:59+0000\n"
-"PO-Revision-Date: 2023-12-17 14:57+0100\n"
+"PO-Revision-Date: 2026-04-10 12:00+0200\n"
 "Last-Translator: Roman Paholik <wizzardsk@gmail.com>\n"
 "Language-Team: Slovak <kde-sk@linux.sk>\n"
 "Language: sk\n"
@@ -600,11 +600,15 @@ msgid ""
 "know what you are doing, but you are strongly advised to fix the table, and/"
 "or backup your data, first."
 msgstr ""
+"Editor '%1' obsahuje nasledujúce duplicitné stĺpce. Úprava tejto tabuľky "
+"nemusí byť bezpečná a bola zakázaná. Úpravu môžete znova povoliť, ak viete, "
+"čo robíte, ale dôrazne sa odporúča najskôr opraviť tabuľku a/alebo zálohovať "
+"vaše dáta."
 
 #: rkward/dataeditor/twintable.cpp:208
 #, kde-format
 msgid "Duplicate columns detected"
-msgstr ""
+msgstr "Zistené duplicitné stĺpce"
 
 #: rkward/dataeditor/twintable.cpp:217
 #, kde-format
@@ -1657,6 +1661,8 @@ msgid ""
 "<p>The setup assistant has been invoked, automatically, because a problem "
 "has been detected in your setup.</p>"
 msgstr ""
+"<p>Asistent nastavenia bol automaticky vyvolaný, pretože bol zistený problém "
+"vo vašom nastavení.</p>"
 
 #: rkward/dialogs/rksetupwizard.cpp:133
 #, kde-format
@@ -1802,11 +1808,13 @@ msgstr "Základná inštalácia"
 #, kde-format
 msgid "<b>R backend has crashed. Click \"Cancel\" to exit setup assistant.</b>"
 msgstr ""
+"<b>Backend R spadol. Kliknite na \"Zrušiť\" pre ukončenie asistenta "
+"nastavenia.</b>"
 
 #: rkward/dialogs/rksetupwizard.cpp:213
 #, kde-format
 msgid "<b>R backend has started. Click \"Next\" to continue.</b>"
-msgstr ""
+msgstr "<b>Backend R bol spustený. Kliknite na \"Ďalej\" pre pokračovanie.</b>"
 
 #: rkward/dialogs/rksetupwizard.cpp:220
 #, kde-format
@@ -1913,7 +1921,7 @@ msgstr "Žiadne balíky R na inštaláciu"
 #: rkward/main.cpp:208
 #, kde-format
 msgid "Unable to detect R installation"
-msgstr ""
+msgstr "Nepodarilo sa detegovať inštaláciu R"
 
 #: rkward/main.cpp:208
 #, kde-format
@@ -1923,11 +1931,15 @@ msgid ""
 "the command line parameter '--r-executable <i>auto / PATH_TO_R</i>', or "
 "supply an rkward.ini file to specify a non-standard location."
 msgstr ""
+"RKWard nedetegoval inštaláciu R na tomto systéme. R buď nie je "
+"nainštalované, alebo nie je v jednom zo štandardných umiestnení. Môžete "
+"použiť parameter príkazového riadka '--r-executable <i>auto / CESTA_K_R</"
+"i>', alebo poskytnúť súbor rkward.ini na určenie neštandardného umiestnenia."
 
 #: rkward/main.cpp:221
 #, kde-format
 msgid "Specified R executable does not exist"
-msgstr ""
+msgstr "Zadaný spustiteľný súbor R neexistuje"
 
 #: rkward/main.cpp:260
 #, kde-format
@@ -2266,6 +2278,8 @@ msgid ""
 "The R executable specified on the command line (%1) does not exist or is not "
 "executable."
 msgstr ""
+"Spustiteľný súbor R zadaný na príkazovom riadku (%1) neexistuje alebo nie je "
+"spustiteľný."
 
 #: rkward/main.cpp:396
 #, kde-format
@@ -2273,6 +2287,8 @@ msgid ""
 "The R executable (%1) specified in the rkward.ini file (%2) does not exist "
 "or is not executable."
 msgstr ""
+"Spustiteľný súbor R (%1) zadaný v súbore rkward.ini (%2) neexistuje alebo "
+"nie je spustiteľný."
 
 #: rkward/main.cpp:401
 #, kde-format
@@ -2282,6 +2298,10 @@ msgid ""
 "command line parameter '--r-executable <i>auto / PATH_TO_R</i>', or supply "
 "an rkward.ini file to specify the new location."
 msgstr ""
+"Spustiteľný súbor R zadaný v čase kompilácie (%1) neexistuje alebo nie je "
+"spustiteľný. Pravdepodobne sa inštalácia R presunula. Môžete použiť "
+"parameter príkazového riadka '--r-executable <i>auto / CESTA_K_R</i>', alebo "
+"poskytnúť súbor rkward.ini na určenie nového umiestnenia."
 
 #: rkward/misc/celleditor.cpp:49
 #, kde-format
@@ -2706,7 +2726,7 @@ msgstr "Unhandled output command '%1'"
 #, kde-format
 msgid ""
 "<b>There have been errors and / or warnings. See below for a transcript</b>"
-msgstr ""
+msgstr "<b>Vyskytli sa chyby a/alebo varovania. Nižšie nájdete prepis</b>"
 
 #: rkward/misc/rkprogresscontrol.cpp:258
 #: rkward/settings/rksettingsmoduleoutput.cpp:185
@@ -2722,12 +2742,12 @@ msgstr "Výstup:"
 #: rkward/misc/rkprogresscontrol.cpp:261
 #, kde-format
 msgid "Errors / Warnings"
-msgstr ""
+msgstr "Chyby / Varovania"
 
 #: rkward/misc/rkprogresscontrol.cpp:262
 #, kde-format
 msgid "Errors / Warnings:"
-msgstr ""
+msgstr "Chyby / Varovania:"
 
 #: rkward/misc/rkprogresscontrol.cpp:282 rkward/misc/rkprogresscontrol.cpp:415
 #: rkward/plugin/rkstandardcomponentgui.cpp:494
@@ -2994,7 +3014,7 @@ msgstr "Varovania alebo chyby:"
 #: rkward/misc/rkxmlguipreviewarea.cpp:259
 #, kde-format
 msgid "Preview not (yet) possible"
-msgstr ""
+msgstr "Náhľad (zatiaľ) nie je možný"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:261
 #, kde-format
@@ -3004,12 +3024,12 @@ msgstr "Náhľad zakázaný"
 #: rkward/misc/rkxmlguipreviewarea.cpp:263
 #, kde-format
 msgid "Preview updating"
-msgstr ""
+msgstr "Náhľad sa aktualizuje"
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:265
 #, kde-format
 msgid "Preview up to date"
-msgstr ""
+msgstr "Náhľad je aktuálny"
 
 #: rkward/misc/xmlhelper.cpp:41
 #, kde-format
@@ -3889,7 +3909,7 @@ msgstr "Require package '%1'"
 #: rkward/rbackend/rkrinterface.cpp:812
 #, kde-format
 msgid "Unrecognized call '%1'"
-msgstr ""
+msgstr "Nerozpoznané volanie '%1'"
 
 #: rkward/rbackend/rkrinterface.cpp:892
 #, kde-format
@@ -4419,6 +4439,10 @@ msgid ""
 "workspace will be lost!</b> All data editors, and graphics windows will be "
 "closed.</p><p>Are you sure you want to proceed?</p>"
 msgstr ""
+"<p>Táto funkcia je primárne určená pre pokročilých používateľov pracujúcich "
+"so skriptami alebo balíkmi. Postupujte prosím opatrne.</p><p><b>Všetky "
+"neuložené dáta v tomto pracovnom priestore budú stratené!</b> Všetky editory "
+"dát a grafické okná budú zatvorené.</p><p>Naozaj chcete pokračovať?</p>"
 
 #: rkward/rkward.cpp:632
 #, kde-format
@@ -4695,7 +4719,7 @@ msgstr ""
 #: rkward/scriptbackends/rkcomponentscripting.cpp:56
 #, kde-format
 msgid "Error opening script file %1"
-msgstr ""
+msgstr "Chyba pri otváraní súboru skriptu %1"
 
 #: rkward/scriptbackends/rkcomponentscripting.cpp:71
 #, kde-format
@@ -5261,6 +5285,13 @@ msgid ""
 "<i>quartz()</i>, depending on the platform.</p><p>You can also specify the "
 "name of a function such as <i>cairoDevice</i>.</p>"
 msgstr ""
+"<p>Predvolené zariadenie na vykresľovanie, t.j. keď je vytvorený nový graf, "
+"zatiaľ čo nie je aktívne žiadne grafické zariadenie (pozri "
+"<i>options(\"device\")</i>).</p><p>Natívne zariadenie RKWard je odporúčaná "
+"voľba pre väčšinu používateľov. Zodpovedá príkazu R <i>RK()</i>.</"
+"p><p>'Predvolené zariadenie platformy' zodpovedá jednému z <i>X11()</i>, "
+"<i>windows()</i> alebo <i>quartz()</i>, v závislosti od platformy.</"
+"p><p>Môžete tiež zadať názov funkcie, ako napríklad <i>cairoDevice</i>.</p>"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:76
 #, kde-format
@@ -6080,11 +6111,15 @@ msgid ""
 "this session. To enable the call tip, install any other (earlier or later) "
 "version of (lib|kf5)ktexteditor."
 msgstr ""
+"Kvôli chybe vo verzii 5.92.0 ktexteditor (momentálne používaná verzia) by "
+"funkcia zobrazenia tipov pri volaní funkcií spôsobila pád a bola v tejto "
+"relácii zakázaná. Na povolenie tipov nainštalujte akúkoľvek inú (staršiu "
+"alebo novšiu) verziu (lib|kf5)ktexteditor."
 
 #: rkward/windows/rkcodecompletion.cpp:61
 #, kde-format
 msgid "Incompatible version of ktexteditor"
-msgstr ""
+msgstr "Nekompatibilná verzia ktexteditor"
 
 #: rkward/windows/rkcodecompletion.cpp:695
 #, kde-format
@@ -6182,6 +6217,7 @@ msgid ""
 "Preview the script as rendered from RMarkdown format (appropriate for .Rmd "
 "files)."
 msgstr ""
+"Náhľad skriptu vykresleného z formátu RMarkdown (vhodné pre súbory .Rmd)."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:412
 #, kde-format
@@ -6264,6 +6300,14 @@ msgid ""
 "p><p>Please keep this in mind when using the preview feature, and especially "
 "when using the feature on scripts originating from untrusted sources.</p>"
 msgstr ""
+"<p>Funkcia náhľadu sa <b>snaží</b> vyhnúť trvalým zmenám vo vašom pracovnom "
+"priestore (technicky využitím prostredia <i>local()</i>). <b>Existujú však "
+"prípady, kedy použitie náhľadu môže spôsobiť neočakávané vedľajšie efekty</"
+"b>.</p><p>Konkrétne ide o skripty obsahujúce explicitné priradenia do "
+"<i>globalenv()</i>, alebo skripty meniace súbory na vašom súborovom systéme. "
+"Pripojenie/odpojenie balíkov alebo menných priestorov balíkov ovplyvní celú "
+"bežiacu reláciu R.</p><p>Majte to na pamäti pri používaní náhľadu, najmä pri "
+"skriptoch z nedôveryhodných zdrojov.</p>"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:576
 #, kde-format
@@ -6290,7 +6334,7 @@ msgstr "Náhľad vykresleného R Markdown"
 #: rkward/windows/rkcommandeditorwindow.cpp:913
 #, kde-format
 msgid "Pandoc is not installed"
-msgstr ""
+msgstr "Pandoc nie je nainštalovaný"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:914
 #, kde-format
@@ -6597,6 +6641,8 @@ msgid ""
 "<HTML><BODY><H1>RKWard output file could not be found</H1>\n"
 "</BODY></HTML>"
 msgstr ""
+"<HTML><BODY><H1>Výstupný súbor RKWard sa nepodarilo nájsť</H1>\n"
+"</BODY></HTML>"
 
 #: rkward/windows/rkhtmlwindow.cpp:926
 #, kde-format

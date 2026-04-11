@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: rkward__analysis\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 08:59+0000\n"
-"PO-Revision-Date: 2016-09-01 20:30+0100\n"
+"PO-Revision-Date: 2026-04-10 12:00+0200\n"
 "Last-Translator: Roman Paholik <wizzardsk@gmail.com>\n"
 "Language-Team: Slovak <kde-sk@linux.sk>\n"
 "Language: sk\n"
@@ -2559,6 +2559,9 @@ msgid ""
 "reminder, this is (rows − 1)×(columns − 1) for a test of independence, and "
 "(cells − 1) for a test of goodness of fit."
 msgstr ""
+"Zobrazené iba pre štatistiku chí-kvadrát: Cieľové stupne voľnosti. "
+"Pripomienka: pre test nezávislosti je to (riadky − 1)×(stĺpce − 1) a pre "
+"test dobrej zhody je to (bunky − 1)."
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Degrees of freedom for numerator")
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:65
@@ -2607,6 +2610,10 @@ msgid ""
 "control.   As a reminder, for mapping between cohen's f and Eta² use f² = "
 "Eta² / (1 − Eta²)"
 msgstr ""
+"Minimálna zistiteľná veľkosť účinku. Poznámka: špecifikácie veľkosti účinku "
+"sa líšia medzi dostupnými metódami. Nezabudnite si prečítať poznámku "
+"zobrazenú pod ovládacím prvkom.   Pripomienka: pre prevod medzi Cohenovym f "
+"a Eta² použite f² = Eta² / (1 − Eta²)"
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Significance level")
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:84
@@ -2903,7 +2910,7 @@ msgstr "stupne voľnosti"
 #: rkward/plugins/analysis/power/Poweranalysis.xml:169
 #, kde-format
 msgid "df <sub> num </sub> : k − 1"
-msgstr ""
+msgstr "df <sub> čit. </sub> : k − 1"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <spinbox label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:175
@@ -2915,7 +2922,7 @@ msgstr "stupne voľnosti"
 #: rkward/plugins/analysis/power/Poweranalysis.xml:176
 #, kde-format
 msgid "df <sub> den </sub> : N − k"
-msgstr ""
+msgstr "df <sub> men. </sub> : N − k"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Known measures"> <spinbox label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:185
