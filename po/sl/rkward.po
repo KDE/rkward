@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-04-10 00:40+0000\n"
-"PO-Revision-Date: 2026-03-15 08:21+0100\n"
+"POT-Creation-Date: 2026-04-11 00:39+0000\n"
+"PO-Revision-Date: 2026-04-10 07:03+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -5423,40 +5423,35 @@ msgstr ""
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:94
 #, fuzzy, kde-format
-#| msgid ""
-#| "Disable HTML hardware rendering (setting takes effect after restarting "
-#| "RKWard)"
-msgid "HTML rendering (setings take effect after restarting RKWard)"
+#| msgid "HTML rendering (setings take effect after restarting RKWard)"
+msgid "HTML rendering (settings take effect after restarting RKWard)"
 msgstr ""
-"Onemogoči strojno upodabljanje HTML-ja (nastavitev začne veljati po ponovnem "
-"zagonu RKWard-a)"
+"Upodabljanje HTML-ja (nastavitve začnejo veljati po ponovnem zagonu RKWard-a)"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:96
 #, kde-format
 msgid "Engine:"
-msgstr ""
+msgstr "Stroj:"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:97
-#, fuzzy, kde-format
-#| msgid "Platform default device"
+#, kde-format
 msgid "Platform default"
-msgstr "Privzeta naprava platforme"
+msgstr "Privzeta platforma"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:99
 #, kde-format
 msgid "QWebEngine"
-msgstr ""
+msgstr "QWebEngine"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:103
-#, fuzzy, kde-format
-#| msgid "View"
+#, kde-format
 msgid "QWebView"
-msgstr "Pogled"
+msgstr "QWebView"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:109
 #, kde-format
 msgid "Disable hardware acceleration"
-msgstr ""
+msgstr "Onemogoči strojno pospeševanje"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:110
 #, kde-format
@@ -7152,10 +7147,9 @@ msgid "Package"
 msgstr "Paket"
 
 #: rkward/windows/rkhtmlwindow.cpp:389
-#, fuzzy, kde-format
-#| msgid "RKWard output file %s does not (yet) exist"
+#, kde-format
 msgid "RKWard output file %1 does not (yet) exist"
-msgstr "Izhodna datoteka RKWard %s (še) ne obstaja"
+msgstr "Izhodna datoteka RKWard %1 (še) ne obstaja"
 
 #: rkward/windows/rkhtmlwindow.cpp:521
 #: rkward/windows/rktoplevelwindowgui.cpp:264
@@ -7234,20 +7228,19 @@ msgid "&Clear Output"
 msgstr "Osveži izhod"
 
 #: rkward/windows/rkhtmlwindow.cpp:686
-#, fuzzy, kde-format
-#| msgid "Unload"
+#, kde-format
 msgid "Reload"
-msgstr "Odloži"
+msgstr "Ponovno naloži"
 
 #: rkward/windows/rkhtmlwindow.cpp:690
 #, kde-format
 msgid "&Revert to last saved state"
-msgstr "&Povrni na zadnje shranjeno stanje"
+msgstr "Pov&rni na zadnje shranjeno stanje"
 
 #: rkward/windows/rkhtmlwindow.cpp:694
 #, kde-format
 msgid "Set Output as &Active"
-msgstr "Nastavi izhod kot aktiven"
+msgstr "Nastavi izhod kot &aktiven"
 
 #: rkward/windows/rkhtmlwindow.cpp:696
 #, kde-format
@@ -7363,12 +7356,12 @@ msgstr "Shrani kot"
 #: rkward/windows/rkqwebview.cpp:252
 #, kde-format
 msgid "Open link in new tab"
-msgstr ""
+msgstr "Odpri povezavo v novem zavihku"
 
 #: rkward/windows/rkqwebview.cpp:265
 #, kde-format
 msgid "Copy link address"
-msgstr ""
+msgstr "Kopiraj naslov povezave"
 
 #: rkward/windows/rktexthints.cpp:34
 #, kde-format

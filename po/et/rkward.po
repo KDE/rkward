@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-04-10 00:40+0000\n"
+"POT-Creation-Date: 2026-04-11 00:39+0000\n"
 "PO-Revision-Date: 2022-11-14 20:26+0100\n"
 "Last-Translator: Mihkel Tõnnov <mihhkel@gmail.com>\n"
 "Language-Team: Estonian <>\n"
@@ -5356,7 +5356,7 @@ msgstr ""
 #: rkward/settings/rksettingsmodulegeneral.cpp:94
 #, fuzzy, kde-format
 #| msgid "Directory where rkward may store files (*)"
-msgid "HTML rendering (setings take effect after restarting RKWard)"
+msgid "HTML rendering (settings take effect after restarting RKWard)"
 msgstr "Kataloog, millesse rkward võib salvestada faile (*)"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:96

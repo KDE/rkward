@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-04-10 00:40+0000\n"
-"PO-Revision-Date: 2026-03-15 14:33+0100\n"
+"POT-Creation-Date: 2026-04-11 00:39+0000\n"
+"PO-Revision-Date: 2026-04-10 11:37+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -5464,40 +5464,35 @@ msgstr ""
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:94
 #, fuzzy, kde-format
-#| msgid ""
-#| "Disable HTML hardware rendering (setting takes effect after restarting "
-#| "RKWard)"
-msgid "HTML rendering (setings take effect after restarting RKWard)"
+#| msgid "HTML rendering (setings take effect after restarting RKWard)"
+msgid "HTML rendering (settings take effect after restarting RKWard)"
 msgstr ""
-"Hardware renderen van HTML uitschakelen (dit wordt van toepassing na "
-"herstart van RKWard)"
+"HTML weergeven (instellingen zijn van toepassing na herstart van RKWard)"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:96
 #, kde-format
 msgid "Engine:"
-msgstr ""
+msgstr "Engine:"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:97
-#, fuzzy, kde-format
-#| msgid "Platform default device"
+#, kde-format
 msgid "Platform default"
-msgstr "Eigen apparaat platform"
+msgstr "Standaard van platform"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:99
 #, kde-format
 msgid "QWebEngine"
-msgstr ""
+msgstr "QWebEngine"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:103
-#, fuzzy, kde-format
-#| msgid "View"
+#, kde-format
 msgid "QWebView"
-msgstr "Beeld"
+msgstr "QWebView"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:109
 #, kde-format
 msgid "Disable hardware acceleration"
-msgstr ""
+msgstr "Hardwareversnelling uitschakelen"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:110
 #, kde-format
@@ -7202,10 +7197,9 @@ msgid "Package"
 msgstr "Pakket"
 
 #: rkward/windows/rkhtmlwindow.cpp:389
-#, fuzzy, kde-format
-#| msgid "RKWard output file %s does not (yet) exist"
+#, kde-format
 msgid "RKWard output file %1 does not (yet) exist"
-msgstr "RKWard uitvoerbestand %s bestaat (nog) niet"
+msgstr "RKWard uitvoerbestand %1 bestaat (nog) niet"
 
 #: rkward/windows/rkhtmlwindow.cpp:521
 #: rkward/windows/rktoplevelwindowgui.cpp:264
@@ -7285,10 +7279,9 @@ msgid "&Clear Output"
 msgstr "&Uitvoer wissen"
 
 #: rkward/windows/rkhtmlwindow.cpp:686
-#, fuzzy, kde-format
-#| msgid "Unload"
+#, kde-format
 msgid "Reload"
-msgstr "Verwijderen"
+msgstr "Herladen"
 
 #: rkward/windows/rkhtmlwindow.cpp:690
 #, kde-format
@@ -7416,12 +7409,12 @@ msgstr "Opslaan als"
 #: rkward/windows/rkqwebview.cpp:252
 #, kde-format
 msgid "Open link in new tab"
-msgstr ""
+msgstr "Koppeling openen in nieuw tabblad"
 
 #: rkward/windows/rkqwebview.cpp:265
 #, kde-format
 msgid "Copy link address"
-msgstr ""
+msgstr "Koppelingsadres kopiëren"
 
 #: rkward/windows/rktexthints.cpp:34
 #, kde-format

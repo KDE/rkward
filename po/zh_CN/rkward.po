@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-04-10 00:40+0000\n"
+"POT-Creation-Date: 2026-04-11 00:39+0000\n"
 "PO-Revision-Date: 2024-04-22 15:59\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -4923,7 +4923,7 @@ msgstr ""
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:94
 #, kde-format
-msgid "HTML rendering (setings take effect after restarting RKWard)"
+msgid "HTML rendering (settings take effect after restarting RKWard)"
 msgstr ""
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:96
@@ -4942,10 +4942,9 @@ msgid "QWebEngine"
 msgstr ""
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:103
-#, fuzzy, kde-format
-#| msgid "View"
+#, kde-format
 msgid "QWebView"
-msgstr "查看  "
+msgstr ""
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:109
 #, kde-format
@@ -6564,10 +6563,9 @@ msgid "&Clear Output"
 msgstr ""
 
 #: rkward/windows/rkhtmlwindow.cpp:686
-#, fuzzy, kde-format
-#| msgid "Unload"
+#, kde-format
 msgid "Reload"
-msgstr "卸载"
+msgstr ""
 
 #: rkward/windows/rkhtmlwindow.cpp:690
 #, kde-format

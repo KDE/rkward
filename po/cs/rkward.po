@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-04-10 00:40+0000\n"
+"POT-Creation-Date: 2026-04-11 00:39+0000\n"
 "PO-Revision-Date: 2024-08-15 17:04+0200\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -5210,7 +5210,7 @@ msgstr ""
 #| msgid ""
 #| "Directory where rkward may store files (setting takes effect after "
 #| "restarting RKWard)"
-msgid "HTML rendering (setings take effect after restarting RKWard)"
+msgid "HTML rendering (settings take effect after restarting RKWard)"
 msgstr ""
 "Adresář, v němž by RKWard může uchovávat soubory (změna nastavení bude "
 "vyžadovat restart RKWardu)."
@@ -5218,7 +5218,7 @@ msgstr ""
 #: rkward/settings/rksettingsmodulegeneral.cpp:96
 #, kde-format
 msgid "Engine:"
-msgstr ""
+msgstr "Nástroj:"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:97
 #, fuzzy, kde-format
@@ -6909,10 +6909,9 @@ msgid "&Clear Output"
 msgstr "&Vyprázdnit výstup"
 
 #: rkward/windows/rkhtmlwindow.cpp:686
-#, fuzzy, kde-format
-#| msgid "Unload"
+#, kde-format
 msgid "Reload"
-msgstr "Zrušit načtení"
+msgstr "Obnovit"
 
 #: rkward/windows/rkhtmlwindow.cpp:690
 #, kde-format

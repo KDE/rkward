@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-04-10 00:40+0000\n"
-"PO-Revision-Date: 2023-12-17 14:57+0100\n"
+"POT-Creation-Date: 2026-04-11 00:39+0000\n"
+"PO-Revision-Date: 2026-04-10 12:00+0200\n"
 "Last-Translator: Roman Paholik <wizzardsk@gmail.com>\n"
 "Language-Team: Slovak <kde-sk@linux.sk>\n"
 "Language: sk\n"
@@ -5402,40 +5402,34 @@ msgstr ""
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:94
 #, fuzzy, kde-format
-#| msgid ""
-#| "Disable HTML hardware rendering (setting takes effect after restarting "
-#| "RKWard)"
-msgid "HTML rendering (setings take effect after restarting RKWard)"
-msgstr ""
-"Zakázať hardvérové vykresľovanie HTML (nastavenie sa prejaví po reštartovaní "
-"RKWard)"
+#| msgid "HTML rendering (setings take effect after restarting RKWard)"
+msgid "HTML rendering (settings take effect after restarting RKWard)"
+msgstr "Vykresľovanie HTML (nastavenie sa prejaví po reštartovaní RKWard)"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:96
 #, kde-format
 msgid "Engine:"
-msgstr ""
+msgstr "Jadro:"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:97
-#, fuzzy, kde-format
-#| msgid "Platform default device"
+#, kde-format
 msgid "Platform default"
-msgstr "Predvolené zariadenie platformy"
+msgstr "Predvolené platformy"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:99
 #, kde-format
 msgid "QWebEngine"
-msgstr ""
+msgstr "QWebEngine"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:103
-#, fuzzy, kde-format
-#| msgid "View"
+#, kde-format
 msgid "QWebView"
-msgstr "Zobraziť"
+msgstr "QWebView"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:109
 #, kde-format
 msgid "Disable hardware acceleration"
-msgstr ""
+msgstr "Zakázať hardvérovú akceleráciu"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:110
 #, kde-format
@@ -7128,10 +7122,9 @@ msgid "Package"
 msgstr "Balík"
 
 #: rkward/windows/rkhtmlwindow.cpp:389
-#, fuzzy, kde-format
-#| msgid "RKWard output file %s does not (yet) exist"
+#, kde-format
 msgid "RKWard output file %1 does not (yet) exist"
-msgstr "Výstupný súbor RKWard %s (zatiaľ) neexistuje"
+msgstr "Výstupný súbor RKWard %1 (zatiaľ) neexistuje"
 
 #: rkward/windows/rkhtmlwindow.cpp:521
 #: rkward/windows/rktoplevelwindowgui.cpp:264
@@ -7210,10 +7203,9 @@ msgid "&Clear Output"
 msgstr "&Vyčistiť výstup"
 
 #: rkward/windows/rkhtmlwindow.cpp:686
-#, fuzzy, kde-format
-#| msgid "Unload"
+#, kde-format
 msgid "Reload"
-msgstr "Uvoľniť"
+msgstr "Obnoviť"
 
 #: rkward/windows/rkhtmlwindow.cpp:690
 #, kde-format
@@ -7339,12 +7331,12 @@ msgstr "Uložiť ako"
 #: rkward/windows/rkqwebview.cpp:252
 #, kde-format
 msgid "Open link in new tab"
-msgstr ""
+msgstr "Otvoriť odkaz v novej karte"
 
 #: rkward/windows/rkqwebview.cpp:265
 #, kde-format
 msgid "Copy link address"
-msgstr ""
+msgstr "Kopírovať adresu odkazu"
 
 #: rkward/windows/rktexthints.cpp:34
 #, kde-format
