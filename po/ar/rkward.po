@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-04-11 00:39+0000\n"
-"PO-Revision-Date: 2026-03-24 11:05+0400\n"
+"PO-Revision-Date: 2026-04-11 18:14+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -5309,41 +5309,34 @@ msgstr ""
 "الأولوية.</p>"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:94
-#, fuzzy, kde-format
-#| msgid ""
-#| "Disable HTML hardware rendering (setting takes effect after restarting "
-#| "RKWard)"
+#, kde-format
 msgid "HTML rendering (settings take effect after restarting RKWard)"
-msgstr ""
-"عطّل عرض HTML بتسريع العتاد (يصبح الإعداد ساري المفعول بعد إعادة تشغيل أر كي "
-"وارد)"
+msgstr "عرض HTML (يصبح الإعداد ساري المفعول بعد إعادة تشغيل أر كي وارد)"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:96
 #, kde-format
 msgid "Engine:"
-msgstr ""
+msgstr "المحرّك:"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:97
-#, fuzzy, kde-format
-#| msgid "Platform default device"
+#, kde-format
 msgid "Platform default"
-msgstr "جهاز النظام مبدئي"
+msgstr "مبدئي المنصة"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:99
 #, kde-format
 msgid "QWebEngine"
-msgstr ""
+msgstr "QWebEngine"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:103
-#, fuzzy, kde-format
-#| msgid "View"
+#, kde-format
 msgid "QWebView"
-msgstr "اعرض"
+msgstr "QWebView"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:109
 #, kde-format
 msgid "Disable hardware acceleration"
-msgstr ""
+msgstr "عطّل التسريع بالعتاد"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:110
 #, kde-format
@@ -7002,10 +6995,9 @@ msgid "Package"
 msgstr "الحزمة"
 
 #: rkward/windows/rkhtmlwindow.cpp:389
-#, fuzzy, kde-format
-#| msgid "RKWard output file %s does not (yet) exist"
+#, kde-format
 msgid "RKWard output file %1 does not (yet) exist"
-msgstr "ملف ناتج أر كي وارد %s لا يوجد (بعد)"
+msgstr "ملف ناتج أر كي وارد %1 لا يوجد (بعد)"
 
 #: rkward/windows/rkhtmlwindow.cpp:521
 #: rkward/windows/rktoplevelwindowgui.cpp:264
@@ -7084,10 +7076,9 @@ msgid "&Clear Output"
 msgstr "ا&محُ الخرج"
 
 #: rkward/windows/rkhtmlwindow.cpp:686
-#, fuzzy, kde-format
-#| msgid "Unload"
+#, kde-format
 msgid "Reload"
-msgstr "لا تحمّل"
+msgstr "أعد التحميل"
 
 #: rkward/windows/rkhtmlwindow.cpp:690
 #, kde-format
@@ -7213,12 +7204,12 @@ msgstr "احفظ ك‍"
 #: rkward/windows/rkqwebview.cpp:252
 #, kde-format
 msgid "Open link in new tab"
-msgstr ""
+msgstr "افتح الوصلة في لسان جديد"
 
 #: rkward/windows/rkqwebview.cpp:265
 #, kde-format
 msgid "Copy link address"
-msgstr ""
+msgstr "انسخ عنوان الوصلة"
 
 #: rkward/windows/rktexthints.cpp:34
 #, kde-format

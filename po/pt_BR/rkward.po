@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-04-11 00:39+0000\n"
-"PO-Revision-Date: 2026-04-10 07:03-0300\n"
+"PO-Revision-Date: 2026-04-11 08:05-0300\n"
 "Last-Translator: Marcus Gama <marcus.gama@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
 "Language: pt_BR\n"
@@ -5465,8 +5465,7 @@ msgstr ""
 "precedência.</p>"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:94
-#, fuzzy, kde-format
-#| msgid "HTML rendering (setings take effect after restarting RKWard)"
+#, kde-format
 msgid "HTML rendering (settings take effect after restarting RKWard)"
 msgstr ""
 "Renderização HTML (as configurações entram em vigor após reiniciar o RKWard)"

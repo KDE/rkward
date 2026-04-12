@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-04-11 00:39+0000\n"
-"PO-Revision-Date: 2026-03-21 19:54+0100\n"
+"PO-Revision-Date: 2026-04-11 18:16+0100\n"
 "Last-Translator: Víctor Rodrigo Córdoba <vrcordoba@gmail.com>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -5481,41 +5481,34 @@ msgstr ""
 "preferencia.</p>"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:94
-#, fuzzy, kde-format
-#| msgid ""
-#| "Disable HTML hardware rendering (setting takes effect after restarting "
-#| "RKWard)"
+#, kde-format
 msgid "HTML rendering (settings take effect after restarting RKWard)"
-msgstr ""
-"Desactivar la aceleración hardware para HTML (esta opción tiene efecto tras "
-"reiniciar RKWard)"
+msgstr "Representación HTML (esta opción tiene efecto tras reiniciar RKWard)"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:96
 #, kde-format
 msgid "Engine:"
-msgstr ""
+msgstr "Motor:"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:97
-#, fuzzy, kde-format
-#| msgid "Platform default device"
+#, kde-format
 msgid "Platform default"
-msgstr "Dispositivo por omisión de la plataforma"
+msgstr "Predeterminado de la plataforma"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:99
 #, kde-format
 msgid "QWebEngine"
-msgstr ""
+msgstr "QWebEngine"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:103
-#, fuzzy, kde-format
-#| msgid "View"
+#, kde-format
 msgid "QWebView"
-msgstr "Ver"
+msgstr "QWebView"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:109
 #, kde-format
 msgid "Disable hardware acceleration"
-msgstr ""
+msgstr "Desactivar aceleración por hardware"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:110
 #, kde-format
@@ -7242,10 +7235,9 @@ msgid "Package"
 msgstr "Paquete"
 
 #: rkward/windows/rkhtmlwindow.cpp:389
-#, fuzzy, kde-format
-#| msgid "RKWard output file %s does not (yet) exist"
+#, kde-format
 msgid "RKWard output file %1 does not (yet) exist"
-msgstr "El archivo de salida de RKWard %s (todavía) no existe"
+msgstr "El archivo de salida de RKWard %1 (todavía) no existe"
 
 #: rkward/windows/rkhtmlwindow.cpp:521
 #: rkward/windows/rktoplevelwindowgui.cpp:264
@@ -7324,10 +7316,9 @@ msgid "&Clear Output"
 msgstr "&Limpiar salida"
 
 #: rkward/windows/rkhtmlwindow.cpp:686
-#, fuzzy, kde-format
-#| msgid "Unload"
+#, kde-format
 msgid "Reload"
-msgstr "Descartar"
+msgstr "Recargar"
 
 #: rkward/windows/rkhtmlwindow.cpp:690
 #, kde-format
@@ -7453,12 +7444,12 @@ msgstr "Guardar como"
 #: rkward/windows/rkqwebview.cpp:252
 #, kde-format
 msgid "Open link in new tab"
-msgstr ""
+msgstr "Abrir enlace en nueva pestaña"
 
 #: rkward/windows/rkqwebview.cpp:265
 #, kde-format
 msgid "Copy link address"
-msgstr ""
+msgstr "Copiar dirección del enlace"
 
 #: rkward/windows/rktexthints.cpp:34
 #, kde-format
@@ -8085,13 +8076,3 @@ msgstr "Introducir el nuevo nombre"
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr "Mostrar en el editor (solo-lectura)"
-
-#~ msgid "Default &Encoding"
-#~ msgstr "&Codificación por omisión"
-
-#~ msgid ""
-#~ "Set the encoding to assume in case no explicit encoding has been set in "
-#~ "the page or in the HTTP headers."
-#~ msgstr ""
-#~ "Establecer la codificación a usar en caso de no se haya establecido "
-#~ "ninguna codificación en la página o en las cabeceras HTTP."

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-04-11 00:39+0000\n"
-"PO-Revision-Date: 2026-03-14 06:36+0100\n"
+"PO-Revision-Date: 2026-04-11 04:36+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -4343,6 +4343,9 @@ msgid ""
 "activated, automatically. To de-activate selected plugin packs, use Settings-"
 ">Configure RKWard->Plugins."
 msgstr ""
+"აღმოჩენილი და ავტომატურად გააქტიურებულია ახალი RKWard-ის დამატების პაკეტები "
+"(ჩამოთვლილია ქვემოთ). იმისათვის, რომ მოახდინოთ მონიშნული დამატების პაკეტების "
+"დეაქტივაცია, გამოიყენეთ: მორგება->RKWard-ის მორგება->დამატებები."
 
 #: rkward/rkward.cpp:373
 #, kde-format
@@ -5277,41 +5280,34 @@ msgid ""
 msgstr ""
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:94
-#, fuzzy, kde-format
-#| msgid ""
-#| "Disable HTML hardware rendering (setting takes effect after restarting "
-#| "RKWard)"
+#, kde-format
 msgid "HTML rendering (settings take effect after restarting RKWard)"
-msgstr ""
-"გამორთავს HTML-ის აპარატურულ რენდერს (ძალაში RKWard-ის გადატვირთვის შემდეგ "
-"შევა)"
+msgstr "HTML-ის რენდერი (ძალაში RKWard-ის გადატვირთვის შემდეგ შევა)"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:96
 #, kde-format
 msgid "Engine:"
-msgstr ""
+msgstr "ძრავა:"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:97
-#, fuzzy, kde-format
-#| msgid "Platform default device"
+#, kde-format
 msgid "Platform default"
-msgstr "პლატფორმის ნაგულისხმევი მოწყობილობა"
+msgstr "პლატფორმის ნაგულისხმევი"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:99
 #, kde-format
 msgid "QWebEngine"
-msgstr ""
+msgstr "QWebEngine"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:103
-#, fuzzy, kde-format
-#| msgid "View"
+#, kde-format
 msgid "QWebView"
-msgstr "ხედი"
+msgstr "QWebView"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:109
 #, kde-format
 msgid "Disable hardware acceleration"
-msgstr ""
+msgstr "აპარატურული აჩქარების გათიშვა"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:110
 #, kde-format
@@ -6869,6 +6865,9 @@ msgid ""
 "loaded, or maybe you mistyped the command. Try using Help->Search R Help for "
 "more options."
 msgstr ""
+"'%1'-ის შესახებ დახმარების გვერდი აღმოჩენილი არაა. ან შესაბამისი პაკეტი "
+"დაყენებული/ჩატვირთული არაა, ან ბრძანება არასწორად აკრიფეთ. მეტი არჩევნის "
+"მისაღებად სცადეთ, გამოიყენოთ დახმარება->ძებნა R-ის დახმარებაში."
 
 #: rkward/windows/rkhelpsearchwindow.cpp:161
 #, kde-format
@@ -6896,10 +6895,9 @@ msgid "Package"
 msgstr "პაკეტი"
 
 #: rkward/windows/rkhtmlwindow.cpp:389
-#, fuzzy, kde-format
-#| msgid "RKWard output file %s does not (yet) exist"
+#, kde-format
 msgid "RKWard output file %1 does not (yet) exist"
-msgstr "RKWard-ის გამოტანის ფაილი %s (ჯერ) არ არსებობს"
+msgstr "RKWard-ის გამოტანის ფაილი %1 (ჯერ) არ არსებობს"
 
 #: rkward/windows/rkhtmlwindow.cpp:521
 #: rkward/windows/rktoplevelwindowgui.cpp:264
@@ -6934,6 +6932,8 @@ msgid ""
 "Do you really want to clear the output? This will also remove all image "
 "files used in the output. It will not be possible to restore it."
 msgstr ""
+"მართლა გნებავთ გამოტანის გასუფთავება? ეს ასევე წაშლის ყველა გამოსახულებას, "
+"რომელიც გამოტანისას იყო გამოყენებული და მათ ვერ აღადგენთ."
 
 #: rkward/windows/rkhtmlwindow.cpp:619
 #, kde-format
@@ -6976,10 +6976,9 @@ msgid "&Clear Output"
 msgstr "&გამოტანის გასუფთავება"
 
 #: rkward/windows/rkhtmlwindow.cpp:686
-#, fuzzy, kde-format
-#| msgid "Unload"
+#, kde-format
 msgid "Reload"
-msgstr "გამოტვირთვა"
+msgstr "თავიდან ჩატვირთვა"
 
 #: rkward/windows/rkhtmlwindow.cpp:690
 #, kde-format
@@ -7105,12 +7104,12 @@ msgstr "შენახვა, როგორც"
 #: rkward/windows/rkqwebview.cpp:252
 #, kde-format
 msgid "Open link in new tab"
-msgstr ""
+msgstr "ბმულის გახსნა ახალ ჩანართში"
 
 #: rkward/windows/rkqwebview.cpp:265
 #, kde-format
 msgid "Copy link address"
-msgstr ""
+msgstr "ბმულის მისამართის კოპირება"
 
 #: rkward/windows/rktexthints.cpp:34
 #, kde-format

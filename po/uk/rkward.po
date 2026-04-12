@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-04-11 00:39+0000\n"
-"PO-Revision-Date: 2026-04-10 08:30+0300\n"
+"PO-Revision-Date: 2026-04-11 08:23+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -5495,8 +5495,7 @@ msgstr ""
 "пріоритетним буде саме каталог робочих просторів.</p>"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:94
-#, fuzzy, kde-format
-#| msgid "HTML rendering (setings take effect after restarting RKWard)"
+#, kde-format
 msgid "HTML rendering (settings take effect after restarting RKWard)"
 msgstr "Обробка HTML (налаштування наберуть чинності після перезапуску RKWard)"
 
