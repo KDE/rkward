@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-04-11 00:39+0000\n"
-"PO-Revision-Date: 2026-04-10 11:37+0200\n"
+"PO-Revision-Date: 2026-04-11 14:08+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -5463,8 +5463,7 @@ msgstr ""
 "ingelezen werkruimten te gebruiken, die map voorrang krijgt.</p>"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:94
-#, fuzzy, kde-format
-#| msgid "HTML rendering (setings take effect after restarting RKWard)"
+#, kde-format
 msgid "HTML rendering (settings take effect after restarting RKWard)"
 msgstr ""
 "HTML weergeven (instellingen zijn van toepassing na herstart van RKWard)"
