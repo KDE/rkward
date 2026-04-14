@@ -1,62 +1,63 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR This file is copyright:
 # This file is distributed under the same license as the rkward package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# Aindriú Mac Giolla Eoin <aindriu80@yahoo.com>, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 14:38+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: Irish Gaelic <kde-i18n-doc@kde.org>\n"
+"PO-Revision-Date: 2026-03-26 12:27+0000\n"
+"Last-Translator: Aindriú Mac Giolla Eoin <aindriu80@yahoo.com>\n"
+"Language-Team: Irish <http://weblate.amgelocalnet.duckdns.org/projects/"
+"rkward/rkward__import_export/ga/>\n"
 "Language: ga\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=5; plural=n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n < 11 ? "
-"3 : 4\n"
+"3 : 4;\n"
+"X-Generator: Weblate 5.16\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
+msgstr "Aindriú Mac Giolla Eoin"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
+msgstr "aindriu80@yahoo.com"
 
 #. i18n: ectx: (Loaded from Install from git/svn)
 #: rkward/plugins/00saveload/../internal/Installfromgit.js:78
 #, kde-format
 msgid "Install from git results"
-msgstr ""
+msgstr "Suiteáil ó thorthaí git"
 
 #. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Package source")
 #: rkward/plugins/00saveload/../internal/Installfromgit.rkh:18
 #, kde-format
 msgid "Set the location where the package resides that you want to install."
-msgstr ""
+msgstr "Socraigh an suíomh ina bhfuil an pacáiste ar mhaith leat a shuiteáil."
 
 #. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Git user name")
 #: rkward/plugins/00saveload/../internal/Installfromgit.rkh:22
 #, kde-format
 msgid "Specify the user name (GitHub, GitLab and Bitbucket only)."
-msgstr ""
+msgstr "Sonraigh ainm an úsáideora (GitHub, GitLab agus Bitbucket amháin)."
 
 #. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Repository")
 #: rkward/plugins/00saveload/../internal/Installfromgit.rkh:25
 #, kde-format
 msgid "Give the repository name (GitHub, GitLab and Bitbucket only)."
-msgstr ""
+msgstr "Tabhair ainm an stórais (GitHub, GitLab agus Bitbucket amháin)."
 
 #. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "URL to repository")
 #: rkward/plugins/00saveload/../internal/Installfromgit.rkh:28
 #, kde-format
 msgid "Give the full URL to the repository (generic git and svn only)."
-msgstr ""
+msgstr "Tabhair an URL iomlán don stórlann (git agus svn cineálacha amháin)."
 
 #. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Commit/tag/branch")
 #: rkward/plugins/00saveload/../internal/Installfromgit.rkh:31
@@ -65,6 +66,8 @@ msgid ""
 "If you want a certain commit, tag or branch for installation, define that "
 "here."
 msgstr ""
+"Más mian leat tiomantas, clib nó brainse áirithe le haghaidh suiteála, "
+"sainmhínigh é sin anseo."
 
 #. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Subdirectory")
 #: rkward/plugins/00saveload/../internal/Installfromgit.rkh:34
@@ -73,6 +76,7 @@ msgid ""
 "If you want to install from a subdirectory of the repository, define that "
 "here."
 msgstr ""
+"Más mian leat a shuiteáil ó fho-eolaire den stórlann, sainmhínigh sin anseo."
 
 #. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Personal access token (PAT)")
 #: rkward/plugins/00saveload/../internal/Installfromgit.rkh:38
@@ -81,6 +85,8 @@ msgid ""
 "To install from a private repository, set your personal access token (PAT, "
 "GitHub and GitLab only)."
 msgstr ""
+"Chun suiteáil ó stór príobháideach, socraigh do chomhartha rochtana "
+"pearsanta (PAT, GitHub agus GitLab amháin)."
 
 #. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "User")
 #: rkward/plugins/00saveload/../internal/Installfromgit.rkh:41
@@ -88,6 +94,8 @@ msgstr ""
 msgid ""
 "To install from a private repository, set the user name (Bitbucket only)."
 msgstr ""
+"Chun suiteáil ó stór príobháideach, socraigh an t-ainm úsáideora (Bitbucket "
+"amháin)."
 
 #. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Password")
 #: rkward/plugins/00saveload/../internal/Installfromgit.rkh:44
@@ -95,114 +103,116 @@ msgstr ""
 msgid ""
 "To install from a private repository, set the password (Bitbucket only)."
 msgstr ""
+"Chun suiteáil ó stór príobháideach, socraigh an focal faire (Bitbucket "
+"amháin)."
 
 #. i18n: ectx: (Install from git/svn) <dialog label="...">
 #: rkward/plugins/00saveload/../internal/Installfromgit.xml:30
 #, kde-format
 msgid "Install from git/svn"
-msgstr ""
+msgstr "Suiteáil ó git/svn"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <dropdown label="...">
 #: rkward/plugins/00saveload/../internal/Installfromgit.xml:32
 #, kde-format
 msgid "Package source"
-msgstr ""
+msgstr "Foinse an phacáiste"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <dropdown label="Package source"> <option label="...">
 #: rkward/plugins/00saveload/../internal/Installfromgit.xml:33
 #, kde-format
 msgid "git (generic)"
-msgstr ""
+msgstr "git (ginearálta)"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <dropdown label="Package source"> <option label="...">
 #: rkward/plugins/00saveload/../internal/Installfromgit.xml:34
 #, kde-format
 msgid "GitHub"
-msgstr ""
+msgstr "GitHub"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <dropdown label="Package source"> <option label="...">
 #: rkward/plugins/00saveload/../internal/Installfromgit.xml:35
 #, kde-format
 msgid "GitLab"
-msgstr ""
+msgstr "GitLab"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <dropdown label="Package source"> <option label="...">
 #: rkward/plugins/00saveload/../internal/Installfromgit.xml:36
 #, kde-format
 msgid "Bitbucket"
-msgstr ""
+msgstr "Bitbucket"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <dropdown label="Package source"> <option label="...">
 #: rkward/plugins/00saveload/../internal/Installfromgit.xml:37
 #, kde-format
 msgid "subversion (generic)"
-msgstr ""
+msgstr "treascairt (cineálach)"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="...">
 #: rkward/plugins/00saveload/../internal/Installfromgit.xml:39
 #, kde-format
 msgid "Package repository"
-msgstr ""
+msgstr "Stórlann pacáiste"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="Package repository"> <input label="...">
 #: rkward/plugins/00saveload/../internal/Installfromgit.xml:41
 #, kde-format
 msgid "Git user name"
-msgstr ""
+msgstr "Ainm úsáideora Git"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="Package repository"> <input label="...">
 #: rkward/plugins/00saveload/../internal/Installfromgit.xml:42
 #, kde-format
 msgid "Repository"
-msgstr ""
+msgstr "Stór"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="Package repository"> <input label="...">
 #: rkward/plugins/00saveload/../internal/Installfromgit.xml:44
 #, kde-format
 msgid "URL to repository"
-msgstr ""
+msgstr "URL chuig an stórlann"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <input label="...">
 #: rkward/plugins/00saveload/../internal/Installfromgit.xml:46
 #, kde-format
 msgid "Commit/tag/branch"
-msgstr ""
+msgstr "Tiomantas/clib/brainse"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <input label="...">
 #: rkward/plugins/00saveload/../internal/Installfromgit.xml:47
 #, kde-format
 msgid "Subdirectory"
-msgstr ""
+msgstr "Fo-eolaire"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="...">
 #: rkward/plugins/00saveload/../internal/Installfromgit.xml:48
 #, kde-format
 msgid "Private repository"
-msgstr ""
+msgstr "Stór príobháideach"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="Private repository"> <input label="...">
 #: rkward/plugins/00saveload/../internal/Installfromgit.xml:49
 #, kde-format
 msgid "Personal access token (PAT)"
-msgstr ""
+msgstr "Comhartha rochtana pearsanta (PAT)"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="Private repository"> <input label="...">
 #: rkward/plugins/00saveload/../internal/Installfromgit.xml:51
 #, kde-format
 msgid "User"
-msgstr ""
+msgstr "Úsáideoir"
 
 #. i18n: ectx: (Install from git/svn) <dialog label="Install from git/svn"> <frame label="Private repository"> <input label="...">
 #: rkward/plugins/00saveload/../internal/Installfromgit.xml:52
 #, kde-format
 msgid "Password"
-msgstr ""
+msgstr "Pasfhocal"
 
 #. i18n: ectx: (Loaded from Download AppImage)
 #: rkward/plugins/00saveload/DownloadAppImage.js:63
 #, kde-format
 msgid "Download AppImage results"
-msgstr ""
+msgstr "Íoslódáil torthaí AppImage"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Download AppImage) <title>
@@ -212,19 +222,20 @@ msgstr ""
 #: rkward/plugins/import_export.pluginmap:55
 #, kde-format
 msgid "Download AppImage"
-msgstr ""
+msgstr "Íoslódáil Íomhá an Aip"
 
 #. i18n: ectx: (Download AppImage) <summary>
 #: rkward/plugins/00saveload/DownloadAppImage.rkh:17
 #, kde-format
 msgid "Adds a dialog to install or update an AppImage of RKWard"
 msgstr ""
+"Cuireann sé dialóg leis chun AppImage de RKWard a shuiteáil nó a nuashonrú"
 
 #. i18n: ectx: (Download AppImage) <settings> <setting> (refers to element labelled "Save to")
 #: rkward/plugins/00saveload/DownloadAppImage.rkh:30
 #, kde-format
 msgid "Select a target file to save the AppImage to."
-msgstr ""
+msgstr "Roghnaigh comhad sprice chun an AppImage a shábháil chuige."
 
 #. i18n: ectx: (Download AppImage) <settings> <setting> (refers to element labelled "RKWard release branch")
 #: rkward/plugins/00saveload/DownloadAppImage.rkh:36
@@ -234,25 +245,29 @@ msgid ""
 "release, the latest development build (used for testing and probably buggy/"
 "unstable) or an AppImage from a custom source."
 msgstr ""
+"Sainigh cén brainse de RKWard is mian leat a íoslódáil: An scaoileadh "
+"cobhsaí is déanaí, an tógáil forbartha is déanaí (a úsáidtear le haghaidh "
+"tástála agus is dócha go bhfuil fabhtanna/neamhchobhsaí ann) nó AppImage ó "
+"fhoinse saincheaptha."
 
 #. i18n: ectx: (Download AppImage) <settings> <setting> (refers to element labelled "URL")
 #: rkward/plugins/00saveload/DownloadAppImage.rkh:39
 #, kde-format
 msgid "URL to look for the AppImage files."
-msgstr ""
+msgstr "URL chun na comhaid AppImage a lorg."
 
 #. i18n: ectx: (Download AppImage) <settings> <setting> (refers to element labelled "Pattern")
 #: rkward/plugins/00saveload/DownloadAppImage.rkh:42
 #, kde-format
 msgid ""
 "Regular expression to find links to the AppImage in the HTML code of the URL."
-msgstr ""
+msgstr "Slonn rialta chun naisc chuig an AppImage a aimsiú i gcód HTML an URL."
 
 #. i18n: ectx: (Download AppImage) <settings> <setting> (refers to element labelled "Download method")
 #: rkward/plugins/00saveload/DownloadAppImage.rkh:46
 #, kde-format
 msgid "The method to use by download.file()."
-msgstr ""
+msgstr "An modh le húsáid ag download.file()."
 
 #. i18n: ectx: (Download AppImage) <settings> <setting> (refers to element labelled "Allow cached files")
 #: rkward/plugins/00saveload/DownloadAppImage.rkh:49
@@ -262,18 +277,23 @@ msgid ""
 "‘⁠http://⁠’ and ‘⁠https://⁠’ URLs. It will attempt to get a copy directly from "
 "the site rather than from an intermediate cache."
 msgstr ""
+"An nglactar le luach taisceáilte ar thaobh an fhreastalaí? Tá sé úsáideach é "
+"seo a dhíchumasú i gcás URLanna ‘⁠http://⁠’ agus ‘⁠https://⁠’. Déanfaidh sé "
+"iarracht cóip a fháil go díreach ón suíomh seachas ó thaisce idirmheánach."
 
 #. i18n: ectx: (Download AppImage) <settings> <setting> (refers to element labelled "Timeout")
 #: rkward/plugins/00saveload/DownloadAppImage.rkh:52
 #, kde-format
 msgid "The number of seconds allowed to try downloading the AppImage."
 msgstr ""
+"An líon soicindí a cheadaítear chun iarracht a dhéanamh an AppImage a "
+"íoslódáil."
 
 #. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> <tabbook label="...">
 #: rkward/plugins/00saveload/DownloadAppImage.xml:40
 #, kde-format
 msgid "AppImage"
-msgstr ""
+msgstr "ÍomháAip"
 
 #. i18n: ectx: (Loaded from Export Table / CSV files)
 #. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> <tabbook label="AppImage"> <tab label="...">
@@ -283,7 +303,7 @@ msgstr ""
 #: rkward/plugins/import_export.pluginmap:61
 #, kde-format
 msgid "File"
-msgstr ""
+msgstr "Comhad"
 
 #. i18n: ectx: (Save R objects) <dialog label="Save R objects"> <tab label="Select variables"> <frame label="...">
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <frame label="...">
@@ -295,37 +315,37 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:60
 #, kde-format
 msgid "Save to"
-msgstr ""
+msgstr "Sábháil chuig"
 
 #. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> <tabbook label="AppImage"> <tab label="File"> <checkbox label="...">
 #: rkward/plugins/00saveload/DownloadAppImage.xml:48
 #, kde-format
 msgid "Suppress package loading messages"
-msgstr ""
+msgstr "Teachtaireachtaí luchtaithe pacáiste a chosc"
 
 #. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> <tabbook label="AppImage"> <tab label="...">
 #: rkward/plugins/00saveload/DownloadAppImage.xml:52
 #, kde-format
 msgid "Source"
-msgstr ""
+msgstr "Foinse"
 
 #. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> <tabbook label="AppImage"> <tab label="Source"> <dropdown label="...">
 #: rkward/plugins/00saveload/DownloadAppImage.xml:55
 #, kde-format
 msgid "RKWard release branch"
-msgstr ""
+msgstr "Brainse scaoilte RKWard"
 
 #. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> [...] <dropdown label="RKWard release branch"> <option label="...">
 #: rkward/plugins/00saveload/DownloadAppImage.xml:56
 #, kde-format
 msgid "Latest stable release"
-msgstr ""
+msgstr "An scaoileadh cobhsaí is déanaí"
 
 #. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> [...] <dropdown label="RKWard release branch"> <option label="...">
 #: rkward/plugins/00saveload/DownloadAppImage.xml:57
 #, kde-format
 msgid "Current development build (untested!)"
-msgstr ""
+msgstr "An fhorbairt reatha (gan tástáil!)"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <dropdown label="File format"> <option label="...">
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="General"> <dropdown label="Data format"> <option label="...">
@@ -335,79 +355,79 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:73
 #, kde-format
 msgid "Custom"
-msgstr ""
+msgstr "Saincheaptha"
 
 #. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> <tabbook label="AppImage"> <tab label="Source"> <input label="...">
 #: rkward/plugins/00saveload/DownloadAppImage.xml:60
 #, kde-format
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> <tabbook label="AppImage"> <tab label="Source"> <input label="...">
 #: rkward/plugins/00saveload/DownloadAppImage.xml:61
 #, kde-format
 msgid "Pattern"
-msgstr ""
+msgstr "Patrún"
 
 #. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> <tabbook label="AppImage"> <tab label="...">
 #: rkward/plugins/00saveload/DownloadAppImage.xml:66
 #, kde-format
 msgid "Download"
-msgstr ""
+msgstr "Íoslódáil"
 
 #. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> <tabbook label="AppImage"> <tab label="Download"> <dropdown label="...">
 #: rkward/plugins/00saveload/DownloadAppImage.xml:69
 #, kde-format
 msgid "Download method"
-msgstr ""
+msgstr "Modh íoslódála"
 
 #. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> [...] <dropdown label="Download method"> <option label="...">
 #: rkward/plugins/00saveload/DownloadAppImage.xml:70
 #, kde-format
 msgid "auto"
-msgstr ""
+msgstr "uath"
 
 #. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> [...] <dropdown label="Download method"> <option label="...">
 #: rkward/plugins/00saveload/DownloadAppImage.xml:71
 #, kde-format
 msgid "internal"
-msgstr ""
+msgstr "inmheánach"
 
 #. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> [...] <dropdown label="Download method"> <option label="...">
 #: rkward/plugins/00saveload/DownloadAppImage.xml:72
 #, kde-format
 msgid "libcurl"
-msgstr ""
+msgstr "libcurl"
 
 #. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> [...] <dropdown label="Download method"> <option label="...">
 #: rkward/plugins/00saveload/DownloadAppImage.xml:73
 #, kde-format
 msgid "wget"
-msgstr ""
+msgstr "wget"
 
 #. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> [...] <dropdown label="Download method"> <option label="...">
 #: rkward/plugins/00saveload/DownloadAppImage.xml:74
 #, kde-format
 msgid "curl"
-msgstr ""
+msgstr "curl"
 
 #. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> [...] <dropdown label="Download method"> <option label="...">
 #: rkward/plugins/00saveload/DownloadAppImage.xml:75
 #, kde-format
 msgid "wininet (Windows only)"
-msgstr ""
+msgstr "wininet (Windows amháin)"
 
 #. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> <tabbook label="AppImage"> <tab label="Download"> <checkbox label="...">
 #: rkward/plugins/00saveload/DownloadAppImage.xml:77
 #, kde-format
 msgid "Allow cached files"
-msgstr ""
+msgstr "Ceadaigh comhaid taisceáilte"
 
 #. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> <tabbook label="AppImage"> <tab label="Download"> <spinbox label="...">
 #: rkward/plugins/00saveload/DownloadAppImage.xml:78
 #, kde-format
 msgid "Timeout"
-msgstr ""
+msgstr "Am críochnaithe"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Encoding and Character Options"> <frame label="...">
 #. i18n: ectx: (Loaded from Loaded from Import SPSS file) <snippet> <tab label="...">
@@ -422,7 +442,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:132
 #, kde-format
 msgid "Encoding"
-msgstr ""
+msgstr "Ionchódú"
 
 #. i18n: ectx: (Loaded from Loaded from Import SPSS file) <snippet> <tab label="Encoding"> <checkbox label="...">
 #. i18n: ectx: (Loaded from Import SPSS file) <snippet> <tab label="Encoding"> <checkbox label="...">
@@ -435,7 +455,7 @@ msgstr ""
 #: rkward/plugins/00saveload/import/convert_encoding.xml:17
 #, kde-format
 msgid "Convert string encoding"
-msgstr ""
+msgstr "Tiontaigh ionchódú teaghrán"
 
 #. i18n: ectx: (Loaded from Loaded from Import SPSS file) <snippet> <tab label="Encoding"> <dropdown label="...">
 #. i18n: ectx: (Loaded from Import SPSS file) <snippet> <tab label="Encoding"> <dropdown label="...">
@@ -448,7 +468,7 @@ msgstr ""
 #: rkward/plugins/00saveload/import/convert_encoding.xml:18
 #, kde-format
 msgid "Convert from:"
-msgstr ""
+msgstr "Tiontaigh ó:"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> [...] <dropdown label="File encoding"> <option label="...">
 #. i18n: ectx: (Loaded from Loaded from Import SPSS file) <snippet> <tab label="Encoding"> <dropdown label="Convert from:"> <option label="...">
@@ -463,7 +483,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:136
 #, kde-format
 msgid "Latin 1"
-msgstr ""
+msgstr "Laidin 1"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> [...] <dropdown label="File encoding"> <option label="...">
 #. i18n: ectx: (Loaded from Loaded from Import SPSS file) <snippet> <tab label="Encoding"> <dropdown label="Convert from:"> <option label="...">
@@ -478,7 +498,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:135
 #, kde-format
 msgid "UTF-8"
-msgstr ""
+msgstr "UTF-8"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> [...] <dropdown label="File encoding"> <option label="...">
 #. i18n: ectx: (Loaded from Loaded from Import SPSS file) <snippet> <tab label="Encoding"> <dropdown label="Convert from:"> <option label="...">
@@ -493,7 +513,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:137
 #, kde-format
 msgid "ISO8859-1 Latin-1 Western European"
-msgstr ""
+msgstr "ISO8859-1 Laidin-1 Iarthar na hEorpa"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> [...] <dropdown label="File encoding"> <option label="...">
 #. i18n: ectx: (Loaded from Loaded from Import SPSS file) <snippet> <tab label="Encoding"> <dropdown label="Convert from:"> <option label="...">
@@ -508,7 +528,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:138
 #, kde-format
 msgid "ISO8859-2 Latin-2 Central European"
-msgstr ""
+msgstr "ISO8859-2 Laidin-2 Lár-Eorpach"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> [...] <dropdown label="File encoding"> <option label="...">
 #. i18n: ectx: (Loaded from Loaded from Import SPSS file) <snippet> <tab label="Encoding"> <dropdown label="Convert from:"> <option label="...">
@@ -523,7 +543,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:139
 #, kde-format
 msgid "ISO8859-3 Latin-3 South European"
-msgstr ""
+msgstr "ISO8859-3 Laidin-3 Deisceart na hEorpa"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> [...] <dropdown label="File encoding"> <option label="...">
 #. i18n: ectx: (Loaded from Loaded from Import SPSS file) <snippet> <tab label="Encoding"> <dropdown label="Convert from:"> <option label="...">
@@ -538,7 +558,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:140
 #, kde-format
 msgid "ISO8859-4 Latin-4 North European"
-msgstr ""
+msgstr "ISO8859-4 Laidin-4 Tuaisceart na hEorpa"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> [...] <dropdown label="File encoding"> <option label="...">
 #. i18n: ectx: (Loaded from Loaded from Import SPSS file) <snippet> <tab label="Encoding"> <dropdown label="Convert from:"> <option label="...">
@@ -553,7 +573,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:141
 #, kde-format
 msgid "ISO8859-5 Latin/Cyrillic"
-msgstr ""
+msgstr "ISO8859-5 Laidin/Coireallach"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> [...] <dropdown label="File encoding"> <option label="...">
 #. i18n: ectx: (Loaded from Loaded from Import SPSS file) <snippet> <tab label="Encoding"> <dropdown label="Convert from:"> <option label="...">
@@ -568,7 +588,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:142
 #, kde-format
 msgid "ISO8859-6 Latin/Arabic"
-msgstr ""
+msgstr "ISO8859-6 Laidin/Araibis"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> [...] <dropdown label="File encoding"> <option label="...">
 #. i18n: ectx: (Loaded from Loaded from Import SPSS file) <snippet> <tab label="Encoding"> <dropdown label="Convert from:"> <option label="...">
@@ -583,7 +603,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:143
 #, kde-format
 msgid "ISO8859-7 Latin/Greek"
-msgstr ""
+msgstr "ISO8859-7 Laidin/Gréigis"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> [...] <dropdown label="File encoding"> <option label="...">
 #. i18n: ectx: (Loaded from Loaded from Import SPSS file) <snippet> <tab label="Encoding"> <dropdown label="Convert from:"> <option label="...">
@@ -598,7 +618,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:144
 #, kde-format
 msgid "MS-GREEK"
-msgstr ""
+msgstr "MS-GRÉIGIS"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> [...] <dropdown label="File encoding"> <option label="...">
 #. i18n: ectx: (Loaded from Loaded from Import SPSS file) <snippet> <tab label="Encoding"> <dropdown label="Convert from:"> <option label="...">
@@ -613,7 +633,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:145
 #, kde-format
 msgid "ISO8859-8 Latin/Hebrew"
-msgstr ""
+msgstr "ISO8859-8 Laidin/Eabhrais"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> [...] <dropdown label="File encoding"> <option label="...">
 #. i18n: ectx: (Loaded from Loaded from Import SPSS file) <snippet> <tab label="Encoding"> <dropdown label="Convert from:"> <option label="...">
@@ -628,7 +648,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:146
 #, kde-format
 msgid "ISO8859-9 Latin-5 Turkish"
-msgstr ""
+msgstr "ISO8859-9 Laidin-5 Tuircis"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> [...] <dropdown label="File encoding"> <option label="...">
 #. i18n: ectx: (Loaded from Loaded from Import SPSS file) <snippet> <tab label="Encoding"> <dropdown label="Convert from:"> <option label="...">
@@ -643,7 +663,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:147
 #, kde-format
 msgid "ISO8859-10 Latin-6 Nordic"
-msgstr ""
+msgstr "ISO8859-10 Laidin-6 Nordach"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> [...] <dropdown label="File encoding"> <option label="...">
 #. i18n: ectx: (Loaded from Loaded from Import SPSS file) <snippet> <tab label="Encoding"> <dropdown label="Convert from:"> <option label="...">
@@ -658,7 +678,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:148
 #, kde-format
 msgid "ISO8859-11 Latin/Thai"
-msgstr ""
+msgstr "ISO8859-11 Laidin/Téalainnis"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> [...] <dropdown label="File encoding"> <option label="...">
 #. i18n: ectx: (Loaded from Loaded from Import SPSS file) <snippet> <tab label="Encoding"> <dropdown label="Convert from:"> <option label="...">
@@ -673,7 +693,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:149
 #, kde-format
 msgid "ISO8859-13 Latin-7 Baltic Rim"
-msgstr ""
+msgstr "ISO8859-13 Laidin-7 Imeall Baltach"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> [...] <dropdown label="File encoding"> <option label="...">
 #. i18n: ectx: (Loaded from Loaded from Import SPSS file) <snippet> <tab label="Encoding"> <dropdown label="Convert from:"> <option label="...">
@@ -688,7 +708,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:150
 #, kde-format
 msgid "ISO8859-14 Latin-8 Celtic"
-msgstr ""
+msgstr "ISO8859-14 Laidin-8 Ceilteach"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> [...] <dropdown label="File encoding"> <option label="...">
 #. i18n: ectx: (Loaded from Loaded from Import SPSS file) <snippet> <tab label="Encoding"> <dropdown label="Convert from:"> <option label="...">
@@ -703,7 +723,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:151
 #, kde-format
 msgid "ISO8859-15 Latin-9 Western European (EUR)"
-msgstr ""
+msgstr "ISO8859-15 Laidin-9 Iarthar na hEorpa (EUR)"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> [...] <dropdown label="File encoding"> <option label="...">
 #. i18n: ectx: (Loaded from Loaded from Import SPSS file) <snippet> <tab label="Encoding"> <dropdown label="Convert from:"> <option label="...">
@@ -718,7 +738,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:152
 #, kde-format
 msgid "ISO8859-16 Latin-10 South-Eastern European"
-msgstr ""
+msgstr "ISO8859-16 Laidin-10 Oirdheisceart na hEorpa"
 
 #. i18n: ectx: (Write vector / matrix) <dialog label="Write vector / matrix"> [...] <radio label="Field separator character"> <option label="...">
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> [...] <dropdown label="File encoding"> <option label="...">
@@ -741,7 +761,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:153
 #, kde-format
 msgid "Other (specify below)"
-msgstr ""
+msgstr "Eile (sonraigh thíos)"
 
 #. i18n: ectx: (Loaded from Loaded from Import SPSS file) <snippet> <tab label="Encoding"> <input label="...">
 #. i18n: ectx: (Loaded from Import SPSS file) <snippet> <tab label="Encoding"> <input label="...">
@@ -754,7 +774,7 @@ msgstr ""
 #: rkward/plugins/00saveload/import/convert_encoding.xml:39
 #, kde-format
 msgid "Other encoding"
-msgstr ""
+msgstr "Ionchódú eile"
 
 #. i18n: ectx: (Loaded from Loaded from Import SPSS file) <snippet> <setting> (refers to element labelled "Convert string encoding")
 #. i18n: ectx: (Loaded from Import SPSS file) <snippet> <setting> (refers to element labelled "Convert string encoding")
@@ -771,6 +791,10 @@ msgid ""
 "probably uses a different locale than your R session. In this case, check "
 "this option, and specify the correct character encoding below."
 msgstr ""
+"Mura bhfuil carachtair speisialta (m.sh. umlauts) le feiceáil i gceart, is "
+"dócha go n-úsáideann an comhad sonraí logán difriúil ná do sheisiún R. Sa "
+"chás seo, seiceáil an rogha seo, agus sonraigh an ionchódú carachtar ceart "
+"thíos."
 
 #. i18n: ectx: (Loaded from Loaded from Import SPSS file) <snippet> <setting> (refers to element labelled "Convert from:")
 #. i18n: ectx: (Loaded from Import SPSS file) <snippet> <setting> (refers to element labelled "Convert from:")
@@ -786,6 +810,8 @@ msgid ""
 "Select character encoding to convert from. The option above needs to be "
 "checked, for this to be enabled."
 msgstr ""
+"Roghnaigh ionchódú carachtar le tiontú uaidh. Ní mór an rogha thuas a "
+"sheiceáil, le go mbeidh sé seo cumasaithe."
 
 #. i18n: ectx: (Loaded from Loaded from Import SPSS file) <snippet> <setting> (refers to element labelled "Other encoding")
 #. i18n: ectx: (Loaded from Import SPSS file) <snippet> <setting> (refers to element labelled "Other encoding")
@@ -802,19 +828,24 @@ msgid ""
 "Note that the available encodings may differ from platform to platform. See "
 "<link href=\"rkward://rhelp/iconvlist\"/> for a list of available encodings."
 msgstr ""
+"Mura bhfuil aon cheann de na hionchóduithe thuas ag teacht le chéile, is "
+"féidir leat ionchódú a shonrú anseo. Tabhair faoi deara go bhféadfadh na "
+"hionchóduithe atá ar fáil a bheith difriúil ó ardán go hardán. Féach <link "
+"href=\"rkward://rhelp/iconvlist\"/> le haghaidh liosta de na hionchóduithe "
+"atá ar fáil."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data)
 #: rkward/plugins/00saveload/import/import_csv.js:46
 #, kde-format
 msgctxt "R code comment"
 msgid "copy from the local environment to globalenv()"
-msgstr ""
+msgstr "cóipeáil ón timpeallacht áitiúil go globalenv()"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data)
 #: rkward/plugins/00saveload/import/import_csv.js:56
 #, kde-format
 msgid "Import text / csv data"
-msgstr ""
+msgstr "Iompórtáil sonraí téacs / csv"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <summary>
 #: rkward/plugins/00saveload/import/import_csv.rkh:8
@@ -823,6 +854,8 @@ msgid ""
 "Import Comma Separated Value files (other delimiters besides comma are "
 "supported)."
 msgstr ""
+"Iompórtáil comhaid Luachanna Scartha le Camóga (tacaítear le deighilteoirí "
+"eile seachas camóga)."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <usage>
 #: rkward/plugins/00saveload/import/import_csv.rkh:12
@@ -831,6 +864,8 @@ msgid ""
 "Choose the CSV file to import. An R object containing the data will be "
 "created. See <link href=\"rkward://rhelp/read.table\"/>."
 msgstr ""
+"Roghnaigh an comhad CSV le hallmhairiú. Cruthófar réad R ina bhfuil na "
+"sonraí. Féach <link href=\"rkward://rhelp/read.table\"/>."
 
 #. i18n: ectx: (Loaded from Import SPSS file) <settings> <setting> (refers to element labelled "File name")
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "File name")
@@ -843,7 +878,7 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:23
 #, kde-format
 msgid "The filename of the file to import"
-msgstr ""
+msgstr "Ainm comhaid an chomhaid atá le hallmhairiú"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Data format")
 #: rkward/plugins/00saveload/import/import_csv.rkh:19
@@ -853,6 +888,9 @@ msgid ""
 "affects several of the other settings, importantly <i><label id=\"dec\"/></"
 "i> and <i><label id=\"sep\"/></i>."
 msgstr ""
+"Roghnaigh ó cheann de na formáidí réamhshainithe (na formáidí is coitianta). "
+"Bíonn tionchar ag an socrú seo ar roinnt de na socruithe eile, go háirithe "
+"<i><label id=\"dec\"/></i> agus <i><label id=\"sep\"/></i>."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Use first row as column names")
 #: rkward/plugins/00saveload/import/import_csv.rkh:20
@@ -861,12 +899,14 @@ msgid ""
 "Whether the first row of the file contains should be interpreted as column "
 "names"
 msgstr ""
+"Ar cheart an chéad ró den chomhad ina bhfuil a léirmhíniú mar ainmneacha "
+"colún"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Decimal point character")
 #: rkward/plugins/00saveload/import/import_csv.rkh:21
 #, kde-format
 msgid "Decimal character used in the imported file"
-msgstr ""
+msgstr "Carachtar deachúil a úsáideadh sa chomhad allmhairithe"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Specify decimal point character")
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Specify field separator character")
@@ -875,12 +915,13 @@ msgstr ""
 #, kde-format
 msgid "If you selected \"other\" above, specify the character, here."
 msgstr ""
+"Más rud é gur roghnaigh tú \"eile\" thuas, sonraigh an carachtar anseo."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Field separator character")
 #: rkward/plugins/00saveload/import/import_csv.rkh:23
 #, kde-format
 msgid "The separator character used in the imported file"
-msgstr ""
+msgstr "An carachtar deighilteora a úsáidtear sa chomhad allmhairithe"
 
 #. i18n: ectx: (Loaded from Import SPSS file) <settings> <setting> (refers to element labelled "Object to save to")
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Object to save to")
@@ -899,6 +940,9 @@ msgid ""
 "The name of an R object to store the imported data in. If you choose an "
 "existing symbol name, you will be prompted, whether to overwrite this object."
 msgstr ""
+"Ainm réada R ina stóráilfear na sonraí allmhairithe. Má roghnaíonn tú ainm "
+"siombaile atá ann cheana féin, iarrfar ort an ndéanfaidh tú athscríobh ar an "
+"réad seo."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Open imported data for editing")
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Open imported data for editing")
@@ -908,6 +952,8 @@ msgstr ""
 #, kde-format
 msgid "Whether the object should be opened for editing after it was imported"
 msgstr ""
+"Ar cheart an réad a oscailt le haghaidh eagarthóireachta tar éis é a "
+"allmhairiú"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Preview")
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Preview")
@@ -918,6 +964,8 @@ msgid ""
 "Show a preview of the imported data. At most the first 50 rows and columns "
 "will be shown."
 msgstr ""
+"Taispeáin réamhamharc ar na sonraí allmhairithe. Taispeánfar na chéad 50 "
+"sraith agus colún ar a mhéad."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Row names")
 #: rkward/plugins/00saveload/import/import_csv.rkh:30
@@ -927,6 +975,10 @@ msgid ""
 "can specify a single column containing the row names (typically the first). "
 "Or you can provide a character vector of names."
 msgstr ""
+"Conas ainmneacha na sraitheanna a chinneadh? Is féidir na sraitheanna a "
+"uimhriú 1...n. Nó is féidir leat colún aonair a shonrú ina bhfuil ainmneacha "
+"na sraitheanna (an chéad cheann de ghnáth). Nó is féidir leat veicteoir "
+"carachtar d'ainmneacha a sholáthar."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Column number or variable name")
 #: rkward/plugins/00saveload/import/import_csv.rkh:31
@@ -935,6 +987,8 @@ msgid ""
 "See above. The column containing the row names, given either as a number, or "
 "as a column name (in the latter case, make sure to quote the name)"
 msgstr ""
+"Féach thuas. An colún ina bhfuil ainmneacha na sraitheanna, tugtha mar "
+"uimhir, nó mar ainm colúin (sa chás deireanach, déan cinnte an t-ainm a lua)"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Vector of row names (quoted)")
 #: rkward/plugins/00saveload/import/import_csv.rkh:32
@@ -944,6 +998,9 @@ msgid ""
 "\"), but you can also specify the name of an R object containing the names "
 "to use)"
 msgstr ""
+"Féach thuas. Veicteoir d'ainmneacha sraitheanna (m.sh. c (\"row1\", "
+"\"row2\", ..., \"rown\"), ach is féidir leat ainm réada R a shonrú freisin "
+"ina bhfuil na hainmneacha le húsáid)"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Column names")
 #: rkward/plugins/00saveload/import/import_csv.rkh:33
@@ -952,6 +1009,8 @@ msgid ""
 "Use automatic column names (possibly read from first row of file), or use "
 "manually specified names?"
 msgstr ""
+"Úsáid ainmneacha colún uathoibríocha (léamha ón gcéad ró den chomhad "
+"b'fhéidir), nó úsáid ainmneacha sonraithe de láimh?"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Vector of column names (quoted)")
 #: rkward/plugins/00saveload/import/import_csv.rkh:34
@@ -961,19 +1020,22 @@ msgid ""
 "\"col2\", ..., \"coln\"), but you can also specify the name of an R object "
 "containing the names to use)"
 msgstr ""
+"Féach thuas. Sonraigh veicteoir carachtar d'ainmneacha colún (m.sh. c "
+"(\"col1\", \"col2\", ..., \"coln\"), ach is féidir leat ainm réada R a "
+"shonrú freisin ina bhfuil na hainmneacha le húsáid)"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Check syntax of column names")
 #: rkward/plugins/00saveload/import/import_csv.rkh:35
 #, kde-format
 msgid "Should column names be checked for validity?"
-msgstr ""
+msgstr "Ar cheart bailíocht ainmneacha na gcolún a sheiceáil?"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Classes of columns")
 #: rkward/plugins/00saveload/import/import_csv.rkh:36
 #, kde-format
 msgid ""
 "Should be class of each column be determined automatically, or specified?"
-msgstr ""
+msgstr "Ar cheart rang gach colúin a chinneadh go huathoibríoch, nó a shonrú?"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Vector of column classes (quoted)")
 #: rkward/plugins/00saveload/import/import_csv.rkh:37
@@ -982,6 +1044,8 @@ msgid ""
 "See above. Specify a character vector with the names of the classes to use "
 "for each column."
 msgstr ""
+"Féach thuas. Sonraigh veicteoir carachtar le hainmneacha na ranganna le "
+"húsáid do gach colún."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Skip trailing fields")
 #: rkward/plugins/00saveload/import/import_csv.rkh:38
@@ -991,6 +1055,9 @@ msgid ""
 "five rows of input) be skipped? See parameter flush in <link href=\"rkward://"
 "rhelp/read.table\"/>."
 msgstr ""
+"Ar cheart colúin bhreise (nach bhfuil sonraithe thuas, agus nach bhfuil "
+"laistigh den chéad chúig shraith ionchuir) a scipeáil? Féach ar an "
+"bparaiméadar flush i <link href=\"rkward://rhelp/read.table\"/>."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Pad rows if unequal length")
 #: rkward/plugins/00saveload/import/import_csv.rkh:39
@@ -999,6 +1066,8 @@ msgid ""
 "If checked, and the rows have differing length, they will be padded with "
 "empty values in the imported data."
 msgstr ""
+"Má tá sé seo seiceáilte, agus má tá fad difriúil ag na sraitheanna, cuirfear "
+"luachanna folamha sna sonraí allmhairithe iontu."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Allow escaped characters")
 #: rkward/plugins/00saveload/import/import_csv.rkh:43
@@ -1007,13 +1076,15 @@ msgid ""
 "Should a backslash ('\\') followed by a character be treated as an escaped "
 "character? Otherwise the sequence is read literally."
 msgstr ""
+"Ar cheart slais chúl ('\\') agus carachtar ina dhiaidh a áireamh mar "
+"charachtar éalaithe? Seachas sin léitear an seicheamh go litriúil."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Strip leading and trailing whitespace")
 #: rkward/plugins/00saveload/import/import_csv.rkh:44
 #, kde-format
 msgid ""
 "Should leading and trailing white space be removed from character fields?"
-msgstr ""
+msgstr "Ar cheart spás bán tosaigh agus deiridh a bhaint as réimsí carachtar?"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Convert character columns to factors")
 #: rkward/plugins/00saveload/import/import_csv.rkh:45
@@ -1022,6 +1093,8 @@ msgid ""
 "Should columns containing character data be converted to factors in R, or "
 "should they be read as character vectors?"
 msgstr ""
+"Ar cheart colúin ina bhfuil sonraí carachtar a thiontú go fachtóirí in R, nó "
+"ar cheart iad a léamh mar veicteoirí carachtar?"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Missing value string")
 #: rkward/plugins/00saveload/import/import_csv.rkh:46
@@ -1030,12 +1103,15 @@ msgid ""
 "How are missing values (NAs) written in the file to be imported? (Blank "
 "fields are also interpreted as NAs in columns that are not strings.)"
 msgstr ""
+"Conas a scríobhtar luachanna atá ar iarraidh (NAanna) sa chomhad atá le "
+"hallmhairiú? (Léirmhínítear réimsí folamha mar NAanna i gcolúin nach "
+"teaghráin iad freisin.)"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "String delimiter")
 #: rkward/plugins/00saveload/import/import_csv.rkh:47
 #, kde-format
 msgid "String delimiter character(s) used in the file"
-msgstr ""
+msgstr "Carachtar(í) deighilteora teaghrán a úsáidtear sa chomhad"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Specify quoting character(s)")
 #: rkward/plugins/00saveload/import/import_csv.rkh:48
@@ -1045,6 +1121,10 @@ msgid ""
 "use, here. Simply enter all character to use (without spaces or comma, e.g. "
 "\"'@ to use \", ', and @ as string delimiters)."
 msgstr ""
+"Má roghnaigh tú \"eile\" thuas, is féidir leat a shonrú cén carachtar "
+"athfhriotail atá le húsáid anseo. Cuir isteach na carachtair uile atá le "
+"húsáid (gan spásanna ná camóga, m.sh. \"'@ le húsáid \", ', agus @ mar "
+"dheighilteoirí teaghrán)."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Skip x lines at the start of the file")
 #: rkward/plugins/00saveload/import/import_csv.rkh:50
@@ -1053,12 +1133,14 @@ msgid ""
 "This many rows will be skipped at the start of the file. Use, for instance, "
 "if the file contains a text header."
 msgstr ""
+"Déanfar an líon seo sraitheanna a scipeáil ag tús an chomhaid. Úsáid, mar "
+"shampla, má tá ceanntásc téacs sa chomhad."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Max number of lines to read (-1 for no limit)")
 #: rkward/plugins/00saveload/import/import_csv.rkh:51
 #, kde-format
 msgid "Maximum number of rows to read (-1 to read all lines)"
-msgstr ""
+msgstr "Uasmhéid na sraitheanna le léamh (-1 chun na línte go léir a léamh)"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Character for comments")
 #: rkward/plugins/00saveload/import/import_csv.rkh:52
@@ -1067,12 +1149,15 @@ msgid ""
 "If you enter a single character, here, everything after that character in a "
 "line will be ignored. Leave blank to disable detection of comments."
 msgstr ""
+"Má chuireann tú carachtar amháin isteach anseo, déanfar neamhaird ar gach "
+"rud i ndiaidh an charachtair sin i líne. Fág bán é chun braiteadh tráchtanna "
+"a dhíchumasú."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Skip blank lines")
 #: rkward/plugins/00saveload/import/import_csv.rkh:53
 #, kde-format
 msgid "Should blank lines be ignored?"
-msgstr ""
+msgstr "Ar cheart neamhaird a dhéanamh de línte bána?"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Import Text / CSV data) <dialog label="...">
@@ -1080,7 +1165,7 @@ msgstr ""
 #: rkward/plugins/import_export.pluginmap:38
 #, kde-format
 msgid "Import Text / CSV data"
-msgstr ""
+msgstr "Iompórtáil sonraí Téacs / CSV"
 
 #. i18n: ectx: (Import SPSS file) <dialog label="Import SPSS file"> <tab label="...">
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="...">
@@ -1095,7 +1180,7 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.xml:20
 #, kde-format
 msgid "General"
-msgstr ""
+msgstr "Ginearálta"
 
 #. i18n: ectx: (Source an R file) <dialog label="Source an R file"> <tab label="Main options"> <browser label="...">
 #. i18n: ectx: (Save R objects) <dialog label="Save R objects"> <tab label="Select variables"> <frame label="Save to"> <browser label="...">
@@ -1116,13 +1201,13 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write.xml:24
 #, kde-format
 msgid "File name"
-msgstr ""
+msgstr "Ainm comhaid"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="General"> <dropdown label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:106
 #, kde-format
 msgid "Data format"
-msgstr ""
+msgstr "Formáid sonraí"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <dropdown label="File format"> <option label="...">
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="General"> <dropdown label="Data format"> <option label="...">
@@ -1130,7 +1215,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:69
 #, kde-format
 msgid "Comma separated values (CSV)"
-msgstr ""
+msgstr "Luachanna scartha le camóga (CSV)"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <dropdown label="File format"> <option label="...">
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="General"> <dropdown label="Data format"> <option label="...">
@@ -1139,6 +1224,7 @@ msgstr ""
 #, kde-format
 msgid "Semicolon separated values, comma as decimal separator (CSV2)"
 msgstr ""
+"Luachanna scartha le leathstad, camóg mar dheighilteoir deachúil (CSV2)"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <dropdown label="File format"> <option label="...">
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="General"> <dropdown label="Data format"> <option label="...">
@@ -1146,7 +1232,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:71
 #, kde-format
 msgid "Tab separated values (TAB)"
-msgstr ""
+msgstr "Luachanna scartha le tab (TAB)"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <dropdown label="File format"> <option label="...">
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="General"> <dropdown label="Data format"> <option label="...">
@@ -1154,13 +1240,13 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:72
 #, kde-format
 msgid "Tab separated values, comma as decimal separator (TAB2)"
-msgstr ""
+msgstr "Luachanna scartha le tab, camóg mar dheighilteoir deachúil (TAB2)"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="General"> <dropdown label="Data format"> <option label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:111
 #, kde-format
 msgid "read.table() default (whitespace separated values)"
-msgstr ""
+msgstr "réamhshocrú read.table() (luachanna scartha le spás bán)"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="General"> <checkbox label="...">
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="General"> <checkbox label="...">
@@ -1169,7 +1255,7 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.xml:24
 #, kde-format
 msgid "Use first row as column names"
-msgstr ""
+msgstr "Úsáid an chéad ró mar ainmneacha colún"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <radio label="...">
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="General"> <radio label="...">
@@ -1177,7 +1263,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:78
 #, kde-format
 msgid "Decimal point character"
-msgstr ""
+msgstr "Carachtar pointe deachúil"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <radio label="Decimal point character"> <option label="...">
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="General"> <radio label="Decimal point character"> <option label="...">
@@ -1185,7 +1271,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:79
 #, kde-format
 msgid "'.' (Period)"
-msgstr ""
+msgstr "'.' (Ponc)"
 
 #. i18n: ectx: (Write vector / matrix) <dialog label="Write vector / matrix"> [...] <radio label="Field separator character"> <option label="...">
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <radio label="Decimal point character"> <option label="...">
@@ -1199,13 +1285,13 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:90
 #, kde-format
 msgid "',' (Comma)"
-msgstr ""
+msgstr "',' (Camóg)"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="General"> <input label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:126
 #, kde-format
 msgid "Specify decimal point character"
-msgstr ""
+msgstr "Sonraigh carachtar pointe deachúil"
 
 #. i18n: ectx: (Write vector / matrix) <dialog label="Write vector / matrix"> <tab label="Select variables"> <frame label="Options"> <radio label="...">
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <radio label="...">
@@ -1215,7 +1301,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:87
 #, kde-format
 msgid "Field separator character"
-msgstr ""
+msgstr "Carachtar deighilteora réimse"
 
 #. i18n: ectx: (Write vector / matrix) <dialog label="Write vector / matrix"> [...] <radio label="Field separator character"> <option label="...">
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <radio label="Field separator character"> <option label="...">
@@ -1225,7 +1311,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:88
 #, kde-format
 msgid "Tab"
-msgstr ""
+msgstr "Táb"
 
 #. i18n: ectx: (Write vector / matrix) <dialog label="Write vector / matrix"> [...] <radio label="Field separator character"> <option label="...">
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <radio label="Field separator character"> <option label="...">
@@ -1235,19 +1321,19 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:89
 #, kde-format
 msgid "';' (Semicolon)"
-msgstr ""
+msgstr "';' (Leathstad)"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="General"> <radio label="Field separator character"> <option label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:133
 #, kde-format
 msgid "Single space"
-msgstr ""
+msgstr "Spás aonair"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="General"> <radio label="Field separator character"> <option label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:134
 #, kde-format
 msgid "Any whitespace"
-msgstr ""
+msgstr "Aon spás bán"
 
 #. i18n: ectx: (Write vector / matrix) <dialog label="Write vector / matrix"> <tab label="Select variables"> <frame label="Options"> <input label="...">
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="General"> <input label="...">
@@ -1255,7 +1341,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write.xml:36
 #, kde-format
 msgid "Specify field separator character"
-msgstr ""
+msgstr "Sonraigh carachtar deighilteora réimse"
 
 #. i18n: ectx: (Import SPSS file) <dialog label="Import SPSS file"> <tab label="General"> <saveobject label="...">
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="General"> <saveobject label="...">
@@ -1270,7 +1356,7 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.xml:28
 #, kde-format
 msgid "Object to save to"
-msgstr ""
+msgstr "Réad le sábháil chuige"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="General"> <checkbox label="...">
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="General"> <checkbox label="...">
@@ -1279,7 +1365,7 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.xml:29
 #, kde-format
 msgid "Open imported data for editing"
-msgstr ""
+msgstr "Oscail sonraí allmhairithe le haghaidh eagarthóireachta"
 
 #. i18n: ectx: (Import SPSS file) <dialog label="Import SPSS file"> <tab label="General"> <preview label="...">
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="General"> <preview label="...">
@@ -1293,7 +1379,7 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.xml:32
 #, kde-format
 msgid "Preview"
-msgstr ""
+msgstr "Réamhamharc"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="...">
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="...">
@@ -1301,13 +1387,13 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:102
 #, kde-format
 msgid "Rows and Columns"
-msgstr ""
+msgstr "Sraitheanna agus Colúin"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="Rows and Columns"> <frame label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:151
 #, kde-format
 msgid "Row Specifications"
-msgstr ""
+msgstr "Sonraíochtaí Ró"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Rows and Columns"> <frame label="Row  specifications"> <radio label="...">
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="Rows and Columns"> <frame label="Row Specifications"> <radio label="...">
@@ -1315,7 +1401,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:109
 #, kde-format
 msgid "Row names"
-msgstr ""
+msgstr "Ainmneacha ró"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> [...] <radio label="Row names"> <option label="...">
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> [...] <radio label="Column names"> <option label="...">
@@ -1325,43 +1411,43 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_csv.xml:172
 #, kde-format
 msgid "Automatic"
-msgstr ""
+msgstr "Uathoibríoch"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> [...] <radio label="Row names"> <option label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:154
 #, kde-format
 msgid "Numeric row names"
-msgstr ""
+msgstr "Ainmneacha uimhriúla sraithe"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> [...] <radio label="Row names"> <option label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:155
 #, kde-format
 msgid "As specified in column x:"
-msgstr ""
+msgstr "Mar atá sonraithe i gcolún x:"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> [...] <radio label="Row names"> <option label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:156
 #, kde-format
 msgid "Use a vector"
-msgstr ""
+msgstr "Úsáid veicteoir"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="Rows and Columns"> <frame label="Row Specifications"> <input label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:158
 #, kde-format
 msgid "Column number or variable name"
-msgstr ""
+msgstr "Uimhir an cholúin nó ainm an athróige"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="Rows and Columns"> <frame label="Row Specifications"> <input label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:159
 #, kde-format
 msgid "Vector of row names (quoted)"
-msgstr ""
+msgstr "Veicteoir ainmneacha sraitheanna (luaite)"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="Rows and Columns"> <frame label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:164
 #, kde-format
 msgid "Column Specifications"
-msgstr ""
+msgstr "Sonraíochtaí Colún"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Rows and Columns"> <frame label="Column specifications"> <radio label="...">
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="Rows and Columns"> <frame label="Column Specifications"> <radio label="...">
@@ -1369,7 +1455,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:118
 #, kde-format
 msgid "Column names"
-msgstr ""
+msgstr "Ainmneacha colún"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> [...] <radio label="Column names"> <option label="...">
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> [...] <radio label="Classes of columns"> <option label="...">
@@ -1377,37 +1463,37 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_csv.xml:173
 #, kde-format
 msgid "Use a character vector"
-msgstr ""
+msgstr "Úsáid veicteoir carachtar"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="Rows and Columns"> <frame label="Column Specifications"> <input label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:169
 #, kde-format
 msgid "Vector of column names (quoted)"
-msgstr ""
+msgstr "Veicteoir ainmneacha colún (luaite)"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="Rows and Columns"> <frame label="Column Specifications"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:170
 #, kde-format
 msgid "Check syntax of column names"
-msgstr ""
+msgstr "Seiceáil comhréir ainmneacha na gcolún"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="Rows and Columns"> <frame label="Column Specifications"> <radio label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:171
 #, kde-format
 msgid "Classes of columns"
-msgstr ""
+msgstr "Aicmí colún"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="Rows and Columns"> <frame label="Column Specifications"> <input label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:175
 #, kde-format
 msgid "Vector of column classes (quoted)"
-msgstr ""
+msgstr "Veicteoir de ranganna colún (luaite)"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="Rows and Columns"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:180
 #, kde-format
 msgid "Skip trailing fields"
-msgstr ""
+msgstr "Seachain réimsí deiridh"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="Rows and Columns"> <checkbox label="...">
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="Further Options"> <checkbox label="...">
@@ -1415,7 +1501,7 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_xls.xml:42
 #, kde-format
 msgid "Pad rows if unequal length"
-msgstr ""
+msgstr "Sraitheanna ceap mura bhfuil an fad céanna"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="...">
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="...">
@@ -1423,19 +1509,19 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_xls.xml:30
 #, kde-format
 msgid "Further Options"
-msgstr ""
+msgstr "Roghanna Breise"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="Further Options"> <frame label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:186
 #, kde-format
 msgid "String handling"
-msgstr ""
+msgstr "Láimhseáil teaghrán"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="Further Options"> <frame label="String handling"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:187
 #, kde-format
 msgid "Allow escaped characters"
-msgstr ""
+msgstr "Ceadaigh carachtair éalaithe"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="Further Options"> <frame label="String handling"> <checkbox label="...">
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="Further Options"> <checkbox label="...">
@@ -1443,7 +1529,7 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_xls.xml:43
 #, kde-format
 msgid "Strip leading and trailing whitespace"
-msgstr ""
+msgstr "Spás bán tosaigh agus deiridh a stróiceadh"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="Further Options"> <frame label="String handling"> <radio label="...">
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="Further Options"> <radio label="...">
@@ -1451,7 +1537,7 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_xls.xml:37
 #, kde-format
 msgid "Convert character columns to factors"
-msgstr ""
+msgstr "Tiontaigh colúin charachtair go fachtóirí"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> [...] <radio label="Convert character columns to factors"> <option label="...">
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="Further Options"> <radio label="Convert character columns to factors"> <option label="...">
@@ -1459,7 +1545,7 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_xls.xml:38
 #, kde-format
 msgid "Convert to factor"
-msgstr ""
+msgstr "Tiontaigh go fachtóir"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> [...] <radio label="Convert character columns to factors"> <option label="...">
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="Further Options"> <radio label="Convert character columns to factors"> <option label="...">
@@ -1467,7 +1553,7 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_xls.xml:39
 #, kde-format
 msgid "Default"
-msgstr ""
+msgstr "Réamhshocrú"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> [...] <radio label="Convert character columns to factors"> <option label="...">
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="Further Options"> <radio label="Convert character columns to factors"> <option label="...">
@@ -1475,79 +1561,79 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_xls.xml:40
 #, kde-format
 msgid "Do not convert"
-msgstr ""
+msgstr "Ná tiontaigh"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="Further Options"> <frame label="String handling"> <input label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:197
 #, kde-format
 msgid "Missing value string"
-msgstr ""
+msgstr "Teaghrán luacha ar iarraidh"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="Further Options"> <frame label="String handling"> <radio label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:200
 #, kde-format
 msgid "String delimiter"
-msgstr ""
+msgstr "Teorannaitheoir teaghrán"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> [...] <radio label="String delimiter"> <option label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:201
 #, kde-format
 msgid "\" only"
-msgstr ""
+msgstr "\" amháin"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> [...] <radio label="String delimiter"> <option label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:202
 #, kde-format
 msgid "' only"
-msgstr ""
+msgstr "' amháin"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> [...] <radio label="String delimiter"> <option label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:203
 #, kde-format
 msgid "\" and '"
-msgstr ""
+msgstr "\" agus '"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> [...] <radio label="String delimiter"> <option label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:204
 #, kde-format
 msgid "None / disabled"
-msgstr ""
+msgstr "Gan aon cheann / faoi mhíchumas"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="Further Options"> <frame label="String handling"> <input label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:207
 #, kde-format
 msgid "Specify quoting character(s)"
-msgstr ""
+msgstr "Sonraigh carachtar(í) athfhriotail"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="Further Options"> <frame label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:211
 #, kde-format
 msgid "Skip"
-msgstr ""
+msgstr "Léim"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="Further Options"> <frame label="Skip"> <input label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:212
 #, kde-format
 msgid "Skip x lines at the start of the file"
-msgstr ""
+msgstr "Léim x líne ag tús an chomhaid"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="Further Options"> <frame label="Skip"> <input label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:213
 #, kde-format
 msgid "Max number of lines to read (-1 for no limit)"
-msgstr ""
+msgstr "Uasmhéid línte le léamh (-1 gan teorainn)"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="Further Options"> <frame label="Skip"> <input label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:214
 #, kde-format
 msgid "Character for comments"
-msgstr ""
+msgstr "Carachtar le haghaidh tuairimí"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="Further Options"> <frame label="Skip"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:215
 #, kde-format
 msgid "Skip blank lines"
-msgstr ""
+msgstr "Seachain línte bána"
 
 #. i18n: ectx: (Loaded from Import SPSS file)
 #. i18n: ectx: (Loaded from Import STATA file)
@@ -1561,7 +1647,7 @@ msgstr ""
 #, kde-format
 msgctxt "R code comment"
 msgid "assign to globalenv()"
-msgstr ""
+msgstr "sannadh do globalenv()"
 
 #. i18n: ectx: (Loaded from Generic data import)
 #. i18n: ectx: (Generic data import) <dialog label="...">
@@ -1569,7 +1655,7 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_generic_rio.xml:19
 #, kde-format
 msgid "Generic data import"
-msgstr ""
+msgstr "Allmhairiú sonraí ginearálta"
 
 #. i18n: ectx: (Loaded from Generic data import) <summary>
 #: rkward/plugins/00saveload/import/import_generic_rio.rkh:11
@@ -1581,6 +1667,11 @@ msgid ""
 "usually be preferable, as it will provide more specific options, and with "
 "less packages to install."
 msgstr ""
+"Iompórtáil réimse formáidí. Is cur chuige cineálach é seo atá bunaithe ar an "
+"bpacáiste R \"rio\", a bhraitheann ar réimse pacáistí breise ina dhiaidh "
+"sin. Má tá breiseán tiomnaithe ann don fhormáid is mian leat a allmhairiú, "
+"is fearr é sin a úsáid de ghnáth, mar go soláthróidh sé roghanna níos "
+"sainiúla, agus le níos lú pacáistí le suiteáil."
 
 #. i18n: ectx: (Loaded from Generic data import) <usage>
 #: rkward/plugins/00saveload/import/import_generic_rio.rkh:16
@@ -1589,6 +1680,8 @@ msgid ""
 "Select the data file to import. An R object containing the data will be "
 "created. This will usually be a data.frame, or a list."
 msgstr ""
+"Roghnaigh an comhad sonraí le hallmhairiú. Cruthófar réad R ina bhfuil na "
+"sonraí. De ghnáth, is data.frame nó liosta a bheidh ann."
 
 #. i18n: ectx: (Loaded from Import SPSS file) <settings> <setting> (refers to element labelled "Edit Object")
 #. i18n: ectx: (Loaded from Generic data import) <settings> <setting> (refers to element labelled "Edit Object")
@@ -1600,6 +1693,9 @@ msgid ""
 "Currently, this is only possible, if the object is saved as a data.frame "
 "(see next option)."
 msgstr ""
+"Ar cheart an réad a oscailt le haghaidh eagarthóireachta tar éis é a "
+"allmhairiú. Faoi láthair, ní féidir é seo a dhéanamh ach amháin má "
+"shábháiltear an réad mar data.frame (féach an chéad rogha eile)."
 
 #. i18n: ectx: (Loaded from Generic data import) <settings> <setting> (refers to element labelled "Import a list of all datasets")
 #: rkward/plugins/00saveload/import/import_generic_rio.rkh:25
@@ -1608,6 +1704,9 @@ msgid ""
 "Some data files may contain more than one set of data (e.g. several sheets "
 "inside one excel file). Check this option to import all datasets as a list."
 msgstr ""
+"D’fhéadfadh níos mó ná tacar sonraí amháin a bheith i roinnt comhad sonraí "
+"(e.g. roinnt bileoga laistigh d’aon chomhad Excel amháin). Seiceáil an rogha "
+"seo chun na tacair sonraí go léir a allmhairiú mar liosta."
 
 #. i18n: ectx: (Loaded from Generic data import) <settings> <setting> (refers to element labelled "Import specific sub-set")
 #: rkward/plugins/00saveload/import/import_generic_rio.rkh:26
@@ -1616,6 +1715,8 @@ msgid ""
 "For datasets containing more than one set of data, specify which set to "
 "import (this will usually be a name or a number)."
 msgstr ""
+"I gcás tacair sonraí ina bhfuil níos mó ná tacar amháin sonraí, sonraigh cé "
+"acu tacar atá le hallmhairiú (is ainm nó uimhir a bheidh ann de ghnáth)."
 
 #. i18n: ectx: (Loaded from Generic data import) <settings> <setting> (refers to element labelled "Preview")
 #: rkward/plugins/00saveload/import/import_generic_rio.rkh:27
@@ -1625,6 +1726,9 @@ msgid ""
 "performance reasons (and only the first dataset in case of multiple sets in "
 "the file)."
 msgstr ""
+"Réamhamharc ar shonraí allmhairithe. Ní thaispeántar ach na chéad 50 sraith "
+"agus colún, ar chúiseanna feidhmíochta (agus an chéad tacar sonraí amháin i "
+"gcás tacair iolracha sa chomhad)."
 
 #. i18n: ectx: (Import SPSS file) <dialog label="Import SPSS file"> <tab label="General"> <checkbox label="...">
 #. i18n: ectx: (Import STATA file) <dialog label="Import STATA file"> <tab label="General"> <checkbox label="...">
@@ -1634,25 +1738,25 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_stata.xml:25
 #, kde-format
 msgid "Edit Object"
-msgstr ""
+msgstr "Cuir Réad in Eagar"
 
 #. i18n: ectx: (Generic data import) <dialog label="Generic data import"> <tab label="General"> <frame label="...">
 #: rkward/plugins/00saveload/import/import_generic_rio.xml:29
 #, kde-format
 msgid "If the file contains more than one dataset"
-msgstr ""
+msgstr "Má tá níos mó ná tacar sonraí amháin sa chomhad"
 
 #. i18n: ectx: (Generic data import) <dialog label="Generic data import"> <tab label="General"> <frame label="If the file contains more than one dataset"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/import_generic_rio.xml:30
 #, kde-format
 msgid "Import a list of all datasets"
-msgstr ""
+msgstr "Iompórtáil liosta de na tacair sonraí go léir"
 
 #. i18n: ectx: (Generic data import) <dialog label="Generic data import"> <tab label="General"> <frame label="If the file contains more than one dataset"> <input label="...">
 #: rkward/plugins/00saveload/import/import_generic_rio.xml:31
 #, kde-format
 msgid "Import specific sub-set"
-msgstr ""
+msgstr "Iompórtáil fo-thacar sonrach"
 
 #. i18n: ectx: (Loaded from Import SPSS file)
 #. i18n: ectx: (Loaded from Import STATA file)
@@ -1661,7 +1765,7 @@ msgstr ""
 #, kde-format
 msgctxt "R code comment"
 msgid "set variable labels for use in RKWard"
-msgstr ""
+msgstr "socraigh lipéid athrógacha le húsáid in RKWard"
 
 #. i18n: ectx: (Loaded from Import SPSS file)
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet)
@@ -1669,13 +1773,13 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.js:57
 #, kde-format
 msgid "Import SPSS data"
-msgstr ""
+msgstr "Iompórtáil sonraí SPSS"
 
 #. i18n: ectx: (Loaded from Import SPSS file) <summary>
 #: rkward/plugins/00saveload/import/import_spss.rkh:11
 #, kde-format
 msgid "Import SPSS data files."
-msgstr ""
+msgstr "Iompórtáil comhaid sonraí SPSS."
 
 #. i18n: ectx: (Loaded from Import SPSS file) <usage>
 #: rkward/plugins/00saveload/import/import_spss.rkh:15
@@ -1690,6 +1794,14 @@ msgid ""
 "<link href=\"http://cran.r-project.org/doc/Rnews/Rnews_2004-1.pdf\">R News "
 "4/1 p30-31</link>."
 msgstr ""
+"Roghnaigh an comhad sonraí SPSS le hallmhairiú. De ghnáth bíonn an críoch '*."
+"sav' ar na comhaid sin. Cruthófar réad R ina bhfuil na sonraí SPSS. Is "
+"féidir gur data.frame nó liosta é seo. Pléann roinnt roghanna le láimhseáil "
+"lipéid agus ionchódú carachtar. Féach <link href=\"rkward://rhelp/read.spss"
+"\"/>. Ní thacaítear le comhaid SPSS seachas comhaid sonraí (i.e.:*.por, *."
+"jnl, *.cht, *.spo, *.sps). Maidir le saincheisteanna a bhaineann le "
+"láimhseáil ama/dátaí, féach le do thoil ar <link href=\"http://cran.r-"
+"project.org/doc/Rnews/Rnews_2004-1.pdf\">R News 4/1 lch30-31</link>."
 
 #. i18n: ectx: (Loaded from Import SPSS file) <settings> <setting> (refers to element labelled "Import as a data.frame")
 #: rkward/plugins/00saveload/import/import_spss.rkh:24
@@ -1698,6 +1810,9 @@ msgid ""
 "Whether to save the data as a data.frame. The alternative is saving as a "
 "list (useful, if the columns in your SPSS data have different lengths)"
 msgstr ""
+"Cibé acu ar cheart na sonraí a shábháil mar data.frame. Is é an rogha eile "
+"ná iad a shábháil mar liosta (úsáideach, má tá faid dhifriúla ag na colúin i "
+"do shonraí SPSS)"
 
 #. i18n: ectx: (Loaded from Import SPSS file) <settings> <setting> (refers to element labelled "Convert Variable labels to RKWard format")
 #: rkward/plugins/00saveload/import/import_spss.rkh:26
@@ -1709,6 +1824,10 @@ msgid ""
 "as an attribute \"variable.labels\" (see <link href=\"rkward://rhelp/read."
 "spss\"/>)"
 msgstr ""
+"Is féidir le RKWard lipéid athróg cosúil le SPSS a thaispeáint. Seiceáil an "
+"rogha seo, más mian leat na lipéid athróg SPSS a thiontú go formáid RKWard. "
+"Mura seiceálann tú an rogha, beidh na lipéid athróg SPSS fós ar fáil mar "
+"thréith \"variable.labels\" (féach <link href=\"rkward://rhelp/read.spss\"/>)"
 
 #. i18n: ectx: (Loaded from Import SPSS file) <settings> <setting> (refers to element labelled "Use value labels")
 #: rkward/plugins/00saveload/import/import_spss.rkh:27
@@ -1717,6 +1836,8 @@ msgid ""
 "Should SPSS variables with value labels be converted to R factors with those "
 "levels?"
 msgstr ""
+"Ar cheart athróga SPSS le lipéid luacha a thiontú go fachtóirí R leis na "
+"leibhéil sin?"
 
 #. i18n: ectx: (Loaded from Import SPSS file) <settings> <setting> (refers to element labelled "Maximum number of labels per object")
 #: rkward/plugins/00saveload/import/import_spss.rkh:28
@@ -1725,12 +1846,14 @@ msgid ""
 "Maximum number of factor levels to use (see <link href=\"rkward://rhelp/read."
 "spss\"/>)"
 msgstr ""
+"Uasmhéid leibhéil fachtóra le húsáid (féach <link href=\"rkward://rhelp/read."
+"spss\"/>)"
 
 #. i18n: ectx: (Loaded from Import SPSS file) <settings> <setting> (refers to element labelled "Trim white space")
 #: rkward/plugins/00saveload/import/import_spss.rkh:29
 #, kde-format
 msgid "Trim trailing white space from labels?"
-msgstr ""
+msgstr "An bhfuil spás bán ag teacht ó lipéid?"
 
 #. i18n: ectx: (Loaded from Import SPSS file) <settings> <setting> (refers to element labelled "Preview")
 #: rkward/plugins/00saveload/import/import_spss.rkh:30
@@ -1740,60 +1863,63 @@ msgid ""
 "performance reasons. Internally, the preview uses a data.frame, even if "
 "<label id=\"data_frame\"/> is not checked."
 msgstr ""
+"Réamhamharc ar shonraí allmhairithe. Ní thaispeántar ach na chéad 50 sraith "
+"agus colún, ar chúiseanna feidhmíochta. Go hinmheánach, úsáideann an "
+"réamhamharc data.frame, fiú mura bhfuil <label id=\"data_frame\"/> ticáilte."
 
 #. i18n: ectx: (Import SPSS file) <dialog label="...">
 #: rkward/plugins/00saveload/import/import_spss.xml:24
 #, kde-format
 msgid "Import SPSS file"
-msgstr ""
+msgstr "Iompórtáil comhad SPSS"
 
 #. i18n: ectx: (Import SPSS file) <dialog label="Import SPSS file"> <tab label="General"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/import_spss.xml:34
 #, kde-format
 msgid "Import as a data.frame"
-msgstr ""
+msgstr "Iompórtáil mar data.frame"
 
 #. i18n: ectx: (Import SPSS file) <dialog label="Import SPSS file"> <tab label="General"> <frame label="...">
 #: rkward/plugins/00saveload/import/import_spss.xml:35
 #, kde-format
 msgid "Labels"
-msgstr ""
+msgstr "Lipéid"
 
 #. i18n: ectx: (Import SPSS file) <dialog label="Import SPSS file"> <tab label="General"> <frame label="Labels"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/import_spss.xml:36
 #, kde-format
 msgid "Convert Variable labels to RKWard format"
-msgstr ""
+msgstr "Tiontaigh lipéid athróg go formáid RKWard"
 
 #. i18n: ectx: (Import SPSS file) <dialog label="Import SPSS file"> <tab label="General"> <frame label="Labels"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/import_spss.xml:37
 #, kde-format
 msgid "Use value labels"
-msgstr ""
+msgstr "Úsáid lipéid luacha"
 
 #. i18n: ectx: (Import SPSS file) <dialog label="Import SPSS file"> <tab label="General"> <frame label="Labels"> <spinbox label="...">
 #: rkward/plugins/00saveload/import/import_spss.xml:38
 #, kde-format
 msgid "Maximum number of labels per object"
-msgstr ""
+msgstr "Uasmhéid lipéid in aghaidh an réada"
 
 #. i18n: ectx: (Import SPSS file) <dialog label="Import SPSS file"> <tab label="General"> <frame label="Labels"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/import_spss.xml:39
 #, kde-format
 msgid "Trim white space"
-msgstr ""
+msgstr "Gearr an spás bán"
 
 #. i18n: ectx: (Loaded from Import STATA file)
 #: rkward/plugins/00saveload/import/import_stata.js:73
 #, kde-format
 msgid "Import Stata File"
-msgstr ""
+msgstr "Iompórtáil Comhad Stata"
 
 #. i18n: ectx: (Loaded from Import STATA file) <summary>
 #: rkward/plugins/00saveload/import/import_stata.rkh:11
 #, kde-format
 msgid "Import STATA data files."
-msgstr ""
+msgstr "Iompórtáil comhaid sonraí STATA."
 
 #. i18n: ectx: (Loaded from Import STATA file) <usage>
 #: rkward/plugins/00saveload/import/import_stata.rkh:15
@@ -1803,6 +1929,10 @@ msgid ""
 "dta'. An R object containing the STATA data will be created. STATA files "
 "other than data files (i. e.:*.log, *.smcl, *.do, *.ado) are not supported."
 msgstr ""
+"Roghnaigh an comhad sonraí STATA le hallmhairiú. De ghnáth bíonn deireadh '*."
+"dta' ar na comhaid sin. Cruthófar réad R ina bhfuil na sonraí STATA. Ní "
+"thacaítear le comhaid STATA seachas comhaid sonraí (i.e.:*.log, *.smcl, *."
+"do, *.ado)."
 
 #. i18n: ectx: (Loaded from Import STATA file) <settings> <setting> (refers to element labelled "File name")
 #: rkward/plugins/00saveload/import/import_stata.rkh:21
@@ -1811,12 +1941,16 @@ msgid ""
 "The filename of the file to import. This may also be a URL (http://, http:// "
 "and ftp:// are supported)."
 msgstr ""
+"Ainm comhaid an chomhaid atá le hallmhairiú. D’fhéadfadh sé seo a bheith ina "
+"URL freisin (tacaítear le http://, http:// agus ftp://)."
 
 #. i18n: ectx: (Loaded from Import STATA file) <settings> <setting> (refers to element labelled "Edit Object")
 #: rkward/plugins/00saveload/import/import_stata.rkh:23
 #, kde-format
 msgid "Whether the object should be opened for editing after it was imported."
 msgstr ""
+"Ar cheart an réad a oscailt le haghaidh eagarthóireachta tar éis é a "
+"allmhairiú."
 
 #. i18n: ectx: (Loaded from Import STATA file) <settings> <setting> (refers to element labelled "Convert Stata dates to 'Date' class")
 #: rkward/plugins/00saveload/import/import_stata.rkh:25
@@ -1825,6 +1959,8 @@ msgid ""
 "Convert Stata dates to R 'Date' class (see <link href=\"rkward://rhelp/read."
 "dta\"/>, <link href=\"rkward://rhelp/Dates\"/>)."
 msgstr ""
+"Tiontaigh dátaí Stata go rang 'Date' R (féach <link href=\"rkward://rhelp/"
+"read.dta\"/>, <link href=\"rkward://rhelp/Dates\"/>)."
 
 #. i18n: ectx: (Loaded from Import STATA file) <settings> <setting> (refers to element labelled "Use Stata value labels to create factors?")
 #: rkward/plugins/00saveload/import/import_stata.rkh:26
@@ -1833,6 +1969,8 @@ msgid ""
 "R uses value labels only for factors. Should Stata variable with value "
 "labels be converted to factors?"
 msgstr ""
+"Ní úsáideann R lipéid luacha ach le haghaidh fachtóirí. Ar cheart athróg "
+"Stata le lipéid luacha a thiontú go fachtóirí?"
 
 #. i18n: ectx: (Loaded from Import STATA file) <settings> <setting> (refers to element labelled "For version 8 or later, store information about different types of missing data?")
 #: rkward/plugins/00saveload/import/import_stata.rkh:27
@@ -1842,6 +1980,10 @@ msgid ""
 "values. If this option is set, this information is stored in an attribute of "
 "the imported data. See <link href=\"rkward://rhelp/read.dta\"/> for details."
 msgstr ""
+"Déanann Stata leagan 8 agus níos airde idirdhealú idir cineálacha éagsúla "
+"luachanna atá ar iarraidh. Má shocraítear an rogha seo, stóráiltear an "
+"fhaisnéis seo i dtréith de na sonraí allmhairithe. Féach <link href="
+"\"rkward://rhelp/read.dta\"/> le haghaidh tuilleadh sonraí."
 
 #. i18n: ectx: (Loaded from Import STATA file) <settings> <setting> (refers to element labelled "Convert '_' in Stata variable names to '.' in R names")
 #: rkward/plugins/00saveload/import/import_stata.rkh:28
@@ -1851,6 +1993,9 @@ msgid ""
 "problems in some (rare) situations. Should underscore characters be "
 "converted to dots ('.')?"
 msgstr ""
+"De ghnáth ní úsáidtear an fo-líne ('_') in ainmneacha athróg R, agus "
+"d'fhéadfadh sé fadhbanna a chruthú i gcásanna áirithe (annamha). Ar cheart "
+"carachtair fo-líne a thiontú go poncanna ('.')?"
 
 #. i18n: ectx: (Loaded from Import STATA file) <settings> <setting> (refers to element labelled "Preview")
 #: rkward/plugins/00saveload/import/import_stata.rkh:29
@@ -1859,12 +2004,14 @@ msgid ""
 "Preview imported data. Only the first 50 rows and columns are shown, for "
 "performance reasons."
 msgstr ""
+"Réamhamharc ar shonraí allmhairithe. Ní thaispeántar ach na chéad 50 sraith "
+"agus colún, ar chúiseanna feidhmíochta."
 
 #. i18n: ectx: (Import STATA file) <dialog label="...">
 #: rkward/plugins/00saveload/import/import_stata.xml:18
 #, kde-format
 msgid "Import STATA file"
-msgstr ""
+msgstr "Iompórtáil comhad STATA"
 
 #. i18n: ectx: (Save R objects) <dialog label="Save R objects"> <tab label="Select variables"> <frame label="...">
 #. i18n: ectx: (Create package skeleton) <dialog label="Create package skeleton"> <tab label="Select variables"> <frame label="...">
@@ -1876,19 +2023,19 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write.xml:26
 #, kde-format
 msgid "Options"
-msgstr ""
+msgstr "Roghanna"
 
 #. i18n: ectx: (Import STATA file) <dialog label="Import STATA file"> <tab label="General"> <frame label="Options"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/import_stata.xml:29
 #, kde-format
 msgid "Convert Stata dates to 'Date' class"
-msgstr ""
+msgstr "Tiontaigh dátaí Stata go rang 'Dáta'"
 
 #. i18n: ectx: (Import STATA file) <dialog label="Import STATA file"> <tab label="General"> <frame label="Options"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/import_stata.xml:30
 #, kde-format
 msgid "Use Stata value labels to create factors?"
-msgstr ""
+msgstr "Úsáid lipéid luacha Stata chun fachtóirí a chruthú?"
 
 #. i18n: ectx: (Import STATA file) <dialog label="Import STATA file"> <tab label="General"> <frame label="Options"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/import_stata.xml:31
@@ -1897,12 +2044,14 @@ msgid ""
 "For version 8 or later, store information about different types of missing "
 "data?"
 msgstr ""
+"I gcás leagan 8 nó níos déanaí, stóráiltear faisnéis faoi chineálacha "
+"éagsúla sonraí atá ar iarraidh?"
 
 #. i18n: ectx: (Import STATA file) <dialog label="Import STATA file"> <tab label="General"> <frame label="Options"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/import_stata.xml:32
 #, kde-format
 msgid "Convert '_' in Stata variable names to '.' in R names"
-msgstr ""
+msgstr "Tiontaigh '_' in ainmneacha athróg Stata go '.' in ainmneacha R"
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet)
 #: rkward/plugins/00saveload/import/import_xls.js:14
@@ -1911,6 +2060,8 @@ msgid ""
 "Preview not available, because package gdata is not installed or cannot be "
 "loaded."
 msgstr ""
+"Níl réamhamharc ar fáil, mar níl an pacáiste gdata suiteáilte nó ní féidir é "
+"a luchtú."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet)
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="...">
@@ -1919,14 +2070,14 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.xml:18
 #, kde-format
 msgid "Import Microsoft EXCEL sheet"
-msgstr ""
+msgstr "Iompórtáil bileog Microsoft EXCEL"
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <summary>
 #: rkward/plugins/00saveload/import/import_xls.rkh:8
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:12
 #, kde-format
 msgid "Import a sheet of a Microsoft Excel file into a data frame."
-msgstr ""
+msgstr "Iompórtáil bileog de chomhad Microsoft Excel isteach i bhfráma sonraí."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <usage>
 #: rkward/plugins/00saveload/import/import_xls.rkh:12
@@ -1939,12 +2090,19 @@ msgid ""
 "you may want to try the Java-based alternative <link href=\"rkward://"
 "component/import_xls_xlconnect\"/>."
 msgstr ""
+"Roghnaigh an comhad Microsoft Excel chun bileog a allmhairiú uaidh. "
+"Cruthófar réad R ina bhfuil na sonraí. Tá an modh seo chun bileoga Excel a "
+"allmhairiú bunaithe ar phacáiste R \"gdata\", agus teastaíonn socrú Perl atá "
+"ag obair. Mura n-oibríonn sé seo ar do chóras, nó mura dtáirgeann sé na "
+"torthaí a bhfuiltear ag súil leo, b'fhéidir gur mhaith leat an rogha eile "
+"atá bunaithe ar Java a thriail <link href=\"rkward://component/"
+"import_xls_xlconnect\"/>."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Name or number of sheet")
 #: rkward/plugins/00saveload/import/import_xls.rkh:22
 #, kde-format
 msgid "Specifies the sheet to be imported"
-msgstr ""
+msgstr "Sonraíonn an bhileog atá le hallmhairiú"
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Print details as the file is processed")
 #: rkward/plugins/00saveload/import/import_xls.rkh:23
@@ -1953,30 +2111,32 @@ msgid ""
 "Print details as the file is processed. This may be helpful in "
 "troubleshooting."
 msgstr ""
+"Priontáil sonraí de réir mar a phróiseáiltear an comhad. D’fhéadfadh sé seo "
+"a bheith ina chuidiú le haghaidh fabhtcheartaithe."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Number of rows to skip")
 #: rkward/plugins/00saveload/import/import_xls.rkh:24
 #, kde-format
 msgid "Number of rows to skip at the top"
-msgstr ""
+msgstr "Líon na sraitheanna le scipeáil ag an mbarr"
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Max number of rows to read (-1 for no limit)")
 #: rkward/plugins/00saveload/import/import_xls.rkh:25
 #, kde-format
 msgid "Maximum number of rows to import"
-msgstr ""
+msgstr "Uasmhéid na sraitheanna le hallmhairiú"
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Use first row as column names")
 #: rkward/plugins/00saveload/import/import_xls.rkh:27
 #, kde-format
 msgid "Whether the first row of the file should be interpreted as column names"
-msgstr ""
+msgstr "Ar cheart an chéad ró den chomhad a léirmhíniú mar ainmneacha colún"
 
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="General"> <input label="...">
 #: rkward/plugins/00saveload/import/import_xls.xml:19
 #, kde-format
 msgid "Name or number of sheet"
-msgstr ""
+msgstr "Ainm nó uimhir na bileoige"
 
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="Further Options"> <frame label="...">
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="Rows and columns"> <frame label="...">
@@ -1984,19 +2144,19 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.xml:35
 #, kde-format
 msgid "Range"
-msgstr ""
+msgstr "Raon"
 
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="Further Options"> <frame label="Range"> <input label="...">
 #: rkward/plugins/00saveload/import/import_xls.xml:33
 #, kde-format
 msgid "Max number of rows to read (-1 for no limit)"
-msgstr ""
+msgstr "Uasmhéid na sraitheanna le léamh (-1 gan teorainn)"
 
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="Further Options"> <frame label="Range"> <input label="...">
 #: rkward/plugins/00saveload/import/import_xls.xml:34
 #, kde-format
 msgid "Number of rows to skip"
-msgstr ""
+msgstr "Líon na sraitheanna le scipeáil"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Encoding and Character Options"> <input label="...">
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="Further Options"> <input label="...">
@@ -2004,19 +2164,19 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:168
 #, kde-format
 msgid "Character for missing values"
-msgstr ""
+msgstr "Carachtar le haghaidh luachanna atá ar iarraidh"
 
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="Further Options"> <frame label="...">
 #: rkward/plugins/00saveload/import/import_xls.xml:45
 #, kde-format
 msgid "Error handling"
-msgstr ""
+msgstr "Láimhseáil earráide"
 
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="Further Options"> <frame label="Error handling"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/import_xls.xml:46
 #, kde-format
 msgid "Print details as the file is processed"
-msgstr ""
+msgstr "Priontáil sonraí agus an comhad á phróiseáil"
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet)
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.js:10
@@ -2025,6 +2185,8 @@ msgid ""
 "Preview not available, because package XLConnect is not installed or cannot "
 "be loaded."
 msgstr ""
+"Níl réamhamharc ar fáil, mar níl an pacáiste XLConnect suiteáilte nó ní "
+"féidir é a luchtú."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <usage>
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:16
@@ -2036,6 +2198,12 @@ msgid ""
 "case this does not work on your system, you may want to try the Perl-based "
 "alternative <link href=\"rkward://component/import_xls\"/>."
 msgstr ""
+"Roghnaigh an comhad Microsoft Excel chun bileog a allmhairiú uaidh. "
+"Cruthófar réad R ina bhfuil na sonraí. Tá an modh seo chun bileoga Excel a "
+"allmhairiú bunaithe ar phacáiste R \"XLconnect\", agus teastaíonn socrú Java "
+"atá ag obair chuige. Mura n-oibríonn sé seo ar do chóras, b'fhéidir gur "
+"mhaith leat triail a bhaint as an rogha eile atá bunaithe ar Perl <link href="
+"\"rkward://component/import_xls\"/>."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Index or \"name\" of sheet")
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:24
@@ -2044,6 +2212,8 @@ msgid ""
 "Numeric index or name/label of the sheet to import from the file. If you "
 "specify a name, here, make sure to quote it."
 msgstr ""
+"Innéacs uimhriúil nó ainm/lipéad na bileoige atá le hallmhairiú ón gcomhad. "
+"Má shonraíonn tú ainm anseo, déan cinnte é a lua."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Use first row as column names")
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:25
@@ -2052,6 +2222,8 @@ msgid ""
 "Whether the first row of data should be used as column headers. "
 "Alternatively, columns are named, automatically (by index)."
 msgstr ""
+"Cibé acu ba chóir an chéad ró sonraí a úsáid mar cheanntásca colún. Nó, "
+"ainmnítear colúin go huathoibríoch (de réir innéacs)."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Index or \"name\" of column with row names (if any)")
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:26
@@ -2061,6 +2233,10 @@ msgid ""
 "specify a name, here, make sure to quote it. If you leave this field empty, "
 "row-names will be assigned automatically (row numbers)"
 msgstr ""
+"Innéacs uimhriúil nó ainm/lipéad an cholúin ina bhfuil ainmneacha na "
+"sraitheanna. Má shonraíonn tú ainm anseo, déan cinnte é a lua. Má fhágann tú "
+"an réimse seo folamh, sannfar ainmneacha na sraitheanna go huathoibríoch "
+"(uimhreacha na sraitheanna)"
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Row")
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:33
@@ -2070,6 +2246,9 @@ msgid ""
 "the start row will be determined, automatically. Alternatively, you can "
 "specify a range in spreadsheet notation, below."
 msgstr ""
+"An chéad ró sonraí le hallmhairiú laistigh den bhileog. Má fhágtar go 0 é "
+"(an réamhshocrú), cinnfear an chéad ró go huathoibríoch. Nó is féidir leat "
+"raon a shonrú i nótaíocht scarbhileog, thíos."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Column")
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:35
@@ -2078,6 +2257,8 @@ msgid ""
 "First column of data to import within the sheet. See <label id=\"startrow\"/"
 ">, above."
 msgstr ""
+"An chéad cholún sonraí le hallmhairiú laistigh den bhileog. Féach <label id="
+"\"startrow\"/>, thuas."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Row")
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:37
@@ -2086,6 +2267,8 @@ msgid ""
 "Last row of data to import within the sheet. See <label id=\"startrow\"/>, "
 "above."
 msgstr ""
+"An tsraith dheireanach sonraí le hallmhairiú laistigh den bhileog. Féach "
+"<label id=\"startrow\"/>, thuas."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Column")
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:38
@@ -2094,6 +2277,8 @@ msgid ""
 "Last column of data to import within the sheet. See <label id=\"startrow\"/"
 ">, above."
 msgstr ""
+"An colún deireanach sonraí le hallmhairiú laistigh den bhileog. Féach <label "
+"id=\"startrow\"/>, thuas."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "")
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:39
@@ -2102,6 +2287,8 @@ msgid ""
 "Specify the range to import within the sheet in spreadsheet notation (e.g. "
 "\"A10:B20\")."
 msgstr ""
+"Sonraigh an raon atá le hallmhairiú laistigh den bhileog i nótaíocht "
+"scarbhileog (m.sh. \"A10:B20\")."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Skip empty leading or trailing rows")
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:40
@@ -2110,6 +2297,8 @@ msgid ""
 "If checked, empty leading and trailing rows will be omitted from the "
 "imported data."
 msgstr ""
+"Má tá sé seiceáilte, fágfar sraitheanna tosaigh agus deiridh folamh ar lár ó "
+"na sonraí allmhairithe."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Skip empty leading or trailing columns")
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:41
@@ -2118,6 +2307,8 @@ msgid ""
 "If checked, empty leading and trailing columns will be omitted from the "
 "imported data."
 msgstr ""
+"Má tá sé seo seiceáilte, fágfar colúin tosaigh agus deiridh folamh ar lár ó "
+"na sonraí allmhairithe."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Column classes (empty for automatic)")
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:42
@@ -2130,30 +2321,39 @@ msgid ""
 "this control empty, entirely. Also note that most common type conversions "
 "can also be done <i>after</i> the data has been imported."
 msgstr ""
+"Ligeann sé seo duit an braiteadh uathoibríoch cineálacha sonraí a shárú. "
+"Sonraigh cineálacha sonraí R amhail \"carachtar\" nó \"uimhriúil\" anseo. "
+"Cuirfear aon sonraíocht a dhéanann tú anseo i bhfeidhm ar <b>gach</b> colún "
+"allmhairithe (déanfar an tsonraíocht a \"athchúrsáil\", más gá). Chun "
+"braiteadh uathoibríoch cineálacha sonraí a úsáid, fág an rialú seo folamh, "
+"go hiomlán. Tabhair faoi deara freisin gur féidir an chuid is mó de na "
+"tiontuithe cineálacha coitianta a dhéanamh <i>tar éis</i> na sonraí a "
+"allmhairiú freisin."
 
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="General"> <input label="...">
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.xml:22
 #, kde-format
 msgid "Index or \"name\" of sheet"
-msgstr ""
+msgstr "Innéacs nó \"ainm\" na bileoige"
 
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="General"> <input label="...">
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.xml:25
 #, kde-format
 msgid "Index or \"name\" of column with row names (if any)"
 msgstr ""
+"Innéacs nó \"ainm\" colún le hainmneacha na sraitheanna (más ann dóibh)"
 
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="...">
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.xml:34
 #, kde-format
 msgid "Rows and columns"
-msgstr ""
+msgstr "Sraitheanna agus colúin"
 
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="Rows and columns"> <frame label="Range"> <frame label="...">
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.xml:37
 #, kde-format
 msgid "Start row / column (\"0\" for automatic)"
-msgstr ""
+msgstr "Tosaigh an tsraith/an cholún (\"0\" le haghaidh uathoibríoch)"
 
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> [...] <frame label="Start row / column (\"0\" for automatic)"> <spinbox label="...">
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> [...] <frame label="End row / column (\"0\" for automatic)"> <spinbox label="...">
@@ -2161,7 +2361,7 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.xml:42
 #, kde-format
 msgid "Row"
-msgstr ""
+msgstr "Sraith"
 
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> [...] <frame label="Start row / column (\"0\" for automatic)"> <spinbox label="...">
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> [...] <frame label="End row / column (\"0\" for automatic)"> <spinbox label="...">
@@ -2169,55 +2369,55 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.xml:43
 #, kde-format
 msgid "Column"
-msgstr ""
+msgstr "Colún"
 
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="Rows and columns"> <frame label="Range"> <frame label="...">
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.xml:41
 #, kde-format
 msgid "End row / column (\"0\" for automatic)"
-msgstr ""
+msgstr "Deireadh sraithe/colúin (\"0\" le haghaidh uathoibríoch)"
 
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="Rows and columns"> <frame label="Range"> <text>
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.xml:46
 #, kde-format
 msgid "- <b>or</b> Excel Range (e.g. \"A10:B20\") -"
-msgstr ""
+msgstr "- <b>nó</b> Raon Excel (m.sh. \"A10:B20\") -"
 
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="Rows and columns"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.xml:50
 #, kde-format
 msgid "Skip empty leading or trailing rows"
-msgstr ""
+msgstr "Seachain sraitheanna tosaigh nó deiridh folamh"
 
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="Rows and columns"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.xml:51
 #, kde-format
 msgid "Skip empty leading or trailing columns"
-msgstr ""
+msgstr "Seachain colúin tosaigh nó deiridh folamh"
 
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="Rows and columns"> <matrix label="...">
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.xml:53
 #, kde-format
 msgid "Column classes (empty for automatic)"
-msgstr ""
+msgstr "Ranganna colún (folamh le haghaidh uathoibríoch)"
 
 #. i18n: ectx: (Loaded from Load an R data file)
 #: rkward/plugins/00saveload/import/load_data.js:25
 #, kde-format
 msgid "Load data"
-msgstr ""
+msgstr "Luchtaigh sonraí"
 
 #. i18n: ectx: (Loaded from Load an R data file)
 #: rkward/plugins/00saveload/import/load_data.js:25
 #, kde-format
 msgid "Import to environment"
-msgstr ""
+msgstr "Iompórtáil chuig an timpeallacht"
 
 #. i18n: ectx: (Loaded from Load an R data file) <summary>
 #: rkward/plugins/00saveload/import/load_data.rkh:8
 #, kde-format
 msgid "Load an R data file."
-msgstr ""
+msgstr "Íoslódáil comhad sonraí R."
 
 #. i18n: ectx: (Loaded from Load an R data file) <usage>
 #: rkward/plugins/00saveload/import/load_data.rkh:12
@@ -2231,6 +2431,14 @@ msgid ""
 "with your existing workspace. If in doubt, use Workspace-&gt;Open Workspace, "
 "instead of this plugin."
 msgstr ""
+"Roghnaigh an comhad R le hallmhairiú. Bheadh sé seo ina chomhad a "
+"chruthófaí, mar shampla, tríd an spás oibre a shábháil ó RKWard, ag baint "
+"úsáide as an ordú R <link href=\"rkward://rhelp/save\">save()</link>, nó an "
+"breiseán <link href=\"rkward://component/save_r\"/>. Is é an "
+"príomhdhifríocht idir spás oibre a luchtú trí Spás Oibre->Spás Oibre "
+"Oscailte, ná nach nglantar an spás oibre ar dtús, ach ina ionad sin "
+"cumasctar é le do spás oibre atá ann cheana féin. Má tá amhras ort, bain "
+"úsáid as Spás Oibre->Spás Oibre Oscailte, in ionad an bhreiseáin seo."
 
 #. i18n: ectx: (Loaded from Load an R data file) <usage>
 #: rkward/plugins/00saveload/import/load_data.rkh:12
@@ -2240,12 +2448,15 @@ msgid ""
 "will be overwritten, if the loaded workspace contains objects of the same "
 "names."
 msgstr ""
+"Bí cinnte do spás oibre a shábháil sula n-úsáideann tú an breiseán seo, mar "
+"go ndéanfar do hathróga a róscríobh má tá réada leis na hainmneacha céanna "
+"sa spás oibre luchtaithe."
 
 #. i18n: ectx: (Loaded from Load an R data file) <settings> <setting> (refers to element labelled "R data file to load")
 #: rkward/plugins/00saveload/import/load_data.rkh:19
 #, kde-format
 msgid "The filename of the file to load"
-msgstr ""
+msgstr "Ainm comhaid an chomhaid atá le luchtú"
 
 #. i18n: ectx: (Loaded from Load an R data file) <settings> <setting> (refers to element labelled "Save to environment")
 #: rkward/plugins/00saveload/import/load_data.rkh:20
@@ -2256,18 +2467,22 @@ msgid ""
 "not yet exist, it will be created. If it already exists, it will be "
 "overwritten completely, i.e. deleting all objects inside it!"
 msgstr ""
+"Seiceáil an rogha seo (agus sonraigh timpeallacht), chun na sonraí a luchtú "
+"isteach i dtimpeallacht seachas .GlobalEnv. Mura bhfuil an timpeallacht "
+"shonraithe ann fós, cruthófar í. Má tá sí ann cheana féin, déanfar í a "
+"athscríobh go hiomlán, i.e. scriosfar gach réad laistigh di!"
 
 #. i18n: ectx: (Load an R data file) <dialog label="...">
 #: rkward/plugins/00saveload/import/load_data.xml:14
 #, kde-format
 msgid "Load an R data file"
-msgstr ""
+msgstr "Luchtaigh comhad sonraí R"
 
 #. i18n: ectx: (Load an R data file) <dialog label="Load an R data file"> <browser label="...">
 #: rkward/plugins/00saveload/import/load_data.xml:15
 #, kde-format
 msgid "R data file to load"
-msgstr ""
+msgstr "Comhad sonraí R le luchtú"
 
 #. i18n: ectx: (Load an R data file) <dialog label="Load an R data file"> <text>
 #: rkward/plugins/00saveload/import/load_data.xml:16
@@ -2276,12 +2491,14 @@ msgid ""
 "WARNING: This may overwrite existing objects in .GlobalEnv. Be sure to save "
 "your workspace, first."
 msgstr ""
+"RABHADH: D’fhéadfadh sé seo rudaí atá ann cheana féin i .GlobalEnv a "
+"athscríobh. Bí cinnte do spás oibre a shábháil ar dtús."
 
 #. i18n: ectx: (Load an R data file) <dialog label="Load an R data file"> <saveobject label="...">
 #: rkward/plugins/00saveload/import/load_data.xml:17
 #, kde-format
 msgid "Save to environment"
-msgstr ""
+msgstr "Sábháil chuig an timpeallacht"
 
 #. i18n: ectx: (Load an R data file) <dialog label="Load an R data file"> <text>
 #: rkward/plugins/00saveload/import/load_data.xml:18
@@ -2290,18 +2507,19 @@ msgid ""
 "WARNING: If the environment already exists, all objects inside it will be "
 "lost."
 msgstr ""
+"RABHADH: Má tá an timpeallacht ann cheana féin, caillfear gach réad atá ann."
 
 #. i18n: ectx: (Loaded from Source an R file)
 #: rkward/plugins/00saveload/import/source.js:27
 #, kde-format
 msgid "Source R file"
-msgstr ""
+msgstr "Comhad foinse R"
 
 #. i18n: ectx: (Loaded from Source an R file) <summary>
 #: rkward/plugins/00saveload/import/source.rkh:8
 #, kde-format
 msgid "Run an R source file."
-msgstr ""
+msgstr "Rith comhad foinse R."
 
 #. i18n: ectx: (Loaded from Source an R file) <usage>
 #: rkward/plugins/00saveload/import/source.rkh:12
@@ -2311,12 +2529,15 @@ msgid ""
 "of R statements, which are then evaluated (see <link href=\"rkward://rhelp/"
 "source\"/>)."
 msgstr ""
+"Roghnaigh comhad le luchtú. Luchtófar an comhad seo agus léirmhíneofar é mar "
+"script de ráitis R, a ndéanfar meastóireacht orthu ansin (féach <link href="
+"\"rkward://rhelp/source\"/>)."
 
 #. i18n: ectx: (Loaded from Source an R file) <settings> <setting> (refers to element labelled "File name")
 #: rkward/plugins/00saveload/import/source.rkh:18
 #, kde-format
 msgid "The filename of the source file to run"
-msgstr ""
+msgstr "Ainm comhaid an chomhaid foinse le rith"
 
 #. i18n: ectx: (Loaded from Source an R file) <settings> <setting> (refers to element labelled "Use directory of source file as working directory")
 #: rkward/plugins/00saveload/import/source.rkh:19
@@ -2326,6 +2547,9 @@ msgid ""
 "source file. This may be needed, if the source file refers to further files "
 "using relative paths."
 msgstr ""
+"Má tá sé seo seiceáilte, athrófar an t-eolaire oibre de chuid eolaire an "
+"chomhaid foinse. B’fhéidir go mbeadh gá leis seo, má thagraíonn an comhad "
+"foinse do chomhaid eile ag baint úsáide as cosáin choibhneasta."
 
 #. i18n: ectx: (Loaded from Source an R file) <settings> <setting> (refers to element labelled "Run in a local environment")
 #: rkward/plugins/00saveload/import/source.rkh:20
@@ -2337,6 +2561,12 @@ msgid ""
 "create new objects (in contrast to just producing printed output), it will "
 "have to be run in the global environment."
 msgstr ""
+"Má tá sé seo seiceáilte, déantar an comhad foinse a léirmhíniú i "
+"dtimpeallacht áitiúil, seachas sa timpeallacht dhomhanda. Tá sé seo i bhfad "
+"níos sábháilte, mar ní dhéanfar aon réada atá ann cheana a róscríobh. Ar an "
+"láimh eile, más é cuspóir an chomhaid foinse réada nua a chruthú (i "
+"gcodarsnacht le haschur clóite a tháirgeadh), beidh ort é a rith sa "
+"timpeallacht dhomhanda."
 
 #. i18n: ectx: (Loaded from Source an R file) <settings> <setting> (refers to element labelled "Echo source statements")
 #: rkward/plugins/00saveload/import/source.rkh:22
@@ -2344,6 +2574,8 @@ msgstr ""
 msgid ""
 "Should each source statement be echoed after parsing, and before evaluation?"
 msgstr ""
+"Ar cheart gach ráiteas foinse a mhacallú tar éis parsála, agus roimh "
+"mheasúnú?"
 
 #. i18n: ectx: (Loaded from Source an R file) <settings> <setting> (refers to element labelled "Prompt for echoed lines (empty for default)")
 #: rkward/plugins/00saveload/import/source.rkh:23
@@ -2352,18 +2584,20 @@ msgid ""
 "What should be printed at the start of each echoed source line (to "
 "differentiate it from the output)? Leave empty for the default."
 msgstr ""
+"Cad ba chóir a phriontáil ag tús gach líne foinse macalla (chun idirdhealú a "
+"dhéanamh idir í agus an t-aschur)? Fág folamh don réamhshocrú."
 
 #. i18n: ectx: (Loaded from Source an R file) <settings> <setting> (refers to element labelled "Maximal length of echoed statements")
 #: rkward/plugins/00saveload/import/source.rkh:24
 #, kde-format
 msgid "Maximum length of an echoed source line."
-msgstr ""
+msgstr "Uasfhad líne foinse macalla."
 
 #. i18n: ectx: (Loaded from Source an R file) <settings> <setting> (refers to element labelled "Verbose")
 #: rkward/plugins/00saveload/import/source.rkh:25
 #, kde-format
 msgid "Print additional diagnostics."
-msgstr ""
+msgstr "Priontáil diagnóisic bhreise."
 
 #. i18n: ectx: (Loaded from Source an R file) <settings> <setting> (refers to element labelled "Print eval")
 #: rkward/plugins/00saveload/import/source.rkh:26
@@ -2372,6 +2606,8 @@ msgid ""
 "Print the result of each single evaluation (instead of just the final "
 "result)."
 msgstr ""
+"Priontáil toradh gach meastóireachta aonair (in ionad an toradh deiridh "
+"amháin)."
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Source an R file) <dialog label="...">
@@ -2379,80 +2615,81 @@ msgstr ""
 #: rkward/plugins/import_export.pluginmap:25
 #, kde-format
 msgid "Source an R file"
-msgstr ""
+msgstr "Foinsigh comhad R"
 
 #. i18n: ectx: (Source an R file) <dialog label="Source an R file"> <tab label="...">
 #: rkward/plugins/00saveload/import/source.xml:20
 #, kde-format
 msgid "Main options"
-msgstr ""
+msgstr "Príomhroghanna"
 
 #. i18n: ectx: (Source an R file) <dialog label="Source an R file"> <tab label="Main options"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/source.xml:22
 #, kde-format
 msgid "Use directory of source file as working directory"
-msgstr ""
+msgstr "Úsáid eolaire an chomhaid foinse mar eolaire oibre"
 
 #. i18n: ectx: (Source an R file) <dialog label="Source an R file"> <tab label="Main options"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/source.xml:23
 #, kde-format
 msgid "Run in a local environment"
-msgstr ""
+msgstr "Rith i dtimpeallacht áitiúil"
 
 #. i18n: ectx: (Source an R file) <dialog label="Source an R file"> <tab label="Main options"> <text>
 #: rkward/plugins/00saveload/import/source.xml:24
 #, kde-format
 msgid "WARNING: This may overwrite existing objects without prompting!"
 msgstr ""
+"RABHADH: D’fhéadfadh sé seo rudaí atá ann cheana a athscríobh gan leid!"
 
 #. i18n: ectx: (Source an R file) <dialog label="Source an R file"> <tab label="...">
 #: rkward/plugins/00saveload/import/source.xml:27
 #, kde-format
 msgid "Output options"
-msgstr ""
+msgstr "Roghanna aschuir"
 
 #. i18n: ectx: (Source an R file) <dialog label="Source an R file"> <tab label="Output options"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/source.xml:28
 #, kde-format
 msgid "Echo source statements"
-msgstr ""
+msgstr "Ráitis foinse macalla"
 
 #. i18n: ectx: (Source an R file) <dialog label="Source an R file"> <tab label="Output options"> <input label="...">
 #: rkward/plugins/00saveload/import/source.xml:29
 #, kde-format
 msgid "Prompt for echoed lines (empty for default)"
-msgstr ""
+msgstr "Iarr ar línte macallaithe (folamh don réamhshocrú)"
 
 #. i18n: ectx: (Source an R file) <dialog label="Source an R file"> <tab label="Output options"> <spinbox label="...">
 #: rkward/plugins/00saveload/import/source.xml:30
 #, kde-format
 msgid "Maximal length of echoed statements"
-msgstr ""
+msgstr "Fad uasta ráiteas macallaithe"
 
 #. i18n: ectx: (Source an R file) <dialog label="Source an R file"> <tab label="Output options"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/source.xml:31
 #, kde-format
 msgid "Verbose"
-msgstr ""
+msgstr "Fadóch"
 
 #. i18n: ectx: (Source an R file) <dialog label="Source an R file"> <tab label="Output options"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/source.xml:32
 #, kde-format
 msgid "Print eval"
-msgstr ""
+msgstr "Priontáil meastóireacht"
 
 #. i18n: ectx: (Loaded from Export RMarkdown)
 #: rkward/plugins/00saveload/save/ExportRMarkdown.js:122
 #: rkward/plugins/00saveload/save/ExportRMarkdown.js:124
 #, kde-format
 msgid "Export RMarkdown file"
-msgstr ""
+msgstr "Easpórtáil comhad RMarkdown"
 
 #. i18n: ectx: (Loaded from Export RMarkdown) <settings> <setting> (refers to element labelled "RMarkdown file")
 #: rkward/plugins/00saveload/save/ExportRMarkdown.rkh:21
 #, kde-format
 msgid "Choose the file to be exported."
-msgstr ""
+msgstr "Roghnaigh an comhad atá le honnmhairiú."
 
 #. i18n: ectx: (Loaded from Export RMarkdown) <settings> <setting> (refers to element labelled "Target format")
 #: rkward/plugins/00saveload/save/ExportRMarkdown.rkh:24
@@ -2463,12 +2700,16 @@ msgid ""
 "defined via output_format will be used, see the documentation on rmarkdown::"
 "render()."
 msgstr ""
+"Socraigh an fhormáid sprice do chomhaid onnmhairithe. Má roghnaíonn tú "
+"\"Gach formáid atá sainmhínithe sa doiciméad\" nó \"An chéad fhormáid atá "
+"sainmhínithe sa doiciméad\", úsáidfear na formáidí atá sainmhínithe trí "
+"output_format, féach an doiciméadú ar rmarkdown::render()."
 
 #. i18n: ectx: (Loaded from Export RMarkdown) <settings> <setting> (refers to element labelled "Save as")
 #: rkward/plugins/00saveload/save/ExportRMarkdown.rkh:27
 #, kde-format
 msgid "Choose the target file name to export to."
-msgstr ""
+msgstr "Roghnaigh ainm an chomhaid sprice le heaspórtáil chuige."
 
 #. i18n: ectx: (Loaded from Export RMarkdown) <settings> <setting> (refers to element labelled "Save to")
 #: rkward/plugins/00saveload/save/ExportRMarkdown.rkh:30
@@ -2477,6 +2718,8 @@ msgid ""
 "Choose the target directory to export to, file names are automatically "
 "generated according to the formats defined in the document."
 msgstr ""
+"Roghnaigh an eolaire sprice le honnmhairiú chuici, gintear ainmneacha comhad "
+"go huathoibríoch de réir na bhformáidí atá sainmhínithe sa doiciméad."
 
 #. i18n: ectx: (Loaded from Export RMarkdown) <settings> <setting> (refers to element labelled "Markdown version")
 #: rkward/plugins/00saveload/save/ExportRMarkdown.rkh:34
@@ -2488,6 +2731,13 @@ msgid ""
 "between various output formats. But be aware that some formats may require "
 "special configuration or templates to produce proper results."
 msgstr ""
+"Socraigh an leagan markdown le húsáid. Ní dhéantar doiciméid v1 níos sine a "
+"rindreáil ach i bhformáid HTML, ag baint úsáide as an bpacáiste markdown. Má "
+"tá amhras ort, fág faoin v2 níos nuaí é; rindreáiltear na doiciméid sin ag "
+"baint úsáide as pandoc, rud a ligeann duit rogha a dhéanamh idir formáidí "
+"aschuir éagsúla. Ach bíodh a fhios agat go mb’fhéidir go mbeadh cumraíocht "
+"nó teimpléid speisialta ag teastáil ó roinnt formáidí chun torthaí cearta a "
+"thabhairt."
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Export RMarkdown) <about name="...">
@@ -2499,171 +2749,173 @@ msgstr ""
 #: rkward/plugins/import_export.pluginmap:33
 #, kde-format
 msgid "Export RMarkdown"
-msgstr ""
+msgstr "Easpórtáil RMarkdown"
 
 #. i18n: ectx: (Export RMarkdown) <about shortinfo="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:16
 #, kde-format
 msgid "RKWard GUI to export RMarkdown documents in various formats"
 msgstr ""
+"Comhéadan grafach RKWard chun doiciméid RMarkdown a easpórtáil i bhformáidí "
+"éagsúla"
 
 #. i18n: ectx: (Export RMarkdown) <about> <author given="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:17
 #, kde-format
 msgctxt "Author name"
 msgid "Meik"
-msgstr ""
+msgstr "Meik"
 
 #. i18n: ectx: (Export RMarkdown) <about> <author family="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:17
 #, kde-format
 msgctxt "Author name"
 msgid "Michalke"
-msgstr ""
+msgstr "Michalke"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> <tabbook label="Export RMarkdown"> <tab label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:68
 #, kde-format
 msgid "Source and target"
-msgstr ""
+msgstr "Foinse agus sprioc"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> <tabbook label="Export RMarkdown"> <tab label="Source and target"> <browser label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:71
 #, kde-format
 msgid "RMarkdown file"
-msgstr ""
+msgstr "Comhad RMarkdown"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> <tabbook label="Export RMarkdown"> <tab label="Source and target"> <dropdown label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:72
 #, kde-format
 msgid "Target format"
-msgstr ""
+msgstr "Formáid sprice"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> [...] <dropdown label="Target format"> <option label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:73
 #, kde-format
 msgid "All formats defined in document"
-msgstr ""
+msgstr "Gach formáid atá sainmhínithe sa doiciméad"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> [...] <dropdown label="Target format"> <option label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:74
 #, kde-format
 msgid "First format defined in document"
-msgstr ""
+msgstr "An chéad fhormáid a shainmhínítear sa doiciméad"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> [...] <dropdown label="Target format"> <option label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:75
 #, kde-format
 msgid "Beamer presentation"
-msgstr ""
+msgstr "Cur i láthair Beamer"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> [...] <dropdown label="Target format"> <option label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:76
 #, kde-format
 msgid "DokuWiki"
-msgstr ""
+msgstr "DokuWiki"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> [...] <dropdown label="Target format"> <option label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:77
 #, kde-format
 msgid "HTML"
-msgstr ""
+msgstr "HTML"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> [...] <dropdown label="Target format"> <option label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:78
 #, kde-format
 msgid "HTML 5"
-msgstr ""
+msgstr "HTML 5"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> [...] <dropdown label="Target format"> <option label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:79
 #, kde-format
 msgid "Markdown"
-msgstr ""
+msgstr "Markdown"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> [...] <dropdown label="Target format"> <option label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:80
 #, kde-format
 msgid "Markdown (GitHub, old)"
-msgstr ""
+msgstr "Markdown (GitHub, sean)"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> [...] <dropdown label="Target format"> <option label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:81
 #, kde-format
 msgid "Markdown (GitHub)"
-msgstr ""
+msgstr "Markdown (GitHub)"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> [...] <dropdown label="Target format"> <option label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:82
 #, kde-format
 msgid "MediaWiki"
-msgstr ""
+msgstr "MediaWiki"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> [...] <dropdown label="Target format"> <option label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:83
 #, kde-format
 msgid "ODT"
-msgstr ""
+msgstr "ODT"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> [...] <dropdown label="Target format"> <option label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:84
 #, kde-format
 msgid "PDF"
-msgstr ""
+msgstr "PDF"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> [...] <dropdown label="Target format"> <option label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:85
 #, kde-format
 msgid "PowerPoint"
-msgstr ""
+msgstr "PowerPoint"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> [...] <dropdown label="Target format"> <option label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:86
 #, kde-format
 msgid "RTF"
-msgstr ""
+msgstr "RTF"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> [...] <dropdown label="Target format"> <option label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:87
 #, kde-format
 msgid "Vignette (HTML)"
-msgstr ""
+msgstr "Vignette (HTML)"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> [...] <dropdown label="Target format"> <option label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:88
 #, kde-format
 msgid "Word"
-msgstr ""
+msgstr "Focal"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> <tabbook label="Export RMarkdown"> <tab label="Source and target"> <browser label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:90
 #, kde-format
 msgid "Save as"
-msgstr ""
+msgstr "Sábháil mar"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> <tabbook label="Export RMarkdown"> <tab label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:96
 #, kde-format
 msgid "Advanced options"
-msgstr ""
+msgstr "Roghanna ardleibhéil"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> <tabbook label="Export RMarkdown"> <tab label="Advanced options"> <radio label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:99
 #, kde-format
 msgid "Markdown version"
-msgstr ""
+msgstr "Leagan Markdown"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> [...] <radio label="Markdown version"> <option label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:100
 #, kde-format
 msgid "v1"
-msgstr ""
+msgstr "v1"
 
 #. i18n: ectx: (Export RMarkdown) <dialog label="Export RMarkdown"> [...] <radio label="Markdown version"> <option label="...">
 #: rkward/plugins/00saveload/save/ExportRMarkdown.xml:101
 #, kde-format
 msgid "v2"
-msgstr ""
+msgstr "v2"
 
 #. i18n: ectx: (Loaded from Save R objects)
 #. i18n: ectx: (Save R objects) <dialog label="...">
@@ -2671,7 +2923,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/save.xml:32
 #, kde-format
 msgid "Save R objects"
-msgstr ""
+msgstr "Sábháil réada R"
 
 #. i18n: ectx: (Loaded from Save R objects) <summary>
 #: rkward/plugins/00saveload/save/save.rkh:8
@@ -2680,6 +2932,8 @@ msgid ""
 "Save one or more selected R objects to a file. <b>Note:</b> Use <i>Workspace-"
 ">Save Workspace</i> for saving the complete workspace."
 msgstr ""
+"Sábháil réad R roghnaithe amháin nó níos mó i gcomhad. <b>Nóta:</b> Úsáid "
+"<i>Spás Oibre->Sábháil Spás Oibre</i> chun an spás oibre iomlán a shábháil."
 
 #. i18n: ectx: (Loaded from Save R objects) <usage>
 #: rkward/plugins/00saveload/save/save.rkh:12
@@ -2688,24 +2942,27 @@ msgid ""
 "Select the objects to save, and a filename to save to. Created data files "
 "can be loaded using <link href=\"rkward://component/load_r_object\"/>."
 msgstr ""
+"Roghnaigh na réada le sábháil, agus ainm comhaid le sábháil ann. Is féidir "
+"comhaid sonraí cruthaithe a luchtú ag baint úsáide as <link href=\"rkward://"
+"component/load_r_object\"/>."
 
 #. i18n: ectx: (Loaded from Save R objects) <settings> <setting> (refers to element labelled "Object")
 #: rkward/plugins/00saveload/save/save.rkh:16
 #, kde-format
 msgid "One or more objects to save."
-msgstr ""
+msgstr "Réad amháin nó níos mó le sábháil."
 
 #. i18n: ectx: (Loaded from Save R objects) <settings> <setting> (refers to element labelled "File name")
 #: rkward/plugins/00saveload/save/save.rkh:17
 #, kde-format
 msgid "Location to save to."
-msgstr ""
+msgstr "Suíomh le sábháil ann."
 
 #. i18n: ectx: (Loaded from Save R objects) <settings> <setting> (refers to element labelled "Ascii")
 #: rkward/plugins/00saveload/save/save.rkh:18
 #, kde-format
 msgid "Write an ascii, rather than binary representation of the object(s)."
-msgstr ""
+msgstr "Scríobh léiriú ascii, seachas léiriú dénártha, den réad/na réadaí."
 
 #. i18n: ectx: (Loaded from Save R objects) <settings> <setting> (refers to element labelled "Compression")
 #: rkward/plugins/00saveload/save/save.rkh:19
@@ -2715,18 +2972,23 @@ msgid ""
 "allows to select the method of compression. Some methods are not available "
 "for versions of R before 2.10.0."
 msgstr ""
+"Is féidir an comhad a chomhbhrú chun méid comhaid níos lú a bhaint amach. "
+"Ligeann an rialú seo duit an modh comhbhrúite a roghnú. Níl roinnt modhanna "
+"ar fáil do leaganacha de R roimh 2.10.0."
 
 #. i18n: ectx: (Loaded from Save R objects) <settings> <setting> (refers to element labelled "Compression level")
 #: rkward/plugins/00saveload/save/save.rkh:20
 #, kde-format
 msgid "Compression level. Higher values indicate better compression."
 msgstr ""
+"Leibhéal comhbhrúite. Léiríonn luachanna níos airde comhbhrú níos fearr."
 
 #. i18n: ectx: (Loaded from Save R objects) <settings> <setting> (refers to element labelled "Enable xz extreme compression")
 #: rkward/plugins/00saveload/save/save.rkh:21
 #, kde-format
 msgid "For <i>xz</i> compression, only: Enable xz \"extreme\" compression."
 msgstr ""
+"I gcás comhbhrú <i>xz</i>, amháin: Cumasaigh comhbhrú xz \"foircneach\"."
 
 #. i18n: ectx: (Save R objects) <dialog label="Save R objects"> <tab label="...">
 #. i18n: ectx: (Create package skeleton) <dialog label="Create package skeleton"> <tab label="...">
@@ -2736,61 +2998,61 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write.xml:20
 #, kde-format
 msgid "Select variables"
-msgstr ""
+msgstr "Roghnaigh athróga"
 
 #. i18n: ectx: (Save R objects) <dialog label="Save R objects"> <tab label="Select variables"> <varslot label="...">
 #: rkward/plugins/00saveload/save/save.xml:38
 #, kde-format
 msgid "Object"
-msgstr ""
+msgstr "Réad"
 
 #. i18n: ectx: (Save R objects) <dialog label="Save R objects"> <tab label="Select variables"> <frame label="Options"> <checkbox label="...">
 #: rkward/plugins/00saveload/save/save.xml:47
 #, kde-format
 msgid "Ascii"
-msgstr ""
+msgstr "Ascii"
 
 #. i18n: ectx: (Save R objects) <dialog label="Save R objects"> <tab label="Select variables"> <frame label="Options"> <dropdown label="...">
 #: rkward/plugins/00saveload/save/save.xml:48
 #, kde-format
 msgid "Compression"
-msgstr ""
+msgstr "Comhbhrú"
 
 #. i18n: ectx: (Save R objects) <dialog label="Save R objects"> [...] <dropdown label="Compression"> <option label="...">
 #: rkward/plugins/00saveload/save/save.xml:49
 #, kde-format
 msgid "None"
-msgstr ""
+msgstr "Dada"
 
 #. i18n: ectx: (Save R objects) <dialog label="Save R objects"> [...] <dropdown label="Compression"> <option label="...">
 #: rkward/plugins/00saveload/save/save.xml:50
 #, kde-format
 msgid "gzip"
-msgstr ""
+msgstr "gzip"
 
 #. i18n: ectx: (Save R objects) <dialog label="Save R objects"> [...] <dropdown label="Compression"> <option label="...">
 #: rkward/plugins/00saveload/save/save.xml:51
 #, kde-format
 msgid "bzip2"
-msgstr ""
+msgstr "bzip2"
 
 #. i18n: ectx: (Save R objects) <dialog label="Save R objects"> [...] <dropdown label="Compression"> <option label="...">
 #: rkward/plugins/00saveload/save/save.xml:52
 #, kde-format
 msgid "xz"
-msgstr ""
+msgstr "xz"
 
 #. i18n: ectx: (Save R objects) <dialog label="Save R objects"> <tab label="Select variables"> <frame label="Options"> <spinbox label="...">
 #: rkward/plugins/00saveload/save/save.xml:54
 #, kde-format
 msgid "Compression level"
-msgstr ""
+msgstr "Leibhéal comhbhrúite"
 
 #. i18n: ectx: (Save R objects) <dialog label="Save R objects"> <tab label="Select variables"> <frame label="Options"> <checkbox label="...">
 #: rkward/plugins/00saveload/save/save.xml:55
 #, kde-format
 msgid "Enable xz extreme compression"
-msgstr ""
+msgstr "Cumasaigh comhbhrú foircneach xz"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Loaded from Create package skeleton)
@@ -2800,55 +3062,55 @@ msgstr ""
 #: rkward/plugins/import_export.pluginmap:30
 #, kde-format
 msgid "Create package skeleton"
-msgstr ""
+msgstr "Cruthaigh cnámharlach pacáiste"
 
 #. i18n: ectx: (Create package skeleton) <dialog label="Create package skeleton"> <tab label="Select variables"> <varselector label="...">
 #: rkward/plugins/00saveload/save/skeleton/description.xml:15
 #, kde-format
 msgid "Select a variable"
-msgstr ""
+msgstr "Roghnaigh athróg"
 
 #. i18n: ectx: (Create package skeleton) <dialog label="Create package skeleton"> <tab label="Select variables"> <varslot label="...">
 #: rkward/plugins/00saveload/save/skeleton/description.xml:16
 #, kde-format
 msgid "Objects"
-msgstr ""
+msgstr "Réada"
 
 #. i18n: ectx: (Create package skeleton) <dialog label="Create package skeleton"> <tab label="Select variables"> <frame label="Options"> <input label="...">
 #: rkward/plugins/00saveload/save/skeleton/description.xml:21
 #, kde-format
 msgid "Package name"
-msgstr ""
+msgstr "Package name"
 
 #. i18n: ectx: (Create package skeleton) <dialog label="Create package skeleton"> <tab label="Select variables"> <frame label="Options"> <browser label="...">
 #: rkward/plugins/00saveload/save/skeleton/description.xml:22
 #, kde-format
 msgid "Directory"
-msgstr ""
+msgstr "Eolaire"
 
 #. i18n: ectx: (Create package skeleton) <dialog label="Create package skeleton"> <tab label="Select variables"> <frame label="Options"> <checkbox label="...">
 #: rkward/plugins/00saveload/save/skeleton/description.xml:23
 #, kde-format
 msgid "Overwrite"
-msgstr ""
+msgstr "Forscríobh"
 
 #. i18n: ectx: (Loaded from Write vector / matrix)
 #: rkward/plugins/00saveload/save/write.js:16
 #, kde-format
 msgid "Write Variables"
-msgstr ""
+msgstr "Scríobh Athróga"
 
 #. i18n: ectx: (Write vector / matrix) <dialog label="...">
 #: rkward/plugins/00saveload/save/write.xml:18
 #, kde-format
 msgid "Write vector / matrix"
-msgstr ""
+msgstr "Scríobh veicteoir / maitrís"
 
 #. i18n: ectx: (Write vector / matrix) <dialog label="Write vector / matrix"> <tab label="Select variables"> <varselector label="...">
 #: rkward/plugins/00saveload/save/write.xml:22
 #, kde-format
 msgid "Select a vector or matrix"
-msgstr ""
+msgstr "Roghnaigh veicteoir nó maitrís"
 
 #. i18n: ectx: (Write vector / matrix) <dialog label="Write vector / matrix"> <tab label="Select variables"> <varslot label="...">
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <varslot label="...">
@@ -2856,7 +3118,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:58
 #, kde-format
 msgid "Data"
-msgstr ""
+msgstr "Sonraí"
 
 #. i18n: ectx: (Write vector / matrix) <dialog label="Write vector / matrix"> [...] <radio label="Field separator character"> <option label="...">
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <radio label="Field separator character"> <option label="...">
@@ -2864,19 +3126,19 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:91
 #, kde-format
 msgid "Space"
-msgstr ""
+msgstr "Spás"
 
 #. i18n: ectx: (Write vector / matrix) <dialog label="Write vector / matrix"> <tab label="Select variables"> <frame label="Options"> <spinbox label="...">
 #: rkward/plugins/00saveload/save/write.xml:39
 #, kde-format
 msgid "Number of columns to write"
-msgstr ""
+msgstr "Líon na gcolún le scríobh"
 
 #. i18n: ectx: (Write vector / matrix) <dialog label="Write vector / matrix"> <tab label="Select variables"> <frame label="Options"> <checkbox label="...">
 #: rkward/plugins/00saveload/save/write.xml:40
 #, kde-format
 msgid "Append to existing file"
-msgstr ""
+msgstr "Cuir le comhad atá ann cheana féin"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Loaded from Export Table / CSV files)
@@ -2888,13 +3150,13 @@ msgstr ""
 #: rkward/plugins/import_export.pluginmap:32
 #, kde-format
 msgid "Export Table / CSV files"
-msgstr ""
+msgstr "Easpórtáil Tábla / comhaid CSV"
 
 #. i18n: ectx: (Export Table / CSV files) <summary>
 #: rkward/plugins/00saveload/save/write_csv.rkh:13
 #, kde-format
 msgid "Export data to CSV or similar file formats."
-msgstr ""
+msgstr "Easpórtáil sonraí chuig CSV nó formáidí comhaid dá samhail."
 
 #. i18n: ectx: (Export Table / CSV files) <usage>
 #: rkward/plugins/00saveload/save/write_csv.rkh:16
@@ -2904,6 +3166,10 @@ msgid ""
 "to save to. All other options allow you to define the file format, handling "
 "of column and row names as well as special character handling."
 msgstr ""
+"Roghnaigh réad sonraí táblach (cosúil le fráma sonraí nó maitrís) agus "
+"roghnaigh comhad le sábháil ann. Ligeann na roghanna eile go léir duit "
+"formáid an chomhaid, láimhseáil ainmneacha colún agus sraithe chomh maith le "
+"láimhseáil carachtar speisialta a shainiú."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Data")
 #: rkward/plugins/00saveload/save/write_csv.rkh:25
@@ -2912,6 +3178,8 @@ msgid ""
 "Select a data object to export. Valid data types are array, data.frame, "
 "matrix, character, numeric, and integer."
 msgstr ""
+"Roghnaigh réad sonraí le honnmhairiú. Is iad na cineálacha sonraí bailí ná "
+"eagar, data.frame, maitrís, carachtar, uimhriúil, agus slánuimhir."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "")
 #: rkward/plugins/00saveload/save/write_csv.rkh:29
@@ -2920,6 +3188,8 @@ msgid ""
 "The file to save to. Existing files will be overwritten, unless the append "
 "option is checked."
 msgstr ""
+"An comhad le sábháil ann. Scríobhfar comhaid atá ann cheana féin thar a "
+"chéile, mura bhfuil an rogha cuir leis roghnaithe."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Append to file (if it exists)")
 #: rkward/plugins/00saveload/save/write_csv.rkh:32
@@ -2928,6 +3198,8 @@ msgid ""
 "Should existing files be overwritten or the data appended? If this is greyed "
 "out, the selected preset sets this for you."
 msgstr ""
+"Ar cheart comhaid atá ann cheana a athscríobh nó na sonraí a chur leis? Má "
+"tá sé seo liath, socraíonn an réamhshocrú roghnaithe é seo duit."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "File format")
 #: rkward/plugins/00saveload/save/write_csv.rkh:35
@@ -2937,6 +3209,10 @@ msgid ""
 "options (like field separator and decimal point) with reasonable defaults. "
 "Use the custom format if you need more control."
 msgstr ""
+"Roghnaigh ceann de na formáidí comhaid réamhshocraithe anseo. Socróidh siad "
+"cuid de na roghanna (cosúil le deighilteoir réimsí agus pointe deachúil) le "
+"réamhshocruithe réasúnta. Bain úsáid as an bhformáid saincheaptha más gá "
+"duit níos mó smachta."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Decimal point character")
 #: rkward/plugins/00saveload/save/write_csv.rkh:39
@@ -2945,12 +3221,14 @@ msgid ""
 "Specify the desired decimal point character. If this is greyed out, the "
 "selected preset sets this for you."
 msgstr ""
+"Sonraigh an carachtar pointe deachúil atá uait. Mura bhfuil sé seo liath, "
+"socraíonn an réamhshocrú roghnaithe é seo duit."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "")
 #: rkward/plugins/00saveload/save/write_csv.rkh:42
 #, kde-format
 msgid "Use this value as the custom decimal point character."
-msgstr ""
+msgstr "Úsáid an luach seo mar an carachtar pointe deachúil saincheaptha."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Field separator character")
 #: rkward/plugins/00saveload/save/write_csv.rkh:45
@@ -2959,24 +3237,28 @@ msgid ""
 "Specify the desired field separator character. If this is greyed out, the "
 "selected preset sets this for you."
 msgstr ""
+"Sonraigh an carachtar deighilteora réimse atá uait. Mura bhfuil sé seo "
+"liath, socraíonn an réamhshocrú roghnaithe é seo duit."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "")
 #: rkward/plugins/00saveload/save/write_csv.rkh:48
 #, kde-format
 msgid "Use this value as the custom field separator character."
-msgstr ""
+msgstr "Úsáid an luach seo mar an carachtar deighilteora réimse saincheaptha."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Row names")
 #: rkward/plugins/00saveload/save/write_csv.rkh:53
 #, kde-format
 msgid "Decide how to deal with row names."
-msgstr ""
+msgstr "Cinneadh a dhéanamh ar conas déileáil le hainmneacha na sraitheanna."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Row names (character vector)")
 #: rkward/plugins/00saveload/save/write_csv.rkh:56
 #, kde-format
 msgid "Select a character vector to use for custom row names."
 msgstr ""
+"Roghnaigh veicteoir carachtar le húsáid le haghaidh ainmneacha sraitheanna "
+"saincheaptha."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Column names")
 #: rkward/plugins/00saveload/save/write_csv.rkh:60
@@ -2985,12 +3267,16 @@ msgid ""
 "Decide how to deal with column names. If this is greyed out, the selected "
 "preset sets this for you."
 msgstr ""
+"Cinneadh a dhéanamh ar conas déileáil le hainmneacha colún. Mura bhfuil sé "
+"seo liath, socraíonn an réamhshocrú roghnaithe é seo duit."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Column names (character vector)")
 #: rkward/plugins/00saveload/save/write_csv.rkh:63
 #, kde-format
 msgid "Select a character vector to use for custom column names."
 msgstr ""
+"Roghnaigh veicteoir carachtar le húsáid le haghaidh ainmneacha colún "
+"saincheaptha."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "File encoding")
 #: rkward/plugins/00saveload/save/write_csv.rkh:68
@@ -2999,6 +3285,8 @@ msgid ""
 "If the default character encoding doesn't work for you, you can set a "
 "specific one here."
 msgstr ""
+"Mura n-oibríonn an códú carachtar réamhshocraithe duit, is féidir leat ceann "
+"sonrach a shocrú anseo."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Custom encoding")
 #: rkward/plugins/00saveload/save/write_csv.rkh:71
@@ -3007,12 +3295,16 @@ msgid ""
 "Use this field to set a custom encoding, in case the dropdown menu doesn't "
 "list the one you need."
 msgstr ""
+"Úsáid an réimse seo chun ionchódú saincheaptha a shocrú, ar eagla nach "
+"liostaítear an ceann atá uait sa roghchlár anuas."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Quote all strings")
 #: rkward/plugins/00saveload/save/write_csv.rkh:75
 #, kde-format
 msgid "Check this to have all string values quoted."
 msgstr ""
+"Seiceáil seo chun na luachanna teaghrán go léir a bheith luaite mar "
+"athfhriotail."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Handling double quote characters")
 #: rkward/plugins/00saveload/save/write_csv.rkh:78
@@ -3022,12 +3314,16 @@ msgid ""
 "escaped or double quoted. If this is greyed out, the selected preset sets "
 "this for you."
 msgstr ""
+"Rialaíonn sé seo an chaoi a láimhseálfar comharthaí athfhriotail atá ann "
+"cheana i luachanna -- is féidir iad a úsáid mar éalú nó mar chomhartha "
+"athfhriotail faoi dhó. Má tá sé seo liath, socraíonn an réamhshocrú "
+"roghnaithe é seo duit."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Character for missing values")
 #: rkward/plugins/00saveload/save/write_csv.rkh:81
 #, kde-format
 msgid "Set the character to indicate missing data."
-msgstr ""
+msgstr "Socraigh an carachtar chun sonraí atá ar iarraidh a léiriú."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Newline character")
 #: rkward/plugins/00saveload/save/write_csv.rkh:84
@@ -3037,6 +3333,10 @@ msgid ""
 "operating systems, changing this option might help in case you run into "
 "problems when exchanging files with other people."
 msgstr ""
+"Socraigh an carachtar a úsáidtear chun briseadh líne (EOL) a léiriú. "
+"Athraíonn sé seo idir chórais oibriúcháin, d'fhéadfadh sé go mbeadh sé ina "
+"chuidiú an rogha seo a athrú i gcás fadhbanna a bheith agat agus comhaid á "
+"malartú agat le daoine eile."
 
 #. i18n: ectx: (Export Table / CSV files) <related>
 #: rkward/plugins/00saveload/save/write_csv.rkh:88
@@ -3045,30 +3345,32 @@ msgid ""
 "<link href=\"rkward://rhelp/write.table\"> R manual page for write.table(), "
 "which is called by this plugin. </link>"
 msgstr ""
+"<link href=\"rkward://rhelp/write.table\"> Leathanach láimhe R le haghaidh "
+"write.table(), a nglaonn an breiseán seo air. </link>"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:51
 #, kde-format
 msgid "Data and File Format"
-msgstr ""
+msgstr "Formáid Sonraí agus Comhaid"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <varselector label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:54
 #, kde-format
 msgid "Select a variable or table"
-msgstr ""
+msgstr "Roghnaigh athróg nó tábla"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <frame label="Save to"> <checkbox label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:62
 #, kde-format
 msgid "Append to file (if it exists)"
-msgstr ""
+msgstr "Cuir leis an gcomhad (más ann dó)"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <dropdown label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:68
 #, kde-format
 msgid "File format"
-msgstr ""
+msgstr "Formáid comhaid"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <radio label="Decimal point character"> <option label="...">
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <radio label="Field separator character"> <option label="...">
@@ -3080,25 +3382,25 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:121
 #, kde-format
 msgid "Custom (specify below)"
-msgstr ""
+msgstr "Saincheaptha (sonraigh thíos)"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Rows and Columns"> <varselector label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:105
 #, kde-format
 msgid "Select row or column names"
-msgstr ""
+msgstr "Roghnaigh ainmneacha sraitheanna nó colún"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Rows and Columns"> <frame label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:108
 #, kde-format
 msgid "Row  specifications"
-msgstr ""
+msgstr "Sonraíochtaí sraithe"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> [...] <radio label="Row names"> <option label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:110
 #, kde-format
 msgid "Use current row names"
-msgstr ""
+msgstr "Úsáid ainmneacha na sraitheanna reatha"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> [...] <radio label="Row names"> <option label="...">
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> [...] <radio label="Column names"> <option label="...">
@@ -3106,115 +3408,115 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.xml:120
 #, kde-format
 msgid "No names"
-msgstr ""
+msgstr "Gan ainmneacha"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Rows and Columns"> <frame label="Row  specifications"> <varslot label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:114
 #, kde-format
 msgid "Row names (character vector)"
-msgstr ""
+msgstr "Ainmneacha ró (veicteoir carachtar)"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Rows and Columns"> <frame label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:117
 #, kde-format
 msgid "Column specifications"
-msgstr ""
+msgstr "Sonraíochtaí colún"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> [...] <radio label="Column names"> <option label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:119
 #, kde-format
 msgid "Use current column names"
-msgstr ""
+msgstr "Úsáid ainmneacha na gcolún reatha"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Rows and Columns"> <frame label="Column specifications"> <varslot label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:123
 #, kde-format
 msgid "Column names (character vector)"
-msgstr ""
+msgstr "Ainmneacha colún (veicteoir carachtar)"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:129
 #, kde-format
 msgid "Encoding and Character Options"
-msgstr ""
+msgstr "Roghanna Ionchódaithe agus Carachtair"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Encoding and Character Options"> <frame label="Encoding"> <dropdown label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:133
 #, kde-format
 msgid "File encoding"
-msgstr ""
+msgstr "Ionchódú comhaid"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> [...] <dropdown label="File encoding"> <option label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:134
 #, kde-format
 msgid "(default)"
-msgstr ""
+msgstr "(réamhshocraithe)"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Encoding and Character Options"> <frame label="Encoding"> <input label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:155
 #, kde-format
 msgid "Custom encoding"
-msgstr ""
+msgstr "Ionchódú saincheaptha"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Encoding and Character Options"> <checkbox label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:161
 #, kde-format
 msgid "Quote all strings"
-msgstr ""
+msgstr "Luaigh na teaghráin go léir"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Encoding and Character Options"> <radio label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:162
 #, kde-format
 msgid "Handling double quote characters"
-msgstr ""
+msgstr "Láimhseáil carachtair athfhriotail dhúbailte"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Encoding and Character Options"> <radio label="Handling double quote characters"> <option label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:163
 #, kde-format
 msgid "Escape"
-msgstr ""
+msgstr "Éalú"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Encoding and Character Options"> <radio label="Handling double quote characters"> <option label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:164
 #, kde-format
 msgid "Double"
-msgstr ""
+msgstr "Dúbailte"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Encoding and Character Options"> <dropdown label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:169
 #, kde-format
 msgid "Newline character"
-msgstr ""
+msgstr "Carachtar líne nua"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Encoding and Character Options"> <dropdown label="Newline character"> <option label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:170
 #, kde-format
 msgid "\\n (LF: GNU/Linux, BSD, OS X)"
-msgstr ""
+msgstr "\\n (LF: GNU/Linux, BSD, OS X)"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Encoding and Character Options"> <dropdown label="Newline character"> <option label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:171
 #, kde-format
 msgid "\\r\\n (CR+LF: Windows, DOS)"
-msgstr ""
+msgstr "\\r\\n (CR+LF: Windows, DOS)"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Encoding and Character Options"> <dropdown label="Newline character"> <option label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:172
 #, kde-format
 msgid "\\r (CR: Mac OS <= 9)"
-msgstr ""
+msgstr "\\r (CR: Mac OS <= 9)"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Encoding and Character Options"> <dropdown label="Newline character"> <option label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:173
 #, kde-format
 msgid "\\n\\r (LF+CR: RISC OS)"
-msgstr ""
+msgstr "\\n\\r (LF+CR: RISC OS)"
 
 #. i18n: ectx: (Loaded from Set the working directory) <summary>
 #: rkward/plugins/00saveload/setworkdir.rkh:8
 #, kde-format
 msgid "Set or change the current working directory."
-msgstr ""
+msgstr "Socraigh nó athraigh an t-eolaire oibre reatha."
 
 #. i18n: ectx: (Loaded from Set the working directory) <usage>
 #: rkward/plugins/00saveload/setworkdir.rkh:11
@@ -3223,24 +3525,26 @@ msgid ""
 "Choose a directory to set/change the working directory for R. The R function "
 "<b>setwd</b> is used to do the job."
 msgstr ""
+"Roghnaigh eolaire chun an t-eolaire oibre do R a shocrú/athrú. Úsáidtear an "
+"fheidhm R <b>setwd</b> chun an jab a dhéanamh."
 
 #. i18n: ectx: (Set the working directory) <dialog label="...">
 #: rkward/plugins/00saveload/setworkdir.xml:10
 #, kde-format
 msgid "Set the working directory"
-msgstr ""
+msgstr "Socraigh an eolaire oibre"
 
 #. i18n: ectx: (Set the working directory) <dialog label="Set the working directory"> <browser label="...">
 #: rkward/plugins/00saveload/setworkdir.xml:11
 #, kde-format
 msgid "Choose the Working Directory"
-msgstr ""
+msgstr "Roghnaigh an Eolaire Oibre"
 
 #. i18n: ectx: <about name="...">
 #: rkward/plugins/import_export.pluginmap:10
 #, kde-format
 msgid "Data Import and Export"
-msgstr ""
+msgstr "Iompórtáil agus Easpórtáil Sonraí"
 
 #. i18n: ectx: <about shortinfo="...">
 #: rkward/plugins/import_export.pluginmap:10
@@ -3249,96 +3553,98 @@ msgid ""
 "Plugins for reading and writing data in various formats. Part of the "
 "official RKWard distribution"
 msgstr ""
+"Breiseáin le haghaidh léamh agus scríobh sonraí i bhformáidí éagsúla. Cuid "
+"den dáileadh oifigiúil RKWard"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/import_export.pluginmap:24
 #, kde-format
 msgid "Load R data file"
-msgstr ""
+msgstr "Luchtaigh comhad sonraí R"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/import_export.pluginmap:27
 #, kde-format
 msgid "Save objects as R data"
-msgstr ""
+msgstr "Sábháil réada mar shonraí R"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/import_export.pluginmap:31
 #, kde-format
 msgid "Export vector or matrix data"
-msgstr ""
+msgstr "Easpórtáil sonraí veicteora nó maitrís"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/import_export.pluginmap:35
 #, kde-format
 msgid "Import SPSS"
-msgstr ""
+msgstr "Iompórtáil SPSS"
 
 #. i18n: ectx: <components> <component label="Import SPSS"> <attribute label="...">
 #: rkward/plugins/import_export.pluginmap:36
 #, kde-format
 msgid "SPSS data files"
-msgstr ""
+msgstr "Comhaid sonraí SPSS"
 
 #. i18n: ectx: <components> <component label="Import Text / CSV data"> <attribute label="...">
 #: rkward/plugins/import_export.pluginmap:39
 #, kde-format
 msgid "Text / Comma Separated Values"
-msgstr ""
+msgstr "Luachanna Scartha le Téacs / Camóga"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/import_export.pluginmap:41
 #, kde-format
 msgid "Import Stata"
-msgstr ""
+msgstr "Stát na hIompórtála"
 
 #. i18n: ectx: <components> <component label="Import Stata"> <attribute label="...">
 #: rkward/plugins/import_export.pluginmap:42
 #, kde-format
 msgid "Stata data files"
-msgstr ""
+msgstr "Comhaid sonraí Stata"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/import_export.pluginmap:44
 #, kde-format
 msgid "Import Excel files (Perl based)"
-msgstr ""
+msgstr "Iompórtáil comhaid Excel (bunaithe ar Perl)"
 
 #. i18n: ectx: <components> <component label="Import Excel files (Perl based)"> <attribute label="...">
 #: rkward/plugins/import_export.pluginmap:45
 #, kde-format
 msgid "Microsoft Excel files (Perl)"
-msgstr ""
+msgstr "Comhaid Microsoft Excel (Perl)"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/import_export.pluginmap:47
 #, kde-format
 msgid "Import Excel files (Java based)"
-msgstr ""
+msgstr "Iompórtáil comhaid Excel (bunaithe ar Java)"
 
 #. i18n: ectx: <components> <component label="Import Excel files (Java based)"> <attribute label="...">
 #: rkward/plugins/import_export.pluginmap:48
 #, kde-format
 msgid "Microsoft Excel files (Java)"
-msgstr ""
+msgstr "Comhaid Microsoft Excel (Java)"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/import_export.pluginmap:51
 #, kde-format
 msgid "Generic import (rio-based)"
-msgstr ""
+msgstr "Allmhairiú cineálach (bunaithe ar Rio)"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/import_export.pluginmap:53
 #, kde-format
 msgid "Install R package from git"
-msgstr ""
+msgstr "Suiteáil pacáiste R ó git"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/import_export.pluginmap:54
 #, kde-format
 msgid "Set Working Directory"
-msgstr ""
+msgstr "Socraigh Eolaire Oibre"
 
 #. i18n: ectx: <hierarchy> <menu label="File"> <menu label="...">
 #. i18n: ectx: <context> <menu label="...">
@@ -3346,35 +3652,35 @@ msgstr ""
 #: rkward/plugins/import_export.pluginmap:92
 #, kde-format
 msgid "Import"
-msgstr ""
+msgstr "Iompórtáil"
 
 #. i18n: ectx: <hierarchy> <menu label="File"> <menu label="Import"> <menu label="...">
 #: rkward/plugins/import_export.pluginmap:63
 #, kde-format
 msgid "Import format"
-msgstr ""
+msgstr "Formáid allmhairithe"
 
 #. i18n: ectx: <hierarchy> <menu label="File"> <menu label="...">
 #: rkward/plugins/import_export.pluginmap:74
 #, kde-format
 msgid "Export"
-msgstr ""
+msgstr "Easpórtáil"
 
 #. i18n: ectx: <hierarchy> <menu label="...">
 #: rkward/plugins/import_export.pluginmap:82
 #, kde-format
 msgid "Workspace"
-msgstr ""
+msgstr "Spás Oibre"
 
 #. i18n: ectx: <hierarchy> <menu label="...">
 #: rkward/plugins/import_export.pluginmap:86
 #, kde-format
 msgid "Settings"
-msgstr ""
+msgstr "Socruithe"
 
 #. i18n: ectx: <snippets> <snippet> <author name="...">
 #: rkward/plugins/pluginmap_meta.inc:9
 #, kde-format
 msgctxt "Author name"
 msgid "RKWard Team"
-msgstr ""
+msgstr "Foireann RKWard"

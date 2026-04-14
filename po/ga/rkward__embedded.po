@@ -1,45 +1,46 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR This file is copyright:
 # This file is distributed under the same license as the rkward package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# Aindriú Mac Giolla Eoin <aindriu80@yahoo.com>, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 14:38+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: Irish Gaelic <kde-i18n-doc@kde.org>\n"
+"PO-Revision-Date: 2026-03-26 15:32+0000\n"
+"Last-Translator: Aindriú Mac Giolla Eoin <aindriu80@yahoo.com>\n"
+"Language-Team: Irish <http://weblate.amgelocalnet.duckdns.org/projects/"
+"rkward/rkward__embedded/ga/>\n"
 "Language: ga\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=5; plural=n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n < 11 ? "
-"3 : 4\n"
+"3 : 4;\n"
+"X-Generator: Weblate 5.16\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
+msgstr "Aindriú Mac Giolla Eoin"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
+msgstr "aindriu80@yahoo.com"
 
 #. i18n: ectx: (Level selector) <dialog label="...">
 #: rkward/plugins/distributions/../data/level_select.xml:59
 #: rkward/plugins/distributions/../data/multi_input.xml:99
 #, kde-format
 msgid "Level selector"
-msgstr ""
+msgstr "Roghnóir leibhéal"
 
 #. i18n: ectx: (Level selector) <dialog label="Level selector"> <text>
 #: rkward/plugins/distributions/../data/level_select.xml:61
 #, kde-format
 msgid "Note: Some values were cut off."
-msgstr ""
+msgstr "Nóta: Gearradh roinnt luachanna as."
 
 #. i18n: ectx: (Loaded from Limit Vector Length) <summary>
 #: rkward/plugins/distributions/../data/limit_vector_length.rkh:8
@@ -48,6 +49,9 @@ msgid ""
 "Generic plugin to limit a single numeric vector to the n largest / smallest "
 "values. This plugin is designed to be embedded into other plugins."
 msgstr ""
+"Breiseán cineálach chun veicteoir uimhriúil aonair a theorannú do na n luach "
+"is mó/is lú. Tá an breiseán seo deartha le bheith leabaithe i mbreiseáin "
+"eile."
 
 #. i18n: ectx: (Loaded from Limit Vector Length) <usage>
 #: rkward/plugins/distributions/../data/limit_vector_length.rkh:12
@@ -56,6 +60,9 @@ msgid ""
 "Specify the desired length cutoff and sorting. Note that the result is "
 "always sorted, with the sum of remainder values appended at the end."
 msgstr ""
+"Sonraigh an teorainn faid agus an sórtáil atá uait. Tabhair faoi deara go "
+"ndéantar an toradh a shórtáil i gcónaí, agus suim na luachanna atá fágtha "
+"curtha leis ag an deireadh."
 
 #. i18n: ectx: (Loaded from Limit Vector Length) <settings> <setting> (refers to element labelled "Limit")
 #: rkward/plugins/distributions/../data/limit_vector_length.rkh:17
@@ -64,6 +71,8 @@ msgid ""
 "Maximum number of regular groups to display. One additional group \"others\" "
 "will be displayed, if appropriate."
 msgstr ""
+"Uasmhéid na ngrúpaí rialta le taispeáint. Taispeánfar grúpa breise amháin "
+"\"eile\", más iomchuí."
 
 #. i18n: ectx: (Loaded from Limit Vector Length) <settings> <setting> (refers to element labelled "Sorting")
 #: rkward/plugins/distributions/../data/limit_vector_length.rkh:18
@@ -72,6 +81,8 @@ msgid ""
 "Should the largest or the lowest values be kept? For most purposes, you will "
 "want to keep the largest values."
 msgstr ""
+"Ar cheart na luachanna is mó nó na luachanna is ísle a choinneáil? I gcás "
+"formhór na gcásanna, is fearr na luachanna is mó a choinneáil."
 
 #. i18n: ectx: (Loaded from Limit Vector Length) <settings> <setting> (refers to element labelled "Add remainder category")
 #: rkward/plugins/distributions/../data/limit_vector_length.rkh:19
@@ -80,12 +91,14 @@ msgid ""
 "Should a category be added for the remaining value (those which have been "
 "cut off)? Note: This will always be appended to the end of the vector."
 msgstr ""
+"Ar cheart catagóir a chur leis don luach atá fágtha (iad siúd atá gearrtha "
+"amach)? Tabhair faoi deara: Cuirfear é seo i gcónaí le deireadh an veicteora."
 
 #. i18n: ectx: (Loaded from Limit Vector Length) <settings> <setting> (refers to element labelled "Statistic")
 #: rkward/plugins/distributions/../data/limit_vector_length.rkh:20
 #, kde-format
 msgid "Statistic to use for summarizing the cut off values."
-msgstr ""
+msgstr "Staitistic le húsáid chun na luachanna scoir a achoimriú."
 
 #. i18n: ectx: (Loaded from Limit Vector Length) <settings> <setting> (refers to element labelled "Custom statistic (as function of x)")
 #: rkward/plugins/distributions/../data/limit_vector_length.rkh:21
@@ -94,6 +107,8 @@ msgid ""
 "If you chose to use a custom statistic for summarizing the cut off values, "
 "specify it, here, as a function of <em>x</em>."
 msgstr ""
+"Más mian leat staitistic saincheaptha a úsáid chun na luachanna scoir a "
+"achoimriú, sonraigh é anseo mar fheidhm de <em>x</em>."
 
 #. i18n: ectx: (Loaded from Limit Vector Length) <settings> <setting> (refers to element labelled "Remainder category label")
 #: rkward/plugins/distributions/../data/limit_vector_length.rkh:22
@@ -102,6 +117,8 @@ msgid ""
 "Label to use for the \"others\" category. Note: If your data is not labeled, "
 "emptying this field will sometimes be preferable."
 msgstr ""
+"Lipéad le húsáid don chatagóir \"eile\". Tabhair faoi deara: Mura bhfuil "
+"lipéad ar do shonraí, is fearr an réimse seo a fholmhú uaireanta."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
@@ -123,6 +140,8 @@ msgid ""
 "General users may skip this section of help, this is primarily for "
 "developers."
 msgstr ""
+"Féadfaidh úsáideoirí ginearálta an chuid seo den chabhair a scipeáil, is do "
+"fhorbróirí atá sé seo den chuid is mó."
 
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
@@ -132,7 +151,7 @@ msgstr ""
 #: rkward/plugins/distributions/../data/one_var_tabulation.rkh:32
 #, kde-format
 msgid "The generated code is available from <i>code.calculate</i>."
-msgstr ""
+msgstr "Tá an cód ginte ar fáil ó <i>code.calculate</i>."
 
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Limit Vector Length) <technical>
@@ -142,6 +161,8 @@ msgid ""
 "The following external properties are provided for use in the embedding "
 "plugin."
 msgstr ""
+"Cuirtear na hairíonna seachtracha seo a leanas ar fáil lena n-úsáid sa "
+"bhreiseán leabaithe."
 
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Limit Vector Length) <technical>
@@ -151,6 +172,8 @@ msgid ""
 "<i>invar</i>: Symbol name of the input variable to be limited. Defaults to "
 "'x'."
 msgstr ""
+"<i>invar</i>: Ainm siombaile an athróg ionchuir atá le teorainniú. Is é 'x' "
+"an réamhshocrú."
 
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Limit Vector Length) <technical>
@@ -160,6 +183,9 @@ msgid ""
 "<i>outvar</i>: Symbol name to use for the output variable (the limited "
 "vector). May be identical to <i>invar</i>. Defaults to 'x'."
 msgstr ""
+"<i>outvar</i>: Ainm na siombaile le húsáid don athróg aschuir (an veicteoir "
+"teoranta). Féadfaidh sé a bheith mar an gcéanna le <i>invar</i>. Is é 'x' an "
+"rogha réamhshocraithe."
 
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Limit Vector Length) <technical>
@@ -170,6 +196,9 @@ msgid ""
 "limitation options, suitable for pasting into the <i>parameters</i> argument "
 "of <b>rk.header()</b>."
 msgstr ""
+"<i>parameters</i>: Socrófar an mhaoin seo go teaghrán a chuireann síos ar na "
+"roghanna teorannaithe, atá oiriúnach le greamú isteach san argóint "
+"<i>parameters</i> de <b>rk.header()</b>."
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Limit Vector Length) <dialog label="...">
@@ -177,37 +206,37 @@ msgstr ""
 #: rkward/plugins/distributions/../embedded.pluginmap:29
 #, kde-format
 msgid "Limit Vector Length"
-msgstr ""
+msgstr "Teorainn Fad Veicteoir"
 
 #. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <spinbox label="...">
 #: rkward/plugins/distributions/../data/limit_vector_length.xml:28
 #, kde-format
 msgid "Limit"
-msgstr ""
+msgstr "Teorainn"
 
 #. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <radio label="...">
 #: rkward/plugins/distributions/../data/limit_vector_length.xml:29
 #, kde-format
 msgid "Sorting"
-msgstr ""
+msgstr "Sórtáil"
 
 #. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <radio label="Sorting"> <option label="...">
 #: rkward/plugins/distributions/../data/limit_vector_length.xml:30
 #, kde-format
 msgid "Keep smallest values"
-msgstr ""
+msgstr "Coinnigh na luachanna is lú"
 
 #. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <radio label="Sorting"> <option label="...">
 #: rkward/plugins/distributions/../data/limit_vector_length.xml:31
 #, kde-format
 msgid "Keep largest values"
-msgstr ""
+msgstr "Coinnigh na luachanna is mó"
 
 #. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <frame label="...">
 #: rkward/plugins/distributions/../data/limit_vector_length.xml:34
 #, kde-format
 msgid "Add remainder category"
-msgstr ""
+msgstr "Cuir catagóir an chuid eile leis"
 
 #. i18n: ectx: (Tabulate) <dialog label="Tabulate"> <radio label="...">
 #. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <frame label="Add remainder category"> <radio label="...">
@@ -215,7 +244,7 @@ msgstr ""
 #: rkward/plugins/distributions/../data/one_var_tabulation.xml:51
 #, kde-format
 msgid "Statistic"
-msgstr ""
+msgstr "Staitisticí"
 
 #. i18n: ectx: (Tabulate) <dialog label="Tabulate"> <radio label="Statistic"> <option label="...">
 #. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <frame label="Add remainder category"> <radio label="Statistic"> <option label="...">
@@ -223,13 +252,13 @@ msgstr ""
 #: rkward/plugins/distributions/../data/one_var_tabulation.xml:53
 #, kde-format
 msgid "Sum"
-msgstr ""
+msgstr "Suim"
 
 #. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <frame label="Add remainder category"> <radio label="Statistic"> <option label="...">
 #: rkward/plugins/distributions/../data/limit_vector_length.xml:37
 #, kde-format
 msgid "Mean"
-msgstr ""
+msgstr "Meán"
 
 #. i18n: ectx: (Tabulate) <dialog label="Tabulate"> <radio label="Statistic"> <option label="...">
 #. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <frame label="Add remainder category"> <radio label="Statistic"> <option label="...">
@@ -237,31 +266,31 @@ msgstr ""
 #: rkward/plugins/distributions/../data/one_var_tabulation.xml:54
 #, kde-format
 msgid "Other:"
-msgstr ""
+msgstr "Eile:"
 
 #. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <frame label="Add remainder category"> <input label="...">
 #: rkward/plugins/distributions/../data/limit_vector_length.xml:40
 #, kde-format
 msgid "Custom statistic (as function of x)"
-msgstr ""
+msgstr "Staitistic saincheaptha (mar fheidhm de x)"
 
 #. i18n: ectx: (Limit Vector Length) <dialog label="Limit Vector Length"> <frame label="Add remainder category"> <input label="...">
 #: rkward/plugins/distributions/../data/limit_vector_length.xml:42
 #, kde-format
 msgid "Remainder category label"
-msgstr ""
+msgstr "Lipéad na catagóire atá fágtha"
 
 #. i18n: ectx: (Level selector) <dialog label="Level selector"> <radio label=""> <option label="...">
 #: rkward/plugins/distributions/../data/multi_input.xml:101
 #, kde-format
 msgid "FALSE"
-msgstr ""
+msgstr "BRÉAGACH"
 
 #. i18n: ectx: (Level selector) <dialog label="Level selector"> <radio label=""> <option label="...">
 #: rkward/plugins/distributions/../data/multi_input.xml:102
 #, kde-format
 msgid "TRUE"
-msgstr ""
+msgstr "FÍOR"
 
 #. i18n: ectx: (Loaded from Tabulate) <summary>
 #: rkward/plugins/distributions/../data/one_var_tabulation.rkh:8
@@ -270,6 +299,8 @@ msgid ""
 "Generic tabulation plugin (single outcome vector). This plugin is designed "
 "to be embedded into other plugins."
 msgstr ""
+"Breiseán táblú cineálach (veicteoir toraidh aonair). Tá an breiseán seo "
+"deartha le bheith leabaithe i mbreiseáin eile."
 
 #. i18n: ectx: (Loaded from Tabulate) <usage>
 #: rkward/plugins/distributions/../data/one_var_tabulation.rkh:12
@@ -278,6 +309,8 @@ msgid ""
 "Allows to tabulate frequencies, or aggregate a single variable, by the "
 "levels of one or more grouping variables."
 msgstr ""
+"Ceadaíonn sé minicíochtaí a thablaú, nó athróg aonair a chomhiomlánú, de "
+"réir leibhéil athróg grúpála amháin nó níos mó."
 
 #. i18n: ectx: (Loaded from Tabulate) <settings> <setting> (refers to element labelled "Grouping factors")
 #: rkward/plugins/distributions/../data/one_var_tabulation.rkh:17
@@ -286,6 +319,8 @@ msgid ""
 "Select the grouping variables. Often, these will be factors. The levels of "
 "each grouping variable will be crossed."
 msgstr ""
+"Roghnaigh na hathróga grúpála. Is minic a bheidh siad seo ina bhfachtóirí. "
+"Déanfar leibhéil gach athróg grúpála a thrasnú."
 
 #. i18n: ectx: (Loaded from Tabulate) <settings> <setting> (refers to element labelled "Statistic")
 #: rkward/plugins/distributions/../data/one_var_tabulation.rkh:18
@@ -294,6 +329,8 @@ msgid ""
 "Type of tabulation / statistic to compute. This can be frequency of "
 "occurrence, or a function of a separate vector."
 msgstr ""
+"Cineál táblaithe/staitistice le ríomh. Is féidir leis seo a bheith ina "
+"mhinicíocht tarlaithe, nó ina fheidhm de veicteoir ar leith."
 
 #. i18n: ectx: (Loaded from Tabulate) <settings> <setting> (refers to element labelled "Values")
 #: rkward/plugins/distributions/../data/one_var_tabulation.rkh:19
@@ -302,6 +339,8 @@ msgid ""
 "When computing a statistic other than frequency, specify the vector "
 "containing the underlying data, here."
 msgstr ""
+"Agus staitistic seachas minicíocht á ríomh, sonraigh an veicteoir ina bhfuil "
+"na sonraí bunúsacha anseo."
 
 #. i18n: ectx: (Loaded from Tabulate) <settings> <setting> (refers to element labelled "Custom statistic")
 #: rkward/plugins/distributions/../data/one_var_tabulation.rkh:20
@@ -312,12 +351,17 @@ msgid ""
 "(a sub-group of the variable selected above) as parameter \"x\", and must "
 "return a single numeric value. Typical examples are \"mean(x)\" or \"sd(x)\"."
 msgstr ""
+"Nuair a shocraítear an staitistic go \"Eile:\", ligeann sé seo duit feidhm "
+"treallach a shonrú chun an staitistic a ríomh. Féadfaidh an fheidhm "
+"veicteoir (foghrúpa den athróg a roghnaíodh thuas) a ghlacadh mar "
+"pharaiméadar \"x\", agus ní mór di luach uimhriúil aonair a thabhairt ar "
+"ais. Is samplaí tipiciúla iad \"mean(x)\" nó \"sd(x)\"."
 
 #. i18n: ectx: (Loaded from Tabulate) <related>
 #: rkward/plugins/distributions/../data/one_var_tabulation.rkh:23
 #, kde-format
 msgid "<link href=\"rkward://component/crosstab\"/> and"
-msgstr ""
+msgstr "<link href=\"rkward://component/crosstab\"/> agus"
 
 #. i18n: ectx: (Loaded from Tabulate) <related>
 #: rkward/plugins/distributions/../data/one_var_tabulation.rkh:23
@@ -326,6 +370,8 @@ msgid ""
 "<link href=\"rkward://component/crosstab_multi\"/> for tabulation of "
 "frequencies across many variables."
 msgstr ""
+"<link href=\"rkward://component/crosstab_multi\"/> le haghaidh táblaíocht "
+"minicíochtaí trasna go leor athróg."
 
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Tabulate) <technical>
@@ -335,6 +381,8 @@ msgid ""
 "The following external properties are provided for use in the embedding "
 "plugin:"
 msgstr ""
+"Cuirtear na hairíonna seachtracha seo a leanas ar fáil lena n-úsáid sa "
+"bhreiseán leabaithe:"
 
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Tabulate) <technical>
@@ -345,6 +393,10 @@ msgid ""
 "default. Connect your own to this one (<i>client=\"embedded_id.varsource."
 "selected\" governor=\"myvarselector_id.selected\"</i>)."
 msgstr ""
+"<i>varsource</i>: Ní thaispeánann an breiseán táblúcháin a roghnóir var féin "
+"de réir réamhshocraithe. Ceangail do cheann féin leis an gceann seo "
+"(<i>client=\"embedded_id.varsource.selected\" governor=\"myvarselector_id."
+"selected\"</i>)."
 
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Tabulate) <technical>
@@ -354,6 +406,8 @@ msgid ""
 "<i>outvar</i>: By default, the plugin produces a table in a variable called "
 "\"x\". You can set it to use a different name, here."
 msgstr ""
+"<i>outvar</i>: De réir réamhshocraithe, táirgeann an breiseán tábla in "
+"athróg ar a dtugtar \"x\". Is féidir leat ainm difriúil a shocrú anseo."
 
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Tabulate) <technical>
@@ -364,6 +418,10 @@ msgid ""
 "grouping variables in an R variable, set this to an object name to use. Else "
 "set this to \"\" to disable. Defaults to \"title\""
 msgstr ""
+"<i>titlevar</i>: Más mian leat go sábhálfadh an breiseán cur síos ar na "
+"hathróga grúpála in athróg R, socraigh é seo go hainm réada le húsáid. "
+"Seachas sin socraigh é seo go \"\" chun é a dhíchumasú. Réamhshocrú go "
+"\"title\""
 
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Tabulate) <technical>
@@ -373,6 +431,7 @@ msgid ""
 "<i>fun_label</i>: This property will be set to a description of the "
 "statistic."
 msgstr ""
+"<i>fun_label</i>: Socrófar an mhaoin seo mar thuairisc ar an staitistic."
 
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Tabulate) <technical>
@@ -383,6 +442,9 @@ msgid ""
 "tabulation options, suitable for pasting into the <i>parameters</i> argument "
 "of <b>rk.header()</b>."
 msgstr ""
+"<i>parameters</i>: Socrófar an mhaoin seo go teaghrán a chuireann síos ar na "
+"roghanna tábála, atá oiriúnach le greamú isteach san argóint <i>parameters</"
+"i> de <b>rk.header()</b>."
 
 #. i18n: ectx: (Loaded from Default histogram options)
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <checkbox label="...">
@@ -394,39 +456,39 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/histogram_options.xml:57
 #, kde-format
 msgid "Frequency"
-msgstr ""
+msgstr "Minicíocht"
 
 #. i18n: ectx: (Tabulate)
 #: rkward/plugins/distributions/../data/one_var_tabulation.xml:32
 #, no-c-format, kde-format
 msgid "Sum of %1"
-msgstr ""
+msgstr "Suim %1"
 
 #. i18n: ectx: (Tabulate)
 #: rkward/plugins/distributions/../data/one_var_tabulation.xml:34
 #, no-c-format, kde-format
 msgctxt "(function name) of (object name)"
 msgid "%1 of %2"
-msgstr ""
+msgstr "%1 de %2"
 
 #. i18n: ectx: (Tabulate)
 #: rkward/plugins/distributions/../data/one_var_tabulation.xml:42
 #, kde-format
 msgid "Tabulation groups"
-msgstr ""
+msgstr "Grúpaí táiblithe"
 
 #. i18n: ectx: (Tabulate)
 #: rkward/plugins/distributions/../data/one_var_tabulation.xml:42
 #, kde-format
 msgctxt "Tabulate X by Y [by Z [...]]"
 msgid " by "
-msgstr ""
+msgstr " ag "
 
 #. i18n: ectx: (Tabulate)
 #: rkward/plugins/distributions/../data/one_var_tabulation.xml:42
 #, kde-format
 msgid "Tabulation statistic"
-msgstr ""
+msgstr "Staitistic táiblithe"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Tabulate) <dialog label="...">
@@ -434,31 +496,31 @@ msgstr ""
 #: rkward/plugins/distributions/../embedded.pluginmap:28
 #, kde-format
 msgid "Tabulate"
-msgstr ""
+msgstr "Táblaigh"
 
 #. i18n: ectx: (Tabulate) <dialog label="Tabulate"> <varslot label="...">
 #: rkward/plugins/distributions/../data/one_var_tabulation.xml:49
 #, kde-format
 msgid "Grouping factors"
-msgstr ""
+msgstr "Fachtóirí grúpála"
 
 #. i18n: ectx: (Tabulate) <dialog label="Tabulate"> <varslot label="...">
 #: rkward/plugins/distributions/../data/one_var_tabulation.xml:57
 #, kde-format
 msgid "Values"
-msgstr ""
+msgstr "Luachanna"
 
 #. i18n: ectx: (Tabulate) <dialog label="Tabulate"> <input label="...">
 #: rkward/plugins/distributions/../data/one_var_tabulation.xml:58
 #, kde-format
 msgid "Custom statistic"
-msgstr ""
+msgstr "Staitistic saincheaptha"
 
 #. i18n: ectx: <about name="...">
 #: rkward/plugins/distributions/../embedded.pluginmap:10
 #, kde-format
 msgid "Embedded plugins"
-msgstr ""
+msgstr "Breiseáin leabaithe"
 
 #. i18n: ectx: <about shortinfo="...">
 #: rkward/plugins/distributions/../embedded.pluginmap:10
@@ -467,6 +529,8 @@ msgid ""
 "Not for direct use: Utility plugins that can be included by other plugins. "
 "Part of the official RKWard distribution"
 msgstr ""
+"Gan úsáid dhíreach: Breiseáin fóntais is féidir a chur san áireamh le "
+"breiseáin eile. Cuid den dáileadh oifigiúil RKWard"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <embed label="...">
@@ -474,25 +538,25 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/barplot_embed.xml:39
 #, kde-format
 msgid "Plot Options"
-msgstr ""
+msgstr "Roghanna Plota"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions/../embedded.pluginmap:23
 #, kde-format
 msgid "Color Chooser"
-msgstr ""
+msgstr "Roghnóir Dathanna"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions/../embedded.pluginmap:24
 #, kde-format
 msgid "Step Function plot options"
-msgstr ""
+msgstr "Roghanna plota Feidhme Céime"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions/../embedded.pluginmap:25
 #, kde-format
 msgid "Histogram Options"
-msgstr ""
+msgstr "Roghanna Histeagram"
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Barplot Options) <dialog label="...">
@@ -500,37 +564,37 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/barplot_embed.xml:21
 #, kde-format
 msgid "Barplot Options"
-msgstr ""
+msgstr "Roghanna Plota Barra"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions/../embedded.pluginmap:31
 #, kde-format
 msgid "Draw Grid"
-msgstr ""
+msgstr "Tarraing Eangach"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions/../embedded.pluginmap:33
 #, kde-format
 msgid "Select by value"
-msgstr ""
+msgstr "Roghnaigh de réir luacha"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions/../embedded.pluginmap:34
 #, kde-format
 msgid "Multi Input"
-msgstr ""
+msgstr "Il-Ionchur"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/distributions/../embedded.pluginmap:38
 #, kde-format
 msgid "Run Code"
-msgstr ""
+msgstr "Rith Cód"
 
 #. i18n: ectx: <about name="...">
 #: rkward/plugins/distributions/../menu.pluginmap:10
 #, kde-format
 msgid "Menu structure definition"
-msgstr ""
+msgstr "Sainmhíniú struchtúr roghchláir"
 
 #. i18n: ectx: <about shortinfo="...">
 #: rkward/plugins/distributions/../menu.pluginmap:10
@@ -539,49 +603,51 @@ msgid ""
 "Not for direct use: Defines the names and order of top level menus. Part of "
 "the official RKWard distribution"
 msgstr ""
+"Gan úsáid dhíreach: Sainmhíníonn sé ainmneacha agus ord na roghchlár "
+"barrleibhéil. Cuid den dáileadh oifigiúil RKWard"
 
 #. i18n: ectx: <hierarchy> <menu label="...">
 #: rkward/plugins/distributions/../menu.pluginmap:24
 #, kde-format
 msgid "Data"
-msgstr ""
+msgstr "Sonraí"
 
 #. i18n: ectx: <hierarchy> <menu label="...">
 #: rkward/plugins/distributions/../menu.pluginmap:27
 #, kde-format
 msgid "Analysis"
-msgstr ""
+msgstr "Anailís"
 
 #. i18n: ectx: <hierarchy> <menu label="...">
 #: rkward/plugins/distributions/../menu.pluginmap:30
 #, kde-format
 msgid "Plots"
-msgstr ""
+msgstr "Plotaí"
 
 #. i18n: ectx: <hierarchy> <menu label="...">
 #: rkward/plugins/distributions/../menu.pluginmap:33
 #, kde-format
 msgid "Distributions"
-msgstr ""
+msgstr "Dáiltí"
 
 #. i18n: ectx: <hierarchy> <menu label="...">
 #: rkward/plugins/distributions/../menu.pluginmap:35
 #, kde-format
 msgid "empty"
-msgstr ""
+msgstr "folamh"
 
 #. i18n: ectx: (Loaded from Barplot Options)
 #: rkward/plugins/distributions/../plots/barplot_embed.js:56
 #, kde-format
 msgctxt "R code comment"
 msgid "adjust the range so that the labels will fit"
-msgstr ""
+msgstr "coigeartaigh an raon ionas go n-oirfidh na lipéid"
 
 #. i18n: ectx: (Loaded from Barplot Options) <summary>
 #: rkward/plugins/distributions/../plots/barplot_embed.rkh:8
 #, kde-format
 msgid "Options applicable to bar plots"
-msgstr ""
+msgstr "Roghanna is infheidhme maidir le plotaí barra"
 
 #. i18n: ectx: (Loaded from Barplot Options) <usage>
 #: rkward/plugins/distributions/../plots/barplot_embed.rkh:12
@@ -590,6 +656,9 @@ msgid ""
 "Choose if you want stacked bars, legend, and rainbow colors. Also you can "
 "choose if you want to display or not bar values (labels) and in what place."
 msgstr ""
+"Roghnaigh más mian leat barraí cruachta, finscéalta, agus dathanna tuar "
+"ceatha. Chomh maith leis sin, is féidir leat a roghnú más mian leat "
+"luachanna barraí (lipéid) a thaispeáint nó nach ea, agus cá háit."
 
 #. i18n: ectx: (Loaded from Barplot Options) <settings> <setting> (refers to element labelled "Draw Legend")
 #: rkward/plugins/distributions/../plots/barplot_embed.rkh:17
@@ -599,12 +668,15 @@ msgid ""
 "used to construct the legend, so this option has no effect, if the rows are "
 "not named."
 msgstr ""
+"Ar cheart finscéal a chur leis an mbarraplota? Úsáidfear ainmneacha na "
+"sraitheanna de na sonraí chun an finscéal a thógáil, mar sin níl aon "
+"éifeacht ag an rogha seo mura bhfuil ainmneacha ar na sraitheanna."
 
 #. i18n: ectx: (Loaded from Barplot Options) <settings> <setting> (refers to element labelled "Colors")
 #: rkward/plugins/distributions/../plots/barplot_embed.rkh:18
 #, kde-format
 msgid "Select between grey and rainbow colors."
-msgstr ""
+msgstr "Roghnaigh idir dathanna liath agus tuar ceatha."
 
 #. i18n: ectx: (Loaded from Barplot Options) <settings> <setting> (refers to element labelled "Type")
 #: rkward/plugins/distributions/../plots/barplot_embed.rkh:19
@@ -614,12 +686,15 @@ msgid ""
 "meaningful for two-dimensional data. If you choose stacked bars you can not "
 "display bar values, below."
 msgstr ""
+"Roghnaigh cineál idir barraí taobh le taobh agus barraí cruachta. Níl an "
+"socrú seo bríoch ach amháin i gcás sonraí dháthoiseacha. Mura roghnaíonn tú "
+"barraí cruachta ní féidir leat luachanna barraí a thaispeáint, thíos."
 
 #. i18n: ectx: (Loaded from Barplot Options) <settings> <setting> (refers to element labelled "Display values")
 #: rkward/plugins/distributions/../plots/barplot_embed.rkh:20
 #, kde-format
 msgid "Select if you want to display bar values (labels)."
-msgstr ""
+msgstr "Roghnaigh más mian leat luachanna barra (lipéid) a thaispeáint."
 
 #. i18n: ectx: (Loaded from Barplot Options) <settings> <setting> (refers to element labelled "Placement")
 #: rkward/plugins/distributions/../plots/barplot_embed.rkh:21
@@ -628,24 +703,26 @@ msgid ""
 "If you have selected to display bar values (labels) you can select where "
 "should they be displayed:"
 msgstr ""
+"Más rud é gur roghnaigh tú luachanna barra (lipéid) a thaispeáint, is féidir "
+"leat a roghnú cá háit ar cheart iad a thaispeáint:"
 
 #. i18n: ectx: (Loaded from Barplot Options) <settings> <setting> (refers to element labelled "Placement")
 #: rkward/plugins/distributions/../plots/barplot_embed.rkh:21
 #, kde-format
 msgid "Above the bars"
-msgstr ""
+msgstr "Os cionn na mbarraí"
 
 #. i18n: ectx: (Loaded from Barplot Options) <settings> <setting> (refers to element labelled "Placement")
 #: rkward/plugins/distributions/../plots/barplot_embed.rkh:21
 #, kde-format
 msgid "Beside the bars"
-msgstr ""
+msgstr "In aice leis na barraí"
 
 #. i18n: ectx: (Loaded from Barplot Options) <settings> <setting> (refers to element labelled "Placement")
 #: rkward/plugins/distributions/../plots/barplot_embed.rkh:21
 #, kde-format
 msgid "Inside the bars"
-msgstr ""
+msgstr "Taobh istigh de na barraí"
 
 #. i18n: ectx: (Loaded from Barplot Options) <settings> <setting> (refers to element labelled "Plot Options")
 #: rkward/plugins/distributions/../plots/barplot_embed.rkh:26
@@ -653,6 +730,8 @@ msgstr ""
 msgid ""
 "Generic plot options. See <link href=\"rkward://component/plot_options\"/>."
 msgstr ""
+"Roghanna plota cineálacha. Féach <link href=\"rkward://component/plot_options"
+"\"/>."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Barplot Options) <technical>
@@ -663,6 +742,9 @@ msgid ""
 "provide a means to select input data. When embedding this plugin, you will "
 "be interested in the following properties:"
 msgstr ""
+"Tá an breiseán seo ceaptha le bheith leabaithe i mbreiseáin eile. Ní "
+"sholáthraíonn sé, leis féin, bealach chun sonraí ionchuir a roghnú. Agus an "
+"breiseán seo á leabú, beidh suim agat sna hairíonna seo a leanas:"
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Barplot Options) <technical>
@@ -672,6 +754,9 @@ msgid ""
 "<i>xvar</i>: The name of the data variable. You can connect this to a "
 "varslot, or set it to a fixed string such as \"x\". This is required."
 msgstr ""
+"<i>xvar</i>: Ainm an athróg sonraí. Is féidir leat é seo a nascadh le "
+"varslot, nó é a shocrú go teaghrán seasta amhail \"x\". Tá sé seo "
+"riachtanach."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Barplot Options) <technical>
@@ -681,6 +766,8 @@ msgid ""
 "<i>code.preprocess</i>: Provides a summary of parameters to be used in a "
 "call to <b>rk.header()</b>, if you have a use for it."
 msgstr ""
+"<i>code.preprocess</i>: Soláthraíonn sé achoimre ar na paraiméadair le "
+"húsáid i nglao ar <b>rk.header()</b>, má tá úsáid agat dó."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Barplot Options) <technical>
@@ -689,90 +776,92 @@ msgstr ""
 msgid ""
 "<i>code.printout</i>: The actual commands needed to construct the barplot."
 msgstr ""
+"<i>code.printout</i>: Na horduithe iarbhír atá riachtanach chun an barraplot "
+"a thógáil."
 
 #. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <checkbox label="...">
 #: rkward/plugins/distributions/../plots/barplot_embed.xml:22
 #, kde-format
 msgid "Draw Legend"
-msgstr ""
+msgstr "Tarraing Finscéal"
 
 #. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <radio label="...">
 #: rkward/plugins/distributions/../plots/barplot_embed.xml:23
 #, kde-format
 msgid "Colors"
-msgstr ""
+msgstr "Dathanna"
 
 #. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <radio label="Colors"> <option label="...">
 #: rkward/plugins/distributions/../plots/barplot_embed.xml:24
 #, kde-format
 msgid "Default (grayscale)"
-msgstr ""
+msgstr "Réamhshocrú (liathscála)"
 
 #. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <radio label="Colors"> <option label="...">
 #: rkward/plugins/distributions/../plots/barplot_embed.xml:25
 #, kde-format
 msgid "Rainbow colors"
-msgstr ""
+msgstr "Dathanna tuar ceatha"
 
 #. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <radio label="...">
 #: rkward/plugins/distributions/../plots/barplot_embed.xml:27
 #, kde-format
 msgid "Type"
-msgstr ""
+msgstr "Cineál"
 
 #. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <radio label="Type"> <option label="...">
 #: rkward/plugins/distributions/../plots/barplot_embed.xml:28
 #, kde-format
 msgid "Juxtaposed"
-msgstr ""
+msgstr "Taobh le taobh"
 
 #. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <radio label="Type"> <option label="...">
 #: rkward/plugins/distributions/../plots/barplot_embed.xml:29
 #, kde-format
 msgid "Stacked"
-msgstr ""
+msgstr "Cruachta"
 
 #. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <checkbox label="...">
 #: rkward/plugins/distributions/../plots/barplot_embed.xml:32
 #, kde-format
 msgid "Display values"
-msgstr ""
+msgstr "Taispeáin luachanna"
 
 #. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <radio label="...">
 #: rkward/plugins/distributions/../plots/barplot_embed.xml:33
 #, kde-format
 msgid "Placement"
-msgstr ""
+msgstr "Socrúchán"
 
 #. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <radio label="Placement"> <option label="...">
 #: rkward/plugins/distributions/../plots/barplot_embed.xml:34
 #, kde-format
 msgid "Above Bars"
-msgstr ""
+msgstr "Os cionn na mBarraí"
 
 #. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <radio label="Placement"> <option label="...">
 #: rkward/plugins/distributions/../plots/barplot_embed.xml:35
 #, kde-format
 msgid "Beside Bars"
-msgstr ""
+msgstr "In aice le Barraí"
 
 #. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <radio label="Placement"> <option label="...">
 #: rkward/plugins/distributions/../plots/barplot_embed.xml:36
 #, kde-format
 msgid "Inside Bars"
-msgstr ""
+msgstr "Barraí Taobh Istigh"
 
 #. i18n: ectx: (Loaded from Choose color) <summary>
 #: rkward/plugins/distributions/../plots/color_chooser.rkh:8
 #, kde-format
 msgid "Simple color picker."
-msgstr ""
+msgstr "Roghnóir dathanna simplí."
 
 #. i18n: ectx: (Loaded from Choose color) <usage>
 #: rkward/plugins/distributions/../plots/color_chooser.rkh:12
 #, kde-format
 msgid "Pick a color."
-msgstr ""
+msgstr "Roghnaigh dath."
 
 #. i18n: ectx: (Loaded from Choose color) <usage>
 #: rkward/plugins/distributions/../plots/color_chooser.rkh:12
@@ -781,18 +870,20 @@ msgid ""
 "This plugin is meant to be used embedded, and you should not really ever see "
 "this help page."
 msgstr ""
+"Tá an breiseán seo ceaptha le húsáid leabaithe, agus níor cheart duit an "
+"leathanach cabhrach seo a fheiceáil riamh i ndáiríre."
 
 #. i18n: ectx: (Loaded from Choose color) <settings> <setting> (refers to element labelled "Color")
 #: rkward/plugins/distributions/../plots/color_chooser.rkh:19
 #, kde-format
 msgid "The color to use."
-msgstr ""
+msgstr "An dath le húsáid."
 
 #. i18n: ectx: (Choose color) <dialog label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:22
 #, kde-format
 msgid "Choose color"
-msgstr ""
+msgstr "Roghnaigh dath"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Points / Lines"> <embed label="...">
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="...">
@@ -816,7 +907,7 @@ msgstr ""
 #: rkward/plugins/distributions/../x11device/grid.xml:59
 #, kde-format
 msgid "Color"
-msgstr ""
+msgstr "Dath"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> [...] <dropdown label="Tick label orientation"> <option label="...">
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Points / Lines"> <dropdown label="Type of points/lines"> <option label="...">
@@ -826,488 +917,488 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/plot_options.xml:151
 #, kde-format
 msgid "default"
-msgstr ""
+msgstr "réamhshocraithe"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:25
 #, kde-format
 msgid "Azure"
-msgstr ""
+msgstr "Azure"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:26
 #, kde-format
 msgid "Black"
-msgstr ""
+msgstr "Dubh"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:27
 #, kde-format
 msgid "Blue"
-msgstr ""
+msgstr "Gorm"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:28
 #, kde-format
 msgid "Blue1"
-msgstr ""
+msgstr "Gorm1"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:29
 #, kde-format
 msgid "Blue2"
-msgstr ""
+msgstr "Gorm2"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:30
 #, kde-format
 msgid "Blue3"
-msgstr ""
+msgstr "Gorm3"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:31
 #, kde-format
 msgid "Blue4"
-msgstr ""
+msgstr "Gorm4"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:32
 #, kde-format
 msgid "Brown"
-msgstr ""
+msgstr "Donn"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:33
 #, kde-format
 msgid "Cyan"
-msgstr ""
+msgstr "Cian"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:34
 #, kde-format
 msgid "Darkviolet"
-msgstr ""
+msgstr "Violet Dorcha"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:35
 #, kde-format
 msgid "Gold"
-msgstr ""
+msgstr "Óir"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:36
 #, kde-format
 msgid "Gray"
-msgstr ""
+msgstr "Liath"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:37
 #, kde-format
 msgid "Gray1"
-msgstr ""
+msgstr "Liath1"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:38
 #, kde-format
 msgid "Gray2"
-msgstr ""
+msgstr "Liath2"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:39
 #, kde-format
 msgid "Gray3"
-msgstr ""
+msgstr "Liath3"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:40
 #, kde-format
 msgid "Gray4"
-msgstr ""
+msgstr "Liath4"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:41
 #, kde-format
 msgid "Green"
-msgstr ""
+msgstr "Glas"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:42
 #, kde-format
 msgid "Green1"
-msgstr ""
+msgstr "Glas1"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:43
 #, kde-format
 msgid "Green2"
-msgstr ""
+msgstr "Glas2"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:44
 #, kde-format
 msgid "Green3"
-msgstr ""
+msgstr "Glas3"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:45
 #, kde-format
 msgid "Green4"
-msgstr ""
+msgstr "Glas4"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:46
 #, kde-format
 msgid "Grey"
-msgstr ""
+msgstr "Liath"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:47
 #, kde-format
 msgid "Grey1"
-msgstr ""
+msgstr "Liath1"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:48
 #, kde-format
 msgid "Grey2"
-msgstr ""
+msgstr "Liath2"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:49
 #, kde-format
 msgid "Grey3"
-msgstr ""
+msgstr "Liath3"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:50
 #, kde-format
 msgid "Grey4"
-msgstr ""
+msgstr "Liath4"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:51
 #, kde-format
 msgid "Lawngreen"
-msgstr ""
+msgstr "Glas faiche"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:52
 #, kde-format
 msgid "Limegreen"
-msgstr ""
+msgstr "Líoma-ghlas"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:53
 #, kde-format
 msgid "Linen"
-msgstr ""
+msgstr "Línéadach"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:54
 #, kde-format
 msgid "Magenta"
-msgstr ""
+msgstr "Maigeanta"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:55
 #, kde-format
 msgid "Magenta1"
-msgstr ""
+msgstr "Maigeanta1"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:56
 #, kde-format
 msgid "Magenta2"
-msgstr ""
+msgstr "Maigeanta2"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:57
 #, kde-format
 msgid "Magenta3"
-msgstr ""
+msgstr "Maigeanta3"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:58
 #, kde-format
 msgid "Magenta4"
-msgstr ""
+msgstr "Maigeanta4"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:59
 #, kde-format
 msgid "Mintcream"
-msgstr ""
+msgstr "Uachtar Miontas"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:60
 #, kde-format
 msgid "Mistyrose"
-msgstr ""
+msgstr "Rós ceoach"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:61
 #, kde-format
 msgid "Navajowhite"
-msgstr ""
+msgstr "Navachóch bán"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:62
 #, kde-format
 msgid "Orange"
-msgstr ""
+msgstr "Oráiste"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:63
 #, kde-format
 msgid "Orchid"
-msgstr ""
+msgstr "Magairlín"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:64
 #, kde-format
 msgid "Palegreen"
-msgstr ""
+msgstr "Glas éadrom"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:65
 #, kde-format
 msgid "Papayawhip"
-msgstr ""
+msgstr "Papayawip"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:66
 #, kde-format
 msgid "Peachpuff"
-msgstr ""
+msgstr "Puff péitseog"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:67
 #, kde-format
 msgid "Pink"
-msgstr ""
+msgstr "Bándearg"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:68
 #, kde-format
 msgid "Red"
-msgstr ""
+msgstr "Dearg"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:69
 #, kde-format
 msgid "Red1"
-msgstr ""
+msgstr "Dearg1"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:70
 #, kde-format
 msgid "Red2"
-msgstr ""
+msgstr "Dearg2"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:71
 #, kde-format
 msgid "Red3"
-msgstr ""
+msgstr "Dearg3"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:72
 #, kde-format
 msgid "Red4"
-msgstr ""
+msgstr "Dearg4"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:73
 #, kde-format
 msgid "Royalblue"
-msgstr ""
+msgstr "Gorm ríoga"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:74
 #, kde-format
 msgid "Salmon"
-msgstr ""
+msgstr "Bradán"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:75
 #, kde-format
 msgid "Sandybrown"
-msgstr ""
+msgstr "Donn gainmheach"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:76
 #, kde-format
 msgid "Seagreen"
-msgstr ""
+msgstr "Glas farraige"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:77
 #, kde-format
 msgid "Sienna"
-msgstr ""
+msgstr "Siaineach"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:78
 #, kde-format
 msgid "Skyblue"
-msgstr ""
+msgstr "Gormspéir"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:79
 #, kde-format
 msgid "Slategrey"
-msgstr ""
+msgstr "Liathshliath"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:80
 #, kde-format
 msgid "Snow"
-msgstr ""
+msgstr "Sneachta"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:81
 #, kde-format
 msgid "Springgreen"
-msgstr ""
+msgstr "Earrachghlas"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:82
 #, kde-format
 msgid "Steelblue"
-msgstr ""
+msgstr "Gormchruach"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:83
 #, kde-format
 msgid "Tan"
-msgstr ""
+msgstr "Crón"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:84
 #, kde-format
 msgid "Thistle"
-msgstr ""
+msgstr "Feochadán"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:85
 #, kde-format
 msgid "Tomato"
-msgstr ""
+msgstr "Trátaí"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:86
 #, kde-format
 msgid "Violet"
-msgstr ""
+msgstr "Vialait"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:87
 #, kde-format
 msgid "Violetred1"
-msgstr ""
+msgstr "VialaitDearg1"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:88
 #, kde-format
 msgid "Violetred2"
-msgstr ""
+msgstr "VialaitDearg2"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:89
 #, kde-format
 msgid "Violetred3"
-msgstr ""
+msgstr "VialaitDearg3"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:90
 #, kde-format
 msgid "Violetred4"
-msgstr ""
+msgstr "VialaitDearg4"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:91
 #, kde-format
 msgid "Wheat"
-msgstr ""
+msgstr "Cruithneacht"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:92
 #, kde-format
 msgid "White"
-msgstr ""
+msgstr "Bán"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:93
 #, kde-format
 msgid "Yellow"
-msgstr ""
+msgstr "Buí"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:94
 #, kde-format
 msgid "Yellow1"
-msgstr ""
+msgstr "Buí1"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:95
 #, kde-format
 msgid "Yellow2"
-msgstr ""
+msgstr "Buí2"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:96
 #, kde-format
 msgid "Yellow3"
-msgstr ""
+msgstr "Buí3"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:97
 #, kde-format
 msgid "Yellow4"
-msgstr ""
+msgstr "Buí4"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:98
 #, kde-format
 msgid "Yellowgreen"
-msgstr ""
+msgstr "Buíglas"
 
 #. i18n: ectx: (Loaded from Default histogram options)
 #: rkward/plugins/distributions/../plots/histogram_options.js:18
 #, kde-format
 msgid "Break points"
-msgstr ""
+msgstr "Pointí Briste"
 
 #. i18n: ectx: (Loaded from Default histogram options)
 #: rkward/plugins/distributions/../plots/histogram_options.js:21
 #, no-c-format, kde-format
 msgid "Approximately %1 cells"
-msgstr ""
+msgstr "Thart ar %1 cealla"
 
 #. i18n: ectx: (Loaded from Default histogram options)
 #: rkward/plugins/distributions/../plots/histogram_options.js:24
 #, kde-format
 msgid "Integers"
-msgstr ""
+msgstr "Slánuimhreacha"
 
 #. i18n: ectx: (Loaded from Default histogram options)
 #: rkward/plugins/distributions/../plots/histogram_options.js:27
 #, no-c-format, kde-format
 msgid "Equally spaced vector of length %1"
-msgstr ""
+msgstr "Veicteoir cothrom-spásáilte de fhad %1"
 
 #. i18n: ectx: (Loaded from Default histogram options)
 #: rkward/plugins/distributions/../plots/histogram_options.js:40
 #: rkward/plugins/distributions/../plots/histogram_options.js:42
 #, kde-format
 msgid "Scale"
-msgstr ""
+msgstr "Scála"
 
 #. i18n: ectx: (Loaded from Default histogram options)
 #: rkward/plugins/distributions/../plots/histogram_options.js:40
 #, kde-format
 msgid "Density"
-msgstr ""
+msgstr "Dlús"
 
 #. i18n: ectx: (Loaded from Default histogram options) <summary>
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:8
@@ -1316,6 +1407,8 @@ msgid ""
 "This plugin provides various options for <b>hist</b> or <b>plot.histogram</"
 "b>."
 msgstr ""
+"Cuireann an breiseán seo roghanna éagsúla ar fáil le haghaidh <b>hist</b> nó "
+"<b>plot.histogram</b>."
 
 #. i18n: ectx: (Loaded from Default histogram options) <usage>
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:11
@@ -1327,6 +1420,12 @@ msgid ""
 "combinations might not produce any sensible plot, so read the R references "
 "to make a judicious choice of parameters."
 msgstr ""
+"Úsáidtear an breiseán seo den chuid is mó mar bhreiseán leabaithe. Socraíonn "
+"na heilimintí grafacha úsáideora go léir anseo paraiméadair éagsúla do "
+"fheidhmeanna hist nó plot.histogram. Le haghaidh cabhrach shonraigh do "
+"pharaiméadair, féach na tagairtí R faoi seach. B’fhéidir nach dtáirgeann "
+"roinnt teaglaim paraiméadair aon phlota ciallmhar, mar sin léigh na tagairtí "
+"R chun rogha ciallmhar paraiméadair a dhéanamh."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Add bars to current plot")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:15
@@ -1335,30 +1434,32 @@ msgid ""
 "Check this box if the histogram is to be added to the current plot. This is "
 "the <i>add</i> parameter."
 msgstr ""
+"Seiceáil an bosca seo más mian leat an histogram a chur leis an bplota "
+"reatha. Seo é an paraiméadar <i>add</i>."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Frequency")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:16
 #, kde-format
 msgid "This is the <i>freq</i> parameter."
-msgstr ""
+msgstr "Seo é an paraiméadar <i>freq</i>."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Bar labels")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:17
 #, kde-format
 msgid "This is the <i>label</i> parameter."
-msgstr ""
+msgstr "Seo é an paraiméadar <i>label</i>."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Right closed")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:18
 #, kde-format
 msgid "This is the <i>right</i> parameter."
-msgstr ""
+msgstr "Seo é an paraiméadar <i>right</i>."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Include in lowest cell")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:19
 #, kde-format
 msgid "This is the <i>include.lowest</i> parameter."
-msgstr ""
+msgstr "Seo é an paraiméadar <i>include.lowest</i>."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Method")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:21
@@ -1371,6 +1472,12 @@ msgid ""
 "points in the range of the variable. The number of break points in this case "
 "is provided by 'Vector length' (see below)."
 msgstr ""
+"Seo é an paraiméadar <i>breaks</i> le <b>hist</b>, mura roghnaítear "
+"'Uimhreacha slána' nó 'Veicteoir pointí briste'. Socraíonn an rogha "
+"'Uimhreacha slána' na pointí briste mar na slánuimhreacha idir íosmhéid agus "
+"uasmhéid an athróige. Socraíonn an rogha 'Veicteoir pointí briste' pointí "
+"briste atá spásáilte go cothrom i raon an athróige. Soláthraíonn 'Fad "
+"veicteora' (féach thíos) líon na bpointí briste sa chás seo."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Suggested cells")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:22
@@ -1380,6 +1487,9 @@ msgid ""
 "suggestion to the number of cells. This is the <i>breaks</i> parameter with "
 "a single number argument."
 msgstr ""
+"Má roghnaítear 'Uimhir aonair' sa réimse thuas, tugann sé seo moladh maidir "
+"le líon na gcealla. Seo é an paraiméadar <i>breaks</i> le hargóint uimhir "
+"aonair."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Vector length")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:23
@@ -1392,6 +1502,12 @@ msgid ""
 "code). The range of the variable is extended by 10% before obtaining the "
 "sequence, so that both the minimum and maximum points are included."
 msgstr ""
+"Má roghnaítear 'Veicteoir pointí briste' sa réimse thuas, soláthraíonn sé "
+"seo fad an veicteora de phointí briste atá spásáilte go cothrom i raon an "
+"athróg. Seo é an paraiméadar <i>breaks</i> le hargóint veicteora. Ríomhtar "
+"an seicheamh iarbhír le glao feidhme inlíne (féach an cód ginte). Síneann "
+"raon an athróg 10% sula bhfaightear an seicheamh, ionas go n-áirítear na "
+"pointí íosta agus uasta araon."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Draw border")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:25
@@ -1401,6 +1517,9 @@ msgid ""
 "<i>border=FALSE</i> is added to the code. Otherwise a color is provided as "
 "the argument to <i>border</i>."
 msgstr ""
+"An bhfuil teorainn le tarraingt chuig barraí an histagram. Mura bhfuil tic "
+"curtha leis, cuirtear <i>border=FALSE</i> leis an gcód. Seachas sin, "
+"cuirtear dath ar fáil mar argóint don <i>border</i>."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Color")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:26
@@ -1409,6 +1528,8 @@ msgid ""
 "This is the <i>border</i> argument which provides the color of the border. "
 "Check the above box to use this option."
 msgstr ""
+"Seo é an argóint <i>border</i> a sholáthraíonn dath na teorann. Seiceáil an "
+"bosca thuas chun an rogha seo a úsáid."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Line type for histogram")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:28
@@ -1418,6 +1539,9 @@ msgid ""
 "select a fill color to make a sensible plot. See R reference for further "
 "details."
 msgstr ""
+"Seo é an paraiméadar <i>lty</i>. Ní tharraingeofar aon línte má roghnaítear "
+"'Blank', roghnaigh dath líonta chun plota ciallmhar a chruthú. Féach tagairt "
+"R le haghaidh tuilleadh sonraí."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Density of shading lines")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:29
@@ -1426,18 +1550,21 @@ msgid ""
 "This is the <i>density</i> parameter. See the R reference on 'rect' for more "
 "details."
 msgstr ""
+"Seo é an paraiméadar <i>density</i>. Féach ar an tagairt R ar 'rect' le "
+"haghaidh tuilleadh sonraí."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Angle of shading lines")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:30
 #, kde-format
 msgid "This is the <i>angle</i> parameter."
-msgstr ""
+msgstr "Seo é an paraiméadar <i>angle</i>."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Use Fill color")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:32
 #, kde-format
 msgid "Check this box to use a fill color for the histogram bars."
 msgstr ""
+"Seiceáil an bosca seo chun dath líonta a úsáid do na barraí histeagram."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Color")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:33
@@ -1447,6 +1574,9 @@ msgid ""
 "color. If it is empty, then <i>col</i> is not used in the code, otherwise "
 "the chosen color is used to fill the bars."
 msgstr ""
+"Seo é an paraiméadar <i>col</i>. D’fhéadfadh an breiseán leabaithe dath "
+"réamhshocraithe a shocrú. Mura bhfuil sé folamh, ní úsáidtear <i>col</i> sa "
+"chód, nó úsáidtear an dath roghnaithe chun na barraí a líonadh."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
@@ -1461,6 +1591,8 @@ msgstr ""
 msgid ""
 "The following external tags are provided for use in the embedding plugin."
 msgstr ""
+"Cuirtear na clibeanna seachtracha seo a leanas ar fáil lena n-úsáid sa "
+"bhreiseán leabaithe."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: i18n: "true", "false, and terms inside <i></i> or <b></b> should not be translated, here
@@ -1473,6 +1605,8 @@ msgid ""
 "<i>code.printout</i>: This contains all the other options determining the "
 "look of the plot."
 msgstr ""
+"<i>code.printout</i>: Tá na roghanna eile go léir a chinneann cuma an phlota "
+"anseo."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: i18n: "true", "false, and terms inside <i></i> or <b></b> should not be translated, here
@@ -1485,6 +1619,9 @@ msgid ""
 "<i>allow_addtoplot</i>: Setting this to \"true\" (\"false\") enables "
 "(disables) the display of the '<label id=\"addtoplot\"/>' check box."
 msgstr ""
+"<i>allow_addtoplot</i>: Má shocraítear seo go \"fíor\" (\"bréagach\") "
+"cuirtear ar chumas (díchumasaítear) taispeáint an bhosca seiceála '<label id="
+"\"addtoplot\"/>'."
 
 #. i18n: i18n: "true", "false, and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default histogram options) <technical>
@@ -1494,6 +1631,9 @@ msgid ""
 "<i>varname</i>: For linking to the variable name for which histogram is "
 "being plotted. This is used in the 'Integer numbers' option for breaks."
 msgstr ""
+"<i>varname</i>: Chun nascadh leis an ainm athróige a bhfuil an histeagram á "
+"phlotaáil dó. Úsáidtear é seo sa rogha 'Uimhreacha slánuimhreacha' le "
+"haghaidh sosanna."
 
 #. i18n: i18n: "true", "false, and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default histogram options) <technical>
@@ -1503,6 +1643,8 @@ msgid ""
 "<i>allow_freq</i>: Setting this to \"true\" (\"false\") enables (disables) "
 "the display of the '<label id=\"freq\"/>' check box."
 msgstr ""
+"<i>allow_freq</i>: Má shocraítear seo go \"fíor\" (\"bréagach\") cuirtear ar "
+"chumas (díchumasaítear) taispeáint an bhosca seiceála '<label id=\"freq\"/>'."
 
 #. i18n: i18n: "true", "false, and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default histogram options) <technical>
@@ -1512,6 +1654,9 @@ msgid ""
 "<i>allow_barlabels</i>: Setting this to \"true\" (\"false\") enables "
 "(disables) the display of the '<label id=\"barlabels\"/>' check box."
 msgstr ""
+"<i>allow_barlabels</i>: Má shocraítear seo go \"fíor\" (\"bréagach\") "
+"cuirtear ar chumas (díchumasaítear) taispeáint an bhosca seiceála '<label id="
+"\"barlabels\"/>'."
 
 #. i18n: i18n: "true", "false, and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default histogram options) <technical>
@@ -1521,6 +1666,8 @@ msgid ""
 "In order to allow flexible use, the generated options are separated into "
 "three different sections:"
 msgstr ""
+"Chun úsáid sholúbtha a cheadú, tá na roghanna ginte roinnte ina dtrí chuid "
+"éagsúla:"
 
 #. i18n: i18n: "true", "false, and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default histogram options) <technical>
@@ -1530,127 +1677,130 @@ msgid ""
 "<i>code.preprocess</i>: Options suitable for use in a call to <b>rk."
 "header()</b>. These are safe to ignore, if you do not need them."
 msgstr ""
+"<i>code.preprocess</i>: Roghanna atá oiriúnach le húsáid i nglao chuig <b>rk."
+"header()</b>. Is féidir neamhaird a dhéanamh díobh seo mura bhfuil siad de "
+"dhíth ort."
 
 #. i18n: i18n: "true", "false, and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default histogram options) <technical>
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:43
 #, kde-format
 msgid "<i>code.calculate</i>: This contains only the <i>breaks</i>-option."
-msgstr ""
+msgstr "<i>code.calculate</i>: Níl anseo ach an rogha <i>breaks</i>."
 
 #. i18n: ectx: (Default histogram options) <dialog label="...">
 #: rkward/plugins/distributions/../plots/histogram_options.xml:53
 #, kde-format
 msgid "Default histogram options"
-msgstr ""
+msgstr "Roghanna réamhshocraithe histeagram"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <checkbox label="...">
 #: rkward/plugins/distributions/../plots/histogram_options.xml:56
 #, kde-format
 msgid "Add bars to current plot"
-msgstr ""
+msgstr "Cuir barraí leis an bplota reatha"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <checkbox label="...">
 #: rkward/plugins/distributions/../plots/histogram_options.xml:58
 #, kde-format
 msgid "Bar labels"
-msgstr ""
+msgstr "Lipéid barra"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="...">
 #: rkward/plugins/distributions/../plots/histogram_options.xml:60
 #, kde-format
 msgid "Histogram Breakpoints"
-msgstr ""
+msgstr "Brisphointí Histeagram"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Breakpoints"> <radio label="...">
 #: rkward/plugins/distributions/../plots/histogram_options.xml:61
 #, kde-format
 msgid "Method"
-msgstr ""
+msgstr "Modh"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Breakpoints"> <radio label="Method"> <option label="...">
 #: rkward/plugins/distributions/../plots/histogram_options.xml:62
 #, kde-format
 msgid "Sturges"
-msgstr ""
+msgstr "Sturges"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Breakpoints"> <radio label="Method"> <option label="...">
 #: rkward/plugins/distributions/../plots/histogram_options.xml:63
 #, kde-format
 msgid "Scott"
-msgstr ""
+msgstr "Scott"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Breakpoints"> <radio label="Method"> <option label="...">
 #: rkward/plugins/distributions/../plots/histogram_options.xml:64
 #, kde-format
 msgid "Friedman-Diaconis"
-msgstr ""
+msgstr "Friedman-Diaconis"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Breakpoints"> <radio label="Method"> <option label="...">
 #: rkward/plugins/distributions/../plots/histogram_options.xml:65
 #, kde-format
 msgid "A single number"
-msgstr ""
+msgstr "Uimhir aonair"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Breakpoints"> <radio label="Method"> <option label="...">
 #: rkward/plugins/distributions/../plots/histogram_options.xml:66
 #, kde-format
 msgid "Integer numbers"
-msgstr ""
+msgstr "Uimhreacha slánuimhreacha"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Breakpoints"> <radio label="Method"> <option label="...">
 #: rkward/plugins/distributions/../plots/histogram_options.xml:67
 #, kde-format
 msgid "Vector of break points"
-msgstr ""
+msgstr "Veicteoir pointí briste"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Breakpoints"> <spinbox label="...">
 #: rkward/plugins/distributions/../plots/histogram_options.xml:70
 #, kde-format
 msgid "Suggested cells"
-msgstr ""
+msgstr "Cealla molta"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Breakpoints"> <spinbox label="...">
 #: rkward/plugins/distributions/../plots/histogram_options.xml:71
 #, kde-format
 msgid "Vector length"
-msgstr ""
+msgstr "Fad veicteora"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Breakpoints"> <checkbox label="...">
 #: rkward/plugins/distributions/../plots/histogram_options.xml:73
 #, kde-format
 msgid "Right closed"
-msgstr ""
+msgstr "Dúnta ar dheis"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Breakpoints"> <checkbox label="...">
 #: rkward/plugins/distributions/../plots/histogram_options.xml:75
 #, kde-format
 msgid "Include in lowest cell"
-msgstr ""
+msgstr "Cuir san áireamh sa chill is ísle"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Breakpoints"> <text>
 #: rkward/plugins/distributions/../plots/histogram_options.xml:76
 #, kde-format
 msgid "(For vector valued breaks)"
-msgstr ""
+msgstr "(Le haghaidh sosanna luachmhara veicteoir)"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="...">
 #: rkward/plugins/distributions/../plots/histogram_options.xml:81
 #, kde-format
 msgid "Histogram Line options"
-msgstr ""
+msgstr "Roghanna Líne Histeagram"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Line options"> <dropdown label="...">
 #: rkward/plugins/distributions/../plots/histogram_options.xml:82
 #, kde-format
 msgid "Line type for histogram"
-msgstr ""
+msgstr "Cineál líne le haghaidh histeagram"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Line options"> <dropdown label="Line type for histogram"> <option label="...">
 #: rkward/plugins/distributions/../plots/histogram_options.xml:83
 #, kde-format
 msgid "Blank (No lines)"
-msgstr ""
+msgstr "Folamh (Gan línte)"
 
 #. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Options"> <dropdown label="Line type for all lines"> <option label="...">
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Line options"> <dropdown label="Line type for histogram"> <option label="...">
@@ -1660,7 +1810,7 @@ msgstr ""
 #: rkward/plugins/distributions/../x11device/grid.xml:52
 #, kde-format
 msgid "Solid"
-msgstr ""
+msgstr "Soladach"
 
 #. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Options"> <dropdown label="Line type for all lines"> <option label="...">
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Line options"> <dropdown label="Line type for histogram"> <option label="...">
@@ -1670,7 +1820,7 @@ msgstr ""
 #: rkward/plugins/distributions/../x11device/grid.xml:53
 #, kde-format
 msgid "Dashed"
-msgstr ""
+msgstr "Daiseanna"
 
 #. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Options"> <dropdown label="Line type for all lines"> <option label="...">
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Line options"> <dropdown label="Line type for histogram"> <option label="...">
@@ -1680,7 +1830,7 @@ msgstr ""
 #: rkward/plugins/distributions/../x11device/grid.xml:54
 #, kde-format
 msgid "Dotted"
-msgstr ""
+msgstr "Poncaithe"
 
 #. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Options"> <dropdown label="Line type for all lines"> <option label="...">
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Line options"> <dropdown label="Line type for histogram"> <option label="...">
@@ -1690,7 +1840,7 @@ msgstr ""
 #: rkward/plugins/distributions/../x11device/grid.xml:55
 #, kde-format
 msgid "Dot-Dash"
-msgstr ""
+msgstr "Ponc-Dais"
 
 #. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Options"> <dropdown label="Line type for all lines"> <option label="...">
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Line options"> <dropdown label="Line type for histogram"> <option label="...">
@@ -1700,7 +1850,7 @@ msgstr ""
 #: rkward/plugins/distributions/../x11device/grid.xml:56
 #, kde-format
 msgid "Long-dash"
-msgstr ""
+msgstr "Fad-dais"
 
 #. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Options"> <dropdown label="Line type for all lines"> <option label="...">
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Line options"> <dropdown label="Line type for histogram"> <option label="...">
@@ -1710,43 +1860,43 @@ msgstr ""
 #: rkward/plugins/distributions/../x11device/grid.xml:57
 #, kde-format
 msgid "Two-dash"
-msgstr ""
+msgstr "Dhá-dais"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Line options"> <spinbox label="...">
 #: rkward/plugins/distributions/../plots/histogram_options.xml:91
 #, kde-format
 msgid "Density of shading lines"
-msgstr ""
+msgstr "Dlús na línte scáthaithe"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Line options"> <spinbox label="...">
 #: rkward/plugins/distributions/../plots/histogram_options.xml:92
 #, kde-format
 msgid "Angle of shading lines"
-msgstr ""
+msgstr "Uillinn na línte scáthaithe"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="...">
 #: rkward/plugins/distributions/../plots/histogram_options.xml:94
 #, kde-format
 msgid "Histogram Border options"
-msgstr ""
+msgstr "Roghanna Teorann Histeagram"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Border options"> <checkbox label="...">
 #: rkward/plugins/distributions/../plots/histogram_options.xml:95
 #, kde-format
 msgid "Draw border"
-msgstr ""
+msgstr "Tarraing teorainn"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="...">
 #: rkward/plugins/distributions/../plots/histogram_options.xml:98
 #, kde-format
 msgid "Histogram Fill options"
-msgstr ""
+msgstr "Roghanna Líonadh Histeagram"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Fill options"> <checkbox label="...">
 #: rkward/plugins/distributions/../plots/histogram_options.xml:99
 #, kde-format
 msgid "Use Fill color"
-msgstr ""
+msgstr "Úsáid dath líonta"
 
 #. i18n: ectx: (Loaded from Default plot options) <summary>
 #: rkward/plugins/distributions/../plots/plot_options.rkh:8
@@ -1757,12 +1907,17 @@ msgid ""
 "available in a specific embedded situation. When a particular feature is "
 "available, it is explained as below."
 msgstr ""
+"Breiseán roghanna plota cineálacha. Is minic a bhíonn an breiseán seo "
+"leabaithe i mbreiseáin eile. Mar thoradh air sin, níl na gnéithe go léir a "
+"mhínítear anseo ar fáil i gcás leabaithe ar leith. Nuair a bhíonn gné ar "
+"leith ar fáil, mínítear í mar atá thíos."
 
 #. i18n: ectx: (Loaded from Default plot options) <usage>
 #: rkward/plugins/distributions/../plots/plot_options.rkh:12
 #, kde-format
 msgid "Set or change the various graphical parameters to the plot function."
 msgstr ""
+"Socraigh nó athraigh na paraiméadair ghrafacha éagsúla don fheidhm phlota."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Main title (on top). Leave empty for default title")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:18
@@ -1771,6 +1926,9 @@ msgid ""
 "This is the <i>main</i> argument to plot.default. See R reference on <b>plot."
 "default</b>. To achieve a line-break (in a quoted string), enter '\\n'."
 msgstr ""
+"Seo é an <i>main</i> argóint chuig plot.default. Féach tagairt R ar <b>plot."
+"default</b>. Chun briseadh líne a bhaint amach (i dtéacs athfhriotail), cuir "
+"isteach '\\n'."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Interpret this label as literal (quoted) string")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:19
@@ -1779,6 +1937,8 @@ msgid ""
 "If this box is checked, the <i>main</i> title will be used literally "
 "(quoted). Otherwise is will be interpreted as an R statement"
 msgstr ""
+"Má tá tic sa bhosca seo, úsáidfear an teideal <i>main</i> go litriúil (i "
+"lua). Seachas sin, léirmhíneofar é mar ráiteas R"
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Sub-title (at bottom). Leave empty for default title")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:20
@@ -1787,6 +1947,9 @@ msgid ""
 "This is the <i>sub</i> argument to plot.default. See R reference on <b>plot."
 "default</b>. To achieve a line-break (in a quoted string), enter '\\n'."
 msgstr ""
+"Seo é an argóint <i>sub</i> le plot.default. Féach tagairt R ar <b>plot."
+"default</b>. Chun briseadh líne a bhaint amach (i dtéacs athfhriotail), cuir "
+"isteach '\\n'."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Interpret this label as literal (quoted) string")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:21
@@ -1795,36 +1958,39 @@ msgid ""
 "If this box is checked, the <i>sub</i> title will be used literally "
 "(quoted). Otherwise is will be interpreted as an R statement"
 msgstr ""
+"Má tá tic sa bhosca seo, úsáidfear an teideal <i>sub</i> go litriúil (i gcló "
+"athfhriotail). Seachas sin, léirmhíneofar é mar ráiteas R"
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Custom margins")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:22
 #, kde-format
 msgid "Enable this option, if you want to customize the margins."
-msgstr ""
+msgstr "Cumasaigh an rogha seo, más mian leat na corrlaigh a shaincheapadh."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Top")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:23
 #, kde-format
 msgid "Size of top margin. Size is specified in (approximate) line heights."
 msgstr ""
+"Méid an imeall uachtaraigh. Sonraítear an méid in airde líne (thart ar)."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Bottom")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:24
 #, kde-format
 msgid "Size of bottom margin. Size is specified in (approximate) line heights."
-msgstr ""
+msgstr "Méid an imeall íochtair. Sonraítear an méid in airde líne (thart ar)."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Left")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:25
 #, kde-format
 msgid "Size of left margin. Size is specified in (approximate) line heights."
-msgstr ""
+msgstr "Méid an imeall chlé. Sonraítear an méid in airde líne (thart ar)."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Right")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:26
 #, kde-format
 msgid "Size of right margin. Size is specified in (approximate) line heights."
-msgstr ""
+msgstr "Méid an imeall ar dheis. Sonraítear an méid in airde líne (thart ar)."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Draw X axis")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:29
@@ -1833,6 +1999,8 @@ msgid ""
 "Uncheck this box to avoid drawing the X axis. This is the <i>xaxt</i> "
 "argument to par. See R reference on <b>par</b>."
 msgstr ""
+"Díthiceáil an bosca seo le nach gá an ais-X a tharraingt. Seo é an argóint "
+"<i>xaxt</i> chuig par. Féach tagairt R ar <b>par</b>."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Draw Y axis")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:30
@@ -1841,6 +2009,8 @@ msgid ""
 "Uncheck this box to avoid drawing the Y axis. This is the <i>yaxt</i> "
 "argument to par. See R reference on <b>par</b>."
 msgstr ""
+"Díthiceáil an bosca seo le nach gá an ais-Y a tharraingt. Seo é an argóint "
+"<i>yaxt</i> chuig par. Féach tagairt R ar <b>par</b>."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "X axis logarithmic")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:31
@@ -1849,6 +2019,8 @@ msgid ""
 "This specifies the <i>log</i> argument to plot.default. Check this box to "
 "set <i>log=\"x\"</i>. See R reference on <b>plot.default</b>."
 msgstr ""
+"Sonraíonn sé seo an argóint <i>log</i> chuig plot.default. Seiceáil an bosca "
+"seo chun <i>log=\"x\"</i> a shocrú. Féach tagairt R ar <b>plot.default</b>."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Y axis logarithmic")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:32
@@ -1858,6 +2030,9 @@ msgid ""
 "set <i>log=\"y\"</i>. Check both the boxes to set <i>log=\"xy\"</i>. See R "
 "reference on <b>plot.default</b>."
 msgstr ""
+"Sonraíonn sé seo an argóint <i>log</i> chuig plot.default. Seiceáil an bosca "
+"seo chun <i>log=\"y\"</i> a shocrú. Seiceáil an dá bhosca chun <i>log=\"xy"
+"\"</i> a shocrú. Féach tagairt R ar <b>plot.default</b>."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Labels (leave empty for default)")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:34
@@ -1868,6 +2043,10 @@ msgid ""
 "labels being evaluated as literal (quoted) strings. To achieve a line-break "
 "(in a quoted string), enter '\\n'."
 msgstr ""
+"Lipéid ais X agus Y. Is iad seo na hargóintí <i>xlab</i> agus <i>ylab</i> "
+"chuig <b>plot.default</b>, faoi seach. Cumasaíonn nó díchumasaíonn na boscaí "
+"seiceála na lipéid atá á measúnú mar theaghráin liteartha (luaite). Chun "
+"briseadh líne a bhaint amach (i dtéacs luaite), cuir isteach '\\n'."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Scale (Minimum/Maximum values for X/Y). Leave blank for automatic")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:35
@@ -1877,6 +2056,9 @@ msgid ""
 "to <b>plot.default</b> respectively. For automatic evaluation of the limits, "
 "leave these blank."
 msgstr ""
+"Teorainneacha an ais X agus Y. Is iad seo na hargóintí <i>xlim</i> agus "
+"<i>ylim</i> chuig <b>plot.default</b> faoi seach. Chun meastóireacht "
+"uathoibríoch a dhéanamh ar na teorainneacha, fág bán iad seo."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Type of points/lines")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:38
@@ -1886,6 +2068,10 @@ msgid ""
 "function use its default plotting type, choose the 'default' option. This is "
 "the <i>type</i> argument to <b>plot.default</b>."
 msgstr ""
+"Roghnaigh ceann de na cineálacha pointe/líne atá liostaithe don phlota. Chun "
+"ligean don fheidhm ghlaoite a cineál plota réamhshocraithe a úsáid, "
+"roghnaigh an rogha 'réamhshocraithe'. Seo é an argóint <i>type</i> chuig "
+"<b>plot.default</b>."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Color")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:40
@@ -1895,12 +2081,16 @@ msgid ""
 "function use its default plotting color, choose the 'default' option. This "
 "is the <i>col</i> argument to <b>plot.default</b>."
 msgstr ""
+"Roghnaigh ceann de na dathanna pointe/líne atá liostaithe don phlota. Chun "
+"ligean don fheidhm ghlaoite a dath plota réamhshocraithe a úsáid, roghnaigh "
+"an rogha 'réamhshocraithe'. Seo é an argóint <i>col</i> chuig <b>plot."
+"default</b>."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Aspect ratio")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:43
 #, kde-format
 msgid "This is the <i>asp</i> argument to <b>plot.default</b>."
-msgstr ""
+msgstr "Seo é an argóint <i>asp</i> chuig <b>plot.default</b>."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Add Grid to the plot")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:46
@@ -1911,20 +2101,25 @@ msgid ""
 "not for <b>plot.default</b> but rather for the function <b>grid</b>. For "
 "this to be functional the embedding plugin should implement it internally."
 msgstr ""
+"Seiceáil an bosca seo chun eangach a chur leis an bplota reatha. Le haghaidh "
+"roghanna éagsúla eangaí, féach <link href=\"rkward://component/x11grid\"/>. "
+"Tabhair faoi deara nach bhfuil na roghanna seo le haghaidh <b>plot.default</"
+"b> ach le haghaidh na feidhme <b>grid</b>. Chun go mbeidh sé seo feidhmiúil, "
+"ba chóir don bhreiseán leabaithe é a chur i bhfeidhm go hinmheánach."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
 #: rkward/plugins/distributions/../plots/plot_options.rkh:58
 #, kde-format
 msgid "<i>xvar</i>: The variable to be used for the x-coordinates."
-msgstr ""
+msgstr "<i>xvar</i>: An athróg le húsáid do na comhordanáidí-x."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
 #: rkward/plugins/distributions/../plots/plot_options.rkh:58
 #, kde-format
 msgid "<i>yvar</i>: The variable to be used for the y-coordinates."
-msgstr ""
+msgstr "<i>yvar</i>: An athróg le húsáid do na comhordanáidí-y."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
@@ -1936,6 +2131,10 @@ msgid ""
 "possibilities are p,l,b,o,h,s and S; the options for the <i>type</i> "
 "argument."
 msgstr ""
+"<i>default_pointtype</i>: Teaghrán a sholáthraíonn an cineál pointe "
+"réamhshocraithe nuair a roghnaíonn an t-úsáideoir 'Réamhshocrú' do '<label "
+"id=\"pointtype\"/>'. Is iad na féidearthachtaí p, l, b, o, h, s agus S; na "
+"roghanna don argóint <i>type</i>."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
@@ -1947,6 +2146,10 @@ msgid ""
 "various possibilities see the code color_chooser.xml; the options for the "
 "<i>col</i> argument."
 msgstr ""
+"<i>default_pointcolor</i>: Teaghrán a sholáthraíonn an dath pointe "
+"réamhshocraithe nuair a roghnaíonn an t-úsáideoir 'Réamhshocrú' le haghaidh "
+"'<label id=\"pointcolor\"/>'. Le haghaidh féidearthachtaí éagsúla féach an "
+"cód color_chooser.xml; na roghanna don argóint <i>col</i>."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
@@ -1959,6 +2162,12 @@ msgid ""
 "unquoted. If you want to specify a literal string add quotes, explicitly, as "
 "\"&amp;<i>quote;</i>\"."
 msgstr ""
+"<i>default_main</i>: Teaghrán ina sonraítear an argóint <i>main</i> chuig "
+"<b>plot.default</b>. De réir réamhshocraithe is é seo \"\" rud a chiallaíonn "
+"go n-úsáidtear an príomhtheideal a ghintear ag an bhfeidhm phlotála. Tabhair "
+"faoi deara: Úsáidtear an teideal réamhshocraithe i gcónaí gan chomharthaí "
+"athfhriotail. Más mian leat teaghrán liteartha a shonrú, cuir comharthaí "
+"athfhriotail leis, go sainráite, mar \"&amp;<i>quote;</i>\"."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
@@ -1968,6 +2177,8 @@ msgid ""
 "<i>default_sub</i>: Similar to <i>main</i> above but for the subtitle "
 "argument <i>sub</i>."
 msgstr ""
+"<i>default_sub</i>: Cosúil le <i>main</i> thuas ach i gcás an argóint "
+"fotheidil <i>sub</i>."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
@@ -1977,6 +2188,8 @@ msgid ""
 "<i>default_xlab</i>: Similar to <i>main</i> above but for the X-label "
 "argument <i>xlab</i>."
 msgstr ""
+"<i>default_xlab</i>: Cosúil le <i>main</i> thuas ach don argóint X-label "
+"<i>xlab</i>."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
@@ -1986,6 +2199,8 @@ msgid ""
 "<i>default_ylab</i>: Similar to <i>main</i> above but for the Y-label "
 "argument <i>ylab</i>."
 msgstr ""
+"<i>default_ylab</i>: Cosúil le <i>main</i> thuas ach don argóint lipéad-Y "
+"<i>ylab</i>."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
@@ -1995,6 +2210,9 @@ msgid ""
 "<i>allow_log</i>: Setting this to \"true\" (\"false\") enables (disables) "
 "the display of '<label id=\"xlog\"/>' and '<label id=\"ylog\"/>' check boxes."
 msgstr ""
+"<i>allow_log</i>: Má shocraítear seo go \"fíor\" (\"bréagach\") cuirtear ar "
+"chumas (díchumasaítear) taispeáint na mboscaí seiceála '<label id=\"xlog\"/"
+">' agus '<label id=\"ylog\"/>'."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
@@ -2005,6 +2223,9 @@ msgid ""
 "the display of '<label id=\"xminvalue\"/>' and '<label id=\"xmaxvalue\"/>' "
 "input boxes."
 msgstr ""
+"<i>allow_xlim</i>: Má shocraítear seo go \"fíor\" (\"bréagach\") cuirtear ar "
+"chumas (díchumasaítear) taispeáint na mboscaí ionchuir '<label id=\"xminvalue"
+"\"/>' agus '<label id=\"xmaxvalue\"/>'."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
@@ -2015,6 +2236,9 @@ msgid ""
 "the display of '<label id=\"yminvalue\"/>' and '<label id=\"ymaxvalue\"/>' "
 "input boxes."
 msgstr ""
+"<i>allow_ylim</i>: Má shocraítear seo go \"fíor\" (\"bréagach\") cuirtear ar "
+"chumas (díchumasaítear) taispeáint na mboscaí ionchuir '<label id=\"yminvalue"
+"\"/>' agus '<label id=\"ymaxvalue\"/>'."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
@@ -2024,6 +2248,9 @@ msgid ""
 "<i>allow_type</i>: Setting this to \"true\" (\"false\") enables (disables) "
 "the display of the '<label id=\"pointtypepage\"/>' tab."
 msgstr ""
+"<i>allow_type</i>: Má shocraítear seo go \"fíor\" (\"bréagach\") cuirtear ar "
+"chumas (díchumasaítear) taispeáint an chluaisín '<label id=\"pointtypepage\"/"
+">'."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
@@ -2033,6 +2260,9 @@ msgid ""
 "<i>allow_aspect</i>: Setting this to \"true\" (\"false\") enables (disables) "
 "the display of the '<label id=\"aspectratio\"/>' tab."
 msgstr ""
+"<i>allow_aspect</i>: Má shocraítear seo go \"fíor\" (\"bréagach\") cuirtear "
+"ar chumas (díchumasaítear) taispeáint an chluaisín '<label id=\"aspectratio"
+"\"/>'."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
@@ -2047,6 +2277,14 @@ msgid ""
 "following call:<br> printIndented (\"\\t\", getRK_val (\"plot_options.code."
 "calculate\"));</br><br> after the plotting function should do the job.</br>"
 msgstr ""
+"<i>allow_grid</i>: Má shocraítear seo go \"fíor\" (\"bréagach\"), "
+"cumasaítear (díchumasaítear) taispeáint an chluaisín '<label id=\"tab_grid\"/"
+">'. Más \"fíor\", is féidir an cód iarbhír le haghaidh roghanna eangaí a "
+"bhaint as code.calculate (féach thíos) a bhainfidh as grid_options.code."
+"printout é. Go sonrach, má tá an breiseán roghanna plota leabaithe ag baint "
+"úsáide as <i>id=\"plot_options\"</i> ansin ba chóir go ndéanfadh an glao seo "
+"a leanas:<br> printIndented (\"\\t\", getRK_val (\"plot_options.code."
+"calculate\"));</br><br> tar éis na feidhme plota an jab.</br>"
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
@@ -2056,6 +2294,8 @@ msgid ""
 "In order to allow flexible use, the generated options are separated into "
 "different sections:"
 msgstr ""
+"Chun úsáid sholúbtha a cheadú, tá na roghanna ginte scartha ina rannóga "
+"éagsúla:"
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
@@ -2065,6 +2305,8 @@ msgid ""
 "<i>code.preprocess</i>: Nothing yet, but will hopefully include some <b>par</"
 "b> options."
 msgstr ""
+"<i>code.preprocess</i>: Ní raibh aon rud ann go fóill, ach tá súil agam go "
+"mbeidh roinnt roghanna <b>par</b> ann."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
@@ -2073,30 +2315,31 @@ msgstr ""
 msgid ""
 "<i>code.calculate</i>: Currently this contains only the <b>grid</b>-options."
 msgstr ""
+"<i>code.calculate</i>: Faoi láthair níl ach na roghanna <b>grid</b> anseo."
 
 #. i18n: ectx: (Default plot options) <dialog label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:78
 #, kde-format
 msgid "Default plot options"
-msgstr ""
+msgstr "Roghanna plota réamhshocraithe"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:80
 #, kde-format
 msgid "Title and margins"
-msgstr ""
+msgstr "Teideal agus corrlaigh"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:82
 #, kde-format
 msgid "Main title"
-msgstr ""
+msgstr "Príomhtheideal"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="Main title"> <input label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:83
 #, kde-format
 msgid "Main title (on top). Leave empty for default title"
-msgstr ""
+msgstr "Príomhtheideal (ar bharr). Fág folamh don teideal réamhshocraithe"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="Main title"> <checkbox label="...">
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="Subtitle"> <checkbox label="...">
@@ -2104,254 +2347,256 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/plot_options.xml:88
 #, kde-format
 msgid "Interpret this label as literal (quoted) string"
-msgstr ""
+msgstr "Léirmhínigh an lipéad seo mar theaghrán liteartha (athfhriotail)"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:86
 #, kde-format
 msgid "Subtitle"
-msgstr ""
+msgstr "Fotheideal"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="Subtitle"> <input label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:87
 #, kde-format
 msgid "Sub-title (at bottom). Leave empty for default title"
-msgstr ""
+msgstr "Fotheideal (ag an mbun). Fág folamh don teideal réamhshocraithe"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:90
 #, kde-format
 msgid "Custom margins"
-msgstr ""
+msgstr "Imill saincheaptha"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="Custom margins"> <spinbox label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:91
 #, kde-format
 msgid "Top"
-msgstr ""
+msgstr "Barr"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="Custom margins"> <spinbox label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:92
 #, kde-format
 msgid "Bottom"
-msgstr ""
+msgstr "Bun"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="Custom margins"> <spinbox label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:93
 #, kde-format
 msgid "Left"
-msgstr ""
+msgstr "Ar chlé"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="Custom margins"> <spinbox label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:94
 #, kde-format
 msgid "Right"
-msgstr ""
+msgstr "Ar dheis"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:99
 #, kde-format
 msgid "Axes"
-msgstr ""
+msgstr "Aiseanna"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:101
 #, kde-format
 msgid "Axis types"
-msgstr ""
+msgstr "Cineálacha ais"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Axis types"> <checkbox label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:103
 #, kde-format
 msgid "Draw X axis"
-msgstr ""
+msgstr "Tarraing ais X"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Axis types"> <checkbox label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:104
 #, kde-format
 msgid "Draw Y axis"
-msgstr ""
+msgstr "Tarraing ais Y"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Axis types"> <checkbox label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:107
 #, kde-format
 msgid "X axis logarithmic"
-msgstr ""
+msgstr "Logartamach ais X"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Axis types"> <checkbox label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:108
 #, kde-format
 msgid "Y axis logarithmic"
-msgstr ""
+msgstr "Logartamach ais Y"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:111
 #, kde-format
 msgid "Labels (leave empty for default)"
-msgstr ""
+msgstr "Lipéid (fág folamh le haghaidh réamhshocraithe)"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Labels (leave empty for default)"> <input label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:113
 #, kde-format
 msgid "X axis label"
-msgstr ""
+msgstr "Lipéad ais X"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Labels (leave empty for default)"> <input label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:114
 #, kde-format
 msgid "Y axis label"
-msgstr ""
+msgstr "Lipéad ais Y"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Labels (leave empty for default)"> <text>
 #: rkward/plugins/distributions/../plots/plot_options.xml:116
 #, kde-format
 msgid "Interpret these labels as literal (quoted) strings?"
 msgstr ""
+"An bhfuil tú ag iarraidh na lipéid seo a léirmhíniú mar theaghráin liteartha "
+"(athfhriotail)?"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Labels (leave empty for default)"> <checkbox label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:118
 #: rkward/plugins/distributions/../plots/plot_options.xml:119
 #, kde-format
 msgid "interpret as string"
-msgstr ""
+msgstr "léirmhíniú mar shreangán"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:122
 #, kde-format
 msgid "Scale (Minimum/Maximum values for X/Y). Leave blank for automatic"
-msgstr ""
+msgstr "Scála (Luachanna íosta/uasta do X/Y). Fág bán le haghaidh uathoibríoch"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Scale (Minimum/Maximum values for X/Y). Leave blank for automatic"> <input label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:124
 #, kde-format
 msgid "Min X value"
-msgstr ""
+msgstr "Íosluach X"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Scale (Minimum/Maximum values for X/Y). Leave blank for automatic"> <input label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:125
 #, kde-format
 msgid "Min Y value"
-msgstr ""
+msgstr "Íosluach Y"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Scale (Minimum/Maximum values for X/Y). Leave blank for automatic"> <input label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:128
 #, kde-format
 msgid "Max X value"
-msgstr ""
+msgstr "Uasluach X"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Scale (Minimum/Maximum values for X/Y). Leave blank for automatic"> <input label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:129
 #, kde-format
 msgid "Max Y value"
-msgstr ""
+msgstr "Uasluach Y"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:132
 #, kde-format
 msgid "Axis Annotations"
-msgstr ""
+msgstr "Anótálacha Ais"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Axis Annotations"> <dropdown label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:133
 #, kde-format
 msgid "Tick label orientation"
-msgstr ""
+msgstr "Treoshuíomh lipéad tic"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> [...] <dropdown label="Tick label orientation"> <option label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:135
 #, kde-format
 msgid "Always parallel to the axis "
-msgstr ""
+msgstr "I gcónaí comhthreomhar leis an ais "
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> [...] <dropdown label="Tick label orientation"> <option label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:136
 #, kde-format
 msgid "Always horizontal "
-msgstr ""
+msgstr "Cothrománach i gcónaí "
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> [...] <dropdown label="Tick label orientation"> <option label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:137
 #, kde-format
 msgid "Always perpendicular to the axis "
-msgstr ""
+msgstr "I gcónaí ingearach leis an ais "
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> [...] <dropdown label="Tick label orientation"> <option label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:138
 #, kde-format
 msgid "Always vertical "
-msgstr ""
+msgstr "I gcónaí ingearach "
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Axis Annotations"> <input label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:141
 #, kde-format
 msgid "Tick label scale (relative to cex)"
-msgstr ""
+msgstr "Scála lipéad tic (i gcoibhneas le cex)"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:148
 #, kde-format
 msgid "Points / Lines"
-msgstr ""
+msgstr "Pointí / Línte"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Points / Lines"> <dropdown label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:150
 #, kde-format
 msgid "Type of points/lines"
-msgstr ""
+msgstr "Cineál pointí/línte"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Points / Lines"> <dropdown label="Type of points/lines"> <option label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:152
 #, kde-format
 msgid "Plot individual points "
-msgstr ""
+msgstr "Plotaigh pointí aonair "
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Points / Lines"> <dropdown label="Type of points/lines"> <option label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:153
 #, kde-format
 msgid "Plot lines "
-msgstr ""
+msgstr "Línte plota "
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Points / Lines"> <dropdown label="Type of points/lines"> <option label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:154
 #, kde-format
 msgid "Plot points connected by lines (both)"
-msgstr ""
+msgstr "Plota pointí ceangailte le línte (an dá cheann)"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Points / Lines"> <dropdown label="Type of points/lines"> <option label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:155
 #, kde-format
 msgid "Plot points overlaid by lines "
-msgstr ""
+msgstr "Pointí plota forleagtha le línte "
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Points / Lines"> <dropdown label="Type of points/lines"> <option label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:156
 #, kde-format
 msgid "Plot vertical lines from points to the zero axis (high-density)"
-msgstr ""
+msgstr "Plota línte ingearacha ó phointí go dtí an ais nialasach (ard-dlúis)"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Points / Lines"> <dropdown label="Type of points/lines"> <option label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:157
 #, kde-format
 msgid "Step-function plots: the left edge defines the point"
-msgstr ""
+msgstr "Plotaí feidhm chéime: sainmhíníonn an imeall clé an pointe"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Points / Lines"> <dropdown label="Type of points/lines"> <option label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:158
 #, kde-format
 msgid "Step-function plots: the right edge defines the point"
-msgstr ""
+msgstr "Plotaí feidhm chéime: sainmhíníonn an imeall deas an pointe"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:164
 #, kde-format
 msgid "Aspect ratio y/x"
-msgstr ""
+msgstr "Cóimheas gné y/x"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Aspect ratio y/x"> <spinbox label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:166
 #, kde-format
 msgid "Aspect ratio"
-msgstr ""
+msgstr "Cóimheas gné"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Aspect ratio y/x"> <text>
 #: rkward/plugins/distributions/../plots/plot_options.xml:167
@@ -2361,6 +2606,9 @@ msgid ""
 "that one data unit in the x direction is equal in length to asp * one data "
 "unit in the y direction."
 msgstr ""
+"Tabhair faoi deara, más luach dearfach críochta é Aspect, go socraítear an "
+"fhuinneog sa chaoi is go bhfuil aonad sonraí amháin sa treo x comhfhad le "
+"asp * aonad sonraí amháin sa treo y."
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Aspect ratio y/x"> <text>
 #: rkward/plugins/distributions/../plots/plot_options.xml:168
@@ -2370,18 +2618,22 @@ msgid ""
 "are represented accurately on screen. Values with Aspect > 1 can be used to "
 "produce more accurate maps when using latitude and longitude."
 msgstr ""
+"Sa chás speisialta Gné == 1, cruthaítear plotaí ina léirítear achair idir "
+"pointí go cruinn ar an scáileán. Is féidir luachanna le Gné > 1 a úsáid chun "
+"léarscáileanna níos cruinne a tháirgeadh agus domhanleithead agus domhanfhad "
+"in úsáid."
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:172
 #, kde-format
 msgid "Grid"
-msgstr ""
+msgstr "Eangach"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Grid"> <checkbox label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:173
 #, kde-format
 msgid "Add Grid to the plot"
-msgstr ""
+msgstr "Cuir Eangach leis an bplota"
 
 #. i18n: ectx: (Loaded from Step function plot options) <summary>
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:8
@@ -2391,6 +2643,9 @@ msgid ""
 "description of the individual parameters see the R reference on 'plot."
 "stepfun'."
 msgstr ""
+"Paraiméadair ghrafacha éagsúla le haghaidh <b>plot.stepfun</b>. Le haghaidh "
+"cur síos mionsonraithe ar na paraiméadair aonair, féach an tagairt R ar "
+"'plot.stepfun'."
 
 #. i18n: ectx: (Loaded from Step function plot options) <usage>
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:11
@@ -2400,6 +2655,9 @@ msgid ""
 "arguments to the plot.stepfun function. This plugin is useful in "
 "constructing <b>ecdf</b> plots."
 msgstr ""
+"Tá sé seo ceaptha a úsáid mar bhreiseán leabaithe. Is argóintí don fheidhm "
+"plot.stepfun iad na heilimintí uile. Tá an breiseán seo úsáideach chun "
+"plotaí <b>ecdf</b> a thógáil."
 
 #. i18n: ectx: (Loaded from Step function plot options) <settings> <setting> (refers to element labelled "Add to current plot")
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:15
@@ -2408,12 +2666,14 @@ msgid ""
 "This is the <i>add</i> argument. This option might be disabled by the "
 "embedding plugin."
 msgstr ""
+"Seo é an argóint <i>add</i>. B’fhéidir go bhfuil an rogha seo díchumasaithe "
+"ag an mbreiseán leabaithe."
 
 #. i18n: ectx: (Loaded from Step function plot options) <settings> <setting> (refers to element labelled "Line type for all lines")
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:16
 #, kde-format
 msgid "This is the <i>lty</i> argument."
-msgstr ""
+msgstr "Seo í argóint an <i>lty</i>."
 
 #. i18n: ectx: (Loaded from Step function plot options) <settings> <setting> (refers to element labelled "Draw points")
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:17
@@ -2422,6 +2682,8 @@ msgid ""
 "This is the <i>do.points</i> argument. Uncheck this option if points are NOT "
 "to be drawn."
 msgstr ""
+"Seo é an argóint <i>do.points</i>. Díthiceáil an rogha seo mura bhfuil "
+"pointí le tarraingt."
 
 #. i18n: ectx: (Loaded from Step function plot options) <settings> <setting> (refers to element labelled "Color")
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:18
@@ -2430,12 +2692,14 @@ msgid ""
 "This is the <i>col.points</i> argument. Leave this as 'default' for using "
 "the standard color settings from par()."
 msgstr ""
+"Seo é an argóint <i>col.points</i>. Fág é seo mar 'réamhshocrú' chun na "
+"socruithe datha caighdeánacha ó par() a úsáid."
 
 #. i18n: ectx: (Loaded from Step function plot options) <settings> <setting> (refers to element labelled "Horizontal Lines")
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:19
 #, kde-format
 msgid "This is the <i>col.hor</i> argument."
-msgstr ""
+msgstr "Seo í an argóint <i>col.hor</i>."
 
 #. i18n: ectx: (Loaded from Step function plot options) <settings> <setting> (refers to element labelled "Draw vertical lines")
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:20
@@ -2444,12 +2708,14 @@ msgid ""
 "This is the <i>verticals</i> arguments. Uncheck this option if vertical "
 "lines are NOT to be drawn."
 msgstr ""
+"Seo iad na hargóintí <i>verticals</i>. Díthiceáil an rogha seo mura bhfuil "
+"línte ingearacha le tarraingt."
 
 #. i18n: ectx: (Loaded from Step function plot options) <settings> <setting> (refers to element labelled "Color")
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:21
 #, kde-format
 msgid "This is the <i>col.vert</i> argument."
-msgstr ""
+msgstr "Seo é an argóint <i>col.vert</i>."
 
 #. i18n: ectx: (Loaded from Step function plot options) <settings> <setting> (refers to element labelled "For y = 1 line")
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:23
@@ -2463,6 +2729,14 @@ msgid ""
 "of the same (specified) color. Otherwise (i.e., when both the colors are "
 "provided) both the colors are provided as a character vector of length two."
 msgstr ""
+"Ní le haghaidh <b>plot.stepfun</b> atá an dá rogha thuas, ach le haghaidh "
+"<b>ecdf</b>. Ní fheictear iad seo ach i gcomhthéacs 'ecdf'. Úsáidtear iad "
+"chun dath na línte cothrománacha a shocrú ag y = 0 agus y = 1 faoi seach. Go "
+"sonrach, is é seo an argóint <i>col.01line</i> chuig <b>ecdf</b>. Mura "
+"soláthraítear ach ceann amháin (i.e. socraítear an ceann eile mar "
+"'Réamhshocrú') ansin beidh an dath céanna (sonraithe) ar an dá líne. Seachas "
+"sin (i.e., nuair a sholáthraítear an dá dhath) soláthraítear an dá dhath mar "
+"veicteoir carachtar de fhad a dó."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Step function plot options) <technical>
@@ -2472,6 +2746,8 @@ msgid ""
 "<i>default_dopoints</i>: Setting this to \"true\" (\"false\") toggles the "
 "state of the '<label id=\"do_points\"/>' check box."
 msgstr ""
+"<i>default_dopoints</i>: Má shocraítear seo go \"fíor\" (\"bréagach\"), "
+"athraítear staid an bhosca seiceála '<label id=\"do_points\"/>'."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Step function plot options) <technical>
@@ -2481,6 +2757,8 @@ msgid ""
 "<i>default_verticals</i>: Setting this to \"true\" (\"false\") toggles the "
 "state of the '<label id=\"verticals\"/>' check box."
 msgstr ""
+"<i>default_verticals</i>: Má shocraítear seo go \"fíor\" (\"bréagach\"), "
+"athraítear staid an bhosca seiceála '<label id=\"verticals\"/>'."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Step function plot options) <technical>
@@ -2491,30 +2769,34 @@ msgid ""
 "(disables) the display of the two frames ('<label id=\"frame_col_y0\"/>' and "
 "'<label id=\"frame_col_y0\"/>') for <i>col.01line</i> option to <b>ecdf</b>."
 msgstr ""
+"<i>allow_col01line</i>: Má shocraítear seo go \"fíor\" (\"bréagach\") "
+"cuirtear ar chumas (díchumasaítear) taispeáint an dá fhráma ('<label id="
+"\"frame_col_y0\"/>' agus '<label id=\"frame_col_y0\"/>') don rogha "
+"<i>col.01line</i> go <b>ecdf</b>."
 
 #. i18n: ectx: (Step function plot options) <dialog label="...">
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:33
 #, kde-format
 msgid "Step function plot options"
-msgstr ""
+msgstr "Roghanna plota feidhm céimnithe"
 
 #. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="...">
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:35
 #, kde-format
 msgid "Options"
-msgstr ""
+msgstr "Roghanna"
 
 #. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Options"> <checkbox label="...">
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:36
 #, kde-format
 msgid "Add to current plot"
-msgstr ""
+msgstr "Cuir leis an bplota reatha"
 
 #. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Options"> <dropdown label="...">
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:37
 #, kde-format
 msgid "Line type for all lines"
-msgstr ""
+msgstr "Cineál líne do gach líne"
 
 #. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Options"> <dropdown label="Line type for all lines"> <option label="...">
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <dropdown label="Line type"> <option label="...">
@@ -2522,62 +2804,62 @@ msgstr ""
 #: rkward/plugins/distributions/../x11device/grid.xml:51
 #, kde-format
 msgid "Default"
-msgstr ""
+msgstr "Réamhshocrú"
 
 #. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="...">
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:47
 #, kde-format
 msgid "Points"
-msgstr ""
+msgstr "Pointí"
 
 #. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Points"> <checkbox label="...">
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:48
 #, kde-format
 msgid "Draw points"
-msgstr ""
+msgstr "Pointí tarraingthe"
 
 #. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="...">
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:53
 #, kde-format
 msgid "Horizontal Lines"
-msgstr ""
+msgstr "Línte Cothrománacha"
 
 #. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="...">
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:56
 #, kde-format
 msgid "Vertical lines"
-msgstr ""
+msgstr "Línte ingearacha"
 
 #. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="Vertical lines"> <checkbox label="...">
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:57
 #, kde-format
 msgid "Draw vertical lines"
-msgstr ""
+msgstr "Tarraing línte ingearacha"
 
 #. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="...">
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:62
 #, kde-format
 msgid "For y = 0 line"
-msgstr ""
+msgstr "I gcás líne y = 0"
 
 #. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="...">
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:65
 #, kde-format
 msgid "For y = 1 line"
-msgstr ""
+msgstr "I gcás y = 1 líne"
 
 #. i18n: ectx: <snippets> <snippet> <author name="...">
 #: rkward/plugins/distributions/../pluginmap_meta.inc:9
 #, kde-format
 msgctxt "Author name"
 msgid "RKWard Team"
-msgstr ""
+msgstr "Foireann RKWard"
 
 #. i18n: ectx: (Internal plugin for automated testing) <dialog label="...">
 #: rkward/plugins/distributions/../testing/run_code.xml:10
 #, kde-format
 msgid "Internal plugin for automated testing"
-msgstr ""
+msgstr "Breiseán inmheánach le haghaidh tástála uathoibrithe"
 
 #. i18n: ectx: (Loaded from Grid options) <summary>
 #: rkward/plugins/distributions/../x11device/grid.rkh:8
@@ -2590,6 +2872,12 @@ msgid ""
 "trellis graphics devices (see <link href=\"rkward://rhelp/Lattice\"/> for "
 "some information)."
 msgstr ""
+"Paraiméadair éagsúla don <b>grid</b>. Le haghaidh cur síos mionsonraithe ar "
+"na paraiméadair aonair, féach an tagairt R ar 'eangach'. Tabhair faoi deara "
+"nach n-oibríonn sé seo ach amháin nuair a úsáidtear feidhmeanna grafaicí "
+"caighdeánacha (traidisiúnta S) (féach library(help=\"graphics\")) chun an "
+"plota a thógáil. Ní oibríonn sé seo le haghaidh gléasanna grafaicí trellis "
+"(féach <link href=\"rkward://rhelp/Lattice\"/> le haghaidh roinnt eolais)."
 
 #. i18n: ectx: (Loaded from Grid options) <usage>
 #: rkward/plugins/distributions/../x11device/grid.rkh:11
@@ -2598,6 +2886,9 @@ msgid ""
 "This may or may not be used as an embedded plugin. When used on a trellis "
 "device the produced error message is displayed."
 msgstr ""
+"Féadfar é seo a úsáid mar bhreiseán leabaithe nó gan é a úsáid. Nuair a "
+"úsáidtear é ar fheiste trellis, taispeántar an teachtaireacht earráide a "
+"tháirgtear."
 
 #. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "Number of X cells")
 #: rkward/plugins/distributions/../x11device/grid.rkh:15
@@ -2608,6 +2899,11 @@ msgid ""
 "vertical lines. Select 'Specify below' to provide a specified (to be "
 "specified below) number of vertical lines in the grid."
 msgstr ""
+"Seo í an argóint <i>nx</i>. Is é NULL an réamhshocrú, agus sa chás sin, "
+"tarraingítear na línte ingearacha ag na ticeanna ar an ais-x. Roghnaigh Gan "
+"Aon cheann chun gan na línte ingearacha a tharraingt. Roghnaigh 'Sonraigh "
+"thíos' chun líon sonraithe (le sonrú thíos) de línte ingearacha a sholáthar "
+"sa ghreille."
 
 #. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "X Cells")
 #: rkward/plugins/distributions/../x11device/grid.rkh:16
@@ -2616,6 +2912,8 @@ msgid ""
 "This is the <i>nx</i> argument, when 'Specify below' is selected in the "
 "above option list."
 msgstr ""
+"Seo é an argóint <i>nx</i>, nuair a roghnaítear 'Sonraigh thíos' sa liosta "
+"roghanna thuas."
 
 #. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "Number of Y cells")
 #: rkward/plugins/distributions/../x11device/grid.rkh:17
@@ -2624,6 +2922,8 @@ msgid ""
 "This is the <i>ny</i> argument. Similar to <i>nx</i>. See the explanation on "
 "number of x cells above."
 msgstr ""
+"Seo í an argóint <i>ny</i>. Cosúil le <i>nx</i>. Féach an míniú ar líon na "
+"gcealla x thuas."
 
 #. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "Y Cells")
 #: rkward/plugins/distributions/../x11device/grid.rkh:18
@@ -2632,6 +2932,8 @@ msgid ""
 "This is the <i>ny</i> argument when a specified (by the user) number of y "
 "cells are to be used. Similar to x cells."
 msgstr ""
+"Seo é an argóint <i>ny</i> nuair a bhíonn líon sonraithe (ag an úsáideoir) "
+"de chealla y le húsáid. Cosúil le cealla x."
 
 #. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "Custom Line width")
 #: rkward/plugins/distributions/../x11device/grid.rkh:19
@@ -2640,12 +2942,15 @@ msgid ""
 "Check this option to use a custom line width. In which case, provide the "
 "width below."
 msgstr ""
+"Seiceáil an rogha seo chun leithead líne saincheaptha a úsáid. Sa chás sin, "
+"cuir an leithead ar fáil thíos."
 
 #. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "Line width")
 #: rkward/plugins/distributions/../x11device/grid.rkh:20
 #, kde-format
 msgid "This is the <i>lwd</i> argument. Check the above option to use this."
 msgstr ""
+"Seo é an argóint <i>lwd</i>. Seiceáil an rogha thuas chun é seo a úsáid."
 
 #. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "Line type")
 #: rkward/plugins/distributions/../x11device/grid.rkh:21
@@ -2654,6 +2959,9 @@ msgid ""
 "This is the <i>lty</i> argument. Choosing Default will not add any arguments "
 "to the grid function call, hence the default line type will be used."
 msgstr ""
+"Seo é an argóint <i>lty</i>. Má roghnaítear Réamhshocrú, ní chuirfear aon "
+"argóintí leis an nglao feidhme eangaí, agus dá bhrí sin úsáidfear an cineál "
+"líne réamhshocraithe."
 
 #. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "Color")
 #: rkward/plugins/distributions/../x11device/grid.rkh:22
@@ -2662,6 +2970,8 @@ msgid ""
 "This is the <i>col</i> argument. The Default option is similar to that of "
 "Line type (see above)."
 msgstr ""
+"Seo í an argóint <i>col</i>. Tá an rogha Réamhshocraithe cosúil leis an "
+"rogha Cineál Líne (féach thuas)."
 
 #. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "Equilogs")
 #: rkward/plugins/distributions/../x11device/grid.rkh:23
@@ -2670,18 +2980,20 @@ msgid ""
 "This is the <i>equilogs</i> argument. Uncheck this option to set "
 "<i>equilogs=FALSE</i>."
 msgstr ""
+"Seo é an argóint <i>equilogs</i>. Díthiceáil an rogha seo chun "
+"<i>equilogs=FALSE</i> a shocrú."
 
 #. i18n: ectx: (Grid options) <dialog label="...">
 #: rkward/plugins/distributions/../x11device/grid.xml:25
 #, kde-format
 msgid "Grid options"
-msgstr ""
+msgstr "Roghanna greille"
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <radio label="...">
 #: rkward/plugins/distributions/../x11device/grid.xml:28
 #, kde-format
 msgid "Number of X cells"
-msgstr ""
+msgstr "Líon na gcealla X"
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <radio label="Number of X cells"> <option label="...">
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <radio label="Number of Y cells"> <option label="...">
@@ -2689,7 +3001,7 @@ msgstr ""
 #: rkward/plugins/distributions/../x11device/grid.xml:37
 #, kde-format
 msgid "At the ticks"
-msgstr ""
+msgstr "Ag na sceartáin"
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <radio label="Number of X cells"> <option label="...">
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <radio label="Number of Y cells"> <option label="...">
@@ -2697,7 +3009,7 @@ msgstr ""
 #: rkward/plugins/distributions/../x11device/grid.xml:38
 #, kde-format
 msgid "None"
-msgstr ""
+msgstr "Dada"
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <radio label="Number of X cells"> <option label="...">
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <radio label="Number of Y cells"> <option label="...">
@@ -2705,52 +3017,52 @@ msgstr ""
 #: rkward/plugins/distributions/../x11device/grid.xml:39
 #, kde-format
 msgid "Specify below"
-msgstr ""
+msgstr "Sonraigh thíos"
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <spinbox label="...">
 #: rkward/plugins/distributions/../x11device/grid.xml:33
 #, kde-format
 msgid "X Cells"
-msgstr ""
+msgstr "Cealla X"
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <radio label="...">
 #: rkward/plugins/distributions/../x11device/grid.xml:36
 #, kde-format
 msgid "Number of Y cells"
-msgstr ""
+msgstr "Líon na gcealla Y"
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <spinbox label="...">
 #: rkward/plugins/distributions/../x11device/grid.xml:41
 #, kde-format
 msgid "Y Cells"
-msgstr ""
+msgstr "Cealla Y"
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <checkbox label="...">
 #: rkward/plugins/distributions/../x11device/grid.xml:45
 #, kde-format
 msgid "Custom Line width"
-msgstr ""
+msgstr "Leithead Líne Saincheaptha"
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <checkbox label="...">
 #: rkward/plugins/distributions/../x11device/grid.xml:46
 #, kde-format
 msgid "Equilogs"
-msgstr ""
+msgstr "Cothromlóga"
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <spinbox label="...">
 #: rkward/plugins/distributions/../x11device/grid.xml:49
 #, kde-format
 msgid "Line width"
-msgstr ""
+msgstr "Leithead líne"
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <dropdown label="...">
 #: rkward/plugins/distributions/../x11device/grid.xml:50
 #, kde-format
 msgid "Line type"
-msgstr ""
+msgstr "Cineál líne"
 
 #. i18n: ectx: (Grid options) <dialog label="Grid options"> <text>
 #: rkward/plugins/distributions/../x11device/grid.xml:63
 #, kde-format
 msgid "Note: Not applicable for Trellis type devices!"
-msgstr ""
+msgstr "Nóta: Ní bhaineann sé le gléasanna de chineál Trellis!"

@@ -1,38 +1,39 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR This file is copyright:
 # This file is distributed under the same license as the rkward package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# Aindriú Mac Giolla Eoin <aindriu80@yahoo.com>, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 14:38+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: Irish Gaelic <kde-i18n-doc@kde.org>\n"
+"PO-Revision-Date: 2026-03-23 13:01+0000\n"
+"Last-Translator: Aindriú Mac Giolla Eoin <aindriu80@yahoo.com>\n"
+"Language-Team: Irish <http://weblate.amgelocalnet.duckdns.org/projects/"
+"rkward/rkward__pages/ga/>\n"
 "Language: ga\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=5; plural=n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n < 11 ? "
-"3 : 4\n"
+"3 : 4;\n"
+"X-Generator: Weblate 5.16\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
+msgstr "Aindriú Mac Giolla Eoin"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
+msgstr "aindriu80@yahoo.com"
 
 #. i18n: ectx: (RKWard Add-Ons) <title>
 #: rkward/pages/rkward_addons.rkh:8
 #, kde-format
 msgid "RKWard Add-Ons"
-msgstr ""
+msgstr "Breiseáin RKWard"
 
 #. i18n: ectx: (RKWard Add-Ons) <summary>
 #: rkward/pages/rkward_addons.rkh:9
@@ -42,12 +43,15 @@ msgid ""
 "Arguably this can make it a bit confusing on where to find the addon "
 "features you are looking for."
 msgstr ""
+"Chun na gnéithe is fearr a thairiscint duit, comhcheanglaíonn RKWard "
+"teicneolaíochtaí éagsúla. Is féidir a rá go bhféadfadh sé seo mearbhall a "
+"chruthú maidir le cá háit le fáil na gnéithe breise atá uait."
 
 #. i18n: ectx: (RKWard Add-Ons) <summary>
 #: rkward/pages/rkward_addons.rkh:9
 #, kde-format
 msgid "In a nutshell:"
-msgstr ""
+msgstr "Go hachomair:"
 
 #. i18n: ectx: (RKWard Add-Ons) <summary>
 #: rkward/pages/rkward_addons.rkh:9
@@ -58,6 +62,10 @@ msgid ""
 "additional R functions that you can use in scripts, or in the interactive R "
 "console."
 msgstr ""
+"Cuireann <strong>pacáistí R</strong> méid dochreidte algartam sonraí agus "
+"uirlisí ar fáil. Cuirtear an fheidhmiúlacht seo ar fáil (den chuid is mó) i "
+"bhfoirm feidhmeanna R breise ar féidir leat a úsáid i scripteanna, nó sa "
+"chonsól R idirghníomhach."
 
 #. i18n: ectx: (RKWard Add-Ons) <summary>
 #: rkward/pages/rkward_addons.rkh:9
@@ -69,6 +77,12 @@ msgid ""
 "activated by default. It can further be extended with custom scripts, or "
 "color-schemes."
 msgstr ""
+"<strong>Breiseáin Kate</strong>: Is í Kate an t-inneall atá taobh thiar "
+"d'eagarthóir scripteanna RKWard. Tagann gnéithe breiseán cumhachtacha leis, "
+"agus ba chóir go mbeadh go leor acu réamhshuiteáilte le RKWard. Mar sin "
+"féin, mar gheall ar a líon mór, ní bhíonn siad uile gníomhachtaithe de réir "
+"réamhshocraithe. Is féidir é a leathnú tuilleadh le scripteanna "
+"saincheaptha, nó scéimeanna dathanna."
 
 #. i18n: ectx: (RKWard Add-Ons) <summary>
 #: rkward/pages/rkward_addons.rkh:9
@@ -79,6 +93,10 @@ msgid ""
 "mostly implemented as plugin-ins in RKWard. Many such plugins are available "
 "for download, separately."
 msgstr ""
+"<strong>Breiseáin RKWard</strong>: Más dialóg ghrafach atá uait chun cabhrú "
+"leat do shonraí a allmhairiú/a thiontú/a anailísiú/a léirshamhlú, is mar "
+"bhreiseáin in RKWard a chuirtear na dialóga sin i bhfeidhm den chuid is mó. "
+"Tá go leor breiseán den chineál seo ar fáil le híoslódáil, ar leithligh."
 
 #. i18n: ectx: (RKWard Add-Ons) <summary>
 #: rkward/pages/rkward_addons.rkh:9
@@ -87,12 +105,14 @@ msgid ""
 "The following sections deal with these, in turn, showing you how to find / "
 "install, what you need."
 msgstr ""
+"Pléann na hailt seo a leanas leis seo, ag taispeáint duit conas a bhfuil "
+"uait a aimsiú / a shuiteáil."
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="...">
 #: rkward/pages/rkward_addons.rkh:24
 #, kde-format
 msgid "R packages"
-msgstr ""
+msgstr "Pacáistí R"
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="R packages">
 #: rkward/pages/rkward_addons.rkh:24
@@ -103,6 +123,10 @@ msgid ""
 "dialog to search, install and/or load packages (Settings->Manage R packages "
 "and plugins)."
 msgstr ""
+"Chomh maith leis na huirlisí rialta líne ordaithe R chun pacáistí R a "
+"bhainistiú (féach <link href=\"rkward://rhelp/install.packages\"/>), "
+"cuireann RKWard dialóg ghrafach ar fáil chun pacáistí a chuardach, a "
+"shuiteáil agus/nó a luchtú (Socruithe->Bainistigh pacáistí agus breiseáin R)."
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="R packages">
 #: rkward/pages/rkward_addons.rkh:24
@@ -113,12 +137,17 @@ msgid ""
 "source is fully automated, you may still have to install additional "
 "libraries or other software for the compilation."
 msgstr ""
+"Tabhair faoi deara, de réir réamhshocraithe, go ndáiltear pacáistí R mar "
+"chomhaid dhénártha tiomsaithe ar Windows agus MacOS, ach ní ar Linux. Cé go "
+"ndéantar an suiteáil ón bhfoinse a uathoibriú go hiomlán i gcás an dara "
+"ceann, b'fhéidir go mbeidh ort leabharlanna breise nó bogearraí eile a "
+"shuiteáil fós don tiomsú."
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="...">
 #: rkward/pages/rkward_addons.rkh:32
 #, kde-format
 msgid "Kate Add-ons"
-msgstr ""
+msgstr "Breiseáin Kate"
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="Kate Add-ons">
 #: rkward/pages/rkward_addons.rkh:32
@@ -134,12 +163,23 @@ msgid ""
 ">Addons</link>. Addons shown in bold have been reported to be useful and "
 "work well in RKWard, but feel free to explore the others, too."
 msgstr ""
+"Is eagarthóir téacs an-chumhachtach é <link href=\"https://kate.kde.org"
+"\">Kate</link> a úsáideann an chomhpháirt eagarthóireachta téacs chéanna a "
+"úsáidtear in RKWard freisin. Tagann réimse breiseán leis freisin, m.sh. chun "
+"píosaí cóid a chruthú, nó chun tionscadail a bhainistiú i stór git. Níl "
+"mórán ciall le cuid díobh seo - cosúil leis an uirlis nascleanúna rianaithe "
+"siar C++ mar shampla - i gcomhthéacs RKWard, ach tá go leor acu. Chun "
+"iniúchadh a dhéanamh ar a bhfuil ar fáil, déan cinnte go bhfuil kate "
+"suiteáilte agat, ansin tabhair cuairt ar <link href=\"rkward://settings/"
+"addons\">Socruithe->Breiseáin</link>. Tuairiscíodh go bhfuil breiseáin a "
+"thaispeántar i gcló trom úsáideach agus go n-oibríonn siad go maith in "
+"RKWard, ach bíodh leisce ort iniúchadh a dhéanamh ar na cinn eile freisin."
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="...">
 #: rkward/pages/rkward_addons.rkh:39
 #, kde-format
 msgid "RKWard Plugins"
-msgstr ""
+msgstr "Breiseáin RKWard"
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="RKWard Plugins">
 #: rkward/pages/rkward_addons.rkh:39
@@ -152,6 +192,12 @@ msgid ""
 "plugins</link>), and check the option \"Show only packages providing RKWard "
 "dialogs\"."
 msgstr ""
+"Is féidir breiseáin RKWard a shuiteáil ó réimse foinsí, ach is gnách go "
+"ndáiltear pacáistí breiseán trí phacáistí R. Chun pacáistí R a chuardach a "
+"sholáthraíonn dialóga grafacha RKWard, bain úsáid as an ngnáthdhialóg (<link "
+"href=\"rkward://actions/rpackage_install\">Socruithe->Bainistigh pacáistí "
+"agus breiseáin R</link>), agus seiceáil an rogha \"Taispeáin pacáistí a "
+"sholáthraíonn dialóga RKWard amháin\"."
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="RKWard Plugins">
 #: rkward/pages/rkward_addons.rkh:39
@@ -167,18 +213,28 @@ msgid ""
 "text=https://github.com/rkward-community/rk.Teaching.git\">this dialog</"
 "link> (pre-initialized for installation of rk.Teaching)."
 msgstr ""
+"Ní bheidh gach breiseán RKWard atá pacáistithe ar an mbealach seo le "
+"feiceáil i ndialóg suiteála an phacáiste R, toisc nach bhfuil siad á óstáil "
+"(go fóill) sna stórtha réamhshocraithe, go háirithe, tráth scríofa na "
+"tuarascála seo, an tsraith fairsing breiseán <link href=\"https://github.com/"
+"rkward-community/rk.Teaching\">rk.Teaching</link>. Tá go leor díobh seo á "
+"óstáil ar ardáin ar nós github.com, agus nuair a bhíonn url an stórtha ar "
+"eolas agat, is féidir iad a shuiteáil le cúpla cad a tharlaíonn, ag baint "
+"úsáide as <link href=\"rkward://runplugin/rkward::install_from_git/fullURL."
+"text=https://github.com/rkward-community/rk.Teaching.git\">an dialóg seo</"
+"link> (réamhthosaithe le haghaidh suiteáil rk.Teaching)."
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="...">
 #: rkward/pages/rkward_addons.rkh:47
 #, kde-format
 msgid "Creating your own RKWard Plugins"
-msgstr ""
+msgstr "Ag cruthú do Bhreiseáin RKWard féin"
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="Creating your own RKWard Plugins">
 #: rkward/pages/rkward_addons.rkh:47
 #, kde-format
 msgid "Still missing something?"
-msgstr ""
+msgstr "Rud éigin fós in easnamh?"
 
 #. i18n: ectx: (RKWard Add-Ons) <section title="Creating your own RKWard Plugins">
 #: rkward/pages/rkward_addons.rkh:47
@@ -192,12 +248,20 @@ msgid ""
 "rhelp/rkward-package\">rkward package overview</link> for RKWard specific "
 "function for development and scripting."
 msgstr ""
+"Féach ar an <link href=\"help:/rkwardplugins/index.html\">Réamhrá maidir le "
+"Breiseáin Scríbhneoireachta do RKWard</link> (<link href=\"https://rkward."
+"kde.org/doc/rkwardplugins/\">leagan is déanaí ar líne</link>) chun foghlaim "
+"cé chomh héasca is atá sé RKWard a fheabhsú le do chuid dialóga "
+"saincheaptha. Agus más mian leat, conas do chuid oibre a roinnt le pobal "
+"úsáideoirí RKWard. Féach ar an <link href=\"rkward://rhelp/rkward-package"
+"\">forbhreathnú ar phacáiste rkward</link> le haghaidh feidhm shonrach "
+"RKWard le haghaidh forbartha agus scriptithe."
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <title>
 #: rkward/pages/rkward_code_navigation.rkh:8
 #, kde-format
 msgid "Code Navigation and Quick Code Navigation Mode"
-msgstr ""
+msgstr "Nascleanúint Chóid agus Mód Nascleanúint Chóid Thapa"
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <summary>
 #: rkward/pages/rkward_code_navigation.rkh:9
@@ -210,12 +274,19 @@ msgid ""
 "href=\"rkward://rhelp/browser\">browser()</link>-command, but importantly "
 "this works entirely without actually running the code."
 msgstr ""
+"Ligeann an ghné nascleanúna cóid i bhfuinneoga an eagarthóra scripte duit "
+"nascleanúint a dhéanamh i gcód R bunaithe ar a struchtúr comhréireach, m.sh. "
+"léim go tapa go dtí an chéad ráiteas eile lasmuigh den raon feidhme reatha "
+"nó go dtí an ráiteas barrleibhéil roimhe seo. Tá roinnt gnéithe nascleanúna "
+"gar d'aon ghnó do dhífhabhtú in ordú <link href=\"rkward://rhelp/browser"
+"\">browser()</link> R, ach is tábhachtaí fós go n-oibríonn sé seo go hiomlán "
+"gan an cód a rith i ndáiríre."
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <section title="...">
 #: rkward/pages/rkward_code_navigation.rkh:15
 #, kde-format
 msgid "Available commands"
-msgstr ""
+msgstr "Orduithe atá ar fáil"
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <section title="Available commands">
 #: rkward/pages/rkward_code_navigation.rkh:15
@@ -229,6 +300,14 @@ msgid ""
 "your sources very quickly. Once in this mode, subsequent single key presses "
 "invoke the following actions:"
 msgstr ""
+"Tá an ghné nascleanúna cóid ar fáil ón roghchlár <i>Rith</i>, agus ón "
+"roghchlár comhthéacs i bhfuinneoga scripte (R nó R markdown) i ndá chineál: "
+"Is é an chéad rogha gníomhartha nascleanúna aonair a roghnú go díreach ón "
+"roghchlár. Ar an dara dul síos, áfach, tugann an \"Mód Nascleanúna Cóid Thapa"
+"\" (an iontráil is fearr sa roghchlár; is é \"Meta+n\" an aicearra "
+"méarchláir réamhshocraithe) deis duit nascleanúint a dhéanamh go han-tapa ar "
+"do fhoinsí. Nuair a bheidh tú sa mhodh seo, spreagann brúnna eochair aonair "
+"ina dhiaidh sin na gníomhartha seo a leanas:"
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <section title="Available commands">
 #: rkward/pages/rkward_code_navigation.rkh:15
@@ -262,12 +341,42 @@ msgid ""
 "<tr><td><tt><b>Ctrl+Return</b></tt></td><td>Run the current line or "
 "selection</td></tr> </table>"
 msgstr ""
+"<table border=\"0\"> <tr><td><tt><b>n / N</b></tt></td><td>Téigh go dtí an "
+"chéad ráiteas eile (n) nó roimhe sin (N) ag an leibhéal reatha, nó an chéad "
+"leibhéal seachtrach eile</td></tr> <tr><td><tt><b>i / I</b></tt></"
+"td><td>Cosúil le n/N, ach céim isteach i gcomhthéacsanna inmheánacha freisin "
+"(amhail sainmhíniú feidhme)</td></tr> <tr><td><tt><b>o / O</b></tt></"
+"td><td>Léim go díreach go dtí an chéad ráiteas eile / roimhe sin lasmuigh "
+"den leibhéal reatha (e.g. an chéad ráiteas i ndiaidh chorp feidhme)</td></"
+"tr> <tr><td><tt><b>t / T</b></tt></td><td>Téigh go dtí an chéad ráiteas "
+"eile / roimhe sin ag an leibhéal is airde den script</td></tr> "
+"<tr><td><tt><b>c / C</b></tt></td><td>(Do dhoiciméid R Markdown, amháin:) "
+"Téigh go dtí an chéad smután cóid eile / roimhe seo</td></tr> "
+"<tr><td><tt><b>1 / !</b></tt></td><td>Téigh go barr / bun an doiciméid</td></"
+"tr> <tr><td><tt><b>s</b></tt></td><td>Roghnaigh an ráiteas reatha</td></tr> "
+"<tr><td><tt><b>S</b></tt></td><td>(Do dhoiciméid R Markdown, amháin:) "
+"Roghnaigh cuir cód leis an smután reatha</td></tr> <tr><td><tt><b>r</b></"
+"tt></td><td>Rith an ráiteas reatha agus téigh ar aghaidh go dtí an chéad "
+"ráiteas eile (atá coibhéiseach leis an seicheamh <tt>s - Ctrl+Return - n</"
+"tt>)</td></tr> <tr><td><tt><b>Cúlspás</b></tt></td><td>Téigh ar ais go dtí "
+"an suíomh roimh an ngníomh is déanaí</td></tr> <tr><td><tt><b>Esc</b></tt></"
+"td><td>Imeacht Mód Nascleanúna an Chóid Thapa, agus athshocraigh an cúrsóir/"
+"roghnú go dtí an staid a bhí ann roimh dhul isteach ann</td></tr> "
+"<tr><td><tt><b>Fill</b></tt></td><td>Imeacht Mód Nascleanúna an Chóid Thapa, "
+"ag coinneáil an tsuímh/roghnú reatha</td></tr> <tr><td/><td>Críochnóidh Mód "
+"Nascleanúna an Chóid Thapa freisin, má chliceálann tú áit ar bith eile sa "
+"script, má aistríonn tú go fuinneog dhifriúil, nó má mhodhnaítear an script</"
+"td></tr> <tr><td colspan=\"2\"> </td></tr> <tr><td colspan=\"2\">Ar "
+"deireadh, is féidir leat leanúint ar aghaidh ag úsáid aicearraí rialta, agus "
+"tú i Mód Nascleanúna an Chóid Thapa. Áirítear leis seo, go háirithe:</td></"
+"tr> <tr><td><tt><b>Ctrl+Return</b></tt></td><td>Rith an líne nó an roghnú "
+"reatha</td></tr> </table>"
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <section title="...">
 #: rkward/pages/rkward_code_navigation.rkh:38
 #, kde-format
 msgid "Notes and Tips"
-msgstr ""
+msgstr "Nótaí agus Leideanna"
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <section title="Notes and Tips">
 #: rkward/pages/rkward_code_navigation.rkh:38
@@ -281,6 +390,14 @@ msgid ""
 "syntax is assumed, syntax errors will be skipped over, which may lead to "
 "unexpected behavior."
 msgstr ""
+"Tá an gníomh 'n' ceaptha chun an t-ordú céime comhfhreagrach sa dífhabhtóir "
+"R a chur i gcuimhne duit (féach <link href=\"rkward://rhelp/browser\"/>), "
+"ach níl sé mar an gcéanna. Is é an difríocht is tábhachtaí ná go n-oibríonn "
+"an nascleanúint cóid, a thuairiscítear anseo, ar léiriú parsáilte lán-"
+"statach den script, agus nach ndéanann sé iarracht sreabhadh rialaithe a "
+"leanúint ar chor ar bith. Ina theannta sin, glactar leis go bhfuil comhréir "
+"dea-fhoirmithe ann, scipeálfar thar earráidí comhréir, rud a d'fhéadfadh "
+"iompar gan choinne a bheith mar thoradh air."
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <section title="Notes and Tips">
 #: rkward/pages/rkward_code_navigation.rkh:38
@@ -292,6 +409,13 @@ msgid ""
 "behave in a way, that we hope makes sense, intuitively. Remember to always "
 "control, visually, what you are doing, before you hit Ctrl+Enter."
 msgstr ""
+"Ina theannta sin, ní bhíonn sé soiléir i gcónaí cad go díreach is brí le "
+"\"ráiteas\", agus comhthéacs \"inmheánach\", nó \"seachtrach\", agus ní "
+"bhíonn sé i gcónaí ag teacht go díreach leis an gcaoi a fheiceann inneall R "
+"do chód. Ina áit sin, tá na horduithe seo ceaptha chun iompar ar bhealach a "
+"bhfuil ciall leis, tá súil againn, go hintuigthe. Cuimhnigh i gcónaí rialú a "
+"dhéanamh, go hamhairc, ar a bhfuil á dhéanamh agat, sula mbrúnn tú Ctrl"
+"+Enter."
 
 #. i18n: ectx: (Code Navigation and Quick Code Navigation Mode) <section title="Notes and Tips">
 #: rkward/pages/rkward_code_navigation.rkh:38
@@ -301,18 +425,23 @@ msgid ""
 "are not exact opposites. Remember you can undo your last step using "
 "Backspace, if you went past the location you were looking for."
 msgstr ""
+"Léiríonn formhór na n-orduithe claonadh chun bogadh i dtreo comhthéacsanna "
+"seachtracha, mar sin ní hionann 'n' agus 'N' agus a chéile ar fad. Cuimhnigh "
+"gur féidir leat do chéim dheireanach a chealú ag baint úsáide as Backspace, "
+"má chuaigh tú thar an suíomh a bhí á lorg agat."
 
 #. i18n: ectx: (Using the RKWard R Console) <title>
 #: rkward/pages/rkward_console.rkh:8
 #, kde-format
 msgid "Using the RKWard R Console"
-msgstr ""
+msgstr "Ag baint úsáide as Consól RKWard R"
 
 #. i18n: ectx: (Using the RKWard R Console) <summary>
 #: rkward/pages/rkward_console.rkh:9
 #, kde-format
 msgid "Describe features and settings regarding the RKWard R Console."
 msgstr ""
+"Déan cur síos ar ghnéithe agus socruithe a bhaineann le Consól RKWard R."
 
 #. i18n: ectx: (Using the RKWard R Console) <summary>
 #: rkward/pages/rkward_console.rkh:9
@@ -321,12 +450,15 @@ msgid ""
 "The console can - by default - be found at the bottom of the application "
 "window. Press the tool button labeled \"R Console\" to invoke it."
 msgstr ""
+"Is féidir an consól a fháil - de réir réamhshocraithe - ag bun fhuinneog an "
+"fheidhmchláir. Brúigh an cnaipe uirlis atá lipéadaithe \"R Console\" chun é "
+"a ghlaoch."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
 #: rkward/pages/rkward_console.rkh:15
 #, kde-format
 msgid "What is the console?"
-msgstr ""
+msgstr "Cad é an consól?"
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="What is the console?">
 #: rkward/pages/rkward_console.rkh:15
@@ -337,6 +469,11 @@ msgid ""
 "know some basics of the R language. Select Help->Help on R for some "
 "introductory information."
 msgstr ""
+"Tá RKWard bunaithe ar an teanga R le haghaidh ríomhaireachta staitistiúla. "
+"Ligeann an consól duit orduithe R a iontráil go díreach. Ar ndóigh, chun é "
+"seo a úsáid, ní mór duit roinnt bunghnéithe na teanga R a bheith ar eolas "
+"agat. Roghnaigh Cabhair->Cabhair ar R le haghaidh roinnt faisnéise "
+"réamhráiteach."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="What is the console?">
 #: rkward/pages/rkward_console.rkh:15
@@ -346,6 +483,10 @@ msgid ""
 "complex commands / scripts, using the Script File Editor (File->New->Script "
 "File) is much more comfortable."
 msgstr ""
+"Tá an consól ceaptha le haghaidh úsáide idirghníomhaí agus orduithe beaga. "
+"Chun orduithe/scripteanna casta a chur in eagar, tá sé i bhfad níos "
+"compordaí an tEagarthóir Comhad Scripte (Comhad->Nua->Comhad Scripte) a "
+"úsáid."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="What is the console?">
 #: rkward/pages/rkward_console.rkh:15
@@ -354,12 +495,15 @@ msgid ""
 "Many console features are available from the context menu. To invoke the "
 "context menu, click the right mouse button inside the console window."
 msgstr ""
+"Tá go leor gnéithe consóil ar fáil ón roghchlár comhthéacs. Chun an "
+"roghchlár comhthéacs a ghlao, cliceáil ar dheis an luchóige taobh istigh de "
+"fhuinneog an chonsóil."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
 #: rkward/pages/rkward_console.rkh:23
 #, kde-format
 msgid "Interrupting commands"
-msgstr ""
+msgstr "Orduithe a chur isteach"
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Interrupting commands">
 #: rkward/pages/rkward_console.rkh:23
@@ -371,12 +515,18 @@ msgid ""
 "time (e.g. some action you invoked from the Analysis menu), the console will "
 "only become available again, when the R backend becomes idle."
 msgstr ""
+"Chun ordú atá ag rith a bhriseadh, brúigh Ctrl+C, nó roghnaigh \"Cuir "
+"isteach ar ordú atá ag rith\" ón roghchlár comhthéacs. Tabhair faoi deara "
+"nach gcríochnóidh an t-ordú láithreach go riachtanach. Má tá roinnt orduithe "
+"eile ag rith ag an am céanna (m.sh. gníomh éigin a d'iarr tú ón roghchlár "
+"Anailís), ní bheidh an consól ar fáil arís ach amháin nuair a bheidh an "
+"cúltaca R díomhaoin."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
 #: rkward/pages/rkward_console.rkh:27
 #, kde-format
 msgid "Re-running selected commands"
-msgstr ""
+msgstr "Athrith orduithe roghnaithe"
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Re-running selected commands">
 #: rkward/pages/rkward_console.rkh:27
@@ -387,12 +537,16 @@ msgid ""
 "+Return). Leading \"> \" and \"+ \" on the selected lines will be removed "
 "automatically."
 msgstr ""
+"Chun (sraith d') orduithe roghnaithe a athrith, roghnaigh iad ag baint "
+"úsáide as an luch. Ansin roghnaigh \"Rith rogha\" ón roghchlár comhthéacs "
+"(is é Ctrl+Return an aicearra réamhshocraithe). Bainfear na \">\" agus na \"+"
+"\" tosaigh ar na línte roghnaithe go huathoibríoch."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
 #: rkward/pages/rkward_console.rkh:31
 #, kde-format
 msgid "Copying commands / output"
-msgstr ""
+msgstr "Orduithe/aschur á gcóipeáil"
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Copying commands / output">
 #: rkward/pages/rkward_console.rkh:31
@@ -403,6 +557,11 @@ msgid ""
 "\"> \" and \"+ \". In contrast, \"Copy commands, only\" will remove the "
 "prompts from the text copied into the clipboard."
 msgstr ""
+"Tá dhá mhodh cóipeála ar fáil ón roghchlár comhthéacs (nó ón roghchlár "
+"Eagar). Ligeann ceann amháin duit an rogha a chóipeáil go litriúil, i.e. na "
+"leideanna \"> \" agus \"+ \" a chur san áireamh. I gcodarsnacht leis sin, "
+"bainfidh \"Cóipeáil orduithe, amháin\" na leideanna ón téacs a chóipeáiltear "
+"isteach sa ghearrthaisce."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Copying commands / output">
 #: rkward/pages/rkward_console.rkh:31
@@ -411,12 +570,15 @@ msgid ""
 "Note that the customary shortcut for copying text - Ctrl+C - does NOT work "
 "in the console, as Ctrl+C already means interrupting the current command."
 msgstr ""
+"Tabhair faoi deara nach n-oibríonn an aicearra is gnách chun téacs a "
+"chóipeáil - Ctrl+C - sa chonsól, toisc go gciallaíonn Ctrl+C cheana féin go "
+"gcuirtear isteach ar an ordú reatha."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
 #: rkward/pages/rkward_console.rkh:37
 #, kde-format
 msgid "Function reference"
-msgstr ""
+msgstr "Tagairt feidhme"
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Function reference">
 #: rkward/pages/rkward_console.rkh:37
@@ -426,12 +588,15 @@ msgid ""
 "try to look up the R help page for whichever keyword the cursor is currently "
 "on."
 msgstr ""
+"Trí bhrú ar F2 (nó trí \"Tagairt feidhme\" a roghnú ón roghchlár comhthéacs) "
+"déanfar iarracht leathanach cabhrach R a chuardach don eochairfhocal ar a "
+"bhfuil an cúrsóir faoi láthair."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
 #: rkward/pages/rkward_console.rkh:41
 #, kde-format
 msgid "Navigating the command history"
-msgstr ""
+msgstr "Ag nascleanúint stair na n-orduithe"
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Navigating the command history">
 #: rkward/pages/rkward_console.rkh:41
@@ -440,6 +605,9 @@ msgid ""
 "The console provides a mechanism to recall recent commands, similar to the "
 "readline functionality offered in R or most shells."
 msgstr ""
+"Cuireann an consól meicníocht ar fáil chun orduithe le déanaí a thabhairt "
+"chun cuimhne, cosúil leis an fheidhmiúlacht readline a thairgtear in R nó i "
+"bhformhór na sliogán."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Navigating the command history">
 #: rkward/pages/rkward_console.rkh:41
@@ -450,6 +618,11 @@ msgid ""
 "pressing the down arrow goes downwards in the command history. Of course, "
 "you can also edit a recalled command line."
 msgstr ""
+"Chun an t-ordú roimhe sin a thabhairt ar ais, brúigh an tsaighead suas. "
+"Brúigh an tsaighead suas arís agus arís eile chun an t-ordú roimhe sin a "
+"thabhairt ar ais, agus mar sin de. Ar an gcaoi chéanna, téann brú ar an "
+"tsaighead síos i stair na n-orduithe. Ar ndóigh, is féidir leat líne "
+"ordaithe a tugadh ar ais a chur in eagar freisin."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Navigating the command history">
 #: rkward/pages/rkward_console.rkh:41
@@ -460,6 +633,11 @@ msgid ""
 "console. Now use Shift+Up / Shift+Down. You will note, that only those "
 "recent command lines that started with \"print\" will be shown."
 msgstr ""
+"Is féidir cuardach a dhéanamh freisin ar stair na n-orduithe le haghaidh "
+"línte a thosaíonn le teaghrán sonraithe. Chun seo a úsáid, cuir isteach - "
+"mar shampla - \"print\" sa chonsól. Anois bain úsáid as Shift+Suas / Shift"
+"+Síos. Tabharfaidh tú faoi deara nach dtaispeánfar ach na línte ordaithe le "
+"déanaí a thosaigh le \"print\"."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Navigating the command history">
 #: rkward/pages/rkward_console.rkh:41
@@ -470,6 +648,11 @@ msgid ""
 "while pressing Up/Down without the Shift key will show only matching lines. "
 "(see <link href=\"#settings\">Section settings</link>)."
 msgstr ""
+"Is féidir an dara modh cuardaigh stair na n-orduithe a dhéanamh mar an modh "
+"réamhshocraithe. Sa chás seo, má bhrúnn tú Shift+Suas/Síos, déanfar "
+"nascleanúint ar na horduithe go léir, agus má bhrúnn tú Suas/Síos gan an "
+"eochair Shift, ní thaispeánfar ach na línte comhoiriúnacha. (féach <link "
+"href=\"#settings\">Socruithe na Rannóige</link>)."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Navigating the command history">
 #: rkward/pages/rkward_console.rkh:41
@@ -479,12 +662,16 @@ msgid ""
 "using <i>File->Import / Export command history</i> or the R commands "
 "<i>savehistory()</i> and <i>loadhistory()</i>."
 msgstr ""
+"Is féidir leat stair orduithe a shábháil/a luchtú tráth ar bith le linn do "
+"sheisiúin freisin, ag baint úsáide as <i>Comhad->Iompórtáil/Easpórtáil stair "
+"orduithe</i> nó na horduithe R <i>savehistory()</i> agus <i>loadhistory()</"
+"i>."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
 #: rkward/pages/rkward_console.rkh:53
 #, kde-format
 msgid "Filename and Object name completion"
-msgstr ""
+msgstr "Comhlánú Ainm Comhaid agus Ainm Réada"
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Filename and Object name completion">
 #: rkward/pages/rkward_console.rkh:53
@@ -494,6 +681,9 @@ msgid ""
 "complete the name of that R object. If several objects start with the typed "
 "characters, a list of all those objects will be shown."
 msgstr ""
+"Trí bhrú ar an eochair Tab agus ainm réada R á chlóscríobh, déanfar iarracht "
+"ainm an réada R sin a chomhlánú. Má thosaíonn roinnt réada leis na "
+"carachtair chlóscríofa, taispeánfar liosta de na réada sin go léir."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Filename and Object name completion">
 #: rkward/pages/rkward_console.rkh:53
@@ -504,6 +694,10 @@ msgid ""
 "\", and press Tab again. The word will be changed to \"paste\", as that is "
 "the only matching object name."
 msgstr ""
+"Mar shampla, cuir isteach \"base::pa\" sa chonsól, agus brúigh Tab ansin. "
+"Liostálfaidh sé seo gach réad ón bpacáiste base ag tosú le \"pa\". Cuir \"s"
+"\" leis anois, agus brúigh Tab arís. Athrófar an focal go \"greamaigh\", mar "
+"is é sin an t-aon ainm réada a mheaitseálann."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Filename and Object name completion">
 #: rkward/pages/rkward_console.rkh:53
@@ -514,6 +708,10 @@ msgid ""
 "seems to be inside a quoted string that does not seem to be part of an "
 "object name."
 msgstr ""
+"Bunaithe ar roinnt heorastaic shimplí, déanfaidh RKWard iarracht ainmneacha "
+"comhad a chomhlánú in ionad ainmneacha réada, más iomchuí. Déantar é seo "
+"nuair is cosúil go bhfuil an cúrsóir taobh istigh de shreangán athfhriotail "
+"nach cosúil gur cuid d'ainm réada é."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="...">
 #. i18n: ectx: (Screen device history) <section title="...">
@@ -522,7 +720,7 @@ msgstr ""
 #: rkward/pages/rkward_workspace_browser.rkh:47
 #, kde-format
 msgid "Configurable Settings"
-msgstr ""
+msgstr "Socruithe Inchumraithe"
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
 #: rkward/pages/rkward_console.rkh:61
@@ -532,6 +730,9 @@ msgid ""
 "console\">Settings->Configure RKWard->R Console</a> or \"Configure\" from "
 "the context menu. The following options are configurable:"
 msgstr ""
+"Chun iompar an chonsóil a chumrú, roghnaigh <a href=\"rkward://settings/"
+"console\">Socruithe->Cumraigh RKWard->R Console</a> nó \"Cumraigh\" ón "
+"roghchlár comhthéacs. Is féidir na roghanna seo a leanas a chumrú:"
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
 #: rkward/pages/rkward_console.rkh:61
@@ -542,6 +743,10 @@ msgid ""
 "next starting RKWard again. If this is not checked, each session of RKWard "
 "will start out with an empty command history."
 msgstr ""
+"<b>Lódáil/sábháil stair orduithe</b>: An sábháiltear an <link href="
+"\"#command_history\">stair orduithe</link> nuair a dhúnfar RKWard, agus an "
+"athlódálfar í nuair a thosófar RKWard arís. Mura bhfuil tic sa rogha seo, "
+"tosóidh gach seisiún de RKWard le stair orduithe folamh."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
 #: rkward/pages/rkward_console.rkh:61
@@ -550,6 +755,8 @@ msgid ""
 "<b>Maximum length of command history</b>: Only this many lines are kept in "
 "the <link href=\"#command_history\">command history</link>."
 msgstr ""
+"<b>Uasmhéid fad stair na n-orduithe</b>: Ní choimeádtar ach an líon seo "
+"línte i <link href=\"#command_history\">stair na n-orduithe</link>."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
 #: rkward/pages/rkward_console.rkh:61
@@ -561,6 +768,11 @@ msgid ""
 "top of the console window. To clear the console entirely, choose \"Clear\" "
 "from the context menu or the Edit menu."
 msgstr ""
+"<b>Uasmhéid míreanna/línte le taispeáint sa chonsól</b>: Ní thaispeánfar "
+"níos mó ná an líon seo línte san iomlán (orduithe agus aschur) sa chonsól. "
+"Nuair a sháraítear an líon seo línte, bainfear línte ag barr fhuinneog an "
+"chonsóil. Chun an consól a ghlanadh go hiomlán, roghnaigh \"Glan\" ón "
+"roghchlár comhthéacs nó ón roghchlár Eagar."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
 #: rkward/pages/rkward_console.rkh:61
@@ -571,6 +783,11 @@ msgid ""
 "their results will be shown in the console. If this option is not checked, "
 "the commands will only be visible in the Command log, but not in the console."
 msgstr ""
+"<b>Rith orduithe ón eagarthóir scripte tríd an gconsól</b>: Is féidir "
+"orduithe a thagann ó eagarthóirí scripte a sheoladh tríd an gconsól, i.e. "
+"taispeánfar na horduithe agus a dtorthaí sa chonsól. Mura bhfuil an rogha "
+"seo roghnaithe, ní bheidh na horduithe le feiceáil ach i log na nOrdú, ach "
+"ní sa chonsól."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
 #: rkward/pages/rkward_console.rkh:61
@@ -581,6 +798,10 @@ msgid ""
 "history. Turning off this option may help to keep the console history \"clean"
 "\"."
 msgstr ""
+"<b>Cuir na horduithe sin le stair an chonsóil freisin</b>: Má tá an rogha "
+"thuas roghnaithe, bíonn tionchar aige seo ar cibé an gcuirtear na horduithe "
+"sin le stair an chonsóil freisin. D’fhéadfadh sé go gcuideodh sé le stair an "
+"chonsóil a choinneáil \"glan\" má mhúchtar an rogha seo."
 
 #. i18n: ectx: (Using the RKWard R Console) <section title="Configurable Settings">
 #: rkward/pages/rkward_console.rkh:61
@@ -591,12 +812,17 @@ msgid ""
 "\">command history</link> is the default, i.e. available with Up/Down "
 "without Shift. Else the key binding for this is Shift+Up/Down."
 msgstr ""
+"<b>Tá stair orduithe íogair ó thaobh comhthéacs de réir réamhshocraithe</b>: "
+"Má tá tic sa rogha seo, is é an modh réamhshocraithe chun nascleanúint a "
+"dhéanamh ar <link href=\"#command_history\">stair orduithe</link> atá íogair "
+"ó thaobh comhthéacs de, i.e. ar fáil le Suas/Síos gan Shift. Seachas sin, is "
+"é Shift+Suas/Síos an ceangal eochrach chuige seo."
 
 #. i18n: ectx: (RKWard for new Users) <title>
 #: rkward/pages/rkward_for_new_users.rkh:8
 #, kde-format
 msgid "RKWard for new Users"
-msgstr ""
+msgstr "RKWard d'Úsáideoirí Nua"
 
 #. i18n: ectx: (RKWard for new Users) <summary>
 #: rkward/pages/rkward_for_new_users.rkh:9
@@ -605,12 +831,15 @@ msgid ""
 "Provide some starting points for users new to R and RKWard. For a more in "
 "depth guide see <link href=\"rkward://page/rkward_for_r_users\"/>."
 msgstr ""
+"Cuir roinnt pointí tosaigh ar fáil d'úsáideoirí nua i R agus RKWard. Le "
+"haghaidh treoir níos doimhne, féach <link href=\"rkward://page/"
+"rkward_for_r_users\"/>."
 
 #. i18n: ectx: (RKWard for new Users) <section title="...">
 #: rkward/pages/rkward_for_new_users.rkh:14
 #, kde-format
 msgid "Where's my data?"
-msgstr ""
+msgstr "Cá bhfuil mo chuid sonraí?"
 
 #. i18n: ectx: (RKWard for new Users) <section title="Where's my data?">
 #: rkward/pages/rkward_for_new_users.rkh:14
@@ -622,6 +851,12 @@ msgid ""
 "course, R can deal with this sort of data (technically called a \"data.frame"
 "\"), it is much more flexible, and may be slightly confusing at first."
 msgstr ""
+"Má d'úsáid tú uirlisí staitisticí éagsúla roimhe seo, b'fhéidir go bhfuil tú "
+"cleachtaithe leis an smaoineamh go bhfuil do chuid sonraí go léir stóráilte "
+"i scarbhileog amháin, agus go bhfuil an scarbhileog sin le feiceáil an t-am "
+"ar fad. Cé gur féidir le R déileáil leis an gcineál seo sonraí (ar a dtugtar "
+"\"data.frame\" go teicniúil), tá sé i bhfad níos solúbtha, agus d'fhéadfadh "
+"sé a bheith beagáinín mearbhall ar dtús."
 
 #. i18n: ectx: (RKWard for new Users) <section title="Where's my data?">
 #: rkward/pages/rkward_for_new_users.rkh:14
@@ -634,6 +869,13 @@ msgid ""
 "of the language itself, the functions, are stored just like data and can "
 "also be edited."
 msgstr ""
+"Is féidir le R - agus dá bhrí sin RKWard - déileáil le líon mór cineálacha "
+"éagsúla sonraí: Na scarbhileoga aitheanta, ach veicteoirí aonair sonraí "
+"freisin (cosúil le colún i scarbhileog), mar a thugtar \"liostaí\" orthu de "
+"veicteoirí éagsúla nó rudaí eile a d'fhéadfadh faid éagsúla a bheith acu, "
+"pointí sonraí aonair, srl. Stóráiltear fiú an chuid is mó den teanga féin, "
+"na feidhmeanna, díreach cosúil le sonraí agus is féidir iad a chur in eagar "
+"freisin."
 
 #. i18n: ectx: (RKWard for new Users) <section title="Where's my data?">
 #: rkward/pages/rkward_for_new_users.rkh:14
@@ -649,6 +891,17 @@ msgid ""
 "other objects are predefined in libraries, such as \"package:base\". See "
 "<link href=\"rkward://page/rkward_workspace_browser\"/> for details."
 msgstr ""
+"Ag an am céanna, níl R teoranta do bheith ag obair le píosa amháin sonraí ag "
+"an am, ach ina ionad sin tá \"Spás Oibre\" agat, áit a bhfuil rochtain ar do "
+"chuid athróg, táblaí, srl. éagsúla go léir. Is féidir leat go leor data."
+"frames a bheith agat ag an am céanna, agus sonraí breise de chineálacha "
+"eile. Ar thaobh na láimhe clé den fhuinneog feidhmchláir, ba chóir go mbeadh "
+"deilbhín lipéadaithe \"Spás Oibre\". Is féidir leat cliceáil air seo chun na "
+"réada go léir atá i láthair i do spás oibre a fheiceáil. Beidh na réada go "
+"léir a chruthaíonn tú nó a mhodhnaíonn tú le feiceáil taobh istigh den \"."
+"GlobalEnv\". Tá an chuid is mó de na réada eile réamhshainithe i "
+"leabharlanna, amhail \"package:base\". Féach <link href=\"rkward://page/"
+"rkward_workspace_browser\"/> le haghaidh sonraí."
 
 #. i18n: ectx: (RKWard for new Users) <section title="Where's my data?">
 #: rkward/pages/rkward_for_new_users.rkh:14
@@ -660,12 +913,19 @@ msgid ""
 "work with pre-existing data, pick the appropriate option from the File-"
 ">Import menu."
 msgstr ""
+"Ní gá duit a bheith buartha faoi na sonraí seo go léir. Chun scarbhileog nua "
+"(data.frame) a chruthú, roghnaigh Comhad->Nua->Tacar Sonraí ón roghchlár. "
+"Níl le déanamh agat ach ainm a shannadh don tábla seo, agus ansin is féidir "
+"leat tosú ag eagarthóireacht. Chun oibriú le sonraí atá ann cheana féin, "
+"roghnaigh an rogha chuí ón roghchlár Comhad->Iompórtáil."
 
 #. i18n: ectx: (RKWard for new Users) <section title="...">
 #: rkward/pages/rkward_for_new_users.rkh:23
 #, kde-format
 msgid "How can I make use of my results in an external application?"
 msgstr ""
+"Conas is féidir liom úsáid a bhaint as mo thorthaí in fheidhmchlár "
+"seachtrach?"
 
 #. i18n: ectx: (RKWard for new Users) <section title="How can I make use of my results in an external application?">
 #: rkward/pages/rkward_for_new_users.rkh:23
@@ -674,6 +934,8 @@ msgid ""
 "In this section you will learn about some basic methods how to make use of "
 "your results in external applications."
 msgstr ""
+"Sa chuid seo foghlaimeoidh tú faoi roinnt modhanna bunúsacha maidir le conas "
+"do thorthaí a úsáid in iarratais sheachtracha."
 
 #. i18n: ectx: (RKWard for new Users) <section title="How can I make use of my results in an external application?">
 #: rkward/pages/rkward_for_new_users.rkh:23
@@ -684,6 +946,10 @@ msgid ""
 "your work since a standard of RKWard is to show everything in chronological "
 "order together with the date of creation."
 msgstr ""
+"Abair gur chruthaigh tú aschur téacsúil ó thástálacha a rinne tú. Cuirfear é "
+"sin i láthair i \"fhuinneog aschuir\" RKWard. Is furasta súil a choinneáil "
+"ar do chuid oibre ós rud é gur caighdeán de chuid RKWard é gach rud a "
+"thaispeáint in ord croineolaíoch mar aon le dáta a chruthaithe."
 
 #. i18n: ectx: (RKWard for new Users) <section title="How can I make use of my results in an external application?">
 #: rkward/pages/rkward_for_new_users.rkh:23
@@ -693,12 +959,16 @@ msgid ""
 "the output. The easiest method of reusing the output is to select the "
 "relevant portion, and copy and paste them to an office suite."
 msgstr ""
+"Féach <link href=\"rkward://page/rkward_output\"/> le haghaidh sonraí maidir "
+"le bheith ag obair leis an aschur. Is é an modh is fusa chun an t-aschur a "
+"athúsáid ná an chuid ábhartha a roghnú, agus iad a chóipeáil agus a ghreamú "
+"i sraith oifige."
 
 #. i18n: ectx: (RKWard for new Users) <section title="...">
 #: rkward/pages/rkward_for_new_users.rkh:30
 #, kde-format
 msgid "Basic Analyses"
-msgstr ""
+msgstr "Anailísí Bunúsacha"
 
 #. i18n: ectx: (RKWard for new Users) <section title="Basic Analyses">
 #: rkward/pages/rkward_for_new_users.rkh:30
@@ -711,6 +981,13 @@ msgid ""
 "introduced above. On the additional tabs you can choose which types of "
 "descriptive statistics should be calculated."
 msgstr ""
+"Chun tú féin a chur ar an eolas faoi RKWard (nó faoi do shonraí), b’fhéidir "
+"gurb é ceann de na chéad rudaí le déanamh ná Anailís->Staitisticí "
+"Tuairisciúla a roghnú ón Roghchlár. Cuirfear dialóg i láthair duit a ligeann "
+"duit athróg amháin nó níos mó a roghnú le hanailísiú. Tá cuma an-chosúil air "
+"seo leis an mbrabhsálaí spáis oibre a tugadh isteach thuas. Ar na cluaisíní "
+"breise is féidir leat a roghnú cé na cineálacha staitisticí tuairisciúla ba "
+"chóir a ríomh."
 
 #. i18n: ectx: (RKWard for new Users) <section title="Basic Analyses">
 #: rkward/pages/rkward_for_new_users.rkh:30
@@ -730,6 +1007,21 @@ msgid ""
 "\"Calculate\" to perform the actual calculations, and \"Printout\" to "
 "generate output in RKWard's output window."
 msgstr ""
+"Ag bun na láimhe deise den dialóg, tá cnaipe dar teideal \"Cód\". Agus é seo "
+"á úsáid agat, is féidir leat limistéar téacs a thaispeáint/a cheilt. Má "
+"fhéachann tú ar ábhar an limistéir téacs seo (b'fhéidir go mbeadh ort méid "
+"na fuinneoige a athrú chun í a fheiceáil níos compordaí), is féidir leat an "
+"téacs a fheiceáil ag athrú de réir na socruithe a roghnaíonn tú sa dialóg. "
+"Is é an téacs seo comhréir R i ndáiríre. Is é an cód atá ag teastáil chun na "
+"ríomhanna seo a dhéanamh in R. Tá an chuid is mó de RKWard bunaithe ar an "
+"gcód seo a ghiniúint duit, agus ansin é a rith laistigh de R. Níos déanaí, "
+"nuair a bhraitheann tú níos compordaí, má tá riachtanais shonracha agat nach "
+"gclúdaíonn RKWard, nó más mian leat tascanna athchleachtacha a uathoibriú, "
+"is féidir leat an comhréir seo a úsáid chun d'anailísí a chlárú go litriúil. "
+"Tabhair faoi deara go bhfuil an cód roinnte ina suas le trí chuid: "
+"\"Réamhphróiseáil\" chun leabharlanna riachtanacha a luchtú nó feidhmeanna "
+"cúnta a shainiú, \"Ríomh\" chun na ríomhanna iarbhír a dhéanamh, agus "
+"\"Priontáil\" chun aschur a ghiniúint i bhfuinneog aschuir RKWard."
 
 #. i18n: ectx: (RKWard for new Users) <section title="Basic Analyses">
 #: rkward/pages/rkward_for_new_users.rkh:30
@@ -738,12 +1030,14 @@ msgid ""
 "For now, just click submit, once you've made your choices, and watch the "
 "results show up in a new window."
 msgstr ""
+"Anois, níl le déanamh ach cliceáil ar 'cuir isteach' nuair a bheidh do "
+"roghanna déanta agat, agus féach ar na torthaí le feiceáil i bhfuinneog nua."
 
 #. i18n: ectx: (RKWard for new Users) <section title="...">
 #: rkward/pages/rkward_for_new_users.rkh:38
 #, kde-format
 msgid "So much more"
-msgstr ""
+msgstr "An oiread sin níos mó"
 
 #. i18n: ectx: (RKWard for new Users) <section title="So much more">
 #: rkward/pages/rkward_for_new_users.rkh:38
@@ -756,6 +1050,13 @@ msgid ""
 "easier, both for users new to R, and R experts. Read on in <link href="
 "\"rkward://page/rkward_for_r_users\"/> for more on this."
 msgstr ""
+"Is é cuspóir RKWard cumhacht na teanga R a dhéanamh inrochtana go héasca don "
+"úsáideoir, gan teanga ríomhchlárúcháin iomlán a fhoghlaim ar dtús. Mar sin "
+"féin, i gcás riachtanais ardleibhéil, b'fhéidir gur mhaith leat úsáid a "
+"bhaint as solúbthacht iomlán na teanga R. Cuireann RKWard go leor uirlisí ar "
+"fáil chun seo a dhéanamh níos éasca, d'úsáideoirí nua i saol R agus do "
+"shaineolaithe R araon. Léigh ar aghaidh i <link href=\"rkward://page/"
+"rkward_for_r_users\"/> le haghaidh tuilleadh eolais faoi seo."
 
 #. i18n: ectx: (RKWard for new Users) <section title="So much more">
 #: rkward/pages/rkward_for_new_users.rkh:38
@@ -764,12 +1065,14 @@ msgid ""
 "Also, you may want to select Help->Help on R from the menu for some starting "
 "points in learning R."
 msgstr ""
+"Chomh maith leis sin, b’fhéidir gur mhaith leat Cabhair->Cabhair le R a "
+"roghnú ón roghchlár le haghaidh roinnt pointí tosaigh i bhfoghlaim R."
 
 #. i18n: ectx: (RKWard for R Users) <title>
 #: rkward/pages/rkward_for_r_users.rkh:8
 #, kde-format
 msgid "RKWard for R Users"
-msgstr ""
+msgstr "RKWard d'Úsáideoirí R"
 
 #. i18n: ectx: (RKWard for R Users) <summary>
 #: rkward/pages/rkward_for_r_users.rkh:9
@@ -778,12 +1081,14 @@ msgid ""
 "Briefly explains the main components of RKWard, assuming the user is already "
 "familiar with basic concepts of R."
 msgstr ""
+"Mínítear go hachomair príomhchodanna RKWard, ag glacadh leis go bhfuil an t-"
+"úsáideoir eolach cheana féin ar choincheapa bunúsacha R."
 
 #. i18n: ectx: (RKWard for R Users) <section title="...">
 #: rkward/pages/rkward_for_r_users.rkh:12
 #, kde-format
 msgid "The Console"
-msgstr ""
+msgstr "An Consól"
 
 #. i18n: ectx: (RKWard for R Users) <section title="The Console">
 #: rkward/pages/rkward_for_r_users.rkh:12
@@ -793,6 +1098,9 @@ msgid ""
 "the bottom on the screen. There you will notice several buttons, one of "
 "which is labelled \"R Console\" and has a console icon."
 msgstr ""
+"Ar dtús báire: Tá aithris den chonsól caighdeánach R le fáil ag bun an "
+"scáileáin. Tabharfaidh tú faoi deara roinnt cnaipí ansin, agus tá lipéad \"R "
+"Consól\" ar cheann acu agus tá deilbhín consóil air."
 
 #. i18n: ectx: (RKWard for R Users) <section title="The Console">
 #: rkward/pages/rkward_for_r_users.rkh:12
@@ -801,12 +1109,15 @@ msgid ""
 "This console works almost exactly like the regular R text console, so you "
 "can start working right away. Differences include:"
 msgstr ""
+"Oibríonn an consól seo beagnach díreach mar a oibríonn an consól téacs "
+"rialta R, mar sin is féidir leat tosú ag obair láithreach. I measc na "
+"ndifríochtaí tá:"
 
 #. i18n: ectx: (RKWard for R Users) <section title="The Console">
 #: rkward/pages/rkward_for_r_users.rkh:12
 #, kde-format
 msgid "Syntax highlighting"
-msgstr ""
+msgstr "Aibhsiú comhréire"
 
 #. i18n: ectx: (RKWard for R Users) <section title="The Console">
 #: rkward/pages/rkward_for_r_users.rkh:12
@@ -815,6 +1126,8 @@ msgid ""
 "While typing function calls, a list of arguments to that function is shown "
 "in a box (argument hinting)"
 msgstr ""
+"Agus glaonna feidhme á gclóscríobh, taispeántar liosta argóintí don fheidhm "
+"sin i mbosca (leid argóinte)"
 
 #. i18n: ectx: (RKWard for R Users) <section title="The Console">
 #: rkward/pages/rkward_for_r_users.rkh:12
@@ -824,6 +1137,9 @@ msgid ""
 "R help for that symbol. Also available from the Help menu, or the right "
 "mouse button menu"
 msgstr ""
+"Agus an cúrsóir ar shiombail nó feidhm R, má bhrúnn tú F2, déanfar cuardach "
+"ar chabhair R don tsiombail sin. Tá sé seo ar fáil freisin ón roghchlár "
+"Cabhrach, nó ón roghchlár leis an gcnaipe deas ar an luch"
 
 #. i18n: ectx: (RKWard for R Users) <section title="The Console">
 #: rkward/pages/rkward_for_r_users.rkh:12
@@ -832,18 +1148,23 @@ msgid ""
 "You can easily create a transcript of the commands you run in the console "
 "using Run->CC commands to output..."
 msgstr ""
+"Is féidir leat trascríbhinn de na horduithe a ritheann tú sa chonsól a "
+"chruthú go héasca trí úsáid a bhaint as orduithe Rith->CC chun aschur a "
+"dhéanamh..."
 
 #. i18n: ectx: (RKWard for R Users) <section title="The Console">
 #: rkward/pages/rkward_for_r_users.rkh:12
 #, kde-format
 msgid "See <link href=\"rkward://page/rkward_console\"/> for more details."
 msgstr ""
+"Féach <link href=\"rkward://page/rkward_console\"/> le haghaidh tuilleadh "
+"sonraí."
 
 #. i18n: ectx: (RKWard for R Users) <section title="...">
 #: rkward/pages/rkward_for_r_users.rkh:26
 #, kde-format
 msgid "Script Editors"
-msgstr ""
+msgstr "Eagarthóirí Scripte"
 
 #. i18n: ectx: (RKWard for R Users) <section title="Script Editors">
 #: rkward/pages/rkward_for_r_users.rkh:26
@@ -854,6 +1175,11 @@ msgid ""
 "syntax highlighting, and many more features), choose File->New->Script File, "
 "or open an already existing Script file using File->Open R Script File."
 msgstr ""
+"Is minic a bhíonn sé níos áisiúla scripteanna a scríobh i gcomhad ar "
+"leithligh, seachas iad a chlóscríobh go díreach sa chonsól. Chun eagarthóir "
+"scripte nua a oscailt (le haibhsiú comhréire, agus go leor gnéithe eile), "
+"roghnaigh Comhad->Nua->Comhad Scripte, nó oscail comhad Scripte atá ann "
+"cheana féin ag baint úsáide as Comhad->Oscail Comhad Scripte R."
 
 #. i18n: ectx: (RKWard for R Users) <section title="Script Editors">
 #: rkward/pages/rkward_for_r_users.rkh:26
@@ -863,6 +1189,10 @@ msgid ""
 "(the area of the window, that you are most likely reading this text, in). "
 "You can open any number of script editor windows at the same time."
 msgstr ""
+"Tabharfaidh tú faoi deara go n-osclaítear an t-eagarthóir i bhfuinneog nua "
+"sa phríomhionad oibre (an limistéar den fhuinneog ina bhfuil tú, is dóichí, "
+"ag léamh an téacs seo). Is féidir leat aon líon fuinneog eagarthóra scripte "
+"a oscailt ag an am céanna."
 
 #. i18n: ectx: (RKWard for R Users) <section title="Script Editors">
 #: rkward/pages/rkward_for_r_users.rkh:26
@@ -874,12 +1204,18 @@ msgid ""
 "type of active window. Hence, if you look at the Run menu while reading "
 "this, there will be no entries."
 msgstr ""
+"Chun an cód a rith i bhfuinneog eagarthóra scripte, cóipeáil agus greamaigh "
+"isteach sa chonsól é, nó roghnaigh ceann de na gníomhartha sa roghchlár "
+"Rith, amhail Rith Gach Rud nó Rith Rogha. Tabhair faoi deara: Féadfaidh "
+"ábhar na roghchlár athrú de réir chineál na fuinneoige gníomhaí. Dá bhrí "
+"sin, má fhéachann tú ar an roghchlár Rith agus tú ag léamh seo, ní bheidh "
+"aon iontrálacha ann."
 
 #. i18n: ectx: (RKWard for R Users) <section title="...">
 #: rkward/pages/rkward_for_r_users.rkh:33
 #, kde-format
 msgid "Workspace View"
-msgstr ""
+msgstr "Radharc an Spáis Oibre"
 
 #. i18n: ectx: (RKWard for R Users) <section title="Workspace View">
 #: rkward/pages/rkward_for_r_users.rkh:33
@@ -894,6 +1230,15 @@ msgid ""
 "explore data and functions in loaded R libraries (and even in package "
 "namespaces)."
 msgstr ""
+"Tagann \"radharc spáis oibre\" nó \"brabhsálaí réad\" le RKWard. De réir "
+"réamhshocraithe, bíonn sé seo ar fáil trí chliceáil ar \"Spás Oibre\" ar "
+"thaobh na láimhe clé den fhuinneog feidhmchláir. Ligeann sé seo duit gach "
+"réad sa spás oibre R a scrúdú agus a ionramháil. De réir réamhshocraithe, ní "
+"thaispeántar ach an timpeallacht \".GlobalEnv\" (áit a ndéanfaidh tú do "
+"chuid oibre de ghnáth; féach <link href=\"rkward://rhelp/.GlobalEnv\"/>). "
+"Ach, trí \"Taispeáin Gach Timpeallacht\" a sheiceáil, is féidir leat sonraí "
+"agus feidhmeanna a iniúchadh go héasca i leabharlanna R luchtaithe (agus fiú "
+"i spásanna ainm pacáiste)."
 
 #. i18n: ectx: (RKWard for R Users) <section title="Workspace View">
 #: rkward/pages/rkward_for_r_users.rkh:33
@@ -905,12 +1250,17 @@ msgid ""
 "available actions. See <link href=\"rkward://page/rkward_workspace_browser\"/"
 "> for details."
 msgstr ""
+"Cuireann an brabhsálaí réad feidhm ar fáil chun na cineálacha réad a "
+"thaispeántar a roghnú (ar an mbarr). Má bhogann tú an luch thar mhír, "
+"taispeánfar roinnt faisnéise breise faoin tsiombail. Má chliceálann tú ar "
+"dheis ar mhír, taispeánfar na gníomhartha atá ar fáil. Féach <link href="
+"\"rkward://page/rkward_workspace_browser\"/> le haghaidh tuilleadh sonraí."
 
 #. i18n: ectx: (RKWard for R Users) <section title="...">
 #: rkward/pages/rkward_for_r_users.rkh:38
 #, kde-format
 msgid "R Help"
-msgstr ""
+msgstr "Cabhair R"
 
 #. i18n: ectx: (RKWard for R Users) <section title="R Help">
 #: rkward/pages/rkward_for_r_users.rkh:38
@@ -923,12 +1273,20 @@ msgid ""
 "located at the bottom of the window (next to the console button). To view a "
 "help page found using this tool, double-click on it."
 msgstr ""
+"De réir réamhshocraithe, taispeántar leathanaigh chabhrach R mar HTML, "
+"laistigh de RKWard. Is féidir leat an chabhair a ghairm ar an ngnáthbhealach "
+"trí rith mar shampla \"?print\" nó \"help (print)\" nó \"help.start ()\" sa "
+"chonsól. Ina theannta sin, tá fuinneog uirlisí ann chun do leathanaigh "
+"chabhrach R suiteáilte a chuardach. Is féidir rochtain a fháil air seo trí "
+"chnaipe atá suite ag bun na fuinneoige (in aice leis an gcnaipe consól). "
+"Chun leathanach cabhrach a aimsíodh ag baint úsáide as an uirlis seo a "
+"fheiceáil, cliceáil faoi dhó air."
 
 #. i18n: ectx: (RKWard for R Users) <section title="...">
 #: rkward/pages/rkward_for_r_users.rkh:41
 #, kde-format
 msgid "Managing installed and loaded Libraries"
-msgstr ""
+msgstr "Bainistiú Leabharlanna suiteáilte agus luchtaithe"
 
 #. i18n: ectx: (RKWard for R Users) <section title="Managing installed and loaded Libraries">
 #: rkward/pages/rkward_for_r_users.rkh:41
@@ -937,12 +1295,15 @@ msgid ""
 "RKWard provides an advanced dialog to have installation, updating, and "
 "loading of packages. This is available from Settings->Manage R Packages."
 msgstr ""
+"Cuireann RKWard dialóg ardleibhéil ar fáil chun pacáistí a shuiteáil, a "
+"nuashonrú agus a luchtú. Tá sé seo ar fáil ó Socruithe->Bainistigh Pacáistí "
+"R."
 
 #. i18n: ectx: (RKWard for R Users) <section title="...">
 #: rkward/pages/rkward_for_r_users.rkh:44
 #, kde-format
 msgid "Window management"
-msgstr ""
+msgstr "Bainistíocht fuinneog"
 
 #. i18n: ectx: (RKWard for R Users) <section title="Window management">
 #: rkward/pages/rkward_for_r_users.rkh:44
@@ -952,6 +1313,11 @@ msgid ""
 "level window using Windows->Detach. Similarly, detached windows can be "
 "attached to the main workplace using Window->Attach to main window."
 msgstr ""
+"Is féidir na fuinneoga uile a thaispeántar sa phríomhlimistéar radhairc a "
+"dheighilt ó fhuinneog ar leithligh ag baint úsáide as Fuinneoga-"
+">Dícheangail. Ar an gcaoi chéanna, is féidir fuinneoga scoite a cheangal "
+"leis an bpríomhionad oibre ag baint úsáide as Fuinneog->Ceangail leis an "
+"bpríomhfhuinneog."
 
 #. i18n: ectx: (RKWard for R Users) <section title="Window management">
 #: rkward/pages/rkward_for_r_users.rkh:44
@@ -961,6 +1327,9 @@ msgid ""
 "Ctrl+Shift+Tab cycle through all active document / tool windows in your "
 "session."
 msgstr ""
+"Is féidir fuinneoga a dhúnadh ag baint úsáide as Windows->Dún (Ctrl+W de "
+"réir réamhshocraithe). Úsáideann Ctrl+Tab agus Ctrl+Shift+Tab na fuinneoga "
+"doiciméad/uirlisí gníomhacha go léir i do sheisiún."
 
 #. i18n: ectx: (RKWard for R Users) <section title="Window management">
 #: rkward/pages/rkward_for_r_users.rkh:44
@@ -969,12 +1338,15 @@ msgid ""
 "Tool windows (e.g. the R Console) can be detached and re-attached using the "
 "arrow-icon in their window border."
 msgstr ""
+"Is féidir fuinneoga uirlisí (m.sh. an Consól R) a dhícheangal agus a "
+"athcheangal ag baint úsáide as an deilbhín saighead i dteorainn a "
+"bhfuinneoige."
 
 #. i18n: ectx: (RKWard for R Users) <section title="...">
 #: rkward/pages/rkward_for_r_users.rkh:51
 #, kde-format
 msgid "Editing data"
-msgstr ""
+msgstr "Sonraí á n-eagarthóireacht"
 
 #. i18n: ectx: (RKWard for R Users) <section title="Editing data">
 #: rkward/pages/rkward_for_r_users.rkh:51
@@ -986,6 +1358,12 @@ msgid ""
 "explore the data editor, either choose File->New->Dataset, or right-click a "
 "data.frame in the Workspace browser, and choose Edit from the menu."
 msgstr ""
+"Cuireann RKWard eagarthóir ionsuite ar fáil do data.frames. Déanta na "
+"fírinne, is féidir leat go leor data.frames a chur in eagar ag an am céanna, "
+"agus fiú agus ríomhanna fada á ndéanamh agat. Stóráiltear na sonraí mar data."
+"frame rialta in R. Chun an t-eagarthóir sonraí a iniúchadh, roghnaigh File-"
+">New->Datasacar, nó cliceáil ar dheis ar data.frame sa bhrabhsálaí Spáis "
+"Oibre, agus roghnaigh Edit ón roghchlár."
 
 #. i18n: ectx: (RKWard for R Users) <section title="Editing data">
 #: rkward/pages/rkward_for_r_users.rkh:51
@@ -994,12 +1372,14 @@ msgid ""
 "Support for adding other types of data, esp. single vectors is planned, but "
 "not currently supported."
 msgstr ""
+"Tá sé beartaithe tacaíocht a thabhairt do chineálacha eile sonraí a chur "
+"leis, go háirithe veicteoirí aonair, ach ní thacaítear leis faoi láthair."
 
 #. i18n: ectx: (RKWard for R Users) <section title="...">
 #: rkward/pages/rkward_for_r_users.rkh:56
 #, kde-format
 msgid "Graphics"
-msgstr ""
+msgstr "Grafaicí"
 
 #. i18n: ectx: (RKWard for R Users) <section title="Graphics">
 #: rkward/pages/rkward_for_r_users.rkh:56
@@ -1013,12 +1393,20 @@ msgid ""
 "browse your plots. See <link href=\"rkward://page/rkward_plot_history\"/> "
 "for details."
 msgstr ""
+"Tá roinnt córas grafaicí thar a bheith cumhachtach ag R (cé nach bhfuil siad "
+"idirghníomhach) a sholáthraítear i bpacáistí éagsúla ar nós <b>graphics</b> "
+"agus <b>lattice</b>. Timpeallaíonn RKWard an gléas scáileáin caighdeánach "
+"atá ag brath ar an ardán chun eispéireas aonfhoirmeach a sholáthar. Chomh "
+"maith leis an bhfeidhmiúlacht chaighdeánach atá ag na pacáistí seo, "
+"soláthraíonn RKWard meicníocht staire gléas scáileáin chun do phlotaí a "
+"stóráil agus a bhrabhsáil. Féach ar <link href=\"rkward://page/"
+"rkward_plot_history\"/> le haghaidh sonraí."
 
 #. i18n: ectx: (RKWard for R Users) <section title="...">
 #: rkward/pages/rkward_for_r_users.rkh:59
 #, kde-format
 msgid "Utility functions"
-msgstr ""
+msgstr "Feidhmeanna fóntais"
 
 #. i18n: ectx: (RKWard for R Users) <section title="Utility functions">
 #: rkward/pages/rkward_for_r_users.rkh:59
@@ -1028,12 +1416,15 @@ msgid ""
 "the <link href=\"rkward://rhelp/rkward-package\">rkward package overview</"
 "link>."
 msgstr ""
+"Cuireann RKWard feidhmeanna fóntais éagsúla ar fáil atá liostaithe in "
+"innéacs <link href=\"rkward://rhelp/rkward-package\">forbhreathnú ar "
+"phacáiste rkward</link>."
 
 #. i18n: ectx: (RKWard for R Users) <section title="...">
 #: rkward/pages/rkward_for_r_users.rkh:62
 #, kde-format
 msgid "Everything else"
-msgstr ""
+msgstr "Gach rud eile"
 
 #. i18n: ectx: (RKWard for R Users) <section title="Everything else">
 #: rkward/pages/rkward_for_r_users.rkh:62
@@ -1048,6 +1439,16 @@ msgid ""
 "to script your code by hand, you can use dialogs to gain usage examples or "
 "snippets of code for functions you are less familiar with in R."
 msgstr ""
+"Tabharfaidh tú faoi deara go soláthraíonn RKWard go leor roghanna breise "
+"roghchláir. Soláthraíonn siad seo rochtain ar fheidhmiúlacht in R. Déanta na "
+"fírinne, déanann siad amhlaidh trí chomhréir R a ghiniúint ó shocruithe a "
+"dhéantar i ndialóg ghrafach. Mar shampla, roghnaigh Anailís->Staitisticí "
+"Tuairisciúla. Tabharfaidh tú faoi deara fuinneog bheag ag an mbun (is féidir "
+"í a chasadh air nó as ag baint úsáide as an gcnaipe \"Cód\") ina bhfuil an "
+"cód R atá riachtanach chun na staitisticí seo a ghiniúint. Ar an mbealach "
+"seo, fiú más fearr leat do chód a script de láimh, is féidir leat dialóga a "
+"úsáid chun samplaí úsáide nó blúiríní cóid a fháil le haghaidh feidhmeanna "
+"nach bhfuil tú chomh heolach orthu in R."
 
 #. i18n: ectx: (RKWard for R Users) <section title="Everything else">
 #: rkward/pages/rkward_for_r_users.rkh:62
@@ -1056,6 +1457,8 @@ msgid ""
 "Also, all commands that are executed get shown in the Command Log, available "
 "as a tool window next to the R Console."
 msgstr ""
+"Chomh maith leis sin, taispeántar gach ordú a fhorghníomhaítear sa Log Ordú, "
+"atá ar fáil mar fhuinneog uirlisí in aice leis an Consól R."
 
 #. i18n: ectx: (RKWard for R Users) <related>
 #: rkward/pages/rkward_for_r_users.rkh:68
@@ -1064,12 +1467,14 @@ msgid ""
 "<link href=\"rkward://page/rkward_for_new_users\"/> For an introduction to "
 "some more basic concepts"
 msgstr ""
+"<link href=\"rkward://page/rkward_for_new_users\"/> Le haghaidh réamhrá ar "
+"roinnt coincheapa bunúsacha"
 
 #. i18n: ectx: (Version incompatibilities) <title>
 #: rkward/pages/rkward_incompatible_version.rkh:8
 #, kde-format
 msgid "Version incompatibilities"
-msgstr ""
+msgstr "Neamh-chomhoiriúnachtaí leaganacha"
 
 #. i18n: ectx: (Version incompatibilities) <summary>
 #: rkward/pages/rkward_incompatible_version.rkh:9
@@ -1081,6 +1486,11 @@ msgid ""
 "Quite often, this does not actually have to be a <i>new</i> version, but "
 "simply one that was compiled against your new version of R."
 msgstr ""
+"Cé go ndéanann RKWard iarracht tacú le líon mór leaganacha éagsúla de R, "
+"uaireanta, ní bheidh leagan nua de R comhoiriúnach le RKWard as an mbosca. "
+"Sna cásanna seo beidh ort leagan nua de RKWard a shuiteáil. Is minic nach gá "
+"gur leagan *nua* atá ann i ndáiríre, ach ceann a tiomsaíodh i gcoinne do "
+"leagan <i>nua</i> de R."
 
 #. i18n: ectx: (Version incompatibilities) <summary>
 #: rkward/pages/rkward_incompatible_version.rkh:9
@@ -1090,6 +1500,9 @@ msgid ""
 "distribution, but no updated package is available, please contact your "
 "distribution maintainer or file a bug report, there."
 msgstr ""
+"Má tá RKWard suiteáilte agat ag baint úsáide as bainisteoir pacáiste do "
+"dháilte Linux, ach mura bhfuil aon phacáiste nuashonraithe ar fáil, déan "
+"teagmháil le cothaitheoir do dháilte nó comhdaigh tuarascáil fabht ansin."
 
 #. i18n: ectx: (Version incompatibilities) <summary>
 #: rkward/pages/rkward_incompatible_version.rkh:9
@@ -1099,12 +1512,15 @@ msgid ""
 "information, see <link href=\"https://rkward.kde.org\">the project homepage</"
 "link>."
 msgstr ""
+"Chun tuilleadh eolais a fháil faoi na leaganacha atá ar fáil, agus tuilleadh "
+"eolais maidir le fabhtcheartú, féach ar <link href=\"https://rkward.kde.org"
+"\">leathanach baile an tionscadail</link>."
 
 #. i18n: ectx: (Version incompatibilities) <section title="...">
 #: rkward/pages/rkward_incompatible_version.rkh:17
 #, kde-format
 msgid "Graphics Engine Version Mismatch"
-msgstr ""
+msgstr "Mí-oiriúnú Leagan Inneall Grafaicí"
 
 #. i18n: ectx: (Version incompatibilities) <section title="Graphics Engine Version Mismatch">
 #: rkward/pages/rkward_incompatible_version.rkh:17
@@ -1118,12 +1534,20 @@ msgid ""
 "integration\". Then you can use the vanille onscreen devices (X11() or "
 "Windows() or Quartz()), for plotting."
 msgstr ""
+"Seo an cineál neamh-chomhoiriúnachta leagan is coitianta. Baineann an "
+"chomhairle chéanna leis an gceann thuas, i.e. suiteáil leagan nuashonraithe "
+"de RKWard le do thoil. Mar sin féin, mura bhfuil aon nuashonrú ar fáil "
+"láithreach, agus má tá tú ag iarraidh leanúint ar aghaidh ag obair, socraigh "
+"<link href=\"rkward://settings/graphics\">Socruithe-&gt;Grafaicí Ar an "
+"Scáileán</link>-&gt;\"Comhtháthú gléas caighdeánach R\" go \"Gan chomhtháthú"
+"\". Ansin is féidir leat na gléasanna ar an scáileán vanille (X11() nó "
+"Windows() nó Quartz()) a úsáid, le haghaidh plota."
 
 #. i18n: ectx: (RKWard Output) <title>
 #: rkward/pages/rkward_output.rkh:8
 #, kde-format
 msgid "RKWard Output"
-msgstr ""
+msgstr "Aschur RKWard"
 
 #. i18n: ectx: (RKWard Output) <summary>
 #: rkward/pages/rkward_output.rkh:9
@@ -1136,6 +1560,12 @@ msgid ""
 "link>), this output file may or may not be shared across different "
 "workspaces."
 msgstr ""
+"Tá sé i gceist le fuinneog aschuir RKWard, nó, níos ginearálta, comhaid "
+"aschuir RKWard (.rko), gur bealach éasca é chun log a choinneáil den obair "
+"ar do shonraí. De réir réamhshocraithe, bíonn comhad aschuir amháin ar fáil "
+"i gcónaí. Ag brath ar do chumraíocht (<link href=\"rkward://settings/output"
+"\">Socruithe->Cumraigh RKWard->Aschur</link>), féadfar an comhad aschuir seo "
+"a roinnt nó gan a roinnt idir spásanna oibre éagsúla."
 
 #. i18n: ectx: (RKWard Output) <summary>
 #: rkward/pages/rkward_output.rkh:9
@@ -1146,12 +1576,17 @@ msgid ""
 "output window does not discard the modifications, but on closing RKWard you "
 "will be prompted to save (or discard) any pending changes."
 msgstr ""
+"Is féidir aschur RKWard a shábháil agus a oscailt cosúil le comhaid rialta. "
+"Chun aschur a threorú chuig comhad aschuir ar leith, beidh ort é a "
+"\"ghníomhachtú\". Ní chuireann dúnadh fuinneoige aschuir na modhnuithe ar "
+"ceal, ach nuair a dhúnfar RKWard iarrfar ort aon athruithe atá ar feitheamh "
+"a shábháil (nó a dhíbirt)."
 
 #. i18n: ectx: (RKWard Output) <section title="...">
 #: rkward/pages/rkward_output.rkh:16
 #, kde-format
 msgid "Producing RKWard output from R"
-msgstr ""
+msgstr "Aschur RKWard a tháirgeadh ó R"
 
 #. i18n: ectx: (RKWard Output) <section title="Producing RKWard output from R">
 #: rkward/pages/rkward_output.rkh:16
@@ -1160,6 +1595,9 @@ msgid ""
 "To write to the active RKWard output file from custom R code, refer to <link "
 "href=\"rkward://rhelp/rk.print\"/>, and the functions linked from there."
 msgstr ""
+"Chun scríobh chuig an gcomhad aschuir gníomhach RKWard ó chód R "
+"saincheaptha, féach ar <link href=\"rkward://rhelp/rk.print\"/>, agus na "
+"feidhmeanna atá nasctha uaidh sin."
 
 #. i18n: ectx: (RKWard Output) <section title="Producing RKWard output from R">
 #: rkward/pages/rkward_output.rkh:16
@@ -1168,12 +1606,14 @@ msgid ""
 "To load / save / switch between output files, etc., refer to <link href="
 "\"rkward://rhelp/rk.output\"/>."
 msgstr ""
+"Chun comhaid aschuir a luchtú / a shábháil / aistriú idir eatarthu, etc., "
+"féach ar <link href=\"rkward://rhelp/rk.output\"/>."
 
 #. i18n: ectx: (RKWard Output) <section title="...">
 #: rkward/pages/rkward_output.rkh:22
 #, kde-format
 msgid "Using the output in an office suite"
-msgstr ""
+msgstr "Ag baint úsáide as an aschur i sraith oifige"
 
 #. i18n: ectx: (RKWard Output) <section title="Using the output in an office suite">
 #: rkward/pages/rkward_output.rkh:22
@@ -1184,6 +1624,11 @@ msgid ""
 "at least in OpenOffice or LibreOffice. You can also drag and drop images "
 "from the output to an OpenOffice or LibreOffice document."
 msgstr ""
+"Is é an bealach is fusa chun aschur a fháil isteach i do shraith oifige ná "
+"na codanna ábhartha a roghnú ar dtús, iad a chóipeáil (Eagar->Cóipeáil), "
+"agus ansin iad a ghreamú. Oibríonn sé seo go maith, ar a laghad in "
+"OpenOffice nó LibreOffice. Is féidir leat íomhánna a tharraingt agus a "
+"scaoileadh ón aschur chuig doiciméad OpenOffice nó LibreOffice freisin."
 
 #. i18n: ectx: (RKWard Output) <section title="Using the output in an office suite">
 #: rkward/pages/rkward_output.rkh:22
@@ -1195,12 +1640,18 @@ msgid ""
 "retrieve the files from the \".rkward\" of your home directory (location "
 "configurable in Settings->Configure RKWard->General)."
 msgstr ""
+"Go hinmheánach, níl comhaid aschuir RKWard bunaithe ach ar HTML faoi "
+"láthair. Más gá duit rochtain a fháil ar na comhaid HTML agus íomhá amha, "
+"níl i gcomhad .rko ach fillteán zipáilte. Is féidir leat é a dhízipeáil ag "
+"baint úsáide as uirlisí caighdeánacha, nó é a oscailt in RKWard, agus na "
+"comhaid a aisghabháil ó \".rkward\" d'eolaire baile (suíomh inchumraithe i "
+"Socruithe->Cumraigh RKWard->Ginearálta)."
 
 #. i18n: ectx: (RKWard Output) <section title="...">
 #: rkward/pages/rkward_output.rkh:28
 #, kde-format
 msgid "RKWard output vs. R Markdown"
-msgstr ""
+msgstr "Aschur RKWard i gcoinne R Markdown"
 
 #. i18n: ectx: (RKWard Output) <section title="RKWard output vs. R Markdown">
 #: rkward/pages/rkward_output.rkh:28
@@ -1211,12 +1662,17 @@ msgid ""
 "great for writing interactive \"reports\", the RKWard Output is very easy to "
 "use for ad-hoc documentation while exploring your data."
 msgstr ""
+"Cuidíonn RKWard leat freisin doiciméid RMarkdown (Rmd) a scríobh. Go "
+"háirithe, tá gné réamhamhairc chumhachtach ann do scripteanna .Rmd. Cé go "
+"bhfuil RMarkdown iontach chun \"tuarascálacha\" idirghníomhacha a scríobh, "
+"tá Aschur RKWard an-éasca le húsáid le haghaidh doiciméadú ad hoc agus tú ag "
+"iniúchadh do shonraí."
 
 #. i18n: ectx: (Screen device history) <title>
 #: rkward/pages/rkward_plot_history.rkh:8
 #, kde-format
 msgid "Screen device history"
-msgstr ""
+msgstr "Stair gléas scáileáin"
 
 #. i18n: ectx: (Screen device history) <summary>
 #: rkward/pages/rkward_plot_history.rkh:10
@@ -1228,6 +1684,11 @@ msgid ""
 "is planned for future. See the Technical Details section below for more "
 "information."
 msgstr ""
+"Cuireann stair na ngléas scáileáin comhéadan ar fáil chun breathnú trí do "
+"phlotaí, cosúil le brabhsálaí gréasáin. Tuigeann an cur i bhfeidhm reatha an "
+"chuid is mó de na glaonna feidhme ó na pacáistí grafaicí agus laitíse. Tá sé "
+"beartaithe innill ghrafaicí eile a chur leis don todhchaí. Féach ar an "
+"rannán Sonraí Teicniúla thíos le haghaidh tuilleadh eolais."
 
 #. i18n: ectx: (Screen device history) <summary>
 #: rkward/pages/rkward_plot_history.rkh:10
@@ -1241,6 +1702,14 @@ msgid ""
 "addition, \"preview\" devices, which are available on some of the plugins "
 "are not managed either."
 msgstr ""
+"Ní féidir rochtain a fháil ar stair na ngléas scáileáin ach ó ghléas "
+"scáileáin oscailte, faoin roghchlár <i>Stair</i>. Tá sé ar fáil ar fhormhór "
+"na bhfuinneog gléas scáileáin. Tugtar gléasanna \"bainistithe\" ar na "
+"gléasanna sin chun críche an leathanaigh chabhrach seo. Ar ndóigh, ní bhíonn "
+"tionchar ag an gcur i bhfeidhm stair scáileáin seo ar ghléasanna comhaid, "
+"amhail png, pdf, srl., agus dá bhrí sin ní dhéantar iad a bhainistiú. Ina "
+"theannta sin, ní dhéantar bainistíocht ar ghléasanna \"réamhamhairc\", atá "
+"ar fáil ar chuid de na breiseáin ach an oiread."
 
 #. i18n: ectx: (Screen device history) <section title="...">
 #. i18n: ectx: (Workspace Browser) <section title="...">
@@ -1248,7 +1717,7 @@ msgstr ""
 #: rkward/pages/rkward_workspace_browser.rkh:30
 #, kde-format
 msgid "Available actions"
-msgstr ""
+msgstr "Gníomhartha atá ar fáil"
 
 #. i18n: ectx: (Screen device history) <section title="Available actions">
 #: rkward/pages/rkward_plot_history.rkh:16
@@ -1259,6 +1728,10 @@ msgid ""
 "can be configured from the device window's Settings->Configure Toolbars menu "
 "item."
 msgstr ""
+"Tá roinnt gníomhartha ar fáil ón roghchlár <i>Stair</i> nó ó dheilbhíní an "
+"bharra uirlisí ar ghléas bainistithe. Is féidir na deilbhíní a thaispeántar "
+"ar an mbarra uirlisí a chumrú ón mír roghchláir Socruithe->Cumraigh Barraí "
+"Uirlisí i bhfuinneog an ghléis."
 
 #. i18n: ectx: (Screen device history) <section title="Available actions">
 #: rkward/pages/rkward_plot_history.rkh:16
@@ -1276,6 +1749,18 @@ msgid ""
 "corresponding position in the history. For the usual \"linear browsing\" see "
 "first / previous / next / last actions below."
 msgstr ""
+"<b>Téigh go dtí an plota</b>: Soláthraíonn sé seo liosta anuas de _gach_ "
+"plota atá stóráilte sa stair; rud a thugann gníomh \"léimneach\" atá "
+"inrochtana go héasca. Déanann RKWard a dhícheall na glaonna plota cuí a "
+"aithint, ach ní bhíonn sé seo indéanta i gcónaí. I gcásanna den sórt sin "
+"déantar iarracht bhreise an lipéad <i>X</i>, an lipéad <i>Y</i> agus teidil "
+"<i>Main</i> an phlota a aithint agus breathnaíonn an teaghrán a thaispeántar "
+"cosúil le \"<b>X:</b> <i>xlab</i>; <b>Y:</b> <i>ylab</i>; <i>main</i>\". "
+"Uaireanta ní féidir fiú sin a dhéanamh (léirithe ag <b>&lt;Anaithnid&gt;</"
+"b>). Léirítear plotaí atá ar feitheamh le sábháil le <b>&lt;Plota Gan "
+"Sábháil&gt;</b>. Cuirtear a suíomh comhfhreagrach sa stair roimh na "
+"teaghráin a thaispeántar. Maidir leis an ngnáth-\"bhrabhsáil líneach\" féach "
+"na chéad / roimhe / ina dhiaidh sin / gníomhartha deireanacha thíos."
 
 #. i18n: ectx: (Screen device history) <section title="Available actions">
 #: rkward/pages/rkward_plot_history.rkh:16
@@ -1288,6 +1773,15 @@ msgid ""
 "For example, a base graphics plot modified by, say, <code>abline(h=0, v=0)</"
 "code> will automatically get stored \"in-place\" in the history."
 msgstr ""
+"<b>An Chéad Phlota, an Plota Roimhe Seo, an Chéad Phlota Eile, agus an Plota "
+"Deireanach</b>: Gníomhartha brabhsála (nó athsheinm) soiléire. Déanfaidh "
+"siad seo iarracht aon phlota neamhshábháilte/ar feitheamh a shábháil sula "
+"dtaispeánfar/athsheinmfear an plota beartaithe (an chéad phlota / an phlota "
+"roimhe seo / an chéad phlota eile / an plota deireanach). Ba cheart go "
+"mbeadh sé seo an-chabhrach chun brabhsáil chuig plota atá stóráilte cheana "
+"féin sa stair agus é a nuashonrú. Mar shampla, stórálfar plota grafaicí "
+"bunúsach atá modhnaithe ag, abair, <code>abline(h=0, v=0)</code> go "
+"huathoibríoch \"ina áit\" sa stair."
 
 #. i18n: ectx: (Screen device history) <section title="Available actions">
 #: rkward/pages/rkward_plot_history.rkh:16
@@ -1300,6 +1794,12 @@ msgid ""
 "handy. But this flexibility comes at the cost of not being able to identify "
 "the plot call."
 msgstr ""
+"<b>Cuir an plota seo leis</b>: Cuirtear an gníomh seo ar fáil chun an plota "
+"taispeánta a chur leis an deireadh den stair go héigeantach, beag beann ar a "
+"stádas (sábháilte / gan sábháil) agus a chineál (grafaicí / laitís / ...). I "
+"gcásanna nach stóráiltear plota go huathoibríoch sa stair, ba cheart go "
+"mbeadh an gníomh seo úsáideach. Ach tagann an tsolúbthacht seo ar chostas "
+"gan a bheith in ann glao an phlota a aithint."
 
 #. i18n: ectx: (Screen device history) <section title="Available actions">
 #: rkward/pages/rkward_plot_history.rkh:16
@@ -1314,6 +1814,15 @@ msgid ""
 "if it happens to be displayed on a second device, then you can re-add it to "
 "the history from the second device."
 msgstr ""
+"<b>Bain an plota seo</b>: Bainfear an plota atá á thaispeáint faoi láthair "
+"ón stair leis seo (má tá sé stóráilte) agus athsheinmfear an chéad phlota "
+"eile atá \"ar fáil\". Nuair a bhíonn an plota céanna á thaispeáint ag "
+"ilghléasanna (le bheith beacht, an suíomh céanna sa stair), ní bhainfear "
+"plota a bhaint ó ghléas amháin de ghléasanna eile é; ina ionad sin socrófar "
+"stádas an phlota seo ar na gléasanna eile mar nua / ar feitheamh. Dá bhrí "
+"sin, má bhaineann tú ceann trí dhearmad, agus má tharlaíonn sé go bhfuil sé "
+"á thaispeáint ar dhara gléas, is féidir leat é a chur leis an stair arís ón "
+"dara gléas."
 
 #. i18n: ectx: (Screen device history) <section title="Available actions">
 #: rkward/pages/rkward_plot_history.rkh:16
@@ -1325,6 +1834,11 @@ msgid ""
 "screen device history close all open devices and call <code>rk.clear.plot."
 "history()</code>"
 msgstr ""
+"<b>Glan stair</b>: Mar a thugann an t-ainm le fios, glanfaidh an gníomh seo "
+"stair na bplotaí. Ach cuirfear na plotaí atá á thaispeáint faoi láthair ar "
+"na gléasanna ar ais leis an stair nuair a dhéantar gníomh eile. Chun stair "
+"na ngléasanna ar an scáileán a athshocrú go hiomlán, dún na gléasanna "
+"oscailte go léir agus glaoigh ar <code>rk.clear.plot.history()</code>"
 
 #. i18n: ectx: (Screen device history) <section title="Available actions">
 #: rkward/pages/rkward_plot_history.rkh:16
@@ -1334,6 +1848,9 @@ msgid ""
 "size of the displayed plot as stored in the memory, the position of the "
 "current plot in the history, and, whenever possible the complete plot call."
 msgstr ""
+"<b>Airíonna plota</b>: Taispeánann sé seo roinnt faisnéise breise amhail "
+"méid an phlota atá á thaispeáint mar atá stóráilte sa chuimhne, suíomh an "
+"phlota reatha sa stair, agus, nuair is féidir, an glao plota iomlán."
 
 #. i18n: ectx: (Screen device history) <section title="Configurable Settings">
 #: rkward/pages/rkward_plot_history.rkh:29
@@ -1343,6 +1860,9 @@ msgid ""
 "<a href=\"rkward://settings/graphics\">Settings->Configure RKWard->Onscreen "
 "Graphics</a>:"
 msgstr ""
+"Is féidir roinnt socruithe réamhshocraithe do stair ghléas an scáileáin a "
+"chumrú ó <a href=\"rkward://settings/graphics\">Socruithe->Cumraigh RKWard-"
+">Grafaicí ar an Scáileán</a>:"
 
 #. i18n: ectx: (Screen device history) <section title="Configurable Settings">
 #: rkward/pages/rkward_plot_history.rkh:29
@@ -1358,6 +1878,18 @@ msgid ""
 "may want to disable this when the implemented history behavior seems non-"
 "intuitive or when dealing with large plots."
 msgstr ""
+"<b>Stair ghléas scáileáin</b>: Cumasaíonn / díchumasaíonn sé taifeadadh "
+"plotaí ar fud an domhain. Is féidir leat é seo a lascadh ó laistigh de "
+"sheisiún RKWard atá ag rith, rud a rachaidh i bhfeidhm ar gach gléas "
+"scáileáin atá oscailte faoi láthair agus amach anseo. Nuair nach bhfuil an "
+"rogha seo roghnaithe, ní stórálfaidh RKWard aon phlotaí eile sa stair; cé "
+"nach gcailltear na cinn atá stóráilte cheana féin! Is féidir leat rochtain a "
+"fháil ar na plotaí stóráilte trí seo a athchumasú. Agus é seo á lascadh, "
+"déanann RKWard iarracht aon phlotaí neamhshábháilte a shábháil, ach bí "
+"cúramach go háirithe nuair a bhíonn an fad staire uasta beag (féach thíos). "
+"B’fhéidir gur mhaith leat é seo a dhíchumasú nuair nach cosúil go bhfuil an "
+"t-iompar staire atá curtha i bhfeidhm iomasach nó nuair a bhíonn tú ag "
+"déileáil le plotaí móra."
 
 #. i18n: ectx: (Screen device history) <section title="Configurable Settings">
 #: rkward/pages/rkward_plot_history.rkh:29
@@ -1371,6 +1903,13 @@ msgid ""
 "appropriate number of plots from the beginning of the history stack will get "
 "removed, which may not be desirable."
 msgstr ""
+"<b>Uasmhéid plotaí taifeadta</b>: Rialaíonn sé seo an t-uasmhéid plotaí is "
+"féidir a stóráil sa stair. Nuair a shroichtear an teorainn seo, bainfear "
+"plotaí ó thús na staire ceann ar cheann, cosúil le cruach brú-pop. "
+"Taispeántar dialóg rabhaidh nuair a tharlaíonn sé seo. Bí cúramach agus é "
+"seo á shocrú faoi bhun líon na bplotaí atá stóráilte cheana féin. Sa chás "
+"sin bainfear líon cuí plotaí ó thús chruach na staire, rud nach mbeadh "
+"inmhianaithe b'fhéidir."
 
 #. i18n: ectx: (Screen device history) <section title="Configurable Settings">
 #: rkward/pages/rkward_plot_history.rkh:29
@@ -1383,18 +1922,25 @@ msgid ""
 "will affect only the future plots (that is, will not remove any already "
 "stored, yet large, plots)."
 msgstr ""
+"<b>Uasmhéid plota taifeadta aonair</b>: Rialaíonn sé seo an uasmhéid "
+"ceadaithe (i KB) de phlota aonair is féidir a stóráil sa stair. I gcás plota "
+"atá níos mó ná an méid sonraithe seo, cuirfear bosca dialóige i láthair chun "
+"an plota a shábháil nó neamhaird a dhéanamh air. Murab ionann agus an srian "
+"faid thuas, ní bheidh tionchar ag an socrú seo ach ar na plotaí amach anseo "
+"(is é sin, ní bhainfidh sé aon phlotaí atá stóráilte cheana féin, ach atá "
+"mór)."
 
 #. i18n: ectx: (Screen device history) <section title="...">
 #: rkward/pages/rkward_plot_history.rkh:39
 #, kde-format
 msgid "Technical Details"
-msgstr ""
+msgstr "Sonraí Teicniúla"
 
 #. i18n: ectx: (Screen device history) <section title="Technical Details">
 #: rkward/pages/rkward_plot_history.rkh:39
 #, kde-format
 msgid "Some assorted technical details:"
-msgstr ""
+msgstr "Roinnt sonraí teicniúla éagsúla:"
 
 #. i18n: ectx: (Screen device history) <section title="Technical Details">
 #: rkward/pages/rkward_plot_history.rkh:39
@@ -1407,6 +1953,13 @@ msgid ""
 "device specific information) or <i>history</i> (returns information on all "
 "the saved plots in the history)."
 msgstr ""
+"<code>rk.plot.history.summary(which,type)</code>: soláthraíonn an fheidhm "
+"chúnta seo roinnt achoimrí faoi stair ghléasanna an scáileáin. Anseo, is "
+"\"aitheantas gléis\" é <code>which</code> (is é <i>NULL</i> an réamhshocrú: "
+"achoimrí faoi na gléasanna bainistithe go léir) agus is é <code>type</code> "
+"ceachtar <i>devices</i> (tugann faisnéis shonrach don ghléas ar ais) nó "
+"<i>history</i> (tugann faisnéis ar ais faoi na plotaí sábháilte go léir sa "
+"stair)."
 
 #. i18n: ectx: (Screen device history) <section title="Technical Details">
 #: rkward/pages/rkward_plot_history.rkh:39
@@ -1416,6 +1969,9 @@ msgid ""
 "<code>graphics::plot.new()</code> or <code>graphics::persp()</code> or "
 "<code>lattice::print.trellis()</code> are captured."
 msgstr ""
+"Go teicniúil, gabhtar glaonna feidhme a théann trí <code>graphics::plot."
+"new()</code> nó <code>graphics::persp()</code> nó <code>lattice::print."
+"trellis()</code>."
 
 #. i18n: ectx: (Screen device history) <section title="Technical Details">
 #: rkward/pages/rkward_plot_history.rkh:39
@@ -1424,6 +1980,8 @@ msgid ""
 "The base graphics plots are recorded and replayed using <code>recordPlot()</"
 "code> and <code>replayPlot()</code>."
 msgstr ""
+"Déantar na plotaí grafaicí bunúsacha a thaifeadadh agus a athsheinm ag baint "
+"úsáide as <code>recordPlot()</code> agus <code>replayPlot()</code>."
 
 #. i18n: ectx: (Screen device history) <section title="Technical Details">
 #: rkward/pages/rkward_plot_history.rkh:39
@@ -1438,24 +1996,33 @@ msgid ""
 "may seem innocuous, but it will have irreparable consequences when trying to "
 "use <code>trellis.last.object()</code>, thereafter. You have been warned!"
 msgstr ""
+"Cuirtear na plotaí laitíse leis an stair ag baint úsáide as feidhm "
+"saincheaptha <code>print.trellis()</code> atá socraithe ag <code>lattice."
+"options(\"print.function\")</code>. Mar sin, tugtar rabhadh duit gan é seo a "
+"athshocrú nó a mhodhnú ó sheisiún RKWard atá ag rith. Ar an gcaoi chéanna, "
+"moltar go láidir duit gan an modh <code>plot</code> a úsáid ar réad trellis "
+"ós rud é nach rachaidh sé trí <code>print.trellis()</code> agus dá bhrí sin "
+"ní stórálfar é sa stair. D’fhéadfadh sé seo a bheith neamhdhíobhálach, ach "
+"beidh iarmhairtí dochúlaithe aige agus tú ag iarraidh <code>trellis.last."
+"object()</code> a úsáid ina dhiaidh sin. Tá rabhadh tugtha duit!"
 
 #. i18n: ectx: (Screen device history) <related>
 #: rkward/pages/rkward_plot_history.rkh:49
 #, kde-format
 msgid "<link href=\"rkward://rhelp/lattice.options\"/> (needs lattice)"
-msgstr ""
+msgstr "<link href=\"rkward://rhelp/lattice.options\"/> (tá gá le laitís)"
 
 #. i18n: ectx: (Screen device history) <related>
 #: rkward/pages/rkward_plot_history.rkh:49
 #, kde-format
 msgid "<link href=\"rkward://rhelp/trellis.last.object\"/> (needs lattice)"
-msgstr ""
+msgstr "<link href=\"rkward://rhelp/trellis.last.object\"/> (tá gá le laitís)"
 
 #. i18n: ectx: (RKWard Shortcut keys) <title>
 #: rkward/pages/rkward_shortcuts.rkh:8
 #, kde-format
 msgid "RKWard Shortcut keys"
-msgstr ""
+msgstr "Eochracha aicearra RKWard"
 
 #. i18n: ectx: (RKWard Shortcut keys) <summary>
 #: rkward/pages/rkward_shortcuts.rkh:9
@@ -1466,6 +2033,10 @@ msgid ""
 "interest is to browse the menu. Shortcuts are listed next to their action in "
 "the menu."
 msgstr ""
+"Is féidir leat RKWard a rialú i go leor cásanna gan luch a úsáid, ag baint "
+"úsáide as an méarchlár amháin. Is é an bealach is fusa chun eolas a fháil "
+"faoi aicearraí spéisiúla ná brabhsáil tríd an roghchlár. Tá aicearraí "
+"liostaithe in aice lena ngníomh sa roghchlár."
 
 #. i18n: ectx: (RKWard Shortcut keys) <summary>
 #: rkward/pages/rkward_shortcuts.rkh:9
@@ -1479,6 +2050,13 @@ msgid ""
 "function or something in the menus, but do not want to go through each menu "
 "individually to find it."
 msgstr ""
+"Féidearthacht eile is ea an taispeáint ceann-suas (HUD) a úsáid. Is réimse "
+"cuardaigh é an roghchlár HUD a ligeann cuardach doiléir sna biachláir. "
+"Tugadh an HUD isteach in fheidhmchláir reatha KDE agus dá bhrí sin níl sé ar "
+"fáil fós i leaganacha níos sine de RKWard. Is féidir an HUD a ghlaoch trí "
+"Ctrl+Alt+i. Tá sé seo an-úsáideach go háirithe má tá tú ag lorg feidhme, "
+"aicearra feidhme nó rud éigin sna biachláir, ach mura mian leat dul trí gach "
+"roghchlár ina aonar chun é a aimsiú."
 
 #. i18n: ectx: (RKWard Shortcut keys) <summary>
 #: rkward/pages/rkward_shortcuts.rkh:9
@@ -1491,6 +2069,14 @@ msgid ""
 "Settings->Configure Shortcuts. Most shortcuts for the script editor are "
 "managed separately using Settings->Configure Editor->Shortcuts."
 msgstr ""
+"Is féidir formhór na n-aicearraí a chumrú trí úsáid a bhaint as Socruithe-"
+">Cumraigh Aicearraí. Ar chúiseanna teicniúla, ní liostálfar ach aicearraí na "
+"gcomhpháirteanna sin atá gníomhach ag an am sin. Dá bhrí sin, mar shampla, "
+"más mian leat na haicearraí don eagarthóir sonraí a chur in eagar, oscail "
+"eagarthóir sonraí ar dtús, agus ansin roghnaigh Socruithe->Cumraigh "
+"Aicearraí. Déantar formhór na n-aicearraí don eagarthóir scripte a "
+"bhainistiú ar leithligh trí úsáid a bhaint as Socruithe->Cumraigh an "
+"Eagarthóir->Aicearraí."
 
 #. i18n: ectx: (RKWard Shortcut keys) <summary>
 #: rkward/pages/rkward_shortcuts.rkh:9
@@ -1499,18 +2085,21 @@ msgid ""
 "On most systems, you can also configure shortcuts by right-clicking on the "
 "respective menu item."
 msgstr ""
+"Ar fhormhór na gcóras, is féidir leat aicearraí a chumrú freisin trí "
+"chliceáil ar dheis ar an mír roghchláir faoi seach."
 
 #. i18n: ectx: (RKWard Shortcut keys) <section title="...">
 #: rkward/pages/rkward_shortcuts.rkh:19
 #, kde-format
 msgid "RKWard Default Shortcut keys"
-msgstr ""
+msgstr "Eochracha aicearra réamhshocraithe RKWard"
 
 #. i18n: ectx: (RKWard Shortcut keys) <section title="RKWard Default Shortcut keys">
 #: rkward/pages/rkward_shortcuts.rkh:19
 #, kde-format
 msgid "To point out some of the less discoverable or more important shortcuts:"
 msgstr ""
+"Chun cuid de na haicearraí nach bhfuil chomh soiléir nó is tábhachtaí a lua:"
 
 #. i18n: ectx: (RKWard Shortcut keys) <section title="RKWard Default Shortcut keys">
 #: rkward/pages/rkward_shortcuts.rkh:19
@@ -1519,6 +2108,8 @@ msgid ""
 "To cycle between document / tool windows inside RKWard, use Ctrl+Tab and Ctrl"
 "+Shift+Tab"
 msgstr ""
+"Chun rothlú idir fuinneoga doiciméad/uirlisí laistigh de RKWard, bain úsáid "
+"as Ctrl+Tab agus Ctrl+Shift+Tab"
 
 #. i18n: ectx: (RKWard Shortcut keys) <section title="RKWard Default Shortcut keys">
 #: rkward/pages/rkward_shortcuts.rkh:19
@@ -1527,6 +2118,8 @@ msgid ""
 "To run code from scripts / help pages / the console, select it, and use Ctrl"
 "+Enter"
 msgstr ""
+"Chun cód a rith ó scripteanna / leathanaigh chabhrach / an consól, roghnaigh "
+"é, agus bain úsáid as Ctrl+Enter"
 
 #. i18n: ectx: (RKWard Shortcut keys) <section title="RKWard Default Shortcut keys">
 #: rkward/pages/rkward_shortcuts.rkh:19
@@ -1535,6 +2128,8 @@ msgid ""
 "F2 to search the R help for the symbol under the cursor in scripts and the "
 "console"
 msgstr ""
+"F2 chun cuardach a dhéanamh sa chabhair R don tsiombail faoin gcúrsóir i "
+"scripteanna agus sa chonsól"
 
 #. i18n: ectx: (RKWard Shortcut keys) <section title="RKWard Default Shortcut keys">
 #: rkward/pages/rkward_shortcuts.rkh:19
@@ -1543,12 +2138,14 @@ msgid ""
 "Meta+n to bring up <link href=\"rkward://rkward_code_navigation\">Code "
 "Navigation</link> mode in script windows"
 msgstr ""
+"Meta+n chun mód <link href=\"rkward://rkward_code_navigation\">Nascleanúint "
+"Chóid</link> a thabhairt suas i bhfuinneoga scripte"
 
 #. i18n: ectx: (Split views) <title>
 #: rkward/pages/rkward_split_views.rkh:8
 #, kde-format
 msgid "Split views"
-msgstr ""
+msgstr "Radharcanna scoilte"
 
 #. i18n: ectx: (Split views) <summary>
 #: rkward/pages/rkward_split_views.rkh:10
@@ -1556,6 +2153,8 @@ msgstr ""
 msgid ""
 "Split views can be used to partition the main window into several view areas."
 msgstr ""
+"Is féidir radhairc scoilte a úsáid chun an phríomhfhuinneog a dheighilt ina "
+"roinnt réimsí radhairc."
 
 #. i18n: ectx: (Split views) <summary>
 #: rkward/pages/rkward_split_views.rkh:10
@@ -1564,12 +2163,15 @@ msgid ""
 "They can be used to make better use of screen space, but also to view far-"
 "apart portions of a single file, simultaneously."
 msgstr ""
+"Is féidir iad a úsáid chun úsáid níos fearr a bhaint as spás scáileáin, ach "
+"freisin chun codanna de chomhad aonair atá i bhfad óna chéile a fheiceáil ag "
+"an am céanna."
 
 #. i18n: ectx: (Split views) <section title="...">
 #: rkward/pages/rkward_split_views.rkh:16
 #, kde-format
 msgid "Splitting views"
-msgstr ""
+msgstr "Radharcanna scoilte"
 
 #. i18n: ectx: (Split views) <section title="Splitting views">
 #: rkward/pages/rkward_split_views.rkh:16
@@ -1582,6 +2184,14 @@ msgid ""
 "window. When splitting other windows (such as onscreen graphics devices), "
 "the new view area will be initialized to show this help page."
 msgstr ""
+"Ní thacaítear le radhairc a roinnt faoi láthair ach amháin sa "
+"phríomhfhuinneog. Úsáid Fuinneog->Scoilt Ingearach nó Fuinneog->Scoilt "
+"Cothrománach chun an limistéar radhairc reatha a roinnt go hingearach nó go "
+"cothrománach. I gcás fuinneoga a thacaíonn leis (m.sh. scripteanna, "
+"leathanaigh chabhrach), beidh cóip den fhuinneog reatha sa limistéar "
+"radhairc nua-chruthaithe. Agus fuinneoga eile á roinnt (amhail gléasanna "
+"grafaicí ar an scáileán), déanfar an limistéar radhairc nua a thosú chun an "
+"leathanach cabhrach seo a thaispeáint."
 
 #. i18n: ectx: (Split views) <section title="Splitting views">
 #: rkward/pages/rkward_split_views.rkh:16
@@ -1592,24 +2202,30 @@ msgid ""
 "make sure that the view area where you want them new window to open has "
 "focus / is active."
 msgstr ""
+"Chun comhaid bhreise a chur le limistéar radhairc, oscail iad ar an "
+"ngnáthbhealach (ón bhfuinneog \"Brabhsálaí Comhad\", an roghchlár, nó ón "
+"bhfuinneog \"Consól R\"). Cinntigh go bhfuil fócas / gníomhach sa limistéar "
+"radhairc inar mian leat an fhuinneog nua a oscailt."
 
 #. i18n: ectx: (Split views) <section title="...">
 #: rkward/pages/rkward_split_views.rkh:22
 #, kde-format
 msgid "Closing split views"
-msgstr ""
+msgstr "Deireadh a chur le radharcanna scoilte"
 
 #. i18n: ectx: (Split views) <section title="Closing split views">
 #: rkward/pages/rkward_split_views.rkh:22
 #, kde-format
 msgid "To remove a view area, simply close all windows inside it."
 msgstr ""
+"Chun limistéar radhairc a bhaint, níl le déanamh ach na fuinneoga go léir "
+"laistigh de a dhúnadh."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <title>
 #: rkward/pages/rkward_trouble_shooting.rkh:8
 #, kde-format
 msgid "Trouble Shooting / FAQ"
-msgstr ""
+msgstr "Fadhbanna a réiteach / Ceisteanna Coitianta"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <summary>
 #: rkward/pages/rkward_trouble_shooting.rkh:9
@@ -1619,18 +2235,24 @@ msgid ""
 "RKWard. See also <link href=\"https://rkward.kde.org/faq\">the online FAQ</"
 "link>."
 msgstr ""
+"Déanfaidh an leathanach seo iarracht roinnt saincheisteanna coitianta a "
+"d'fhéadfadh teacht ort agus RKWard á úsáid agat a chlúdach. Féach freisin "
+"<link href=\"https://rkward.kde.org/faq\">na Ceisteanna Coitianta ar líne</"
+"link>."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:12
 #, kde-format
 msgid "The \"Analysis\" menu is missing, or shows up as \"(no label)\""
 msgstr ""
+"Tá an roghchlár \"Anailís\" ar iarraidh, nó taispeántar é mar \"(gan "
+"lipéad)\""
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:12
 #, kde-format
 msgid "Missing menu items"
-msgstr ""
+msgstr "Míreanna roghchláir ar iarraidh"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="The \"Analysis\" menu is missing, or shows up as \"(no label)\"">
 #: rkward/pages/rkward_trouble_shooting.rkh:12
@@ -1642,18 +2264,24 @@ msgid ""
 "Starting with version 0.6.3, RKWard should detect a changed installation "
 "path, and adjust paths, automatically."
 msgstr ""
+"Is minic a tharlaíonn an fhadhb seo nuair a bhogtar suiteáil RKWard go cosán "
+"difriúil, go háirithe ar Windows agus Mac. B’fhéidir go mbeidh ort cuairt a "
+"thabhairt ar Socruithe->Cumraigh RKWard->Breiseáin agus na comhaid ábhartha "
+"\".pluginmap\" a chur leis arís. Ag tosú le leagan 0.6.3, ba chóir go "
+"mbraithfeadh RKWard cosán suiteála athraithe, agus go ndéanfadh sé na cosáin "
+"a choigeartú go huathoibríoch."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
 #, kde-format
 msgid "The R backend crashed or failed to start"
-msgstr ""
+msgstr "Thuairteáil nó theip ar thosú an chúltaca R"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
 #, kde-format
 msgid "Crashed backend"
-msgstr ""
+msgstr "Cúlchríoch tuairteáilte"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="The R backend crashed or failed to start">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
@@ -1666,6 +2294,13 @@ msgid ""
 "offered a selection of installations found a common paths, but you can also "
 "specify a non-detected installation, manually.)"
 msgstr ""
+"Uaireanta, teipeann ar chúl-deireadh R tosú mar gheall ar fhadhb "
+"chumraíochta nó suiteála. Is iad na cúiseanna coitianta ná cosáin athraithe, "
+"nó nuashonrú ar R. De ghnáth, sna cásanna seo, taispeántar an dialóg "
+"socraithe agus RKWard á thosú, agus tugann sé seo deis duit suiteáil "
+"dhifriúil de R a roghnú. (Nóta: Tabharfar rogha suiteálacha duit a aimsítear "
+"le cosáin choitianta, ach is féidir leat suiteáil neamhbhraite a shonrú de "
+"láimh freisin.)"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="The R backend crashed or failed to start">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
@@ -1676,6 +2311,10 @@ msgid ""
 "advised to use the same, or a similar version of R to what was available "
 "during compilation, however."
 msgstr ""
+"I go leor cásanna, oibreoidh sé \"go simplí\" leagan de R a roghnú seachas "
+"an ceann a úsáideadh le linn an tiomsaithe. Má bhíonn trioblóid agat, moltar "
+"an leagan céanna, nó leagan cosúil de R, a úsáid agus a bhí ar fáil le linn "
+"an tiomsaithe, áfach."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="The R backend crashed or failed to start">
 #: rkward/pages/rkward_trouble_shooting.rkh:17
@@ -1686,18 +2325,23 @@ msgid ""
 "can also use the command-line option --r-executable in order to start a "
 "session using a specific installation of R."
 msgstr ""
+"Is féidir leat an chúltaca R a athrú de láimh am ar bith, ag baint úsáide as "
+"Socruithe->Seiceáil suiteáil. Bí cinnte do chuid sonraí a shábháil, sula n-"
+"athraíonn tú an chúltaca! Is féidir leat an rogha líne ordaithe --r-"
+"executable a úsáid freisin chun seisiún a thosú ag baint úsáide as suiteáil "
+"shonrach de R."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:28
 #, kde-format
 msgid "Why shouldn't I use R bundled inside the RKWard AppImage"
-msgstr ""
+msgstr "Cén fáth nach n-úsáidfinn R atá pacáilte laistigh den RKWard AppImage"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:28
 #, kde-format
 msgid "AppImage"
-msgstr ""
+msgstr "ÍomháAip"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="Why shouldn't I use R bundled inside the RKWard AppImage">
 #: rkward/pages/rkward_trouble_shooting.rkh:28
@@ -1710,6 +2354,13 @@ msgid ""
 "the R installation inside the AppImage, and R packages that are installed "
 "system-wide. This may cause subtle and surprising bugs."
 msgstr ""
+"Cuimsíonn an AppImage suiteáil de R ar mhaithe le háisiúlacht, ach níl an "
+"suiteáil seo feidhmiúil go hiomlán, agus ní féidir í a dhéanamh go "
+"teicniúil. Rud tábhachtach, ní bheidh tú in ann pacáistí R a shuiteáil de "
+"ghnáth (seachas cinn atá curtha i bhfeidhm go hiomlán in R). Chomh maith "
+"leis sin, d'fhéadfadh coimhlintí teacht idir an suiteáil R laistigh den "
+"AppImage, agus pacáistí R atá suiteáilte ar fud an chórais. D'fhéadfadh sé "
+"seo fabhtanna caolchúiseacha agus iontasacha a chruthú."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:33
@@ -1718,12 +2369,14 @@ msgid ""
 "Sometimes I enter a command short after the start of RKWard but it is not "
 "processed. What's wrong?"
 msgstr ""
+"Uaireanta cuirim ordú isteach go gairid i ndiaidh thús RKWard ach ní "
+"dhéantar é a phróiseáil. Cad atá cearr?"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:33
 #, kde-format
 msgid "Commands not processing"
-msgstr ""
+msgstr "Orduithe nach bhfuil á bpróiseáil"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="Sometimes I enter a command short after the start of RKWard but it is not processed. What's wrong?">
 #: rkward/pages/rkward_trouble_shooting.rkh:33
@@ -1735,6 +2388,11 @@ msgid ""
 "at the little box on the right bottom corner of RKWard. If it is green you "
 "can go ahead."
 msgstr ""
+"Tarlaíonn sé seo toisc go dtosaíonn RKWard ar dtús agus go dtosaítear R ina "
+"dhiaidh sin sa chúlra. Ag brath ar luas do mheaisín, féadfaidh sé tamall a "
+"thógáil chun R a thosú. Ar aon nós, is féidir leat staid R a sheiceáil "
+"laistigh de RKWard. Féach ar an mbosca beag sa chúinne íochtarach ar dheis "
+"de RKWard. Más glas é, is féidir leat dul ar aghaidh."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="Sometimes I enter a command short after the start of RKWard but it is not processed. What's wrong?">
 #: rkward/pages/rkward_trouble_shooting.rkh:33
@@ -1745,6 +2403,10 @@ msgid ""
 "commands will be placed into a queue, first, and executed as soon as the "
 "backend becomes available, again."
 msgstr ""
+"Is féidir leat tosú ag cur orduithe isteach agus an cúl-deireadh fós gan "
+"tosú, nó agus ríomh fada eile fós ar siúl. Sa chás seo, cuirfear d’orduithe "
+"i scuaine ar dtús, agus cuirfear i gcrích iad a luaithe a bheidh an cúl-"
+"deireadh ar fáil arís."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:38
@@ -1752,12 +2414,14 @@ msgstr ""
 msgid ""
 "RKWard says it needs a package. Was the installation of RKWard not complete?"
 msgstr ""
+"Deir RKWard go bhfuil pacáiste ag teastáil uaidh. Nach raibh suiteáil RKWard "
+"críochnaithe?"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:38
 #, kde-format
 msgid "Missing packages"
-msgstr ""
+msgstr "Pacáistí ar iarraidh"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard says it needs a package. Was the installation of RKWard not complete?">
 #: rkward/pages/rkward_trouble_shooting.rkh:38
@@ -1769,6 +2433,12 @@ msgid ""
 "on \"external\" packages (obtained from <link href=\"http://cran.r-project."
 "org/\">The Comprehensive R Archive Network (CRAN)</link>) to perform a task."
 msgstr ""
+"Tá beagnach gach feidhmiúlacht ag RKWard a thagann leis na pacáistí "
+"caighdeánacha de chuid R. Ach ag an am céanna tá RKWard sách inleathnaithe. "
+"Bhain go leor forbróirí úsáid as seo agus dá bhrí sin braitheann cuid de na "
+"nósanna imeachta in RKWard ar phacáistí \"seachtracha\" (a fhaightear ó "
+"<link href=\"http://cran.r-project.org/\">An Líonra Cartlainne Cuimsitheach "
+"R (CRAN)</link>) chun tasc a dhéanamh."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard says it needs a package. Was the installation of RKWard not complete?">
 #: rkward/pages/rkward_trouble_shooting.rkh:38
@@ -1782,6 +2452,13 @@ msgid ""
 "be out of luck. First you need to run a test from Analysis->Moment to "
 "achieve this."
 msgstr ""
+"Seo sampla. Déantar na tástálacha uile a bhaineann le <link href=\"rkward://"
+"rhelp/moments\">claonadh</link> agus <link href=\"rkward://rhelp/moments"
+"\">kurtosis</link> (a mbeifeá ag súil go seolfar mar phacáiste bonn de R) ó "
+"phacáiste seachtrach. Má léann tú é seo den chéad uair nó má atosaíonn tú "
+"RKWard tar éis duit é a shuiteáil agus má dhéanann tú iarracht an nasc a "
+"leanúint, ní bheidh an t-ádh ort. Ar dtús ní mór duit tástáil a rith ó "
+"Analysis->Moment chun seo a bhaint amach."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard says it needs a package. Was the installation of RKWard not complete?">
 #: rkward/pages/rkward_trouble_shooting.rkh:38
@@ -1793,6 +2470,12 @@ msgid ""
 "You'll be guided through the install procedure for the required package. "
 "Please note you need root privileges in certain situations."
 msgstr ""
+"De ghnáth, ghlaofá orthu ó R trí <link href=\"rkward://rhelp/update.packages"
+"\">update.packages</link> agus <link href=\"rkward://rhelp/library"
+"\">library</link> chun seo a bhaint amach. Ach déanann RKWard é seo a "
+"shimpliú duit. Treorófar tú tríd an nós imeachta suiteála don phacáiste "
+"riachtanach. Tabhair faoi deara le do thoil go mbeidh pribhléidí fréimhe ag "
+"teastáil uait i gcásanna áirithe."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:45
@@ -1801,12 +2484,14 @@ msgid ""
 "RKWard claims to take care of seamless integration with an office-suite. Why "
 "is there no native option to save it as an office file?"
 msgstr ""
+"Maíonn RKWard go ndéanann sé comhtháthú gan uaim le sraith oifige. Cén fáth "
+"nach bhfuil aon rogha dúchasach ann chun é a shábháil mar chomhad oifige?"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:45
 #, kde-format
 msgid "RKWard integration with an office-suite"
-msgstr ""
+msgstr "Comhtháthú RKWard le sraith oifige"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard claims to take care of seamless integration with an office-suite. Why is there no native option to save it as an office file?">
 #: rkward/pages/rkward_trouble_shooting.rkh:45
@@ -1820,18 +2505,27 @@ msgid ""
 "document or Office document, among others. Current RKWard versions support "
 "this in principle in the export menu."
 msgstr ""
+"Aontaímid go bhfuil easnamh mór fós ar chomhtháthú oifige RKWard, agus go "
+"bhfuil comhtháthú \"gan uaim\" fós i bhfad uainn. Féach <link href="
+"\"rkward://page/rkward_output\"/> le haghaidh eolais ar conas na rudaí is "
+"tábhachtaí a chur i gcrích faoi láthair. Idir an dá linn, is féidir anailísí "
+"a dhéanamh i ndoiciméid RMarkdown. Is féidir iad seo a shábháil mar PDF, "
+"doiciméad TeX nó doiciméad Office, i measc nithe eile. Tacaíonn leaganacha "
+"reatha RKWard leis seo i bprionsabal sa roghchlár easpórtála."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:48
 #, kde-format
 msgid "People tend to ask me what RKWard means. What should I answer?"
 msgstr ""
+"Is gnách le daoine fiafraí díom cad is brí le RKWard. Cad ba cheart dom a "
+"fhreagairt?"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:48
 #, kde-format
 msgid "What does \"RKWard\" mean?"
-msgstr ""
+msgstr "Cad is brí le \"RKWard\"?"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="People tend to ask me what RKWard means. What should I answer?">
 #: rkward/pages/rkward_trouble_shooting.rkh:48
@@ -1843,18 +2537,23 @@ msgid ""
 "link>, which delivered the basic GUI technologies for RKWard. And <link href="
 "\"http://en.wikipedia.org/wiki/Ward\">Ward</link>? That's another story."
 msgstr ""
+"Sea, is ainm an-aisteach é. ;) Ach is léir go dtagann R ón <link href="
+"\"http://www.r-project.org/\">teanga R</link>, arb í bunús staitistiúil "
+"RKWard í. Tagann K ó <link href=\"http://kde.org/\">KDE</link>, a sheachaid "
+"na teicneolaíochtaí bunúsacha grafacha úsáideora do RKWard. Agus <link href="
+"\"http://en.wikipedia.org/wiki/Ward\">Ward</link>? Scéal eile ar fad é sin."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:51
 #, kde-format
 msgid "RKWard is running since ages. Has it hung up?"
-msgstr ""
+msgstr "Tá RKWard ag rith le fada an lá. An bhfuil sé ag crochadh suas?"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:51
 #, kde-format
 msgid "RKWard seems to hang"
-msgstr ""
+msgstr "Is cosúil go bhfuil RKWard crochta"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard is running since ages. Has it hung up?">
 #: rkward/pages/rkward_trouble_shooting.rkh:51
@@ -1867,6 +2566,12 @@ msgid ""
 "there is still something to calculate or plot. If it turns green, R is done "
 "calculating."
 msgstr ""
+"Braitheann sé seo. Ní thógann sé ach tamall ar roinnt tástálacha agus plotaí "
+"má tá méideanna ollmhóra sonraí nó ríomhanna sofaisticiúla agat. Dá bhrí "
+"sin, bíonn foighne ag teastáil uaireanta. Ar aon nós, is féidir leat staid R "
+"a sheiceáil laistigh de RKWard. Féach ar an mbosca beag sa chúinne "
+"íochtarach ar dheis de RKWard. Ciallaíonn dearg go bhfuil rud éigin le ríomh "
+"nó le plota fós. Má chasann sé glas, tá R críochnaithe leis an ríomh."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard is running since ages. Has it hung up?">
 #: rkward/pages/rkward_trouble_shooting.rkh:51
@@ -1878,6 +2583,12 @@ msgid ""
 "An example of very memory hungry tests are the <link href=\"rkward://rhelp/"
 "wilcox.test\">Wilcoxon Rank Sum and Signed Rank Tests</link>."
 msgstr ""
+"Ach bíonn roinnt tástálacha staitistiúla an-ocrasach ar chuimhne agus ar "
+"chruacha agus is féidir leo an córas ar fad a chur as freagairt, má bhíonn "
+"go leor malartaithe ann. Ní fabht in RKWard ná R atá ann, ach an ríomh a "
+"chuireann do chóras ag a theorainn. Sampla de thástálacha an-ocrasach ar "
+"chuimhne is ea na <link href=\"rkward://rhelp/wilcox.test\">Tástálacha "
+"Wilcoxon Rank Sum agus Signed Rank</link>."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="RKWard is running since ages. Has it hung up?">
 #: rkward/pages/rkward_trouble_shooting.rkh:51
@@ -1890,18 +2601,26 @@ msgid ""
 "issue (see: <link href=\"rkward://rhelp/mem.limits\"/>, and <link href="
 "\"rkward://rhelp/memory.limit\"/>)."
 msgstr ""
+"Dá bhrí sin, tá sé tábhachtach go mbeadh an tástáil ar eolas agat. Ina "
+"theannta sin, tá sé an-tábhachtach an spás oibre agus rannóga eile ar "
+"oibrigh tú orthu a shábháil sula ndéanann tú oibríochtaí den sórt sin. Níl "
+"aon fheidhmiúlacht aisghabhála laistigh de RKWard faoi láthair i gcás "
+"tuairteála! Is féidir leat tástálacha ionsuite a fháil ó R chun aghaidh a "
+"thabhairt ar an gceist chuimhne seo (féach: <link href=\"rkward://rhelp/mem."
+"limits\"/>, agus <link href=\"rkward://rhelp/memory.limit\"/>)."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:58
 #, kde-format
 msgid "I think I did something wrong? Where is 'Undo' and 'Redo'?"
 msgstr ""
+"Sílim gur dheineas rud éigin mícheart? Cá bhfuil 'Cealaigh' agus 'Athdhéan'?"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section shorttitle="...">
 #: rkward/pages/rkward_trouble_shooting.rkh:58
 #, kde-format
 msgid "Undo/Redo"
-msgstr ""
+msgstr "Cealaigh/Athdhéanamh"
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="I think I did something wrong? Where is 'Undo' and 'Redo'?">
 #: rkward/pages/rkward_trouble_shooting.rkh:58
@@ -1913,6 +2632,12 @@ msgid ""
 "important that you know what you do before you start. It's recommended to "
 "use copies of original data and to give everything a meaningful name."
 msgstr ""
+"Faoi láthair níl feidhmiúlacht \"cealaigh\" ná \"athdhéanamh\" ag RKWard i "
+"ngach áit. Mar shampla, tá feidhmiúlacht den sórt sin ann don eagarthóir "
+"scripte, ach níl aon chealaigh ná athdhéanamh ann do phlotaí nó tástálacha "
+"críochnaithe. Dá bhrí sin, tá sé tábhachtach go mbeadh a fhios agat cad a "
+"dhéanann tú sula dtosaíonn tú. Moltar cóipeanna de shonraí bunaidh a úsáid "
+"agus ainm bríoch a thabhairt do gach rud."
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="I think I did something wrong? Where is 'Undo' and 'Redo'?">
 #: rkward/pages/rkward_trouble_shooting.rkh:58
@@ -1926,54 +2651,65 @@ msgid ""
 "relevant settings in combination with the creation date. Moreover you can "
 "check and copy any code generated for your documentation purposes."
 msgstr ""
+"Mar sin féin, déanann RKWard iarracht an oiread eolais agus is féidir a "
+"thabhairt duit faoi na rudaí atá déanta agat. I gcás tástálacha agus plotaí "
+"a ritheann tú ón roghchlár, beidh nasc \"rith arís\" faoin aschur ag <link "
+"href=\"rkward://page/rkward_output\"/>. Is féidir leat é seo a úsáid chun an "
+"gníomh seo a athdhéanamh le socruithe comhionanna nó beagán modhnaithe. "
+"Chomh maith leis sin, déanann tástálacha agus plotaí iarracht na socruithe "
+"is ábhartha a thaispeáint i gcomhar leis an dáta cruthaithe. Ina theannta "
+"sin, is féidir leat aon chód a ghintear chun críocha do dhoiciméadaithe a "
+"sheiceáil agus a chóipeáil."
 
 #. i18n: ectx: (Welcome to RKWard) <title>
 #: rkward/pages/rkward_welcome.rkh:8
 #, kde-format
 msgid "Welcome to RKWard"
-msgstr ""
+msgstr "Fáilte go RKWard"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="...">
 #: rkward/pages/rkward_welcome.rkh:10
 #, kde-format
 msgid "My recent script files"
-msgstr ""
+msgstr "Mo chomhaid scripte le déanaí"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="...">
 #: rkward/pages/rkward_welcome.rkh:12
 #, kde-format
 msgid "My recent workspaces"
-msgstr ""
+msgstr "Mo spásanna oibre le déanaí"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="...">
 #: rkward/pages/rkward_welcome.rkh:14
 #, kde-format
 msgid "My recent output files"
-msgstr ""
+msgstr "Mo chomhaid aschuir le déanaí"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="...">
 #: rkward/pages/rkward_welcome.rkh:16
 #, kde-format
 msgid "Import or enter data"
-msgstr ""
+msgstr "Iompórtáil nó cuir isteach sonraí"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Import or enter data">
 #: rkward/pages/rkward_welcome.rkh:16
 #, kde-format
 msgid "<link href=\"rkward://actions/new_data_frame\">Enter new data</link>"
 msgstr ""
+"<link href=\"rkward://actions/new_data_frame\">Cuir isteach sonraí nua</link>"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Import or enter data">
 #: rkward/pages/rkward_welcome.rkh:16
 #, kde-format
 msgid "<link href=\"rkward://actions/import_assistant\">Import data</link>"
 msgstr ""
+"<link href=\"rkward://actions/import_assistant\">Sonraí a allmhairiú</link>"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="...">
 #: rkward/pages/rkward_welcome.rkh:23
 #, kde-format
 msgid "Useful settings"
-msgstr ""
+msgstr "Socruithe úsáideacha"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Useful settings">
 #: rkward/pages/rkward_welcome.rkh:23
@@ -1982,6 +2718,8 @@ msgid ""
 "<link href=\"rkward://actions/rpackage_install\">Install R and RKWard "
 "packages</link>"
 msgstr ""
+"<link href=\"rkward://actions/rpackage_install\">Suiteáil pacáistí R agus "
+"RKWard</link>"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Useful settings">
 #: rkward/pages/rkward_welcome.rkh:23
@@ -1990,6 +2728,8 @@ msgid ""
 "&lrm;<link href=\"rkward://settings/addons\">Further add-on related settings "
 "(e.g., git/project integration)</link>&lrm;"
 msgstr ""
+"<link href=\"rkward://settings/addons\">Socruithe breise a bhaineann le "
+"breiseáin (m.sh., comhtháthú git/project)</link>"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Useful settings">
 #: rkward/pages/rkward_welcome.rkh:23
@@ -1998,12 +2738,14 @@ msgid ""
 "&lrm;<link href=\"rkward://settings/general\">Startup options</link> "
 "(including this page)&lrm;"
 msgstr ""
+"&lrm;<link href=\"rkward://settings/general\">Roghanna tosaithe</link> (lena "
+"n-áirítear an leathanach seo)&lrm;"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="...">
 #: rkward/pages/rkward_welcome.rkh:31
 #, kde-format
 msgid "Documentation starting points"
-msgstr ""
+msgstr "Pointí tosaigh doiciméadachta"
 
 #. i18n: ectx: (Welcome to RKWard) <section title="Documentation starting points">
 #: rkward/pages/rkward_welcome.rkh:31
@@ -2012,12 +2754,14 @@ msgid ""
 "External links: <link href=\"https://rkward.kde.org/\">project homepage</"
 "link>"
 msgstr ""
+"Naisc sheachtracha: <link href=\"https://rkward.kde.org/\">leathanach baile "
+"an tionscadail</link>"
 
 #. i18n: ectx: (Workspace Browser) <title>
 #: rkward/pages/rkward_workspace_browser.rkh:8
 #, kde-format
 msgid "Workspace Browser"
-msgstr ""
+msgstr "Brabhsálaí Spáis Oibre"
 
 #. i18n: ectx: (Workspace Browser) <summary>
 #: rkward/pages/rkward_workspace_browser.rkh:10
@@ -2029,6 +2773,11 @@ msgid ""
 "except you browse R objects in your workspace, instead of files on your "
 "computer."
 msgstr ""
+"Ligeann brabhsálaí an spáis oibre duit réada R a fheiceáil agus a "
+"ionramháil. Áirítear leis seo do chuid réada féin (sonraí, feidhmeanna), "
+"agus na \"timpeallachtaí pacáiste\" mar a thugtar orthu. Mar analaí garbh, "
+"tá sé seo cosúil le brabhsálaí rialta córais comhad, ach amháin go "
+"mbrabhsálann tú réada R i do spás oibre, seachas comhaid ar do ríomhaire."
 
 #. i18n: ectx: (Workspace Browser) <summary>
 #: rkward/pages/rkward_workspace_browser.rkh:10
@@ -2039,12 +2788,16 @@ msgid ""
 "\"Workspace\" icon, which is located on the top of the left window border, "
 "by default."
 msgstr ""
+"Is féidir an brabhsálaí spáis oibre a ghlaoch trí úsáid a bhaint as Windows-"
+">Gníomhachtaigh->Taispeáin / Folaigh Brabhsálaí Spáis Oibre (is é Alt+1 an "
+"aicearra réamhshocraithe), nó trí chliceáil ar an deilbhín \"Spás Oibre\", "
+"atá suite ag barr imeall na fuinneoige ar chlé, de réir réamhshocraithe."
 
 #. i18n: ectx: (Workspace Browser) <section title="...">
 #: rkward/pages/rkward_workspace_browser.rkh:16
 #, kde-format
 msgid "What is shown"
-msgstr ""
+msgstr "Cad a thaispeántar"
 
 #. i18n: ectx: (Workspace Browser) <section title="What is shown">
 #: rkward/pages/rkward_workspace_browser.rkh:16
@@ -2057,6 +2810,12 @@ msgid ""
 "Environments\" (available at the top of the browser window, or choosing "
 "\"Show Objects\" from the context menu)."
 msgstr ""
+"Bíonn na céadta nó fiú na mílte réad i láthair i seisiún tipiciúil R. Is "
+"féidir go mbeadh sé seo ró-dhian ar dtús, dá bhrí sin, cuireann brabhsálaí "
+"an spáis oibre fo-thacar áirithe réad ar fáil. Is iad na roghanna anseo ná "
+"\"Taispeáin Réada Folaithe\", \"Gach Feidhm vs. Neamhfheidhm vs. Feidhmeanna"
+"\", agus \"Taispeáin Gach Timpeallacht\" (ar fáil ag barr fhuinneog an "
+"bhrabhsálaí, nó trí \"Taispeáin Réada\" a roghnú ón roghchlár comhthéacs)."
 
 #. i18n: ectx: (Workspace Browser) <section title="What is shown">
 #: rkward/pages/rkward_workspace_browser.rkh:16
@@ -2067,6 +2826,10 @@ msgid ""
 "objects, which are not meant for direct use, so it's generally safe to hide "
 "them from view."
 msgstr ""
+"Ba chóir go mbeadh an chéad cheann soiléir. Rialaíonn sé an dtaispeántar nó "
+"nach dtaispeántar réada a dtosaíonn a n-ainm le ponc ('.'). Úsáidtear iad "
+"sin go minic le haghaidh réada inmheánacha, nach bhfuil beartaithe lena n-"
+"úsáid go díreach, mar sin is sábháilte iad a cheilt ón radharc i gcoitinne."
 
 #. i18n: ectx: (Workspace Browser) <section title="What is shown">
 #: rkward/pages/rkward_workspace_browser.rkh:16
@@ -2076,6 +2839,9 @@ msgid ""
 "while \"Functions\" shows only functions, and \"Non-Functions\" shows all "
 "other objects (typically data)."
 msgstr ""
+"Ligeann an dara ceann duit roghnú de réir an chineáil réada. Ní dhéanann "
+"\"Uile\" scagadh, ach ní thaispeánann \"Feidhmeanna\" ach feidhmeanna, agus "
+"taispeánann \"Neamh-Fheidhmeanna\" gach réad eile (de ghnáth sonraí)."
 
 #. i18n: ectx: (Workspace Browser) <section title="What is shown">
 #: rkward/pages/rkward_workspace_browser.rkh:16
@@ -2089,6 +2855,13 @@ msgid ""
 "globalenv\"/>) is shown, which is the environment, in which you create and "
 "edit your data."
 msgstr ""
+"Rialaíonn an rogha \"Taispeáin Gach Timpeallacht\" an dtaispeántar "
+"timpeallachtaí pacáiste agus a n-réada. Go garbh, má mhúchann tú an rogha "
+"seo, ní thaispeántar ach do chuid réada \"féin\", agus nuair a bhíonn an "
+"rogha casta air, taispeántar gach réad réamhshainithe freisin. Go teicniúil, "
+"nuair a bhíonn an rogha múchta, ní thaispeántar ach an .GlobalEnv (féach "
+"<link href=\"rkward://rhelp/globalenv\"/>), arb é an timpeallacht í ina "
+"gcruthaíonn tú agus ina n-eagarthaíonn tú do shonraí."
 
 #. i18n: ectx: (Workspace Browser) <section title="What is shown">
 #: rkward/pages/rkward_workspace_browser.rkh:16
@@ -2099,6 +2872,10 @@ msgid ""
 "the left of the object name. Clicking on this will expand the view to show "
 "all the children of the object."
 msgstr ""
+"Tabhair faoi deara go n-eagraítear réada in ordlathas, i.e. bíonn réada "
+"\"leanaí\" breise i roinnt cineálacha réada. Léirítear é seo le siombail \"+"
+"\" ar chlé d'ainm an réada. Trí chliceáil air seo, leathnófar an radharc "
+"chun gach leanbh den réada a thaispeáint."
 
 #. i18n: ectx: (Workspace Browser) <section title="What is shown">
 #: rkward/pages/rkward_workspace_browser.rkh:16
@@ -2107,6 +2884,8 @@ msgid ""
 "Hovering the mouse pointer over an object will show a short summary of the "
 "objects' basic properties."
 msgstr ""
+"Trí an pointeoir luiche a choinneáil os cionn réad, taispeánfar achoimre "
+"ghearr ar airíonna bunúsacha an réada."
 
 #. i18n: ectx: (Workspace Browser) <section title="Available actions">
 #: rkward/pages/rkward_workspace_browser.rkh:30
@@ -2117,6 +2896,10 @@ msgid ""
 "some types of objects. The most important actions for objects in package "
 "environments:"
 msgstr ""
+"Tá roinnt gníomhartha ar fáil ón roghchlár comhthéacs (trí chliceáil ar "
+"dheis ar cheann de na réada), ach níl cuid de na gníomhartha seo ar fáil ach "
+"do chineálacha áirithe réad. Na gníomhartha is tábhachtaí do réada i "
+"dtimpeallachtaí pacáiste:"
 
 #. i18n: ectx: (Workspace Browser) <section title="Available actions">
 #: rkward/pages/rkward_workspace_browser.rkh:30
@@ -2125,6 +2908,8 @@ msgid ""
 "<b>Search Help</b>: This will try to locate and show a relevant R help page "
 "on the object."
 msgstr ""
+"<b>Cuardaigh Cabhair</b>: Déanfaidh sé seo iarracht leathanach cabhrach R "
+"ábhartha a aimsiú agus a thaispeáint ar an réad."
 
 #. i18n: ectx: (Workspace Browser) <section title="Available actions">
 #: rkward/pages/rkward_workspace_browser.rkh:30
@@ -2135,6 +2920,10 @@ msgid ""
 "\">print</link> and <link href=\"rkward://rhelp/summary\">summary</link> to "
 "show more information."
 msgstr ""
+"<b>Amharc</b>: Oscail fuinneog le faisnéis mhionsonraithe faoin réad. "
+"Úsáidfidh sé seo, i measc nithe eile, na horduithe R <link href=\"rkward://"
+"rhelp/print\">print</link> agus <link href=\"rkward://rhelp/summary"
+"\">summary</link> chun tuilleadh eolais a thaispeáint."
 
 #. i18n: ectx: (Workspace Browser) <section title="Available actions">
 #: rkward/pages/rkward_workspace_browser.rkh:30
@@ -2145,12 +2934,16 @@ msgid ""
 "copy an object from the environment \"package:datasets\" into the ."
 "GlobalEnv, and in a second step, edit it."
 msgstr ""
+"<b>Cóipeáil chuig siombail nua / Cóipeáil chuig .GlobalEnv</b>: Chun réada a "
+"ionramháil, ní mór duit iad a chóipeáil chuig an .GlobalEnv. Mar shampla, "
+"d'fhéadfá réad a chóipeáil ón timpeallacht \"package:datasets\" isteach sa ."
+"GlobalEnv, agus sa dara céim, é a chur in eagar."
 
 #. i18n: ectx: (Workspace Browser) <section title="Available actions">
 #: rkward/pages/rkward_workspace_browser.rkh:30
 #, kde-format
 msgid "Further actions available for objects in the .GlobalEnv:"
-msgstr ""
+msgstr "Gníomhartha breise atá ar fáil do réada sa .GlobalEnv:"
 
 #. i18n: ectx: (Workspace Browser) <section title="Available actions">
 #: rkward/pages/rkward_workspace_browser.rkh:30
@@ -2159,12 +2952,14 @@ msgid ""
 "<b>Edit</b>: Open the object in a data editor. Currently editing is only "
 "supported for data.frames."
 msgstr ""
+"<b>Eagarthóireacht</b>: Oscail an réad in eagarthóir sonraí. Faoi láthair, "
+"ní thacaítear le heagarthóireacht ach le haghaidh data.frames."
 
 #. i18n: ectx: (Workspace Browser) <section title="Available actions">
 #: rkward/pages/rkward_workspace_browser.rkh:30
 #, kde-format
 msgid "<b>Rename / Delete</b>: These should be obvious."
-msgstr ""
+msgstr "<b>Athainmnigh / Scrios</b>: Ba chóir go mbeadh siad seo soiléir."
 
 #. i18n: ectx: (Workspace Browser) <section title="Configurable Settings">
 #: rkward/pages/rkward_workspace_browser.rkh:47
@@ -2173,6 +2968,8 @@ msgid ""
 "Some default settings for the Workspace Browser can be configured using the "
 "context menu:"
 msgstr ""
+"Is féidir roinnt socruithe réamhshocraithe don Bhrabhsálaí Spáis Oibre a "
+"chumrú trí úsáid a bhaint as an roghchlár comhthéacs:"
 
 #. i18n: ectx: (Workspace Browser) <section title="Configurable Settings">
 #: rkward/pages/rkward_workspace_browser.rkh:47
@@ -2183,6 +2980,11 @@ msgid ""
 "the workspace browser, these configure the <i>default</i> settings in the "
 "workspace browser (i.e. those that are effectively after restarting RKWard)."
 msgstr ""
+"<b>Taispeáin réada folaithe / taispeáin gach timpeallacht</b>: Féach <link "
+"href=\"#introduction\">thuas</link>. I gcodarsnacht leis na socruithe a "
+"dhéantar go díreach i mbrabhsálaí an spáis oibre, cumraíonn siad seo na "
+"socruithe <i>réamhshocraithe</i> i mbrabhsálaí an spáis oibre (i.e. iad siúd "
+"a bhíonn i bhfeidhm tar éis RKWard a atosú)."
 
 #. i18n: ectx: (Workspace Browser) <section title="Configurable Settings">
 #: rkward/pages/rkward_workspace_browser.rkh:47
@@ -2192,6 +2994,9 @@ msgid ""
 "(such as environments, lists) are shown, even if they do not correspond to "
 "the current filter."
 msgstr ""
+"<b>Taispeáin réada le páistí</b>: Rialaíonn sé seo an dtaispeántar réada le "
+"páistí (amhail timpeallachtaí, liostaí), fiú mura gcomhfhreagraíonn siad don "
+"scagaire reatha."
 
 #. i18n: ectx: (Workspace Browser) <section title="Configurable Settings">
 #: rkward/pages/rkward_workspace_browser.rkh:47
@@ -2200,6 +3005,9 @@ msgid ""
 "<b>Show variables / functions</b>: Equivalent to the \"All vs. Non-Function "
 "vs. Functions\" control described <link href=\"#introduction\">above</link>."
 msgstr ""
+"<b>Taispeáin athróga / feidhmeanna</b>: Coibhéiseach leis an rialú \"Gach "
+"Feidhm vs. Neamhfheidhm vs. Feidhmeanna\" a bhfuil cur síos air <link href="
+"\"#introduction\">thuas</link>."
 
 #. i18n: ectx: (Workspace Browser) <section title="Configurable Settings">
 #: rkward/pages/rkward_workspace_browser.rkh:47
@@ -2208,6 +3016,8 @@ msgid ""
 "<b>Label field / Type field / Class field</b>: Which columns are shown for "
 "each object?"
 msgstr ""
+"<b>Réimse lipéid / Réimse cineáil / Réimse ranga</b>: Cé na colúin a "
+"thaispeántar do gach réad?"
 
 #. i18n: ectx: (Workspace Browser) <section title="Configurable Settings">
 #: rkward/pages/rkward_workspace_browser.rkh:47
@@ -2216,6 +3026,8 @@ msgid ""
 "One additional setting is available from <a href=\"rkward://settings/browser"
 "\">Settings->Configure RKWard->Workspace</a>:"
 msgstr ""
+"Tá socrú breise amháin ar fáil ó <a href=\"rkward://settings/browser"
+"\">Socruithe->Cumraigh RKWard->Spás Oibre</a>:"
 
 #. i18n: ectx: (Workspace Browser) <section title="Configurable Settings">
 #: rkward/pages/rkward_workspace_browser.rkh:47
@@ -2229,3 +3041,11 @@ msgid ""
 "and is \"blacklisted\" by default. If you note that loading a package takes "
 "exceedingly long, you may consider adding it to this list."
 msgstr ""
+"<b>Ná faigh struchtúr na bpacáistí seo riamh</b>: Tá <b>an</b>- líon mór "
+"rudaí beaga (na deicheanna mílte) i roinnt (cúpla) pacáistí R. Sa chás is "
+"measa, is féidir le hiarracht faisnéis struchtúir a fháil orthu sin (i.e. an "
+"fhaisnéis atá le taispeáint sa bhrabhsálaí spáis oibre a fháil) go leor "
+"acmhainní a ídiú agus RKWard a chur as freagairt. Is pacáiste den sórt sin é "
+"an pacáiste \"GO\", agus tá sé \"ar liosta dubh\" de réir réamhshocraithe. "
+"Má thugann tú faoi deara go dtógann sé an-fhada pacáiste a luchtú, b'fhéidir "
+"go mbeadh sé inmholta é a chur leis an liosta seo."
