@@ -1,4 +1,4 @@
---- Version 0.8.3 - UNRELEASED
+--- Version 0.8.3 - Apr-24-2026
 - Fixed: Remove obsolete dep# on dbus
 - Added: Allow to define custom script preview modes (rk.register.script.preview()))
 - Added: Various small updates to the R highlighting in the R console
