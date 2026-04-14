@@ -13,7 +13,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 		</snippet>
 		<snippet id="rkward_version_guard">
 			<!-- Guard against accidental inclusion of pluginmaps in a different installed version of RKWard -->
-			<dependencies rkward_min_version="0.8.3" rkward_max_version="0.8.3y" />
+			<dependencies rkward_min_version="0.8.3z" rkward_max_version="0.8.4y" />
 		</snippet>
 	</snippets>
 </document>
