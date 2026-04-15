@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-04-11 00:39+0000\n"
-"PO-Revision-Date: 2026-01-26 17:35+0100\n"
+"PO-Revision-Date: 2026-04-14 12:39+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 23.08.5\n"
+"X-Generator: Lokalize 25.04.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -4217,7 +4217,7 @@ msgstr "Detalia"
 #: rkward/rkward.cpp:604
 #, kde-format
 msgid "Check installation"
-msgstr ""
+msgstr "Verifica installation"
 
 #: rkward/rkward.cpp:608
 #, kde-format
@@ -4922,13 +4922,12 @@ msgstr ""
 #: rkward/settings/rksettingsmodulegeneral.cpp:96
 #, kde-format
 msgid "Engine:"
-msgstr ""
+msgstr "Motor:"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:97
-#, fuzzy, kde-format
-#| msgid "Restore defaults"
+#, kde-format
 msgid "Platform default"
-msgstr "Restabili a valores predefinite"
+msgstr "Platteforma predefinite"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:99
 #, kde-format
@@ -4936,10 +4935,9 @@ msgid "QWebEngine"
 msgstr ""
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:103
-#, fuzzy, kde-format
-#| msgid "View"
+#, kde-format
 msgid "QWebView"
-msgstr "Vista"
+msgstr "QWebView"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:109
 #, kde-format
@@ -6479,10 +6477,9 @@ msgid "Package"
 msgstr "Pacchetto"
 
 #: rkward/windows/rkhtmlwindow.cpp:389
-#, fuzzy, kde-format
-#| msgid "File '%1' does not exist."
+#, kde-format
 msgid "RKWard output file %1 does not (yet) exist"
-msgstr "Le file '%1' non existe."
+msgstr "Le file de exito de RKWard %1 non existe (ancora)."
 
 #: rkward/windows/rkhtmlwindow.cpp:521
 #: rkward/windows/rktoplevelwindowgui.cpp:264
@@ -6559,10 +6556,9 @@ msgid "&Clear Output"
 msgstr "&Clara Exito"
 
 #: rkward/windows/rkhtmlwindow.cpp:686
-#, fuzzy, kde-format
-#| msgid "Unload"
+#, kde-format
 msgid "Reload"
-msgstr "Discarga"
+msgstr "Recarga"
 
 #: rkward/windows/rkhtmlwindow.cpp:690
 #, kde-format
@@ -6685,12 +6681,12 @@ msgstr "Salveguarda como"
 #: rkward/windows/rkqwebview.cpp:252
 #, kde-format
 msgid "Open link in new tab"
-msgstr ""
+msgstr "Aperi ligamine in nove &scheda"
 
 #: rkward/windows/rkqwebview.cpp:265
 #, kde-format
 msgid "Copy link address"
-msgstr ""
+msgstr "Copia adresse de ligamine"
 
 #: rkward/windows/rktexthints.cpp:34
 #, kde-format
