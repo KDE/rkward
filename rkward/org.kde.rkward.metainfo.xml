@@ -19,6 +19,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
   <name xml:lang="eu">RKWard</name>
   <name xml:lang="fi">RKWard</name>
   <name xml:lang="fr">RKWard</name>
+  <name xml:lang="ga">RKWard</name>
   <name xml:lang="gl">RKWard</name>
   <name xml:lang="he">RKWard</name>
   <name xml:lang="hu">RKWard</name>
@@ -50,6 +51,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
   <summary xml:lang="eu">R estatistika lengoairako KDEren aurrealdekoa</summary>
   <summary xml:lang="fi">R-tilastolaskentakielen KDE-käyttöliittymä</summary>
   <summary xml:lang="fr">Interface utilisateur pour le langage de statistiques « R »</summary>
+  <summary xml:lang="ga">Comhéadan KDE don teanga staitisticí R</summary>
   <summary xml:lang="gl">Interface de KDE para a linguaxe de estatística R</summary>
   <summary xml:lang="he">ממשק משתמש מבית KDE לשפה הסטטיסטית R</summary>
   <summary xml:lang="hu">KDE előtétprogram az R statisztikai nyelvhez</summary>
@@ -86,6 +88,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
     <p xml:lang="eu">«RKWard»ek «R»rako aurrealdeko garden eta erabilerraza bihurtu nahi du, kalkulu estatistikoetarako eta grafikoetarako sistema ahaltsu bat da R. Funtzio estatistiko garrantzitsuenetarako GUI egokiaz gain, etorkizuneko bertsioek bulegotika-suite batekiko josturarik gabeko bateratzea eskainiko du.</p>
     <p xml:lang="fi">RKward pyrkii olemaan helppokäyttöinen ja läpinäkyvä käyttöliittymä tehokkaalle tilastolaskenta- ja kaaviojärjestelmälle R:lle. Paitsi kätevän graafisen käyttöliittymän tärkeimpiin tilastofunktioihin tulevat versiot tarjoavat myös saumattoman integroinnin toimisto-ohjelmiin.</p>
     <p xml:lang="fr">Le logiciel RKWard se veut devenir une interface utilisateur simple à utiliser pour le langage « R », un environnement puissant pour le calcul et l'affichage graphique de statistique. En plus d'une interface graphique utilisateur adapté pour les fonctions de statistiques les plus importantes, les futures versions offriront une intégration transparente avec les suites de bureautique.</p>
+    <p xml:lang="ga">Tá sé mar aidhm ag RKWard a bheith ina chomhéadan trédhearcach éasca le húsáid do R, córas cumhachtach le haghaidh ríomhaireachta staitistiúla agus grafaicí. Chomh maith le comhéadan úsáideora áisiúil do na feidhmeanna staitistiúla is tábhachtaí, cuirfidh leaganacha amach anseo comhtháthú gan uaim le sraith oifige ar fáil freisin.</p>
     <p xml:lang="gl">RKWard pretende converterse nunha interface para R fácil de usar e transparente, un potente sistema de computación estatística e gráficas. Ademais de fornecer unha interface gráfica cómoda para as funcións estatísticas máis importantes, versión futuras fornecerán integración transparente cunha suite de ofimática.</p>
     <p xml:lang="he">המטרה של RKWard היא להיות ממשק משתמש שקוף ופשוט לשימוש מול R, שפה סטטיסטית רבת עוצמה לחישוב סטטיסטי וגרפיקה. לצד ממשק המשתמש הנוח לפונקציות הסטטיסטיות החשובות ביותר, גרסאות עתידיות תספקנה שילוב שקוף לחלוטין מול חבילות תוכנות משרדיות.</p>
     <p xml:lang="hu">Az RKWard célja, hogy egy könnyen használható, átlátható előtétprogramja legyen az R-nek, egy nagy teljesítményű statisztikai számítási és grafikai rendszernek. A legfontosabb statisztikai funkciók kényelmes grafikus felhasználói felülete mellett a jövőbeli verziók zökkenőmentes integrációt biztosítanak majd egy irodai programcsomaggal is.</p>
@@ -121,6 +124,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
       <caption xml:lang="eu">Leiho nagusia, datu-editore, objektu arakatzaile, «R»rako kontsola elkarreragile, eta tresna-leiho gehiagorekin.</caption>
       <caption xml:lang="fi">Pääikkuna, jossa datamuokkain, olioselain, vuorovaikutteinen R-konsoli ja lisätyökaluikkunoita.</caption>
       <caption xml:lang="fr">Fenêtre principale avec l'éditeur de données, le navigateur d'objets, la console interactive de R et d'autres fenêtres d'outils.</caption>
+      <caption xml:lang="ga">Príomhfhuinneog, le heagarthóir sonraí, brabhsálaí réad, consól R idirghníomhach, agus fuinneoga uirlisí breise.</caption>
       <caption xml:lang="gl">Xanela principal, co editor de datos, o navegador de obxectos, a consola interactiva de R, e outras xanelas de ferramentas.</caption>
       <caption xml:lang="he">חלון ראשי, עם עורך נתונים, דפדפן עצמים, מסוף R אינטראקטיבי וחלונות כלים נוספים.</caption>
       <caption xml:lang="hu">A főablak, adatszerkesztővel, objektumböngészővel, interaktív R-konzollal és további eszközablakokkal.</caption>
@@ -154,6 +158,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
       <caption xml:lang="eu">Gidoi-editorea aurreikuspegi aktiboarekin</caption>
       <caption xml:lang="fi">Skriptimuokkain aktiivisella esikatselulla</caption>
       <caption xml:lang="fr">Éditeur de scripts avec aperçu actif.</caption>
+      <caption xml:lang="ga">Eagarthóir scripte le réamhamharc gníomhach</caption>
       <caption xml:lang="gl">Editor de guións con vista previa activa.</caption>
       <caption xml:lang="he">עורך סקריפטים עם תצוגה מקדימה בזמן אמת</caption>
       <caption xml:lang="hu">Parancsfájlszerkesztő aktív előnézettel</caption>
@@ -186,6 +191,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
       <caption xml:lang="eu">RKWard barruan datuekin lan egiten</caption>
       <caption xml:lang="fi">Datatyöskentelyä RKWardissa</caption>
       <caption xml:lang="fr">Travailler avec des données dans RKWard</caption>
+      <caption xml:lang="ga">Ag obair le sonraí in RKWard</caption>
       <caption xml:lang="gl">Traballando con datos en RKWard.</caption>
       <caption xml:lang="he">עבודה עם נתונים ב־RKWard</caption>
       <caption xml:lang="hu">Adatfeldolgozás az RKWardban</caption>
@@ -217,6 +223,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
       <caption xml:lang="eu">Objektuak izenaren arabera bilatzen, laguntza-orriak bilatzen, eta aplikazio barruko laguntza ikustaila</caption>
       <caption xml:lang="fi">Olioiden haku nimellä, ohjesivujen haku ja sisään rakennettu ohjekatselin</caption>
       <caption xml:lang="fr">Recherche d'objets par nom, de pages d'aide ou recherche dans l'afficheur d'aide intégré.</caption>
+      <caption xml:lang="ga">Cuardach a dhéanamh ar réada de réir ainm, cuardach a dhéanamh ar leathanaigh chabhrach, agus breathnóir cabhrach san aip</caption>
       <caption xml:lang="gl">Buscar obxectos por nome, buscar páxinas de axuda, e visor de axuda dentro da aplicación.</caption>
       <caption xml:lang="he">חיפוש עצמים לפי שם, חיפוש אחר עמודי עזרה ומציג עזרה מובנה ביישום</caption>
       <caption xml:lang="hu">Objektumok keresése név alapján, súgóoldalak keresése és alkalmazáson belüli súgó megtekintése</caption>
