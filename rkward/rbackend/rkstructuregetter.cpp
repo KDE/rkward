@@ -134,10 +134,10 @@ void RKStructureGetter::getStructureSafe(SEXP value, const QString &name, int ad
 SEXP RKStructureGetter::peekFromEnv(SEXP sym, SEXP env) {
 	RK_TRACE(RBACKEND);
 
+#if R_VERSION >= R_Version(4, 6, 0)
 	if (keep_evalled_promises) {
 		return RFn::R_getVar(sym, env, /* inherits: */ FALSE);
 	}
-#if R_VERSION >= R_Version(4, 6, 0)
 	if (RFn::R_GetBindingType) { // implies R runtime >= 4.6
 		const auto type = RFn::R_GetBindingType(sym, env);
 		if (type == R_BindingTypeDelayed) {
@@ -151,7 +151,7 @@ SEXP RKStructureGetter::peekFromEnv(SEXP sym, SEXP env) {
 		return RFn::R_getVar(sym, env, /* inherits: */ FALSE);
 	}
 #endif
-	if (!RFn::PRCODE) {
+	if (keep_evalled_promises || !RFn::PRCODE) {
 		// We have neither the new nor the old promise handling functions?
 		// fall back to forcing
 		return RFn::Rf_eval(sym, env); // R_getVar() may not be available, either
