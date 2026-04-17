@@ -91,6 +91,10 @@ available as a config option.
 
 #include <Rversion.h>
 
+#if (R_VERSION >= R_Version(4, 5, 9))
+#	define ENABLE_LEGACY_NONAPI 1
+#endif
+
 #if defined(Win32) && (R_VERSION >= R_Version(4, 3, 0))
 // We don't use Complex.h ourselves, but it is included from Rinternals.h and comes with a non-standard definition
 // that trips up MSVC. Fortunately, we can disable that via a define.
