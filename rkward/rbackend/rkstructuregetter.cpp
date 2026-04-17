@@ -125,19 +125,40 @@ void RKStructureGetter::getStructureSafe(SEXP value, const QString &name, int ad
 	}
 }
 
-/** Temporarily resolve a promise, usually without keeping its value (unless keep_evalled_promises is set, which it never is, at the time of this writing).
+/** Get a symbol value from an environment, taking care not to (permanently) for promises (unless keep_evalled_promises is set,
+ *  which it never is, at the time of this writing).
  *  This is useful for peeking into large objects while building the object tree, without permanently using lots of RAM.
  *
  *  @note This is is not quite perfect, however. E.g. if we have two promises a and b, where b takes a slice out of a, then
  *        evaluating b will force a, permanently. */
-SEXP RKStructureGetter::resolvePromise(SEXP from, SEXP env) {
+SEXP RKStructureGetter::peekFromEnv(SEXP sym, SEXP env) {
 	RK_TRACE(RBACKEND);
 
+	if (keep_evalled_promises) {
+		return RFn::R_getVar(sym, env, /* inherits: */ FALSE);
+	}
+#if R_VERSION >= R_Version(4, 6, 0)
+	if (RFn::R_GetBindingType) { // implies R runtime >= 4.6
+		const auto type = RFn::R_GetBindingType(sym, env);
+		if (type == R_BindingTypeDelayed) {
+			RK_DEBUG(RBACKEND, DL_TRACE, "temporarily resolving delayed expression");
+			return RFn::Rf_eval(RFn::R_DelayedBindingExpression(sym, env), RFn::R_DelayedBindingEnvironment(sym, env));
+		} else if (type == R_BindingTypeMissing) {
+			return ROb(R_NilValue);
+		} else if (type == R_BindingTypeUnbound) {
+			return ROb(R_NilValue);
+		}
+		return RFn::R_getVar(sym, env, /* inherits: */ FALSE);
+	}
+#endif
+	if (!RFn::PRCODE) {
+		// We have neither the new nor the old promise handling functions?
+		// fall back to forcing
+		return RFn::R_getVar(sym, env, /* inherits: */ FALSE);
+	}
+	SEXP from = RFn::Rf_findVar(sym, env);
 	SEXP ret = from;
 	if (RFn::TYPEOF(from) == PROMSXP) {
-		if (keep_evalled_promises) {
-			return RFn::Rf_eval(ret, env);
-		}
 		ret = RFn::PRVALUE(from);
 		if (ret == ROb(R_UnboundValue)) {
 			RK_DEBUG(RBACKEND, DL_TRACE, "temporarily resolving unbound promise");
@@ -369,7 +390,7 @@ void RKStructureGetter::getStructureWorker(SEXP val, const QString &name, int ad
 			for (int i = 0; i < childcount; ++i) {
 				SEXP current_childname = RFn::Rf_install(RFn::R_CHAR(RFn::STRING_ELT(childnames_s, i))); // ??? Why does simply using RFn::STRING_ELT(childnames_i, i) crash?
 				RFn::Rf_protect(current_childname);
-				SEXP child = resolvePromise(RFn::Rf_findVar(current_childname, value), value);
+				SEXP child = peekFromEnv(current_childname, value);
 				RFn::Rf_protect(child);
 
 				getStructureSafe(child, childnames[i], 0, children[i], nesting_depth + 1);

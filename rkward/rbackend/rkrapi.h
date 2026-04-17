@@ -177,16 +177,30 @@ class RFn : public QObject {
 #if (R_VERSION >= R_Version(4, 5, 0))
 	IMPORT_R_API(R_ClosureFormals);
 #else
-	// will be handled, manually, in init
-	static SEXP (*R_ClosureFormals)(SEXP);
+	// used to be named FORMALS; will be handled in init, manually
+	static inline SEXP (*R_ClosureFormals)(SEXP);
+#endif
+#if (R_VERSION >= R_Version(4, 6, 0))
+	IMPORT_R_API(R_GetBindingType);
+	//IMPORT_R_API(R_ActiveBindingFunction);
+	IMPORT_R_API(R_DelayedBindingExpression);
+	IMPORT_R_API(R_DelayedBindingEnvironment);
+	//IMPORT_R_API(R_ForcedBindingExpression);
+	IMPORT_R_API(R_getVar);
+	// these were removed in R 4.6, but we still need them
+	// if using a lower R at runtime
+	static inline SEXP (*PRCODE)(SEXP) = nullptr;
+	static inline SEXP (*PRENV)(SEXP) = nullptr;
+	static inline SEXP (*PRVALUE)(SEXP) = nullptr;
+#else
+	IMPORT_R_API(PRCODE);
+	IMPORT_R_API(PRENV);
+	IMPORT_R_API(PRVALUE);
 #endif
 	IMPORT_R_API(INTEGER);
 	IMPORT_R_API(LOGICAL);
 	IMPORT_R_API(LENGTH);
-	IMPORT_R_API(PRCODE);
-	IMPORT_R_API(PRENV);
 	IMPORT_R_API(PRINTNAME);
-	IMPORT_R_API(PRVALUE);
 	IMPORT_R_API(REAL);
 	IMPORT_R_API(R_CheckDeviceAvailable);
 	IMPORT_R_API(R_CheckStack);
@@ -293,7 +307,7 @@ class RFn : public QObject {
 	IMPORT_R_API(Riconv_close);
 	IMPORT_R_API(Riconv_open);
 	IMPORT_R_API(SET_TAG);
-	IMPORT_R_API(SET_TYPEOF);
+	IMPORT_R_API(Rf_lcons);
 	IMPORT_R_API(STRING_ELT);
 	IMPORT_R_API(SET_STRING_ELT);
 	IMPORT_R_API(SET_VECTOR_ELT);
