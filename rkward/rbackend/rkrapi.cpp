@@ -27,23 +27,24 @@ void RFn::init(void *libr_dll_handle, void *(*dlsym_fun)(void *, const char *)) 
 		RK_DEBUG(RBACKEND, DL_DEBUG, "Lookup of symbol %s in %p: %p", name, libr_dll_handle, symb);
 		prop.write(rfn, QVariant::fromValue((void *)symb)); // NOTE: Qt refuses to write nullptr as value, but that's already the initial value of each member
 	}
-#else
-	RK_DEBUG(RBACKEND, DL_DEBUG, "R lib already linked");
-#endif
 
 	// work around various incompatiblities between R versions
 	// R < 4.5.0
 	if (!R_ClosureFormals) {
-		R_ClosureFormals = reinterpret_cast<decltype(R_ClosureFormals)>(dlsym_fun(libr_dll_handle, "FORMALS"));
+		*(void **)(&R_ClosureFormals) = dlsym_fun(libr_dll_handle, "FORMALS");
 		RK_DEBUG(RBACKEND, DL_DEBUG, "Falling back from R_ClosureFormals to FORMALS (%p)", R_ClosureFormals);
 	}
-#if R_VERSION != R_Version(4, 6, 0)
+#	if R_VERSION >= R_Version(4, 6, 0)
 	if (!R_GetBindingType) {
-		PRCODE = reinterpret_cast<decltype(PRCODE)>(dlsym_fun(libr_dll_handle, "PRCODE"));
-		PRENV = reinterpret_cast<decltype(PRCODE)>(dlsym_fun(libr_dll_handle, "PRENV"));
-		PRVALUE = reinterpret_cast<decltype(PRCODE)>(dlsym_fun(libr_dll_handle, "PRVALUE"));
+		*(void **)(&PRCODE) = dlsym_fun(libr_dll_handle, "PRCODE");
+		*(void **)(&PRENV) = dlsym_fun(libr_dll_handle, "PRENV");
+		*(void **)(&PRVALUE) = dlsym_fun(libr_dll_handle, "PRVALUE");
 		RK_DEBUG(RBACKEND, DL_DEBUG, "Falling back from R_GetBindingType to PRCODE (%p)", PRCODE);
 		RK_ASSERT(PRCODE);
 	}
+#	endif
+
+#else
+	RK_DEBUG(RBACKEND, DL_DEBUG, "R lib already linked");
 #endif
 }
