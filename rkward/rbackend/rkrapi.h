@@ -186,6 +186,7 @@ class RFn : public QObject {
 	IMPORT_R_API(R_DelayedBindingExpression);
 	IMPORT_R_API(R_DelayedBindingEnvironment);
 	//IMPORT_R_API(R_ForcedBindingExpression);
+	IMPORT_R_API(R_getVar);
 	// these were removed in R 4.6, but we still need them
 	// if using a lower R at runtime
 	static inline SEXP (*PRCODE)(SEXP) = nullptr;
@@ -275,7 +276,6 @@ class RFn : public QObject {
 	IMPORT_R_API(Rf_findVarInFrame);
 	IMPORT_R_API(Rf_getAttrib);
 	IMPORT_R_API(Rf_getCharCE);
-	IMPORT_R_API(R_getVar);
 	IMPORT_R_API(Rf_initialize_R);
 	IMPORT_R_API(Rf_install);
 	IMPORT_R_API(Rf_installChar);

@@ -154,7 +154,7 @@ SEXP RKStructureGetter::peekFromEnv(SEXP sym, SEXP env) {
 	if (!RFn::PRCODE) {
 		// We have neither the new nor the old promise handling functions?
 		// fall back to forcing
-		return RFn::R_getVar(sym, env, /* inherits: */ FALSE);
+		return RFn::Rf_eval(sym, env); // R_getVar() may not be available, either
 	}
 	SEXP from = RFn::Rf_findVar(sym, env);
 	SEXP ret = from;
