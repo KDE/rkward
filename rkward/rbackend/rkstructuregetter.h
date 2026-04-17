@@ -36,7 +36,7 @@ class RKStructureGetter {
 	/** needed to wrap things inside an R_ToplevelExec */
 	static void getStructureWrapper(GetStructureWorkerArgs *data);
 	void getStructureSafe(SEXP value, const QString &name, int add_type_flags, RData *storage, int nesting_depth);
-	SEXP resolvePromise(SEXP from);
+	SEXP resolvePromise(SEXP from, SEXP env);
 
 	SEXP prefetch_fun(const char *name, bool from_base = true);
 

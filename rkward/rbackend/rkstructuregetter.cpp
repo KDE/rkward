@@ -130,11 +130,14 @@ void RKStructureGetter::getStructureSafe(SEXP value, const QString &name, int ad
  *
  *  @note This is is not quite perfect, however. E.g. if we have two promises a and b, where b takes a slice out of a, then
  *        evaluating b will force a, permanently. */
-SEXP RKStructureGetter::resolvePromise(SEXP from) {
+SEXP RKStructureGetter::resolvePromise(SEXP from, SEXP env) {
 	RK_TRACE(RBACKEND);
 
 	SEXP ret = from;
 	if (RFn::TYPEOF(from) == PROMSXP) {
+		if (keep_evalled_promises) {
+			return RFn::Rf_eval(ret, env);
+		}
 		ret = RFn::PRVALUE(from);
 		if (ret == ROb(R_UnboundValue)) {
 			RK_DEBUG(RBACKEND, DL_TRACE, "temporarily resolving unbound promise");
@@ -144,10 +147,6 @@ SEXP RKStructureGetter::resolvePromise(SEXP from) {
 			//        Not setting it from here, only means, any recursion will be detected one level later.
 			ret = RFn::Rf_eval(RFn::PRCODE(from), RFn::PRENV(from));
 			// SET_PRSEEN(from, 0);
-			if (keep_evalled_promises) {
-				RFn::SET_PRVALUE(from, ret);
-				RFn::SET_PRENV(from, ROb(R_NilValue));
-			}
 			RFn::Rf_unprotect(1);
 
 			RK_DEBUG(RBACKEND, DL_TRACE, "resolved type is %d", RFn::TYPEOF(ret));
@@ -174,8 +173,6 @@ void RKStructureGetter::getStructureWorker(SEXP val, const QString &name, int ad
 	SEXP value = val;
 	PROTECT_INDEX value_index;
 	RFn::R_ProtectWithIndex(value, &value_index);
-	// manually resolve any promises
-	RFn::R_Reprotect(value = resolvePromise(value), value_index);
 
 	bool is_s4 = RFn::Rf_isS4(value);
 	SEXP baseenv = ROb(R_BaseEnv);
@@ -372,7 +369,7 @@ void RKStructureGetter::getStructureWorker(SEXP val, const QString &name, int ad
 			for (int i = 0; i < childcount; ++i) {
 				SEXP current_childname = RFn::Rf_install(RFn::R_CHAR(RFn::STRING_ELT(childnames_s, i))); // ??? Why does simply using RFn::STRING_ELT(childnames_i, i) crash?
 				RFn::Rf_protect(current_childname);
-				SEXP child = RFn::Rf_findVar(current_childname, value);
+				SEXP child = resolvePromise(RFn::Rf_findVar(current_childname, value), value);
 				RFn::Rf_protect(child);
 
 				getStructureSafe(child, childnames[i], 0, children[i], nesting_depth + 1);
