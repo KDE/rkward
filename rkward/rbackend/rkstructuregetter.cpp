@@ -434,9 +434,9 @@ void RKStructureGetter::getStructureWorker(SEXP val, const QString &name, int ad
 		if (RFn::Rf_isPrimitive(value)) {
 			// primitives don't have formals, internally
 			auto args = RKRSupport::callSimpleFun(args_fun, value, baseenv);
-			if (!RFn::Rf_isNull(args)) formals_s = RFn::FORMALS(args);
+			if (!RFn::Rf_isNull(args)) formals_s = RFn::R_ClosureFormals(args);
 		} else {
-			formals_s = RFn::FORMALS(value);
+			formals_s = RFn::R_ClosureFormals(value);
 		}
 		RFn::Rf_protect(formals_s);
 

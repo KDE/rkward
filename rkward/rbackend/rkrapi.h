@@ -174,7 +174,12 @@ class RFn : public QObject {
 	IMPORT_R_API(GEgetDevice);
 	IMPORT_R_API(GEplayDisplayList);
 	IMPORT_R_API(R_CHAR);
-	IMPORT_R_API(FORMALS);
+#if (R_VERSION >= R_Version(4, 5, 0))
+	IMPORT_R_API(R_ClosureFormals);
+#else
+	// will be handled, manually, in init
+	static SEXP (*R_ClosureFormals)(SEXP);
+#endif
 	IMPORT_R_API(INTEGER);
 	IMPORT_R_API(LOGICAL);
 	IMPORT_R_API(LENGTH);

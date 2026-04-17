@@ -30,4 +30,11 @@ void RFn::init(void *libr_dll_handle, void *(*dlsym_fun)(void *, const char *)) 
 #else
 	RK_DEBUG(RBACKEND, DL_DEBUG, "R lib already linked");
 #endif
+
+	// work around various incompatiblities between R versions
+	// R < 4.5.0
+	if (!R_ClosureFormals) {
+		RK_DEBUG(RBACKEND, DL_DEBUG, "Falling back from R_ClosureFormals to FORMALS (%p)", R_ClosureFormals);
+		R_ClosureFormals = reinterpret_cast<decltype(R_ClosureFormals)>(dlsym_fun(libr_dll_handle, "FORMALS"));
+	}
 }
