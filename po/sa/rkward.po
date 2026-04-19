@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-04-11 00:39+0000\n"
+"POT-Creation-Date: 2026-04-19 00:39+0000\n"
 "PO-Revision-Date: 2024-12-24 20:39+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -3800,7 +3800,7 @@ msgstr "R पृष्ठभागात् सन्देशः"
 msgid "Question from the R backend"
 msgstr "R पृष्ठभागात् प्रश्नः"
 
-#: rkward/rbackend/rkrbackend.cpp:1584
+#: rkward/rbackend/rkrbackend.cpp:1583
 #, kde-format
 msgid ""
 "</p>\t- The 'rkward' R-library either could not be loaded at all, or not in "
@@ -3820,7 +3820,7 @@ msgstr ""
 "समाधातव्यम्</b> । तस्य साहाय्यार्थं <a href=\"https://rkward.kde.org/compiling"
 "\">https://rkward.kde.org/compiling</a> पश्यन्तु ।</p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1588
+#: rkward/rbackend/rkrbackend.cpp:1587
 #, kde-format
 msgid ""
 "<p>\t-There was a problem setting up the communication with R. Most likely "
@@ -3834,12 +3834,12 @@ msgstr ""
 "साहाय्यार्थं <a href=\"https://rkward.kde.org/compiling\">https://rkward.kde."
 "org/compiling</a> पश्यन्तु ।</p></p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1643
+#: rkward/rbackend/rkrbackend.cpp:1642
 #, kde-format
 msgid "Graphics version mismatch"
 msgstr "ग्राफिक्स संस्करण बेमेल"
 
-#: rkward/rbackend/rkrbackend.cpp:1643
+#: rkward/rbackend/rkrbackend.cpp:1642
 #, kde-format
 msgid ""
 "R Graphics Engine version has changed (from %1 to %2).<br>This change "
@@ -3850,7 +3850,7 @@ msgstr ""
 "संकलनस्य आवश्यकता वर्तते ।<br> <a href=\"rkward://page/rkward_incompatible_version"
 "\">अतिरिक्त सूचना</a>"
 
-#: rkward/rbackend/rkrbackend.cpp:1643
+#: rkward/rbackend/rkrbackend.cpp:1642
 #, kde-format
 msgid "Ok"
 msgstr "अस्तु"
