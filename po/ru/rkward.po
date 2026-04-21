@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-04-11 00:39+0000\n"
+"POT-Creation-Date: 2026-04-21 02:38+0000\n"
 "PO-Revision-Date: 2026-03-03 15:57+0300\n"
 "Last-Translator: Olesya Gerasimenko <goa@altlinux.org>\n"
 "Language-Team: Basealt Translation Team\n"
@@ -213,6 +213,12 @@ msgstr ""
 
 #: rkward/core/renvironmentobject.cpp:110
 #, fuzzy, kde-format
+#| msgid ""
+#| "Your workspace contains more than 10.000 top level objects. RKWard is not "
+#| "optimized for this situation, and you may experience lag between R "
+#| "commands. Should this situation constitute a regular use case for your "
+#| "work, please let us know at rkward-devel@kde.org, so we can consider "
+#| "possible solutions."
 msgid ""
 "Your workspace contains more than 10.000 top level objects. RKWard is not "
 "optimized for this situation, and you may experience lag between R commands. "
@@ -986,6 +992,11 @@ msgstr "Запустить диалог импорта"
 
 #: rkward/dialogs/rkimportdialog.cpp:108
 #, fuzzy, kde-format
+#| msgid ""
+#| "No further import methods are available at this time. Things you can try, "
+#| "include: <ul><li>Check for the availability of additional import plugins</"
+#| "li><li>Save your data to a different format in the original application</"
+#| "li><li>Ask for advice on rkward-users@kde.org</li></ul>"
 msgid ""
 "No further import methods are available at this time. Things you can try, "
 "include: <ul><li>Check for the availability of additional import plugins</"
@@ -2264,6 +2275,7 @@ msgstr "Исправления и полезные комментарии"
 
 #: rkward/main.cpp:211
 #, fuzzy, kde-format
+#| msgid "Many more people on rkward-devel@kde.org"
 msgid "Many more people on rkward@kde.org"
 msgstr "Многие другие люди в списке рассылки rkward-devel@kde.org"
 
@@ -3900,7 +3912,7 @@ msgstr "Сообщение от серверного приложения R"
 msgid "Question from the R backend"
 msgstr "Вопрос от серверного приложения R"
 
-#: rkward/rbackend/rkrbackend.cpp:1584
+#: rkward/rbackend/rkrbackend.cpp:1583
 #, kde-format
 msgid ""
 "</p>\t- The 'rkward' R-library either could not be loaded at all, or not in "
@@ -3922,7 +3934,7 @@ msgstr ""
 "установленными компонентами</b>. Дополнительные сведения: <a href=\"https://"
 "rkward.kde.org/compiling\">https://rkward.kde.org/compiling</a>.</p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1588
+#: rkward/rbackend/rkrbackend.cpp:1587
 #, kde-format
 msgid ""
 "<p>\t-There was a problem setting up the communication with R. Most likely "
@@ -3937,12 +3949,12 @@ msgstr ""
 "Дополнительные сведения: <a href=\"https://rkward.kde.org/compiling"
 "\">https://rkward.kde.org/compiling</a>.</p></p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1643
+#: rkward/rbackend/rkrbackend.cpp:1642
 #, kde-format
 msgid "Graphics version mismatch"
 msgstr "Несоответствие версий графики"
 
-#: rkward/rbackend/rkrbackend.cpp:1643
+#: rkward/rbackend/rkrbackend.cpp:1642
 #, kde-format
 msgid ""
 "R Graphics Engine version has changed (from %1 to %2).<br>This change "
@@ -3953,7 +3965,7 @@ msgstr ""
 "пересборки программы.<br><a href=\"rkward://page/rkward_incompatible_version"
 "\">Дополнительные сведения</a>"
 
-#: rkward/rbackend/rkrbackend.cpp:1643
+#: rkward/rbackend/rkrbackend.cpp:1642
 #, kde-format
 msgid "Ok"
 msgstr "ОK"
@@ -4160,6 +4172,7 @@ msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:76
 #, fuzzy, no-c-format, kde-format
+#| msgid "The file or directory does not exist."
 msgid "Target directory '%1' does not exist\n"
 msgstr "Файл или каталог не существует."
 
@@ -4230,6 +4243,7 @@ msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.output.R:86
 #, fuzzy, kde-format
+#| msgid "Local file names"
 msgid "No file name specified"
 msgstr "Имена локальных файлов"
 
@@ -4274,6 +4288,8 @@ msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:145
 #, fuzzy, kde-format
+#| msgctxt "@action:button"
+#| msgid "Do no close"
 msgid "Plot window closed"
 msgstr "Не закрывать"
 
@@ -5127,6 +5143,11 @@ msgstr "(Пытаться) начинать автодополнение при 
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:74
 #, fuzzy, kde-format
+#| msgid ""
+#| "Note: Further shortcuts can be assigned, and by default, Ctlr+Space "
+#| "invokes completions, in addition to this. Further, pressing the Tab key, "
+#| "while completions are shown, performs partial completion (if possible), "
+#| "independent of this setting."
 msgid ""
 "Note: Further shortcuts can be assigned, and by default, Ctrl+Space invokes "
 "completions, in addition to this. Further, pressing the Tab key, while "
@@ -6643,12 +6664,15 @@ msgstr "Выполнить текущую инструкцию и перейти
 
 #: rkward/windows/rkcommandeditorwindow.cpp:183
 #, fuzzy, kde-format
+#| msgctxt "noun: type of preview"
+#| msgid "Preview Mode"
 msgctxt "noun: type of preview"
 msgid "<b>Preview Mode</b>"
 msgstr "Режим предварительного просмотра"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:189
 #, fuzzy, kde-format
+#| msgid "<b>Done</b>"
 msgid "<b>Options</b>"
 msgstr "<b>Готово</b>"
 
@@ -8041,16 +8065,6 @@ msgstr "Введите новое имя"
 msgid "View in editor (read-only)"
 msgstr "Просмотреть в редакторе (только чтение)"
 
-#~ msgid "Default &Encoding"
-#~ msgstr "&Кодировка по умолчанию"
-
-#~ msgid ""
-#~ "Set the encoding to assume in case no explicit encoding has been set in "
-#~ "the page or in the HTTP headers."
-#~ msgstr ""
-#~ "Установите кодировку, которая будет использоваться, когда на странице или "
-#~ "в HTTP-заголовках нет явного указания кодировки."
-
 #~ msgid ""
 #~ "The workplace layout (i.e. which script-, data-, help-windows are open) "
 #~ "may be saved (and loaded) per R workspace, or independent of the R "
@@ -8082,6 +8096,19 @@ msgstr "Просмотреть в редакторе (только чтение)
 #~ "settings/rbackend\">«Настройка -> Настроить RKward-> Серверное приложение "
 #~ "R»</a>."
 
+#~ msgid "Default &Encoding"
+#~ msgstr "&Кодировка по умолчанию"
+
+#~ msgid ""
+#~ "Set the encoding to assume in case no explicit encoding has been set in "
+#~ "the page or in the HTTP headers."
+#~ msgstr ""
+#~ "Установите кодировку, которая будет использоваться, когда на странице или "
+#~ "в HTTP-заголовках нет явного указания кодировки."
+
+#~ msgid "Error opening script file %1"
+#~ msgstr "Ошибка открытия файла сценария %1"
+
 #~ msgid "R Markdown (auto)"
 #~ msgstr "R Markdown (автоматически)"
 
@@ -8092,8 +8119,19 @@ msgstr "Просмотреть в редакторе (только чтение)
 #~ "Предварительный просмотр сценария (преобразование из RMarkdown (.Rmd) в "
 #~ "формат, указанный в заголовке документа)."
 
-#~ msgid "Error opening script file %1"
-#~ msgstr "Ошибка открытия файла сценария %1"
+#~ msgid ""
+#~ "<b>There have been errors and / or warnings. See below for a transcript</"
+#~ "b>"
+#~ msgstr "<b>Присутствовали ошибки и/или предупреждения (см. ниже)</b>"
+
+#~ msgid "Output:"
+#~ msgstr "Вывод:"
+
+#~ msgid "Errors / Warnings"
+#~ msgstr "Ошибки и предупреждения"
+
+#~ msgid "Errors / Warnings:"
+#~ msgstr "Ошибки и предупреждения:"
 
 #~ msgid "<<Open another file>>"
 #~ msgstr "<<Открыть другой файл>>"
@@ -8110,17 +8148,3 @@ msgstr "Просмотреть в редакторе (только чтение)
 
 #~ msgid "Do you want to save the current workspace?"
 #~ msgstr "Сохранить текущую рабочую область?"
-
-#~ msgid ""
-#~ "<b>There have been errors and / or warnings. See below for a transcript</"
-#~ "b>"
-#~ msgstr "<b>Присутствовали ошибки и/или предупреждения (см. ниже)</b>"
-
-#~ msgid "Errors / Warnings"
-#~ msgstr "Ошибки и предупреждения"
-
-#~ msgid "Errors / Warnings:"
-#~ msgstr "Ошибки и предупреждения:"
-
-#~ msgid "Output:"
-#~ msgstr "Вывод:"

@@ -1,13 +1,13 @@
-# Copyright (C) 2025 This file is copyright:
+# Copyright (C) 2026 This file is copyright:
 # This file is distributed under the same license as the rkward package.
 #
-# SPDX-FileCopyrightText: 2024, 2025 giovanni <g.sora@tiscali.it>
+# SPDX-FileCopyrightText: 2024, 2026 giovanni <g.sora@tiscali.it>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:48+0000\n"
-"PO-Revision-Date: 2025-05-27 15:11+0200\n"
+"POT-Creation-Date: 2025-11-17 14:38+0000\n"
+"PO-Revision-Date: 2026-02-05 17:13+0100\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -1696,7 +1696,7 @@ msgstr ""
 #: rkward/pages/rkward_trouble_shooting.rkh:28
 #, kde-format
 msgid "AppImage"
-msgstr "AppImage"
+msgstr ""
 
 #. i18n: ectx: (Trouble Shooting / FAQ) <section title="Why shouldn't I use R bundled inside the RKWard AppImage">
 #: rkward/pages/rkward_trouble_shooting.rkh:28

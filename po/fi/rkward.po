@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-04-11 00:39+0000\n"
+"POT-Creation-Date: 2026-04-21 02:38+0000\n"
 "PO-Revision-Date: 2024-12-23 19:57+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -3789,7 +3789,7 @@ msgstr "Viesti R-taustaosasta"
 msgid "Question from the R backend"
 msgstr "Kysymys R-taustaosasta"
 
-#: rkward/rbackend/rkrbackend.cpp:1584
+#: rkward/rbackend/rkrbackend.cpp:1583
 #, fuzzy, kde-format
 #| msgid ""
 #| "</p>\t- The 'rkward' R-library either could not be loaded at all, or not "
@@ -3821,7 +3821,7 @@ msgstr ""
 "href=\"http://rkward.kde.org/compiling\">http://rkward.kde.org/compiling</a>."
 "</p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1588
+#: rkward/rbackend/rkrbackend.cpp:1587
 #, fuzzy, kde-format
 #| msgid ""
 #| "<p>\t-There was a problem setting up the communication with R. Most "
@@ -3841,12 +3841,12 @@ msgstr ""
 "lopettaa RKWard ja korjata asennus</b>. Lisäohjeita tähän: <a href=\"http://"
 "rkward.kde.org/compiling\">http://rkward.kde.org/compiling</a>.</p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1643
+#: rkward/rbackend/rkrbackend.cpp:1642
 #, kde-format
 msgid "Graphics version mismatch"
 msgstr "Grafiikan versioristiriita"
 
-#: rkward/rbackend/rkrbackend.cpp:1643
+#: rkward/rbackend/rkrbackend.cpp:1642
 #, kde-format
 msgid ""
 "R Graphics Engine version has changed (from %1 to %2).<br>This change "
@@ -3857,7 +3857,7 @@ msgstr ""
 "vaatii uudelleenkoostamisen.<br><a href=\"rkward://page/"
 "rkward_incompatible_version\">Lisätietoa</a>"
 
-#: rkward/rbackend/rkrbackend.cpp:1643
+#: rkward/rbackend/rkrbackend.cpp:1642
 #, kde-format
 msgid "Ok"
 msgstr "OK"
@@ -7818,6 +7818,15 @@ msgstr "Anna uusi nimi"
 msgid "View in editor (read-only)"
 msgstr "Näytä muokkaimessa (vain luku)"
 
+#~ msgid ""
+#~ "The workplace layout (i.e. which script-, data-, help-windows are open) "
+#~ "may be saved (and loaded) per R workspace, or independent of the R "
+#~ "workspace. Which do you prefer?"
+#~ msgstr ""
+#~ "Työtilan asettelun (ts. mitkä skripti-, data- ja ohjeikkunat ovat auki) "
+#~ "voi tallentaa (ja ladata) työtiloittain tai yleisesti. Mitä asetusta "
+#~ "suosit?"
+
 #~ msgid "Default &Encoding"
 #~ msgstr "&Oletuskoodaus:"
 
@@ -7827,14 +7836,8 @@ msgstr "Näytä muokkaimessa (vain luku)"
 #~ msgstr ""
 #~ "Aseta koodaus, joka oletetaan, ellei sivu tai HTTP-otsake aseta sitä."
 
-#~ msgid ""
-#~ "The workplace layout (i.e. which script-, data-, help-windows are open) "
-#~ "may be saved (and loaded) per R workspace, or independent of the R "
-#~ "workspace. Which do you prefer?"
-#~ msgstr ""
-#~ "Työtilan asettelun (ts. mitkä skripti-, data- ja ohjeikkunat ovat auki) "
-#~ "voi tallentaa (ja ladata) työtiloittain tai yleisesti. Mitä asetusta "
-#~ "suosit?"
+#~ msgid "Error opening script file %1"
+#~ msgstr "Virhe avattaessa skriptitiedostoa %1"
 
 #~ msgid "R Markdown (auto)"
 #~ msgstr "R-Markdown (automaattinen)"
@@ -7845,9 +7848,6 @@ msgstr "Näytä muokkaimessa (vain luku)"
 #~ msgstr ""
 #~ "Esikatsele skriptiä RMarkdown-muodosta (.Rmd) tiedoston otsakkeessa "
 #~ "määritettyyn muotoon hahmonnettuna."
-
-#~ msgid "Error opening script file %1"
-#~ msgstr "Virhe avattaessa skriptitiedostoa %1"
 
 #~ msgid ""
 #~ "<b>There have been errors and / or warnings. See below for a transcript</"

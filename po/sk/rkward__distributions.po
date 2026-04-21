@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward__distributions\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:48+0000\n"
-"PO-Revision-Date: 2023-12-17 14:56+0100\n"
+"POT-Creation-Date: 2025-11-17 14:38+0000\n"
+"PO-Revision-Date: 2026-04-07 12:17+0100\n"
 "Last-Translator: Roman Paholik <wizzardsk@gmail.com>\n"
 "Language-Team: Slovak <kde-sk@linux.sk>\n"
 "Language: sk\n"
@@ -31,7 +31,7 @@ msgstr "wizzardsk@gmail.com"
 #: rkward/plugins/distributions.pluginmap:116
 #, kde-format
 msgid "Distributions"
-msgstr "Distributions"
+msgstr "Distribúcie"
 
 #. i18n: ectx: <about shortinfo="...">
 #: rkward/plugins/distributions.pluginmap:10
@@ -1739,7 +1739,7 @@ msgstr "Draw normal curve"
 #: rkward/plugins/distributions/clt/plot_clt_snippets.xml:57
 #, kde-format
 msgid "Type of points/lines"
-msgstr "Type of points/lines"
+msgstr "Zadajte of points/lines"
 
 #. i18n: ectx: (Loaded from Central Limit Theorem: Binomial to Normal) <snippet> [...] <dropdown label="Type of points/lines"> <option label="...">
 #. i18n: ectx: (Loaded from Central Limit Theorem: Geometric to Normal) <snippet> [...] <dropdown label="Type of points/lines"> <option label="...">
@@ -1976,7 +1976,7 @@ msgstr "Farba"
 #: rkward/plugins/distributions/plot_dist_common_snippets.xml:24
 #, kde-format
 msgid "Plot Options"
-msgstr "Plot Options"
+msgstr "Voľby grafu"
 
 #. i18n: ectx: (Loaded from Loaded from Plot Beta probabilities) <snippet> <preview label="...">
 #. i18n: ectx: (Loaded from Plot Beta probabilities) <snippet> <preview label="...">
@@ -2081,7 +2081,7 @@ msgstr "Histogram"
 #: rkward/plugins/distributions/clt/plot_clt_snippets.xml:78
 #, kde-format
 msgid "Histogram Options"
-msgstr "Histogram Options"
+msgstr "Histogram Možnosti"
 
 #. i18n: ectx: (Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <tab label="...">
 #. i18n: ectx: (Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <tab label="...">

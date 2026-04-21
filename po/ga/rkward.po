@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-04-11 00:39+0000\n"
+"POT-Creation-Date: 2026-04-21 02:38+0000\n"
 "PO-Revision-Date: 2026-03-28 16:40+0000\n"
 "Last-Translator: Aindriú Mac Giolla Eoin <aindriu80@yahoo.com>\n"
 "Language-Team: Irish <http://weblate.amgelocalnet.duckdns.org/projects/"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=5; plural=n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n < 11 ? "
-"3 : 4;\n"
+"3 : 4\n"
 "X-Generator: Weblate 5.16\n"
 
 #, kde-format
@@ -221,10 +221,6 @@ msgid ""
 "Should this situation constitute a regular use case for your work, please "
 "let us know at rkward@kde.org, so we can consider possible solutions."
 msgstr ""
-"Tá níos mó ná 10,000 réad barrleibhéil i do spás oibre. Níl RKWard "
-"optamaithe don chás seo, agus d'fhéadfadh moill a bheith idir orduithe R. Má "
-"bhíonn an cás seo ina chás úsáide rialta do d'obair, cuir in iúl dúinn ag "
-"rkward@kde.org, ionas gur féidir linn réitigh fhéideartha a mheas."
 
 #: rkward/core/renvironmentobject.cpp:110
 #, kde-format
@@ -1001,11 +997,6 @@ msgid ""
 "li><li>Save your data to a different format in the original application</"
 "li><li>Ask for advice on rkward@kde.org</li></ul>"
 msgstr ""
-"Níl aon mhodhanna allmhairithe eile ar fáil faoi láthair. Seo a leanas "
-"roinnt rudaí ar féidir leat triail a bhaint astu: <ul><li>Seiceáil an bhfuil "
-"breiseáin allmhairithe breise ar fáil</li><li>Sábháil do chuid sonraí i "
-"bhformáid dhifriúil san fheidhmchlár bunaidh</li><li>Iarr comhairle ar "
-"rkward@kde.org</li></ul>"
 
 #: rkward/dialogs/rkimportdialog.cpp:110
 #, kde-format
@@ -2291,7 +2282,7 @@ msgstr "paistí agus tuairimí cabhracha"
 #: rkward/main.cpp:211
 #, kde-format
 msgid "Many more people on rkward@kde.org"
-msgstr "Go leor daoine eile ar rkward@kde.org"
+msgstr ""
 
 #: rkward/main.cpp:211
 #, kde-format
@@ -3935,7 +3926,7 @@ msgstr "Teachtaireacht ón gcúltaca R"
 msgid "Question from the R backend"
 msgstr "Ceist ón gcúltaca R"
 
-#: rkward/rbackend/rkrbackend.cpp:1584
+#: rkward/rbackend/rkrbackend.cpp:1583
 #, kde-format
 msgid ""
 "</p>\t- The 'rkward' R-library either could not be loaded at all, or not in "
@@ -3957,7 +3948,7 @@ msgstr ""
 "Chun cabhair leis sin a fháil, féach <a href=\"https://rkward.kde.org/"
 "compiling\">https://rkward.kde.org/compiling</a>.</p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1588
+#: rkward/rbackend/rkrbackend.cpp:1587
 #, kde-format
 msgid ""
 "<p>\t-There was a problem setting up the communication with R. Most likely "
@@ -3972,12 +3963,12 @@ msgstr ""
 "href=\"https://rkward.kde.org/compiling\">https://rkward.kde.org/compiling</"
 "a>.</p></p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1643
+#: rkward/rbackend/rkrbackend.cpp:1642
 #, kde-format
 msgid "Graphics version mismatch"
 msgstr "Mí-oiriúnacht leagan grafaicí"
 
-#: rkward/rbackend/rkrbackend.cpp:1643
+#: rkward/rbackend/rkrbackend.cpp:1642
 #, kde-format
 msgid ""
 "R Graphics Engine version has changed (from %1 to %2).<br>This change "
@@ -3988,7 +3979,7 @@ msgstr ""
 "seo aththiomsú.<br><a href=\"rkward://page/rkward_incompatible_version"
 "\">Faisnéis bhreise</a>"
 
-#: rkward/rbackend/rkrbackend.cpp:1643
+#: rkward/rbackend/rkrbackend.cpp:1642
 #, kde-format
 msgid "Ok"
 msgstr "Ceart go leor"
@@ -4189,7 +4180,7 @@ msgstr "Earráid agus cúltaca grafaicí á nascadh"
 #: rkward/rbackend/rpackages/rkward/R/public_graphics.R:93
 #, no-c-format, kde-format
 msgid "Device type \"%1\" is unknown to RKWard"
-msgstr "Tá cineál gléis \"%1\" anaithnid ag RKWard"
+msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:66
 #, no-c-format, kde-format
@@ -4197,13 +4188,12 @@ msgid ""
 "rk.download_appimage() requires XiMpLe >= 0.11.3, but only found %1. Please "
 "update XiMpLe."
 msgstr ""
-"Éilíonn rk.download_appimage() XiMpLe >= 0.11.3, ach níor aimsíodh ach %1. "
-"Nuashonraigh XiMpLe le do thoil."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:76
-#, no-c-format, kde-format
+#, fuzzy, no-c-format, kde-format
+#| msgid "The file or directory does not exist."
 msgid "Target directory '%1' does not exist\n"
-msgstr "Níl an eolaire sprice '%1' ann\n"
+msgstr "Níl an comhad nó an t-eolaire ann."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:82
 #, no-c-format, kde-format
@@ -4211,8 +4201,6 @@ msgid ""
 "Target file '%1' already exists, use the \"overwrite\" argument to replace "
 "it:\n"
 msgstr ""
-"Tá an comhad sprice '%1' ann cheana féin, bain úsáid as an argóint "
-"\"overwrite\" chun é a athsholáthar:\n"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:86
 #, no-c-format, kde-format
@@ -4220,8 +4208,6 @@ msgid ""
 "Creating backup of current AppImage: %1\n"
 "  "
 msgstr ""
-"Ag cruthú cúltaca den AppImage reatha: %1\n"
-"  "
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:111
 #, kde-format
@@ -4229,24 +4215,22 @@ msgid ""
 "Something went wrong with the download! Restored previous AppImage from "
 "backup."
 msgstr ""
-"Chuaigh rud éigin mícheart leis an íoslódáil! Rinneadh an AppImage roimhe "
-"seo a athchóiriú ó chúltaca."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:114
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:139
 #, kde-format
 msgid "Something went wrong with the download!"
-msgstr "Chuaigh rud éigin mícheart leis an íoslódáil!"
+msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:120
 #, kde-format
 msgid "Download successful, setting file permissions."
-msgstr "Íoslódáil rathúil, ceadanna comhaid socraithe."
+msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:127
 #, kde-format
 msgid "Removing backup of previous AppImage."
-msgstr "Ag baint cúltaca den AppImage roimhe seo."
+msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:133
 #, kde-format
@@ -4254,41 +4238,38 @@ msgid ""
 "Something went wrong with the download! Restoring previous AppImage from "
 "backup."
 msgstr ""
-"Chuaigh rud éigin mícheart leis an íoslódáil! Ag athchóiriú an AppImage "
-"roimhe seo ó chúltaca."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.filename-functions.R:146
 #, no-c-format, kde-format
 msgid "Failed to copy CSS file '%1' to '%2'"
-msgstr "Theip ar chomhad CSS '%1' a chóipeáil go '%2'"
+msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.menu.R:81
 #, no-c-format, kde-format
 msgid "Submenu %1 cannot be redefined as a leaf item."
-msgstr "Ní féidir an fo-roghchlár %1 a athshainiú mar mhír duilleoige."
+msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.menu.R:113
 #: rkward/rbackend/rpackages/rkward/R/rk.menu.R:118
 #, no-c-format, kde-format
 msgid "Menu path %1 is not defined"
-msgstr "Níl cosán an roghchláir %1 sainmhínithe"
+msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.menu.R:114
 #, no-c-format, kde-format
 msgid "Leaf menu item %1 cannot be redefined as a submenu."
-msgstr "Ní féidir mír roghchláir duilleoige %1 a athshainiú mar fho-roghchlár."
+msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.output.R:86
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Local file names"
 msgid "No file name specified"
-msgstr "Níor sonraíodh ainm comhaid"
+msgstr "Ainmneacha comhad áitiúla"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.output.R:115
 #, kde-format
 msgid "Invalid output id. Use rk.output() to obtain a valid output handle."
 msgstr ""
-"Aitheantas aschuir neamhbhailí. Bain úsáid as rk.output() chun láimhseáil "
-"aschuir bhailí a fháil."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:37
 #, kde-format
@@ -4323,32 +4304,34 @@ msgstr ""
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:141
 #, kde-format
 msgid "Plot window created"
-msgstr "Fuinneog plota cruthaithe"
+msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:145
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@action:button"
+#| msgid "Do no close"
 msgid "Plot window closed"
-msgstr "Fuinneog plota dúnta"
+msgstr "Ná déan dúnadh"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:155
 #, kde-format
 msgid "Plot updated (click to show)"
-msgstr "Plota nuashonraithe (cliceáil chun a thaispeáint)"
+msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.print-functions.R:115
 #, kde-format
 msgid "Please install package R2HTML to enable output!"
-msgstr "Suiteáil an pacáiste R2HTML le do thoil chun aschur a chumasú!"
+msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.print-functions.R:152
 #, kde-format
 msgid "Unnamed parameter lists are deprecated in rk.header()"
-msgstr "Tá liostaí paraiméadair gan ainm imithe i léig i rk.header()"
+msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.print-functions.R:245
 #, no-c-format, kde-format
 msgid "Printing object of class '%1' is not implemented"
-msgstr "Níl réad priontála den rang '%1' curtha i bhfeidhm"
+msgstr ""
 
 #: rkward/rkconsole.cpp:71
 #, kde-format
@@ -5194,10 +5177,6 @@ msgid ""
 "completions are shown, performs partial completion (if possible), "
 "independent of this setting."
 msgstr ""
-"Nóta: Is féidir aicearraí breise a shannadh, agus de réir réamhshocraithe, "
-"glaonn Ctrl+Spás comhlánuithe, sa bhreis air seo. Ina theannta sin, má "
-"bhrúnn tú an eochair Tab, agus comhlánuithe á dtaispeáint, déantar comhlánú "
-"páirteach (más féidir), neamhspleách ar an socrú seo."
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:77
 #, kde-format
@@ -5514,9 +5493,14 @@ msgstr ""
 "eolaire sin.</p>"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:94
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Directory where rkward may store files (setting takes effect after "
+#| "restarting RKWard)"
 msgid "HTML rendering (settings take effect after restarting RKWard)"
 msgstr ""
+"Eolaire ina bhféadfadh rkward comhaid a stóráil (tiocfaidh an socrú i "
+"bhfeidhm tar éis atosú RKWard)"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:96
 #, kde-format
@@ -5524,9 +5508,10 @@ msgid "Engine:"
 msgstr ""
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:97
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Platform default device"
 msgid "Platform default"
-msgstr ""
+msgstr "Gléas réamhshocraithe ardáin"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:99
 #, kde-format
@@ -5534,9 +5519,10 @@ msgid "QWebEngine"
 msgstr ""
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:103
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "View"
 msgid "QWebView"
-msgstr ""
+msgstr "Amharc"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:109
 #, kde-format
@@ -5552,12 +5538,6 @@ msgid ""
 "is recommended to leave hardware acceleration disabled, unless you "
 "experience performance problems while viewing HTML content inside RKWard."
 msgstr ""
-"Is eol go mbíonn éagobhsaíocht mar thoradh ar úsáid luasghéarú crua-earraí "
-"le haghaidh rindreáil HTML (m.sh. leathanaigh chabhrach agus aschur "
-"breiseán) i roinnt suiteálacha, agus ní bhíonn gá leis de ghnáth don ábhar - "
-"atá simplí de ghnáth - a thaispeántar in RKWard. Moltar luasghéarú crua-"
-"earraí a fhágáil díchumasaithe, mura mbíonn fadhbanna feidhmíochta agat agus "
-"ábhar HTML á fheiceáil agat taobh istigh de RKWard."
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:117
 #, kde-format
@@ -5581,8 +5561,6 @@ msgid ""
 "Persistent workplace layout (i.e. which script-, data-, help-windows are "
 "open)"
 msgstr ""
-"Leagan amach buan an ionaid oibre (i.e. cé na fuinneoga scripte, sonraí, "
-"agus cabhrach atá oscailte)"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:127
 #, kde-format
@@ -6709,15 +6687,17 @@ msgid "Run current statement, and advance"
 msgstr "Rith an ráiteas reatha, agus téigh ar aghaidh"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:183
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "<b>Select one:</b>"
 msgctxt "noun: type of preview"
 msgid "<b>Preview Mode</b>"
-msgstr "<b>Mód Réamhamhairc</b>"
+msgstr "<b>Roghnaigh ceann amháin:</b>"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:189
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "<b>Done</b>"
 msgid "<b>Options</b>"
-msgstr "<b>Roghanna</b>"
+msgstr "<b>Críochnaithe</b>"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:411
 #, kde-format
@@ -7265,9 +7245,9 @@ msgstr "Pacáiste"
 
 #: rkward/windows/rkhtmlwindow.cpp:389
 #, fuzzy, kde-format
-#| msgid "RKWard output file %1 does not (yet) exist"
+#| msgid "RKWard output file %s does not (yet) exist"
 msgid "RKWard output file %1 does not (yet) exist"
-msgstr "Sábháil mar"
+msgstr "Níl comhad aschuir RKWard %s ann (go fóill)"
 
 #: rkward/windows/rkhtmlwindow.cpp:521
 #: rkward/windows/rktoplevelwindowgui.cpp:264
@@ -7347,9 +7327,10 @@ msgid "&Clear Output"
 msgstr "&Glan Aschur"
 
 #: rkward/windows/rkhtmlwindow.cpp:686
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Unload"
 msgid "Reload"
-msgstr ""
+msgstr "Díluchtaigh"
 
 #: rkward/windows/rkhtmlwindow.cpp:690
 #, kde-format
@@ -8110,11 +8091,6 @@ msgstr "Cuir isteach an t-ainm nua"
 msgid "View in editor (read-only)"
 msgstr "Féach san eagarthóir (léamh amháin)"
 
-#~ msgid "RKWard output file %s does not (yet) exist"
-#~ msgstr "Níl comhad aschuir RKWard %s ann (go fóill)"
-
-#, fuzzy
-#~| msgid "Export Page as HTMLDefault &Encoding"
 #~ msgid "Default &Encoding"
 #~ msgstr "Ionchódú &Réamhshocraithe"
 

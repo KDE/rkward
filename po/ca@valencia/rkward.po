@@ -6,14 +6,14 @@
 # SPDX-FileCopyrightText: 2006 Griera <griera@gmail.com>
 # SPDX-FileCopyrightText: 2006 Núria Asensio <nasensio.germanstrias@gencat.net>
 # SPDX-FileCopyrightText: 2007, 2010, 2012 Josep Roca <pep.roca@gmail.com>
-# SPDX-FileCopyrightText: 2014, 2016, 2018, 2019, 2020, 2022, 2025, 2026 Antoni Bella Pérez <antonibella5@yahoo.com>
+# SPDX-FileCopyrightText: 2014, 2016, 2018, 2019, 2020, 2022, 2026 Antoni Bella Pérez <antonibella5@yahoo.com>
 # SPDX-FileCopyrightText: 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026 Josep M. Ferrer <txemaq@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-04-11 00:39+0000\n"
-"PO-Revision-Date: 2026-04-11 10:50+0200\n"
+"POT-Creation-Date: 2026-04-21 02:38+0000\n"
+"PO-Revision-Date: 2026-03-14 09:59+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -213,7 +213,13 @@ msgstr ""
 "carregat. Tècnicament, açò correspon a l'entorn <i>.GlobalEnv</i>."
 
 #: rkward/core/renvironmentobject.cpp:110
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Your workspace contains more than 10.000 top level objects. RKWard is not "
+#| "optimized for this situation, and you may experience lag between R "
+#| "commands. Should this situation constitute a regular use case for your "
+#| "work, please let us know at rkward-devel@kde.org, so we can consider "
+#| "possible solutions."
 msgid ""
 "Your workspace contains more than 10.000 top level objects. RKWard is not "
 "optimized for this situation, and you may experience lag between R commands. "
@@ -223,8 +229,8 @@ msgstr ""
 "L'espai de treball conté més de 10.000 objectes de nivell superior. RKWard "
 "no està optimitzat per a esta situació, i podeu experimentar un retard en "
 "les ordres d'R. Si esta situació constituïx un cas d'ús regular per al "
-"vostre treball, feu-nos-ho saber a rkward@kde.org, de manera que puguem "
-"considerar possibles solucions."
+"vostre treball, feu-nos-ho saber a rkward@devel.kde.org, de manera que "
+"puguem considerar possibles solucions."
 
 #: rkward/core/renvironmentobject.cpp:110
 #, kde-format
@@ -421,7 +427,7 @@ msgstr ""
 "de funció per als objectes en este paquet.\n"
 "Habitualment un paquet es fica en la llista negra, si té una enorme "
 "quantitat de dades i es tardaria molt a carregar-lo. Per a traure'l de la "
-"llista, anar fins a «Configuració → Configura RKWard → Espai de treball»."
+"llista, anar fins a «Configuració -> Configura RKWard… -> Espai de treball»."
 
 #: rkward/core/robject.cpp:281
 #, kde-format
@@ -732,7 +738,7 @@ msgstr ""
 "damunt «Informeu d'un problema» anireu fins al sistema de seguiment d'errors "
 "de KDE. Després d'iniciar la sessió, hi haurà certa informació que estarà "
 "emplenada en el formulari d'informe. Assegureu-vos que empleneu els dades "
-"que falten – en anglés – a on s'indiquen, especialment en el camp de "
+"que falten - en anglés - a on s'indiquen, especialment en el camp de "
 "«Comentari».</p>"
 
 #: rkward/dialogs/rkerrordialog.cpp:57
@@ -818,7 +824,7 @@ msgid ""
 "###Please fill in###\n"
 "\n"
 msgstr ""
-"Què – en detall – heu fet directament abans de trobar este problema?\n"
+"Què - en detall - heu fet directament abans de trobar este problema?\n"
 "###Empleneu-ho###\n"
 "\n"
 
@@ -996,7 +1002,12 @@ msgid "Start import dialog"
 msgstr "Inicia el diàleg d'importació"
 
 #: rkward/dialogs/rkimportdialog.cpp:108
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "No further import methods are available at this time. Things you can try, "
+#| "include: <ul><li>Check for the availability of additional import plugins</"
+#| "li><li>Save your data to a different format in the original application</"
+#| "li><li>Ask for advice on rkward-users@kde.org</li></ul>"
 msgid ""
 "No further import methods are available at this time. Things you can try, "
 "include: <ul><li>Check for the availability of additional import plugins</"
@@ -1006,8 +1017,8 @@ msgstr ""
 "No hi ha cap altre mètode d'importació disponible en este moment. Les coses "
 "que podeu intentar inclouen: <ul><li>Comprovar la disponibilitat de "
 "connectors d'importació addicionals</li><li>Guardar les dades en un format "
-"diferent en l'aplicació original</li><li>Demanar assessorament a rkward@kde."
-"org</li></ul>"
+"diferent en l'aplicació original</li><li>Demanar assessorament en rkward-"
+"users@kde.org</li></ul>"
 
 #: rkward/dialogs/rkimportdialog.cpp:110
 #, kde-format
@@ -2062,7 +2073,7 @@ msgstr "Frontal per al llenguatge estadístic R"
 #: rkward/main.cpp:189
 #, kde-format
 msgid "(c) 2002 - 2025"
-msgstr "(c) 2002 – 2025"
+msgstr "(c) 2002 - 2025"
 
 #: rkward/main.cpp:190
 #, kde-format
@@ -2267,9 +2278,10 @@ msgid "patches and helpful comments"
 msgstr "Pedaços i comentaris útils"
 
 #: rkward/main.cpp:211
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Many more people on rkward-devel@kde.org"
 msgid "Many more people on rkward@kde.org"
-msgstr "Moltes més persones a rkward@kde.org"
+msgstr "Moltes més persones en rkward-devel@kde.org"
 
 #: rkward/main.cpp:211
 #, kde-format
@@ -3256,7 +3268,7 @@ msgid ""
 msgstr ""
 "Heu intentat executar el connector «%1», però este connector és desconegut. "
 "Probablement necessiteu carregar el fitxer corresponent PluginMap "
-"(Configuració → Configura RKWard → Connectors), o potser el connector ha "
+"(Configuració -> Configura RKWard… -> Connectors), o potser el connector ha "
 "sigut canviat el nom."
 
 #: rkward/plugin/rkcomponentmap.cpp:466
@@ -3929,7 +3941,7 @@ msgstr "Missatge del dorsal R"
 msgid "Question from the R backend"
 msgstr "Pregunta del dorsal R"
 
-#: rkward/rbackend/rkrbackend.cpp:1584
+#: rkward/rbackend/rkrbackend.cpp:1583
 #, kde-format
 msgid ""
 "</p>\t- The 'rkward' R-library either could not be loaded at all, or not in "
@@ -3951,7 +3963,7 @@ msgstr ""
 "consultar <a href=\"https://rkward.kde.org/compiling\">https://rkward.kde."
 "org/compiling</a>.</p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1588
+#: rkward/rbackend/rkrbackend.cpp:1587
 #, kde-format
 msgid ""
 "<p>\t-There was a problem setting up the communication with R. Most likely "
@@ -3966,12 +3978,12 @@ msgstr ""
 "href=\"https://rkward.kde.org/compiling\">https://rkward.kde.org/compiling</"
 "a>.</p></p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1643
+#: rkward/rbackend/rkrbackend.cpp:1642
 #, kde-format
 msgid "Graphics version mismatch"
 msgstr "La versió del motor gràfic no coincidix"
 
-#: rkward/rbackend/rkrbackend.cpp:1643
+#: rkward/rbackend/rkrbackend.cpp:1642
 #, kde-format
 msgid ""
 "R Graphics Engine version has changed (from %1 to %2).<br>This change "
@@ -3982,7 +3994,7 @@ msgstr ""
 "requerix una recompilació.<br><a href=\"rkward://page/"
 "rkward_incompatible_version\">Informació addicional</a>"
 
-#: rkward/rbackend/rkrbackend.cpp:1643
+#: rkward/rbackend/rkrbackend.cpp:1642
 #, kde-format
 msgid "Ok"
 msgstr "D'acord"
@@ -4181,7 +4193,7 @@ msgstr "S'ha produït un error mentre es connectava el dorsal gràfic"
 #: rkward/rbackend/rpackages/rkward/R/public_graphics.R:93
 #, no-c-format, kde-format
 msgid "Device type \"%1\" is unknown to RKWard"
-msgstr "El tipus de dispositiu «%1» es desconegut a RKWard"
+msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:66
 #, no-c-format, kde-format
@@ -4189,13 +4201,12 @@ msgid ""
 "rk.download_appimage() requires XiMpLe >= 0.11.3, but only found %1. Please "
 "update XiMpLe."
 msgstr ""
-"rk.download_appimage() requerix XiMpLe >= 0.11.3, però només s'ha trobat %1. "
-"Actualitzeu XiMpLe."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:76
-#, no-c-format, kde-format
+#, fuzzy, no-c-format, kde-format
+#| msgid "The file or directory does not exist."
 msgid "Target directory '%1' does not exist\n"
-msgstr "El directori de destinació «%1» no existix\n"
+msgstr "El fitxer o directori no existix."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:82
 #, no-c-format, kde-format
@@ -4203,8 +4214,6 @@ msgid ""
 "Target file '%1' already exists, use the \"overwrite\" argument to replace "
 "it:\n"
 msgstr ""
-"El fitxer «%1» ja existix. Utilitzeu l'argument «overwrite» per a substituir-"
-"lo:\n"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:86
 #, no-c-format, kde-format
@@ -4212,8 +4221,6 @@ msgid ""
 "Creating backup of current AppImage: %1\n"
 "  "
 msgstr ""
-"S'està creant una còpia de seguretat d'AppImage actual:%1\n"
-"  "
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:111
 #, kde-format
@@ -4221,25 +4228,22 @@ msgid ""
 "Something went wrong with the download! Restored previous AppImage from "
 "backup."
 msgstr ""
-"Alguna cosa ha anat malament amb la baixada! S'ha restaurat AppImage "
-"anterior a partir de la còpia de seguretat."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:114
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:139
 #, kde-format
 msgid "Something went wrong with the download!"
-msgstr "Alguna cosa ha anat malament amb la baixada!"
+msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:120
 #, kde-format
 msgid "Download successful, setting file permissions."
 msgstr ""
-"La baixada s'ha fet correctament. S'establixen els permisos del fitxer."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:127
 #, kde-format
 msgid "Removing backup of previous AppImage."
-msgstr "S'eliminen les còpies de seguretat de les AppImage anteriors."
+msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:133
 #, kde-format
@@ -4247,41 +4251,38 @@ msgid ""
 "Something went wrong with the download! Restoring previous AppImage from "
 "backup."
 msgstr ""
-"Alguna cosa ha anat malament amb la baixada! S'està restaurant AppImage "
-"anterior a partir de la còpia de seguretat."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.filename-functions.R:146
 #, no-c-format, kde-format
 msgid "Failed to copy CSS file '%1' to '%2'"
-msgstr "Ha fallat mentre es copiava el fitxer CSS «%1» a «%2»"
+msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.menu.R:81
 #, no-c-format, kde-format
 msgid "Submenu %1 cannot be redefined as a leaf item."
-msgstr "El submenú %1 no s'ha pogut redefinir com un element de fulla."
+msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.menu.R:113
 #: rkward/rbackend/rpackages/rkward/R/rk.menu.R:118
 #, no-c-format, kde-format
 msgid "Menu path %1 is not defined"
-msgstr "No s'ha definit el camí de menú %1"
+msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.menu.R:114
 #, no-c-format, kde-format
 msgid "Leaf menu item %1 cannot be redefined as a submenu."
-msgstr "L'element de menú de fulla %1 no s'ha pogut redefinir com a submenú."
+msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.output.R:86
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Local file names"
 msgid "No file name specified"
-msgstr "No s'ha indicat cap nom de fitxer"
+msgstr "Noms dels fitxers locals"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.output.R:115
 #, kde-format
 msgid "Invalid output id. Use rk.output() to obtain a valid output handle."
 msgstr ""
-"ID d'eixida no vàlid. Utilitzeu rk.output() per a obtindre un gestor "
-"d'eixida vàlid."
 
 # skip-rule: t-acc_obe
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:37
@@ -4316,32 +4317,34 @@ msgstr ""
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:141
 #, kde-format
 msgid "Plot window created"
-msgstr "S'ha creat la finestra de diagrames"
+msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:145
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@action:button"
+#| msgid "Do no close"
 msgid "Plot window closed"
-msgstr "S'ha tancat la finestra de diagrames"
+msgstr "No el tanques"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:155
 #, kde-format
 msgid "Plot updated (click to show)"
-msgstr "Diagrama actualitzat (clic per a mostrar)"
+msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.print-functions.R:115
 #, kde-format
 msgid "Please install package R2HTML to enable output!"
-msgstr "Instal·leu el paquet R2HTML per a activar l'eixida!"
+msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.print-functions.R:152
 #, kde-format
 msgid "Unnamed parameter lists are deprecated in rk.header()"
-msgstr "Les llistes de paràmetres sense nom són obsoletes a rk.header()"
+msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.print-functions.R:245
 #, no-c-format, kde-format
 msgid "Printing object of class '%1' is not implemented"
-msgstr "No s'ha implementat la impressió d'objectes de classe «%1»"
+msgstr ""
 
 #: rkward/rkconsole.cpp:71
 #, kde-format
@@ -4534,7 +4537,7 @@ msgid ""
 msgstr ""
 "S'han trobat paquets nous (llistats davall) de connectors de RKWard, i s'han "
 "activat automàticament. Per a desactivar els paquets de connectors "
-"seleccionats, utilitzeu «Configuració → Configura RKWard → Connectors»."
+"seleccionats, utilitzeu «Configuració -> Configura RKWard… -> Connectors»."
 
 #: rkward/rkward.cpp:373
 #, kde-format
@@ -4581,7 +4584,7 @@ msgid ""
 msgstr ""
 "Nota: No tornarà a aparéixer l'avís quant a estos fitxers del mapa de "
 "connectors, fins que actualitzeu RKWard, o els elimineu i els torneu a "
-"afegir a «Configuració → Configura RKWard → Connectors»."
+"afegir a «Configuració -> Configura RKWard… -> Connectors»."
 
 #: rkward/rkward.cpp:443
 #, kde-format
@@ -5181,7 +5184,12 @@ msgid "(Attempt to) start completion whenever the cursor position changes"
 msgstr "(Intenta) iniciar la compleció sempre que la posició del cursor canvie"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:74
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Note: Further shortcuts can be assigned, and by default, Ctlr+Space "
+#| "invokes completions, in addition to this. Further, pressing the Tab key, "
+#| "while completions are shown, performs partial completion (if possible), "
+#| "independent of this setting."
 msgid ""
 "Note: Further shortcuts can be assigned, and by default, Ctrl+Space invokes "
 "completions, in addition to this. Further, pressing the Tab key, while "
@@ -5512,35 +5520,41 @@ msgstr ""
 "directori tindrà preferència.</p>"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:94
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Directory where rkward may store files (setting takes effect after "
+#| "restarting RKWard)"
 msgid "HTML rendering (settings take effect after restarting RKWard)"
 msgstr ""
-"Renderització HTML (les opcions s'efectuaran després de reiniciar RKWard)"
+"Directori on RKWard pot emmagatzemar els fitxers (este paràmetre tindrà "
+"efecte després de reiniciar RKWard)"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:96
 #, kde-format
 msgid "Engine:"
-msgstr "Motor:"
+msgstr ""
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:97
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Platform default device"
 msgid "Platform default"
-msgstr "Predeterminat de la plataforma"
+msgstr "Dispositiu predeterminat de la plataforma"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:99
 #, kde-format
 msgid "QWebEngine"
-msgstr "QWebEngine"
+msgstr ""
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:103
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "View"
 msgid "QWebView"
-msgstr "QWebView"
+msgstr "Visualitza"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:109
 #, kde-format
 msgid "Disable hardware acceleration"
-msgstr "Desactiva l'acceleració de maquinari"
+msgstr ""
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:110
 #, kde-format
@@ -5551,12 +5565,6 @@ msgid ""
 "is recommended to leave hardware acceleration disabled, unless you "
 "experience performance problems while viewing HTML content inside RKWard."
 msgstr ""
-"L'ús de l'acceleració de maquinari per a la renderització HTML (p. ex., "
-"pàgines d'ajuda i eixida de connectors) se sap que pot causar inestabilitat "
-"en algunes instal·lacions, i generalment no és necessari per al contingut, "
-"normalment senzill, mostrat a RKWard. Es recomana deixar l'acceleració de "
-"maquinari desactivada, llevat que experimenteu problemes de rendiment mentre "
-"visualitzeu contingut HTML dins de RKWard."
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:117
 #, kde-format
@@ -5580,8 +5588,6 @@ msgid ""
 "Persistent workplace layout (i.e. which script-, data-, help-windows are "
 "open)"
 msgstr ""
-"Disposició persistent de l'espai de treball (és a dir, les finestres de "
-"script, dades, ajuda que hi ha obertes)"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:127
 #, kde-format
@@ -5727,7 +5733,7 @@ msgstr ""
 "(<i>RK()</i>). Alguns però no tots els arguments de funcions coincidiran, "
 "els altres s'ignoraran.</li><li>Es poden utilitzar els dispositius originals "
 "específics de plataforma, però incrustats dins de finestres de RKWard. Esta "
-"opció no està disponible en macOS X.</li><li>Es poden utilitzar els "
+"opció no està disponible a macOS X.</li><li>Es poden utilitzar els "
 "dispositius originals específics de plataforma sense canviar, sense "
 "l'addició de les característiques específiques de RKWard.</li></"
 "ul><p>Independentment d'este paràmetre, els dispositius originals sempre són "
@@ -6720,15 +6726,18 @@ msgid "Run current statement, and advance"
 msgstr "Executa la sentència actual i avança"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:183
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "noun: type of preview"
+#| msgid "Preview Mode"
 msgctxt "noun: type of preview"
 msgid "<b>Preview Mode</b>"
-msgstr "<b>Mode de vista prèvia</b>"
+msgstr "Mode de vista prèvia"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:189
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "<b>Done</b>"
 msgid "<b>Options</b>"
-msgstr "<b>Opcions</b>"
+msgstr "<b>Fet</b>"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:411
 #, kde-format
@@ -7155,7 +7164,7 @@ msgstr ""
 "<b>No</b> oferix cap característica per a depurar el codi d'R.</p><p>Cal "
 "tindre en compte que la llista de missatges es neteja cada vegada que es "
 "tanca la finestra.</p><p>Es pot controlar el tipus i el nivell de gravetat "
-"dels missatges a «Configuració → Configura RKWard → Depuració»</p>"
+"dels missatges a «Configuració -> Configura RKWard… -> Depuració»</p>"
 
 #: rkward/windows/rkdebugmessagewindow.cpp:72
 #, kde-format
@@ -7246,7 +7255,7 @@ msgid ""
 msgstr ""
 "No s'ha trobat cap ajuda sobre «%1». Potser el paquet corresponent no està "
 "instal·lat / carregat, o potser heu escrit malament l'ordre. Per a més "
-"opcions, intenteu utilitzar «Ajuda → Busca ajuda quant a R»."
+"opcions, intenteu utilitzar «Ajuda -> Busca ajuda quant a R»."
 
 #: rkward/windows/rkhelpsearchwindow.cpp:161
 #, kde-format
@@ -7274,9 +7283,10 @@ msgid "Package"
 msgstr "Paquet"
 
 #: rkward/windows/rkhtmlwindow.cpp:389
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "RKWard output file %s does not (yet) exist"
 msgid "RKWard output file %1 does not (yet) exist"
-msgstr "El fitxer d'eixida %1 de RKWard (encara) no existix"
+msgstr "El fitxer d'eixida %s de RKWard (encara) no existix"
 
 #: rkward/windows/rkhtmlwindow.cpp:521
 #: rkward/windows/rktoplevelwindowgui.cpp:264
@@ -7355,9 +7365,10 @@ msgid "&Clear Output"
 msgstr "&Neteja l'eixida"
 
 #: rkward/windows/rkhtmlwindow.cpp:686
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Unload"
 msgid "Reload"
-msgstr "Torna a carregar"
+msgstr "Descarrega"
 
 #: rkward/windows/rkhtmlwindow.cpp:690
 #, kde-format
@@ -7484,12 +7495,12 @@ msgstr "Anomena i guarda"
 #: rkward/windows/rkqwebview.cpp:252
 #, kde-format
 msgid "Open link in new tab"
-msgstr "Obri l'enllaç en una pestanya nova"
+msgstr ""
 
 #: rkward/windows/rkqwebview.cpp:265
 #, kde-format
 msgid "Copy link address"
-msgstr "Copia l'adreça de l'enllaç"
+msgstr ""
 
 #: rkward/windows/rktexthints.cpp:34
 #, kde-format
@@ -7653,7 +7664,7 @@ msgstr ""
 "RKWard. Tanmateix, no s'ha creat cap finestra, o RKWard ha fallat en "
 "detectar la finestra nova. Si creieu que RKWard ho podria haver fet millor, "
 "considereu informar-ho com un error. De manera alternativa, podríeu voler "
-"ajustar «Configuració → Configura RKWard → Gràfics en pantalla»."
+"ajustar «Configuració -> Configura RKWard… -> Gràfics en pantalla»."
 
 #: rkward/windows/rkwindowcatcher.cpp:308
 #, kde-format
@@ -7674,7 +7685,7 @@ msgid ""
 msgstr ""
 "La finestra actual pareix massa gran per a ajustar-se a la pantalla. Si açò "
 "passa sovint, podríeu voler ajustar la mida predeterminada de la finestra "
-"gràfica a «Configuració → Configura RKWard → Gràfics en pantalla»."
+"gràfica a «Configuració -> Configura RKWard… -> Gràfics en pantalla»."
 
 #: rkward/windows/rkwindowcatcher.cpp:368
 #, kde-format
@@ -7979,7 +7990,7 @@ msgstr ""
 "petits abans d'editar-los. D'altra banda, si teniu memòria suficient, o les "
 "dades són prou simples (les dades numèriques són més fàcils de gestionar que "
 "els factors), es podran editar sense problemes. Podeu configurar este avís "
-"(o desactivar-lo del tot) a «Configuració → Configura RKWard → General».\n"
+"(o desactivar-lo del tot) a «Configuració -> Configura RKWard… -> General».\n"
 "Edite l'objecte?"
 
 #: rkward/windows/rkworkplace.cpp:648
@@ -8115,3 +8126,43 @@ msgstr "Introduïu el nom nou"
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr "Veure en l'editor (només lectura)"
+
+# workplace layout "#" R workspace
+#~ msgid ""
+#~ "The workplace layout (i.e. which script-, data-, help-windows are open) "
+#~ "may be saved (and loaded) per R workspace, or independent of the R "
+#~ "workspace. Which do you prefer?"
+#~ msgstr ""
+#~ "El lloc de treball (és a dir, les finestres de scripts, dades, d'ajuda "
+#~ "que estan obertes) es pot guardar (i carregar) per a l'espai de treball "
+#~ "d'R, o independentment d'este espai de treball. Què preferiu?"
+
+#~ msgctxt "Caption: Some software is missing."
+#~ msgid "Missing software"
+#~ msgstr "Falta programari"
+
+#~ msgid ""
+#~ "The software <tt>pandoc</tt>, required to rendering R markdown files, is "
+#~ "not installed, or not in the system path of the running R session. You "
+#~ "will need to install pandoc from <a href=\"https://pandoc.org/\">https://"
+#~ "pandoc.org/</a>.</br>If it is installed, but cannot be found, try adding "
+#~ "it to the system path of the running R session at <a href=\"rkward://"
+#~ "settings/rbackend\">Settings->Configure RKward->R-backend</a>."
+#~ msgstr ""
+#~ "El programari <tt>pandoc</tt>, requerit per a representar els fitxers R "
+#~ "Markdown, no està instal·lat, o no està en el camí del sistema de la "
+#~ "sessió R en execució. Caldrà instal·lar «pandoc» des de <a href=\"https://"
+#~ "pandoc.org/\">https://pandoc.org/</a>.</br>Si està instal·lat però no "
+#~ "s'ha trobat, intenteu afegir-lo al camí del sistema de la sessió R en "
+#~ "execució des d'<a href=\"rkward://settings/rbackend\">Configuració-"
+#~ ">Configura RKward->Dorsal R</a>."
+
+#~ msgid "Default &Encoding"
+#~ msgstr "Codificació pre&determinada"
+
+#~ msgid ""
+#~ "Set the encoding to assume in case no explicit encoding has been set in "
+#~ "the page or in the HTTP headers."
+#~ msgstr ""
+#~ "Establix la codificació a assumir en cas que no s'haja establit cap "
+#~ "codificació explícita a la pàgina a les capçaleres HTTP."

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:48+0000\n"
-"PO-Revision-Date: 2026-01-11 09:57+0100\n"
+"POT-Creation-Date: 2025-11-17 14:38+0000\n"
+"PO-Revision-Date: 2026-01-17 03:27+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -2357,9 +2357,6 @@ msgid ""
 "substantially larger than the second eigenvalue of data under the assumed "
 "IRT model</em>"
 msgstr ""
-"ალტერნატიული ჰიპოთეზა: <em>დასაკვირვებელი მონაცემების მეორე საკუთრივი "
-"მნიშვნელობა საგრძნობლად დიდია ჩათვლილი IRT მოდელის ქვეშ არსებული მონაცემების "
-"მეორე საკუთრივ მნიშვნელობაზე</em>"
 
 #. i18n: ectx: (Loaded from Unidimensionality check (Rasch, LTM, 3PM))
 #: rkward/plugins/analysis/irt/tests/ltm_unidimensional.js:34
@@ -3027,7 +3024,7 @@ msgstr "ქულების მქონე პასუხის მოდე
 #: rkward/plugins/plots/irt/polytomous/plot_grm.xml:19
 #, kde-format
 msgid "Plotting fitted graded response model"
-msgstr "ქულების მქონე პასუხის მოდელის ნახაზი"
+msgstr "ჩატეული ქულების მქონე პასუხის მოდელის დახატვა"
 
 #. i18n: ectx: (Plotting fitted graded response model) <dialog label="Plotting fitted graded response model"> <tab label="Model"> <text>
 #: rkward/plugins/plots/irt/polytomous/plot_grm.xml:26
@@ -3039,7 +3036,7 @@ msgstr "ობიექტების გამოყენება, მხო
 #: rkward/plugins/plots/irt/polytomous/plot_grm.xml:42
 #, kde-format
 msgid "Item operation characteristic curve"
-msgstr "ჩანაწერის მახასიათებლების მრუდი"
+msgstr "ელემენტის ოპერაციის მახასიათებლების მრუდი"
 
 #. i18n: ectx: (Plotting fitted graded response model) <dialog label="Plotting fitted graded response model"> <tab label="Plot type"> <radio label="Type of item plot"> <option label="...">
 #: rkward/plugins/plots/irt/polytomous/plot_grm.xml:43

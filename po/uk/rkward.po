@@ -3,13 +3,13 @@
 # This file is distributed under the license LGPL version 2.1 or
 # version 3 or later versions approved by the membership of KDE e.V.
 #
-# Yuri Chornoivan <yurchor@ukr.net>, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2019, 2020, 2021, 2022, 2024, 2025, 2026.
+# Yuri Chornoivan <yurchor@ukr.net>, 2011, 2012, 2013, 2014, 2015, 2016, 2018, 2019, 2020, 2021, 2022, 2024, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-04-11 00:39+0000\n"
-"PO-Revision-Date: 2026-04-11 08:23+0300\n"
+"POT-Creation-Date: 2026-04-21 02:38+0000\n"
+"PO-Revision-Date: 2025-10-07 22:16+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -211,7 +211,13 @@ msgstr ""
 "GlobalEnv</i>."
 
 #: rkward/core/renvironmentobject.cpp:110
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Your workspace contains more than 10.000 top level objects. RKWard is not "
+#| "optimized for this situation, and you may experience lag between R "
+#| "commands. Should this situation constitute a regular use case for your "
+#| "work, please let us know at rkward-devel@kde.org, so we can consider "
+#| "possible solutions."
 msgid ""
 "Your workspace contains more than 10.000 top level objects. RKWard is not "
 "optimized for this situation, and you may experience lag between R commands. "
@@ -221,7 +227,7 @@ msgstr ""
 "У вашому робочому просторі міститься понад 10000 об'єктів верхнього рівня. "
 "RKWard у таких випадках працює неоптимально — можуть відчуватися затримки "
 "між виконанням команд R. Якщо така ситуація є звичною для вашої роботи, будь "
-"ласка, повідомте нам про це за адресою rkward@kde.org, щоб ми могли "
+"ласка, повідомте нам про це за адресою rkward-devel@kde.org, щоб ми могли "
 "повідомити вам про можливі шляхи вирішення проблеми."
 
 #: rkward/core/renvironmentobject.cpp:110
@@ -994,7 +1000,12 @@ msgid "Start import dialog"
 msgstr "Відкрити вікно імпортування"
 
 #: rkward/dialogs/rkimportdialog.cpp:108
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "No further import methods are available at this time. Things you can try, "
+#| "include: <ul><li>Check for the availability of additional import plugins</"
+#| "li><li>Save your data to a different format in the original application</"
+#| "li><li>Ask for advice on rkward-users@kde.org</li></ul>"
 msgid ""
 "No further import methods are available at this time. Things you can try, "
 "include: <ul><li>Check for the availability of additional import plugins</"
@@ -1003,8 +1014,8 @@ msgid ""
 msgstr ""
 "Не лишилося ніяких інших способів імпортування. Ви можете спробувати такі "
 "дії: <ul><li>Пошукати додаткові додатки імпортування</li><li>Зберегти дані в "
-"іншому форматі у програмі походження даних</li><li>Попросити поради у "
-"rkward@kde.org</li></ul>"
+"іншому форматі у програмі походження даних</li><li>Попросити поради у rkward-"
+"users@kde.org</li></ul>"
 
 #: rkward/dialogs/rkimportdialog.cpp:110
 #, kde-format
@@ -2281,9 +2292,10 @@ msgid "patches and helpful comments"
 msgstr "латки та корисні коментарі"
 
 #: rkward/main.cpp:211
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Many more people on rkward-devel@kde.org"
 msgid "Many more people on rkward@kde.org"
-msgstr "Всі інші учасники листування у rkward@kde.org"
+msgstr "Всі інші учасники листування у rkward-devel@kde.org"
 
 #: rkward/main.cpp:211
 #, kde-format
@@ -3919,7 +3931,7 @@ msgstr "Повідомлення від основного модуля R"
 msgid "Question from the R backend"
 msgstr "Запитання від основного модуля R"
 
-#: rkward/rbackend/rkrbackend.cpp:1584
+#: rkward/rbackend/rkrbackend.cpp:1583
 #, kde-format
 msgid ""
 "</p>\t- The 'rkward' R-library either could not be loaded at all, or not in "
@@ -3941,7 +3953,7 @@ msgstr ""
 "Довідкові матеріали, які допоможуть в усуванні негараздів, можна знайти <a "
 "href=\"https://rkward.kde.org/compiling\">тут</a>.</p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1588
+#: rkward/rbackend/rkrbackend.cpp:1587
 #, kde-format
 msgid ""
 "<p>\t-There was a problem setting up the communication with R. Most likely "
@@ -3957,12 +3969,12 @@ msgstr ""
 "негараздів, можна знайти <a href=\"https://rkward.kde.org/compiling\">тут</"
 "a>.</p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1643
+#: rkward/rbackend/rkrbackend.cpp:1642
 #, kde-format
 msgid "Graphics version mismatch"
 msgstr "Невідповідність версії графіки"
 
-#: rkward/rbackend/rkrbackend.cpp:1643
+#: rkward/rbackend/rkrbackend.cpp:1642
 #, kde-format
 msgid ""
 "R Graphics Engine version has changed (from %1 to %2).<br>This change "
@@ -3973,7 +3985,7 @@ msgstr ""
 "збирання програми.<br><a href=\"rkward://page/rkward_incompatible_version"
 "\">Додаткові відомості</a>"
 
-#: rkward/rbackend/rkrbackend.cpp:1643
+#: rkward/rbackend/rkrbackend.cpp:1642
 #, kde-format
 msgid "Ok"
 msgstr "Гаразд"
@@ -4169,7 +4181,7 @@ msgstr "Помилка під час спроби з’єднатисяіз мо
 #: rkward/rbackend/rpackages/rkward/R/public_graphics.R:93
 #, no-c-format, kde-format
 msgid "Device type \"%1\" is unknown to RKWard"
-msgstr "Тип пристрою «%1» не реалізовано у RKWard"
+msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:66
 #, no-c-format, kde-format
@@ -4177,13 +4189,12 @@ msgid ""
 "rk.download_appimage() requires XiMpLe >= 0.11.3, but only found %1. Please "
 "update XiMpLe."
 msgstr ""
-"rk.download_appimage() потребує XiMpLe >= 0.11.3, але виявлено лише %1. Будь "
-"ласка, оновіть XiMpLe."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:76
-#, no-c-format, kde-format
+#, fuzzy, no-c-format, kde-format
+#| msgid "The file or directory does not exist."
 msgid "Target directory '%1' does not exist\n"
-msgstr "Каталогу призначення, «%1» не існує\n"
+msgstr "Файла або каталогу не існує."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:82
 #, no-c-format, kde-format
@@ -4191,8 +4202,6 @@ msgid ""
 "Target file '%1' already exists, use the \"overwrite\" argument to replace "
 "it:\n"
 msgstr ""
-"Файл призначення, «%1», вже існує, скористайтеся аргументом «overwrite», щоб "
-"його замінити:\n"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:86
 #, no-c-format, kde-format
@@ -4200,8 +4209,6 @@ msgid ""
 "Creating backup of current AppImage: %1\n"
 "  "
 msgstr ""
-"Створюємо резервну копію поточного AppImage: %1\n"
-"  "
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:111
 #, kde-format
@@ -4209,24 +4216,22 @@ msgid ""
 "Something went wrong with the download! Restored previous AppImage from "
 "backup."
 msgstr ""
-"Щось не так із отриманими даними! Відновлено попередню версію AppImage з "
-"резервної копії."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:114
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:139
 #, kde-format
 msgid "Something went wrong with the download!"
-msgstr "Щось не так із отриманими даними!"
+msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:120
 #, kde-format
 msgid "Download successful, setting file permissions."
-msgstr "Дані успішно отримано, встановлюємо права доступу до файлів."
+msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:127
 #, kde-format
 msgid "Removing backup of previous AppImage."
-msgstr "Вилучаємо резервну копію попередньої версії AppImage."
+msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:133
 #, kde-format
@@ -4234,41 +4239,38 @@ msgid ""
 "Something went wrong with the download! Restoring previous AppImage from "
 "backup."
 msgstr ""
-"Щось не так із отриманими даними! Відновлюємо попередню версію AppImage з "
-"резервної копії."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.filename-functions.R:146
 #, no-c-format, kde-format
 msgid "Failed to copy CSS file '%1' to '%2'"
-msgstr "Не вдалося скопіювати файл CSS «%1» до «%2»"
+msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.menu.R:81
 #, no-c-format, kde-format
 msgid "Submenu %1 cannot be redefined as a leaf item."
-msgstr "Підменю %1 не можна перевизначати як підлеглий запис."
+msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.menu.R:113
 #: rkward/rbackend/rpackages/rkward/R/rk.menu.R:118
 #, no-c-format, kde-format
 msgid "Menu path %1 is not defined"
-msgstr "Шлях у меню %1 не визначено"
+msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.menu.R:114
 #, no-c-format, kde-format
 msgid "Leaf menu item %1 cannot be redefined as a submenu."
-msgstr "Підлеглий пункт меню %1 не може бути перевизначено як підменю."
+msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.output.R:86
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Local file names"
 msgid "No file name specified"
-msgstr "Не вказано назви файла"
+msgstr "Назви локальних файлів"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.output.R:115
 #, kde-format
 msgid "Invalid output id. Use rk.output() to obtain a valid output handle."
 msgstr ""
-"Некоректний ідентифікатор виведення. Скористайтеся rk.output() для отримання "
-"коректного дескриптора виведення."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:37
 #, kde-format
@@ -4302,32 +4304,34 @@ msgstr ""
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:141
 #, kde-format
 msgid "Plot window created"
-msgstr "Створено вікно креслення"
+msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:145
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@action:button"
+#| msgid "Do no close"
 msgid "Plot window closed"
-msgstr "Вікно креслення закрито"
+msgstr "Не закривати"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:155
 #, kde-format
 msgid "Plot updated (click to show)"
-msgstr "Креслення оновлено (клацніть, щоб переглянути)"
+msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.print-functions.R:115
 #, kde-format
 msgid "Please install package R2HTML to enable output!"
-msgstr "Будь ласка, встановіть пакунок R2HTML, щоб уможливити виведення даних!"
+msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.print-functions.R:152
 #, kde-format
 msgid "Unnamed parameter lists are deprecated in rk.header()"
-msgstr "Списки параметрів без назви вважаються у rk.header() застарілими"
+msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.print-functions.R:245
 #, no-c-format, kde-format
 msgid "Printing object of class '%1' is not implemented"
-msgstr "Друк об'єкта класу «%1» не реалізовано"
+msgstr ""
 
 #: rkward/rkconsole.cpp:71
 #, kde-format
@@ -5165,7 +5169,12 @@ msgstr ""
 "курсора"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:74
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Note: Further shortcuts can be assigned, and by default, Ctlr+Space "
+#| "invokes completions, in addition to this. Further, pressing the Tab key, "
+#| "while completions are shown, performs partial completion (if possible), "
+#| "independent of this setting."
 msgid ""
 "Note: Further shortcuts can be assigned, and by default, Ctrl+Space invokes "
 "completions, in addition to this. Further, pressing the Tab key, while "
@@ -5173,7 +5182,7 @@ msgid ""
 "independent of this setting."
 msgstr ""
 "Зауваження: ви можете призначити інші клавіатурні скорочення. Типово, окрім "
-"цього, Ctrl+Пробіл викликає автодоповнення. Далі, натискання клавіші Tab, "
+"цього, Ctlr+Пробіл викликає автодоповнення. Далі, натискання клавіші Tab, "
 "якщо показано список варіантів доповнення, виконує часткове доповнення (якщо "
 "це можливо), незалежно від цього параметра."
 
@@ -5495,34 +5504,41 @@ msgstr ""
 "пріоритетним буде саме каталог робочих просторів.</p>"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:94
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Directory where rkward may store files (setting takes effect after "
+#| "restarting RKWard)"
 msgid "HTML rendering (settings take effect after restarting RKWard)"
-msgstr "Обробка HTML (налаштування наберуть чинності після перезапуску RKWard)"
+msgstr ""
+"Каталог, у якому rkward може зберігати файли (набуде чинності після "
+"перезапуску RKWard)"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:96
 #, kde-format
 msgid "Engine:"
-msgstr "Рушій:"
+msgstr ""
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:97
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Platform default device"
 msgid "Platform default"
-msgstr "Типовий для платформи"
+msgstr "Типовий пристрій платформи"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:99
 #, kde-format
 msgid "QWebEngine"
-msgstr "QWebEngine"
+msgstr ""
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:103
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "View"
 msgid "QWebView"
-msgstr "QWebView"
+msgstr "Переглянути"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:109
 #, kde-format
 msgid "Disable hardware acceleration"
-msgstr "Вимкнути апаратне прискорення"
+msgstr ""
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:110
 #, kde-format
@@ -5533,12 +5549,6 @@ msgid ""
 "is recommended to leave hardware acceleration disabled, unless you "
 "experience performance problems while viewing HTML content inside RKWard."
 msgstr ""
-"Відомо, що використання апаратного прискорення для візуалізації HTML "
-"(наприклад, сторінок довідки та результатів роботи додатків) призводить до "
-"нестабільності в деяких реалізаціях і зазвичай не потрібне для – зазвичай "
-"простих – даних, які відтворює RKWard. Рекомендуємо залишати апаратне "
-"прискорення вимкненим, якщо у вас не виникають проблеми з продуктивністю під "
-"час перегляду даних HTML у RKWard."
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:117
 #, kde-format
@@ -5561,8 +5571,6 @@ msgid ""
 "Persistent workplace layout (i.e. which script-, data-, help-windows are "
 "open)"
 msgstr ""
-"Стале компонування робочого простору (тобто те, які вікна скриптів, даних та "
-"довідки відкрито)"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:127
 #, kde-format
@@ -6688,15 +6696,18 @@ msgid "Run current statement, and advance"
 msgstr "Виконати поточну інструкцію і перейти до наступною"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:183
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "noun: type of preview"
+#| msgid "Preview Mode"
 msgctxt "noun: type of preview"
 msgid "<b>Preview Mode</b>"
-msgstr "<b>Режим перегляду</b>"
+msgstr "Режим перегляду"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:189
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "<b>Done</b>"
 msgid "<b>Options</b>"
-msgstr "<b>Параметри</b>"
+msgstr "<b>Виконано</b>"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:411
 #, kde-format
@@ -7243,9 +7254,10 @@ msgid "Package"
 msgstr "Пакунок"
 
 #: rkward/windows/rkhtmlwindow.cpp:389
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "RKWard output file %s does not (yet) exist"
 msgid "RKWard output file %1 does not (yet) exist"
-msgstr "Файла результатів RKWard %1 ще не існує"
+msgstr "Файла результатів RKWard %s ще не існує"
 
 #: rkward/windows/rkhtmlwindow.cpp:521
 #: rkward/windows/rktoplevelwindowgui.cpp:264
@@ -7325,9 +7337,10 @@ msgid "&Clear Output"
 msgstr "&Очистити вивід"
 
 #: rkward/windows/rkhtmlwindow.cpp:686
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Unload"
 msgid "Reload"
-msgstr "Перезавантажити"
+msgstr "Вивантажити"
 
 #: rkward/windows/rkhtmlwindow.cpp:690
 #, kde-format
@@ -7454,12 +7467,12 @@ msgstr "Зберегти як"
 #: rkward/windows/rkqwebview.cpp:252
 #, kde-format
 msgid "Open link in new tab"
-msgstr "Відкрити посилання у новій вкладці"
+msgstr ""
 
 #: rkward/windows/rkqwebview.cpp:265
 #, kde-format
 msgid "Copy link address"
-msgstr "Копіювати адресу посилання"
+msgstr ""
 
 #: rkward/windows/rktexthints.cpp:34
 #, kde-format
@@ -8085,16 +8098,6 @@ msgstr "Вкажіть нову назву"
 msgid "View in editor (read-only)"
 msgstr "Переглянути у редакторі (лише читання)"
 
-#~ msgid "Default &Encoding"
-#~ msgstr "Типове &кодування"
-
-#~ msgid ""
-#~ "Set the encoding to assume in case no explicit encoding has been set in "
-#~ "the page or in the HTTP headers."
-#~ msgstr ""
-#~ "Встановлює кодування, яким слід користуватися, якщо на сторінці або у "
-#~ "заголовках HTTP кодування не вказано явним чином."
-
 #~ msgid ""
 #~ "The workplace layout (i.e. which script-, data-, help-windows are open) "
 #~ "may be saved (and loaded) per R workspace, or independent of the R "
@@ -8126,6 +8129,19 @@ msgstr "Переглянути у редакторі (лише читання)"
 #~ "допомогою пункту меню <a href=\"rkward://settings/rbackend\">Параметри → "
 #~ "Налаштувати RKward → R-модуль</a>."
 
+#~ msgid "Default &Encoding"
+#~ msgstr "Типове &кодування"
+
+#~ msgid ""
+#~ "Set the encoding to assume in case no explicit encoding has been set in "
+#~ "the page or in the HTTP headers."
+#~ msgstr ""
+#~ "Встановлює кодування, яким слід користуватися, якщо на сторінці або у "
+#~ "заголовках HTTP кодування не вказано явним чином."
+
+#~ msgid "Error opening script file %1"
+#~ msgstr "Помилка під час спроби відкрити файл скрипту %1"
+
 #~ msgid "R Markdown (auto)"
 #~ msgstr "Розмітка R (авто)"
 
@@ -8135,9 +8151,6 @@ msgstr "Переглянути у редакторі (лише читання)"
 #~ msgstr ""
 #~ "Попередній перегляд скрипту на основі обробки формату RMarkdown до "
 #~ "формату, який вказано у заголовку документа."
-
-#~ msgid "Error opening script file %1"
-#~ msgstr "Помилка під час спроби відкрити файл скрипту %1"
 
 #~ msgid ""
 #~ "<b>There have been errors and / or warnings. See below for a transcript</"

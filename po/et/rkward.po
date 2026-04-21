@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-04-11 00:39+0000\n"
+"POT-Creation-Date: 2026-04-21 02:38+0000\n"
 "PO-Revision-Date: 2022-11-14 20:26+0100\n"
 "Last-Translator: Mihkel Tõnnov <mihhkel@gmail.com>\n"
 "Language-Team: Estonian <>\n"
@@ -3783,7 +3783,7 @@ msgstr "R-i taustaprogrammi teade"
 msgid "Question from the R backend"
 msgstr "R-i taustaprogrammi küsimus"
 
-#: rkward/rbackend/rkrbackend.cpp:1584
+#: rkward/rbackend/rkrbackend.cpp:1583
 #, fuzzy, kde-format
 #| msgid ""
 #| "</p>\t- The 'rkward' R-library either could not be loaded at all, or not "
@@ -3815,7 +3815,7 @@ msgstr ""
 "Asjakohast abi võib leida aadressil <a href=\"http://rkward.kde.org/compiling"
 "\">http://rkward.kde.org/compiling</a>.</p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1588
+#: rkward/rbackend/rkrbackend.cpp:1587
 #, fuzzy, kde-format
 #| msgid ""
 #| "<p>\t-There was a problem setting up the communication with R. Most "
@@ -3836,12 +3836,12 @@ msgstr ""
 "leida aadressil <a href=\"http://rkward.kde.org/compiling\">http://rkward."
 "kde.org/compiling</a>.<p></p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1643
+#: rkward/rbackend/rkrbackend.cpp:1642
 #, kde-format
 msgid "Graphics version mismatch"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:1643
+#: rkward/rbackend/rkrbackend.cpp:1642
 #, kde-format
 msgid ""
 "R Graphics Engine version has changed (from %1 to %2).<br>This change "
@@ -3849,7 +3849,7 @@ msgid ""
 "rkward_incompatible_version\">Additional information</a>"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:1643
+#: rkward/rbackend/rkrbackend.cpp:1642
 #, kde-format
 msgid "Ok"
 msgstr ""
@@ -7946,16 +7946,6 @@ msgstr "Kirjuta uus nimi"
 msgid "View in editor (read-only)"
 msgstr "Vaata redaktoris (kirjutuskaitstult)"
 
-#~ msgid "Default &Encoding"
-#~ msgstr "Vaikimisi kod&eering"
-
-#~ msgid ""
-#~ "Set the encoding to assume in case no explicit encoding has been set in "
-#~ "the page or in the HTTP headers."
-#~ msgstr ""
-#~ "Kodeeringu lisamine, mida eeldada, kui leheküljel või HTTP-päises ei ole "
-#~ "kodeeringut otseselt määratud."
-
 #~ msgid ""
 #~ "The workplace layout (i.e. which script-, data-, help-windows are open) "
 #~ "may be saved (and loaded) per R workspace, or independent of the R "
@@ -7981,6 +7971,19 @@ msgstr "Vaata redaktoris (kirjutuskaitstult)"
 #~ "\"rkward://settings/rbackend\">Seadistused->RKWardi seadistamine-> R-i "
 #~ "taustaprogramm</a>."
 
+#~ msgid "Default &Encoding"
+#~ msgstr "Vaikimisi kod&eering"
+
+#~ msgid ""
+#~ "Set the encoding to assume in case no explicit encoding has been set in "
+#~ "the page or in the HTTP headers."
+#~ msgstr ""
+#~ "Kodeeringu lisamine, mida eeldada, kui leheküljel või HTTP-päises ei ole "
+#~ "kodeeringut otseselt määratud."
+
+#~ msgid "Error opening script file %1"
+#~ msgstr "Tõrge skriptifaili %1 avamisel"
+
 #, fuzzy
 #~| msgid "R Markdown"
 #~ msgid "R Markdown (auto)"
@@ -7996,9 +7999,6 @@ msgstr "Vaata redaktoris (kirjutuskaitstult)"
 #~ msgstr ""
 #~ "Skripti eelvaatlus renderdatuna RMarkdowni vormingust (sobilik .Rmd-"
 #~ "failidele)."
-
-#~ msgid "Error opening script file %1"
-#~ msgstr "Tõrge skriptifaili %1 avamisel"
 
 #~ msgid ""
 #~ "<b>There have been errors and / or warnings. See below for a transcript</"

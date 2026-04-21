@@ -83,7 +83,7 @@ as Authors, publish date, the abstract, and Keywords -->
 
 <copyright>
 <year
->2006-2024</year>
+>2006-2022</year>
 <holder
 >Thomas Friedrichsmeier</holder>
 </copyright>
@@ -94,9 +94,9 @@ as Authors, publish date, the abstract, and Keywords -->
 >&FDLNotice;</legalnotice>
 
 <date
->07.09.2024</date>
+>24.04.2022</date>
 <releaseinfo
->0.8.1</releaseinfo>
+>0.7.4</releaseinfo>
 
 <abstract>
 <para
@@ -7483,28 +7483,6 @@ variables &lt;- rk.XML.varselector(
 >. Neobvezno; če ni navedeno, ni najmanjše/največje različice &R; bo obvezno.</para
 ></listitem>
 	</varlistentry>
-	<varlistentry>
-	<term
->platforme</term>
-	<listitem
-><para
->Platforme, kjer je ta vtičnik na voljo. Podprte vrednosti so <replaceable
->"unix"</replaceable
->, <replaceable
->"windows"</replaceable
->, <replaceable
->"macos"</replaceable
->, <replaceable
->"any"</replaceable
-> in kombinacije ločene z dvopičjem (npr. <replaceable
->"unix:macos"</replaceable
->). <replaceable
->"unix"</replaceable
-> vključuje vse različice Linuxa in BSD, vendar <emphasis
->ne</emphasis
-> MacOS. Če vaš vtičnik ni odvisen od platforme, preprosto izpustite ta atribut.</para
-></listitem>
-	</varlistentry>
 	</variablelist>
 <para
 >Podrejeni elementi:</para>
@@ -7754,20 +7732,6 @@ variables &lt;- rk.XML.varselector(
 	<listitem
 ><para
 >Oznaka za to komponento, ko je postavljena v hierarhijo menija.</para
-></listitem>
-	</varlistentry>
-	<varlistentry>
-	<term
->neobvezno</term>
-	<listitem
-><para
->Smiselno samo za komponente z definiranimi <link linkend="chapter_dependencies"
->odvisnostmi</link
->: Običajno velja za napako, ki jo je treba prijaviti, če komponenta ni združljiva s to različico RKWard. Vendar, če komponenta v trenutnem okolju res ni potrebna, nastavitev tega atributa na <replaceable
->"true"</replaceable
-> privzeto zavrne vsa opozorila (<replaceable
->"false"</replaceable
->).</para
 ></listitem>
 	</varlistentry>
 	</variablelist
@@ -8498,7 +8462,7 @@ variables &lt;- rk.XML.varselector(
 <title
 >Licenca</title>
 <para
->Prevod: Matjaž Jeran<email
+>Prevod: Matjaž Jeran <email
 >matjaz.jeran@amis.net</email
 ></para
 > 

@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RKWard\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-04-11 00:39+0000\n"
-"PO-Revision-Date: 2026-04-11 21:05+0300\n"
+"POT-Creation-Date: 2026-04-21 02:38+0000\n"
+"PO-Revision-Date: 2026-03-09 21:57+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -214,7 +214,13 @@ msgstr ""
 "Teknik olarak bu, <i>.GlobalEnv</i> ortamına karşılık gelir."
 
 #: rkward/core/renvironmentobject.cpp:110
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Your workspace contains more than 10.000 top level objects. RKWard is not "
+#| "optimized for this situation, and you may experience lag between R "
+#| "commands. Should this situation constitute a regular use case for your "
+#| "work, please let us know at rkward@kde.org, so we can consider possible "
+#| "solutions."
 msgid ""
 "Your workspace contains more than 10.000 top level objects. RKWard is not "
 "optimized for this situation, and you may experience lag between R commands. "
@@ -987,7 +993,12 @@ msgid "Start import dialog"
 msgstr "İçe aktarma iletişim kutusunu başlat"
 
 #: rkward/dialogs/rkimportdialog.cpp:108
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "No further import methods are available at this time. Things you can try, "
+#| "include: <ul><li>Check for the availability of additional import plugins</"
+#| "li><li>Save your data to a different format in the original application</"
+#| "li><li>Ask for advice on rkward@kde.org</li></ul>"
 msgid ""
 "No further import methods are available at this time. Things you can try, "
 "include: <ul><li>Check for the availability of additional import plugins</"
@@ -2245,7 +2256,8 @@ msgid "patches and helpful comments"
 msgstr "Yamalar ve yararlı yorumlar"
 
 #: rkward/main.cpp:211
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Many more people on rkward@kde.org"
 msgid "Many more people on rkward@kde.org"
 msgstr "rkward@kde.org posta listesindeki birçok kişi"
 
@@ -3863,7 +3875,7 @@ msgstr "R arka ucundan ileti"
 msgid "Question from the R backend"
 msgstr "R arka ucundan soru"
 
-#: rkward/rbackend/rkrbackend.cpp:1584
+#: rkward/rbackend/rkrbackend.cpp:1583
 #, kde-format
 msgid ""
 "</p>\t- The 'rkward' R-library either could not be loaded at all, or not in "
@@ -3884,7 +3896,7 @@ msgstr ""
 "b>. Bununle ilgili ek yardım için <a href=\"https://rkward.kde.org/compiling"
 "\">https://rkward.kde.org/compiling</a> adresine bakın.</p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1588
+#: rkward/rbackend/rkrbackend.cpp:1587
 #, kde-format
 msgid ""
 "<p>\t-There was a problem setting up the communication with R. Most likely "
@@ -3899,12 +3911,12 @@ msgstr ""
 "\"https://rkward.kde.org/compiling\">https://rkward.kde.org/compiling</a> "
 "adresine bakın.</p></p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1643
+#: rkward/rbackend/rkrbackend.cpp:1642
 #, kde-format
 msgid "Graphics version mismatch"
 msgstr "Grafikler sürümü uyuşmazlığı"
 
-#: rkward/rbackend/rkrbackend.cpp:1643
+#: rkward/rbackend/rkrbackend.cpp:1642
 #, kde-format
 msgid ""
 "R Graphics Engine version has changed (from %1 to %2).<br>This change "
@@ -3915,7 +3927,7 @@ msgstr ""
 "bir yeniden derleme gerektirir.<br><a href=\"rkward://page/"
 "rkward_incompatible_version\">Ek bilgi</a>"
 
-#: rkward/rbackend/rkrbackend.cpp:1643
+#: rkward/rbackend/rkrbackend.cpp:1642
 #, kde-format
 msgid "Ok"
 msgstr "Tamam"
@@ -5099,7 +5111,12 @@ msgid "(Attempt to) start completion whenever the cursor position changes"
 msgstr "İmleç konumu değiştiğinde tamamlamayı başlat/başlatmaya çalış"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:74
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Note: Further shortcuts can be assigned, and by default, Ctrl+Space "
+#| "invokes completions, in addition to this. Further, pressing the Tab key, "
+#| "while completions are shown, performs partial completion (if possible), "
+#| "independent of this setting."
 msgid ""
 "Note: Further shortcuts can be assigned, and by default, Ctrl+Space invokes "
 "completions, in addition to this. Further, pressing the Tab key, while "
@@ -5420,34 +5437,41 @@ msgstr ""
 "şekilde yapılandırdıysanız bu dizinin öncelikli olacağını unutmayın.</p>"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:94
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Directory where rkward may store files (setting takes effect after "
+#| "restarting RKWard)"
 msgid "HTML rendering (settings take effect after restarting RKWard)"
-msgstr "HTML sunmasını (ayar, RKWard yeniden başlatıldıktan sonra etkili olur)"
+msgstr ""
+"RKWard’ın dosyaları depolayabileceği dizin (ayar, RKWard yeniden "
+"başlatıldıktan sonra etkili olur)"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:96
 #, kde-format
 msgid "Engine:"
-msgstr "İşletke:"
+msgstr ""
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:97
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Platform default device"
 msgid "Platform default"
-msgstr "Platform öntanımlısı"
+msgstr "Platform öntanımlı aygıtı"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:99
 #, kde-format
 msgid "QWebEngine"
-msgstr "QWebEngine"
+msgstr ""
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:103
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "View"
 msgid "QWebView"
-msgstr "QWebView"
+msgstr "Görüntüle"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:109
 #, kde-format
 msgid "Disable hardware acceleration"
-msgstr "Donanım ivmelendirmesini devre dışı bırak"
+msgstr ""
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:110
 #, kde-format
@@ -5458,12 +5482,6 @@ msgid ""
 "is recommended to leave hardware acceleration disabled, unless you "
 "experience performance problems while viewing HTML content inside RKWard."
 msgstr ""
-"HTML sunma için donanım ivmelendirmenin kullanımı (örneğin yardım sayfaları "
-"ve eklenti çıktısı) bazı kurulumlarda kararsızlığa neden olduğu "
-"bilinmektedir ve genellikle RKWard’da gösterilen —genellikle basit— içerik "
-"için gerekli değildir. RKWard içinde HTML içeriği görüntülerken başarım "
-"sorunları yaşamadığınız sürece donanım hızlandırmayı devre dışı bırakmanız "
-"önerilir."
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:117
 #, kde-format
@@ -6602,7 +6620,9 @@ msgid "Run current statement, and advance"
 msgstr "Geçerli ifadeyi çalıştır ve ilerle"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:183
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "noun: type of preview"
+#| msgid "<b>Preview Mode</b>"
 msgctxt "noun: type of preview"
 msgid "<b>Preview Mode</b>"
 msgstr "<b>Önizleme Kipi</b>"
@@ -7151,9 +7171,10 @@ msgid "Package"
 msgstr "Paket"
 
 #: rkward/windows/rkhtmlwindow.cpp:389
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "RKWard output file %s does not (yet) exist"
 msgid "RKWard output file %1 does not (yet) exist"
-msgstr "RKWard çıktı dosyası %1 (henüz) yok"
+msgstr "RKWard çıktı dosyası %s (henüz) yok"
 
 #: rkward/windows/rkhtmlwindow.cpp:521
 #: rkward/windows/rktoplevelwindowgui.cpp:264
@@ -7233,9 +7254,10 @@ msgid "&Clear Output"
 msgstr "&Çıktıyı Temizle"
 
 #: rkward/windows/rkhtmlwindow.cpp:686
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Unload"
 msgid "Reload"
-msgstr "Yeniden Yükle"
+msgstr "Çıkar"
 
 #: rkward/windows/rkhtmlwindow.cpp:690
 #, kde-format
@@ -7361,12 +7383,12 @@ msgstr "Farklı Kaydet"
 #: rkward/windows/rkqwebview.cpp:252
 #, kde-format
 msgid "Open link in new tab"
-msgstr "Bağlantıyı Yeni Sekmede Aç"
+msgstr ""
 
 #: rkward/windows/rkqwebview.cpp:265
 #, kde-format
 msgid "Copy link address"
-msgstr "Bağlantı Adresini Kopyala"
+msgstr ""
 
 #: rkward/windows/rktexthints.cpp:34
 #, kde-format
@@ -7989,16 +8011,6 @@ msgstr "Yeni adı girin"
 msgid "View in editor (read-only)"
 msgstr "Düzenleyicide görüntüle (saltokunur)"
 
-#~ msgid "Default &Encoding"
-#~ msgstr "Öntanımlı &Kodlama"
-
-#~ msgid ""
-#~ "Set the encoding to assume in case no explicit encoding has been set in "
-#~ "the page or in the HTTP headers."
-#~ msgstr ""
-#~ "Sayfada veya HTTP başlıklarında açık bir kodlamanın ayarlanmaması "
-#~ "durumunda kodlamayı öntanımlı şekilde ayarlayın."
-
 #~ msgid ""
 #~ "The workplace layout (i.e. which script-, data-, help-windows are open) "
 #~ "may be saved (and loaded) per R workspace, or independent of the R "
@@ -8027,6 +8039,16 @@ msgstr "Düzenleyicide görüntüle (saltokunur)"
 #~ "settings/rbackend\">Ayarlar → RKward Uygulamasını Yapılandır → R Arka "
 #~ "Ucu</a> konumuna gidip çalışan R oturumunun sistem yoluna eklemeyi "
 #~ "deneyin."
+
+#~ msgid "Default &Encoding"
+#~ msgstr "Öntanımlı &Kodlama"
+
+#~ msgid ""
+#~ "Set the encoding to assume in case no explicit encoding has been set in "
+#~ "the page or in the HTTP headers."
+#~ msgstr ""
+#~ "Sayfada veya HTTP başlıklarında açık bir kodlamanın ayarlanmaması "
+#~ "durumunda kodlamayı öntanımlı şekilde ayarlayın."
 
 #~ msgid "R Markdown (auto)"
 #~ msgstr "R Markdown (Kendiliğinden)"

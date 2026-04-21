@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-04-11 00:39+0000\n"
+"POT-Creation-Date: 2026-04-21 02:38+0000\n"
 "PO-Revision-Date: 2024-08-15 17:04+0200\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -923,13 +923,22 @@ msgid "Start import dialog"
 msgstr "Spustit dialog importu"
 
 #: rkward/dialogs/rkimportdialog.cpp:108
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "No further import methods are available at this time. Things you can try, "
+#| "include: <ul><li>Check for the availability of additional import plugins</"
+#| "li><li>Save your data to a different format in the original application</"
+#| "li><li>Ask for advice on rkward-users@kde.org</li></ul>"
 msgid ""
 "No further import methods are available at this time. Things you can try, "
 "include: <ul><li>Check for the availability of additional import plugins</"
 "li><li>Save your data to a different format in the original application</"
 "li><li>Ask for advice on rkward@kde.org</li></ul>"
 msgstr ""
+"Žádné další metody importu nejsou momentálně k dispozici. Můžete zkusit: "
+"<ul><li>Zkontrolovat dostupnost dalších modulů pro import</li><li>Uložit "
+"vaše data v původní aplikaci do jiného formátu</li><li>Zeptat se na radu na "
+"rkward-users@kde.org</li></ul>"
 
 #: rkward/dialogs/rkimportdialog.cpp:110
 #, kde-format
@@ -1944,9 +1953,10 @@ msgid "Frontend to the R statistics language"
 msgstr "Rozhraní pro statistický jazyk R"
 
 #: rkward/main.cpp:189
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "(c) 2002 - 2024"
 msgid "(c) 2002 - 2025"
-msgstr ""
+msgstr "(c) 2002 - 2024"
 
 #: rkward/main.cpp:190
 #, kde-format
@@ -2149,9 +2159,10 @@ msgid "patches and helpful comments"
 msgstr "úpravy a užitečné komentáře"
 
 #: rkward/main.cpp:211
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Many more people on rkward-devel@kde.org"
 msgid "Many more people on rkward@kde.org"
-msgstr ""
+msgstr "Všichni ti lidé na rkward-devel@kde.org"
 
 #: rkward/main.cpp:211
 #, kde-format
@@ -3718,7 +3729,7 @@ msgstr "Zpráva od jádra k R"
 msgid "Question from the R backend"
 msgstr "Dotaz od jádra k R"
 
-#: rkward/rbackend/rkrbackend.cpp:1584
+#: rkward/rbackend/rkrbackend.cpp:1583
 #, kde-format
 msgid ""
 "</p>\t- The 'rkward' R-library either could not be loaded at all, or not in "
@@ -3731,7 +3742,7 @@ msgid ""
 "rkward.kde.org/compiling\">https://rkward.kde.org/compiling</a>.</p>\n"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:1588
+#: rkward/rbackend/rkrbackend.cpp:1587
 #, kde-format
 msgid ""
 "<p>\t-There was a problem setting up the communication with R. Most likely "
@@ -3741,12 +3752,12 @@ msgid ""
 "p></p>\n"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:1643
+#: rkward/rbackend/rkrbackend.cpp:1642
 #, kde-format
 msgid "Graphics version mismatch"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:1643
+#: rkward/rbackend/rkrbackend.cpp:1642
 #, kde-format
 msgid ""
 "R Graphics Engine version has changed (from %1 to %2).<br>This change "
@@ -3754,7 +3765,7 @@ msgid ""
 "rkward_incompatible_version\">Additional information</a>"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:1643
+#: rkward/rbackend/rkrbackend.cpp:1642
 #, kde-format
 msgid "Ok"
 msgstr "OK"
@@ -3957,9 +3968,10 @@ msgid ""
 msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:76
-#, no-c-format, kde-format
+#, fuzzy, no-c-format, kde-format
+#| msgid "The file or directory does not exist."
 msgid "Target directory '%1' does not exist\n"
-msgstr ""
+msgstr "Soubor nebo adresář neexistuje."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:82
 #, no-c-format, kde-format
@@ -4027,9 +4039,10 @@ msgid "Leaf menu item %1 cannot be redefined as a submenu."
 msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.output.R:86
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Unspecified"
 msgid "No file name specified"
-msgstr "Nebyl zadán název souboru"
+msgstr "Neurčeno"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.output.R:115
 #, kde-format
@@ -4064,9 +4077,11 @@ msgid "Plot window created"
 msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:145
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@action:button"
+#| msgid "Do no close"
 msgid "Plot window closed"
-msgstr ""
+msgstr "Nezavírat"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:155
 #, kde-format
@@ -4643,9 +4658,10 @@ msgid "Open as text file and force R highlighting"
 msgstr ""
 
 #: rkward/rkward.cpp:1040
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Open Recent Workspace"
 msgid "Open as R workspace"
-msgstr ""
+msgstr "Otevřít nedávné pracovní prostředí"
 
 #: rkward/rkward.cpp:1077
 #, kde-format
@@ -5218,7 +5234,7 @@ msgstr ""
 #: rkward/settings/rksettingsmodulegeneral.cpp:96
 #, kde-format
 msgid "Engine:"
-msgstr "Nástroj:"
+msgstr ""
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:97
 #, fuzzy, kde-format
@@ -6225,9 +6241,10 @@ msgid ""
 msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:284
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "User commands"
 msgid "Enter command"
-msgstr ""
+msgstr "Uživatelské příkazy"
 
 #: rkward/windows/rkcodenavigation.cpp:321
 #, kde-format
@@ -6265,9 +6282,10 @@ msgid "Next statement"
 msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:347
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Previous Window"
 msgid "Previous statement"
-msgstr ""
+msgstr "Předchozí okno"
 
 #: rkward/windows/rkcodenavigation.cpp:348
 #, kde-format
@@ -6310,14 +6328,16 @@ msgid "Previous code chunk"
 msgstr ""
 
 #: rkward/windows/rkcodenavigation.cpp:358
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select parent object"
 msgid "Select current statement"
-msgstr ""
+msgstr "Vyberte rodičovský objekt"
 
 #: rkward/windows/rkcodenavigation.cpp:359
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select parent object"
 msgid "Select current code chunk"
-msgstr ""
+msgstr "Vyberte rodičovský objekt"
 
 #: rkward/windows/rkcodenavigation.cpp:360
 #, kde-format
@@ -6331,15 +6351,16 @@ msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:183
 #, fuzzy, kde-format
-#| msgid "<b>Select one:</b>"
+#| msgid "Preview"
 msgctxt "noun: type of preview"
 msgid "<b>Preview Mode</b>"
-msgstr "<b>Vybrat jeden:</b>"
+msgstr "Náhled"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:189
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "<b>Done</b>"
 msgid "<b>Options</b>"
-msgstr "<b>Možnosti</b>"
+msgstr "<b>Hotovo</b>"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:411
 #, kde-format
@@ -6452,9 +6473,10 @@ msgid "Preview the script as rendered from RMarkdown format (.Rmd)"
 msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:858
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select format"
 msgid "Render format"
-msgstr ""
+msgstr "Vyberte formát"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:859
 #, kde-format
@@ -6467,9 +6489,10 @@ msgid "Render as PDF"
 msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:861
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Format"
 msgid "Auto Format"
-msgstr ""
+msgstr "Formát"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:871
 #, kde-format
@@ -6504,14 +6527,16 @@ msgid "Echo statements"
 msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:890
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Continue"
 msgid "Continue on error"
-msgstr ""
+msgstr "Pokračovat"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:892
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Environment"
 msgid "Evaluation environment"
-msgstr ""
+msgstr "Prostředí"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:893
 #, kde-format
@@ -6841,10 +6866,11 @@ msgid "[Active]"
 msgstr "[Aktivní]"
 
 #: rkward/windows/rkhtmlwindow.cpp:532
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Output %1"
 msgctxt "noun, the output"
 msgid "Output %1"
-msgstr ""
+msgstr "Výstup %1"
 
 #: rkward/windows/rkhtmlwindow.cpp:577
 #, kde-format
@@ -6909,9 +6935,10 @@ msgid "&Clear Output"
 msgstr "&Vyprázdnit výstup"
 
 #: rkward/windows/rkhtmlwindow.cpp:686
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Unload"
 msgid "Reload"
-msgstr "Obnovit"
+msgstr "Zrušit načtení"
 
 #: rkward/windows/rkhtmlwindow.cpp:690
 #, kde-format
@@ -7615,9 +7642,6 @@ msgstr ""
 msgid "View in editor (read-only)"
 msgstr ""
 
-#~ msgid "Default &Encoding"
-#~ msgstr "Výchozí &kódování"
-
 #~ msgid ""
 #~ "The workplace layout (i.e. which script-, data-, help-windows are open) "
 #~ "may be saved (and loaded) per R workspace, or independent of the R "
@@ -7626,3 +7650,31 @@ msgstr ""
 #~ "Rozvržení pracoviště (to jest, která okna se skripty, daty, s nápovědou "
 #~ "jsou otevřená), může být uloženo (a načteno) podle pracovního prostředí "
 #~ "R, nebo na něm nezávisle. Čemu dáváte přednost?"
+
+#~ msgctxt "Caption: Some software is missing."
+#~ msgid "Missing software"
+#~ msgstr "Chybějící software"
+
+#~ msgid "Default &Encoding"
+#~ msgstr "Výchozí &kódování"
+
+#~ msgid "Error opening script file %1"
+#~ msgstr "Chyba při otevírání souboru skriptu %1"
+
+#~ msgid "R Markdown (auto)"
+#~ msgstr "R Markdown (automaticky)"
+
+#~ msgid ""
+#~ "<b>There have been errors and / or warnings. See below for a transcript</"
+#~ "b>"
+#~ msgstr ""
+#~ "<b>Vyskytly se chyby a/nebo varování. Podívejte se níže na zápis</b>"
+
+#~ msgid "Output:"
+#~ msgstr "Výstup:"
+
+#~ msgid "Errors / Warnings"
+#~ msgstr "Chyby / varování"
+
+#~ msgid "Errors / Warnings:"
+#~ msgstr "Chyby / varování:"

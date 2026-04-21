@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward__plots\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:48+0000\n"
-"PO-Revision-Date: 2023-12-17 15:00+0100\n"
+"POT-Creation-Date: 2025-11-17 14:38+0000\n"
+"PO-Revision-Date: 2026-04-07 12:17+0100\n"
 "Last-Translator: Roman Paholik <wizzardsk@gmail.com>\n"
 "Language-Team: Slovak <kde-sk@linux.sk>\n"
 "Language: sk\n"
@@ -358,7 +358,7 @@ msgstr "Obmedziť kategórie"
 #: rkward/plugins/plots/barplot.xml:59 rkward/plugins/plots/barplot.xml:60
 #, kde-format
 msgid "Bar labels"
-msgstr "Bar labels"
+msgstr "Označenia stĺpcov"
 
 #. i18n: ectx: (Barplot) <dialog label="Barplot"> <tab label="Bar labels"> <radio label="Bar labels"> <option label="...">
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> [...] <radio label="Labeling"> <option label="...">
@@ -433,7 +433,7 @@ msgstr "Voľby"
 #: rkward/plugins/plots/barplot.xml:69
 #, kde-format
 msgid "Barplot Options"
-msgstr "Barplot Options"
+msgstr "Voľby stĺpcového grafu"
 
 #. i18n: ectx: (Loaded from Boxplot)
 #: rkward/plugins/plots/box_plot.js:36
@@ -933,7 +933,7 @@ msgstr "standard deviation symbol (lower)"
 #: rkward/plugins/plots/stripchart_plot.xml:58
 #, kde-format
 msgid "Plot Options"
-msgstr "Plot Options"
+msgstr "Voľby grafu"
 
 #. i18n: ectx: (Loaded from Density Plot)
 #: rkward/plugins/plots/density_plot.js:44
@@ -1613,7 +1613,7 @@ msgstr "Generic Graf Možnosti"
 #: rkward/plugins/plots/histogram.xml:45 rkward/plugins/plots/histogram.xml:46
 #, kde-format
 msgid "Histogram Options"
-msgstr "Histogram Options"
+msgstr "Histogram Možnosti"
 
 #. i18n: ectx: (Histogram) <dialog label="Histogram"> <tab label="...">
 #: rkward/plugins/plots/histogram.xml:48
@@ -2054,25 +2054,25 @@ msgstr "Zadajte of all points/lines"
 #: rkward/plugins/plots/scatterplot.xml:46
 #, kde-format
 msgid "Plot individual points "
-msgstr "Plot individual points "
+msgstr "Graf individual points "
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Options"> <dropdown label="Type of all points/lines"> <option label="...">
 #: rkward/plugins/plots/scatterplot.xml:47
 #, kde-format
 msgid "Plot lines "
-msgstr "Plot lines "
+msgstr "Graf lines "
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Options"> <dropdown label="Type of all points/lines"> <option label="...">
 #: rkward/plugins/plots/scatterplot.xml:48
 #, kde-format
 msgid "Plot points connected by lines (both)"
-msgstr "Plot points connected by lines (both)"
+msgstr "Graf points connected by lines (both)"
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Options"> <dropdown label="Type of all points/lines"> <option label="...">
 #: rkward/plugins/plots/scatterplot.xml:49
 #, kde-format
 msgid "Plot points overlaid by lines "
-msgstr "Plot points overlaid by lines "
+msgstr "Graf points overlaid by lines "
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Options"> <dropdown label="Type of all points/lines"> <option label="...">
 #: rkward/plugins/plots/scatterplot.xml:50
@@ -2118,7 +2118,7 @@ msgstr ""
 #: rkward/plugins/plots/scatterplot.xml:69
 #, kde-format
 msgid " "
-msgstr ", "
+msgstr " "
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Further options"> <radio label="...">
 #: rkward/plugins/plots/scatterplot.xml:78

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-04-11 00:39+0000\n"
-"PO-Revision-Date: 2024-08-24 12:06+0100\n"
+"POT-Creation-Date: 2026-04-21 02:38+0000\n"
+"PO-Revision-Date: 2024-08-03 13:43+0100\n"
 "Last-Translator: Steve Allewell <steve.allewell@gmail.com>\n"
 "Language-Team: British English\n"
 "Language: en_GB\n"
@@ -2783,13 +2783,16 @@ msgid "Unhandled output command '%1'"
 msgstr "Unhandled output command '%1'"
 
 #: rkward/misc/rkprogresscontrol.cpp:257
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "There has been an error while trying to load / unload packages. See "
+#| "transcript below for details"
 msgid ""
 "<b>There has been an error while running the command. See below for output "
 "details</b>"
 msgstr ""
-"<b>There has been an error while running the command. See below for output "
-"details</b>"
+"There has been an error while trying to load / unload packages. See "
+"transcript below for details"
 
 #: rkward/misc/rkprogresscontrol.cpp:268
 #: rkward/settings/rksettingsmoduleoutput.cpp:107
@@ -3860,7 +3863,7 @@ msgstr "Message from the R backend"
 msgid "Question from the R backend"
 msgstr "Question from the R backend"
 
-#: rkward/rbackend/rkrbackend.cpp:1584
+#: rkward/rbackend/rkrbackend.cpp:1583
 #, kde-format
 msgid ""
 "</p>\t- The 'rkward' R-library either could not be loaded at all, or not in "
@@ -3881,7 +3884,7 @@ msgstr ""
 "and fix your installation</b>. For help with that, see <a href=\"https://"
 "rkward.kde.org/compiling\">https://rkward.kde.org/compiling</a>.</p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1588
+#: rkward/rbackend/rkrbackend.cpp:1587
 #, kde-format
 msgid ""
 "<p>\t-There was a problem setting up the communication with R. Most likely "
@@ -3896,12 +3899,12 @@ msgstr ""
 "\"https://rkward.kde.org/compiling\">https://rkward.kde.org/compiling</a>.</"
 "p></p>\n"
 
-#: rkward/rbackend/rkrbackend.cpp:1643
+#: rkward/rbackend/rkrbackend.cpp:1642
 #, kde-format
 msgid "Graphics version mismatch"
 msgstr "Graphics version mismatch"
 
-#: rkward/rbackend/rkrbackend.cpp:1643
+#: rkward/rbackend/rkrbackend.cpp:1642
 #, kde-format
 msgid ""
 "R Graphics Engine version has changed (from %1 to %2).<br>This change "
@@ -3912,7 +3915,7 @@ msgstr ""
 "requires a recompilation.<br><a href=\"rkward://page/"
 "rkward_incompatible_version\">Additional information</a>"
 
-#: rkward/rbackend/rkrbackend.cpp:1643
+#: rkward/rbackend/rkrbackend.cpp:1642
 #, kde-format
 msgid "Ok"
 msgstr "Ok"
@@ -7980,16 +7983,6 @@ msgstr "Enter the new name"
 msgid "View in editor (read-only)"
 msgstr "View in editor (read-only)"
 
-#~ msgid "Default &Encoding"
-#~ msgstr "Default &Encoding"
-
-#~ msgid ""
-#~ "Set the encoding to assume in case no explicit encoding has been set in "
-#~ "the page or in the HTTP headers."
-#~ msgstr ""
-#~ "Set the encoding to assume in case no explicit encoding has been set in "
-#~ "the page or in the HTTP headers."
-
 #~ msgid ""
 #~ "The workplace layout (i.e. which script-, data-, help-windows are open) "
 #~ "may be saved (and loaded) per R workspace, or independent of the R "
@@ -8018,6 +8011,19 @@ msgstr "View in editor (read-only)"
 #~ "it to the system path of the running R session at <a href=\"rkward://"
 #~ "settings/rbackend\">Settings->Configure RKward->R-backend</a>."
 
+#~ msgid "Default &Encoding"
+#~ msgstr "Default &Encoding"
+
+#~ msgid ""
+#~ "Set the encoding to assume in case no explicit encoding has been set in "
+#~ "the page or in the HTTP headers."
+#~ msgstr ""
+#~ "Set the encoding to assume in case no explicit encoding has been set in "
+#~ "the page or in the HTTP headers."
+
+#~ msgid "Error opening script file %1"
+#~ msgstr "Error opening script file %1"
+
 #~ msgid "R Markdown (auto)"
 #~ msgstr "R Markdown (auto)"
 
@@ -8027,9 +8033,6 @@ msgstr "View in editor (read-only)"
 #~ msgstr ""
 #~ "Preview the script as rendered from RMarkdown format (.Rmd) to the format "
 #~ "specified in the document header."
-
-#~ msgid "Error opening script file %1"
-#~ msgstr "Error opening script file %1"
 
 #~ msgid ""
 #~ "<b>There have been errors and / or warnings. See below for a transcript</"

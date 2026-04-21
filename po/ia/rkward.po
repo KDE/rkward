@@ -2,13 +2,12 @@
 # This file is distributed under the same license as the rkward package.
 #
 # SPDX-FileCopyrightText: 2024, 2025, 2026 giovanni <g.sora@tiscali.it>
-# giovanni <g.sora@tiscali.it>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-04-11 00:39+0000\n"
-"PO-Revision-Date: 2026-01-26 17:35+0100\n"
+"POT-Creation-Date: 2026-04-21 02:38+0000\n"
+"PO-Revision-Date: 2026-02-05 17:15+0100\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -3498,7 +3497,7 @@ msgstr ""
 msgid "Question from the R backend"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:1584
+#: rkward/rbackend/rkrbackend.cpp:1583
 #, kde-format
 msgid ""
 "</p>\t- The 'rkward' R-library either could not be loaded at all, or not in "
@@ -3511,7 +3510,7 @@ msgid ""
 "rkward.kde.org/compiling\">https://rkward.kde.org/compiling</a>.</p>\n"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:1588
+#: rkward/rbackend/rkrbackend.cpp:1587
 #, kde-format
 msgid ""
 "<p>\t-There was a problem setting up the communication with R. Most likely "
@@ -3521,12 +3520,12 @@ msgid ""
 "p></p>\n"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:1643
+#: rkward/rbackend/rkrbackend.cpp:1642
 #, kde-format
 msgid "Graphics version mismatch"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:1643
+#: rkward/rbackend/rkrbackend.cpp:1642
 #, kde-format
 msgid ""
 "R Graphics Engine version has changed (from %1 to %2).<br>This change "
@@ -3534,7 +3533,7 @@ msgid ""
 "rkward_incompatible_version\">Additional information</a>"
 msgstr ""
 
-#: rkward/rbackend/rkrbackend.cpp:1643
+#: rkward/rbackend/rkrbackend.cpp:1642
 #, kde-format
 msgid "Ok"
 msgstr "OK"
@@ -3707,9 +3706,10 @@ msgid ""
 msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:76
-#, no-c-format, kde-format
+#, fuzzy, no-c-format, kde-format
+#| msgid "The file or directory does not exist."
 msgid "Target directory '%1' does not exist\n"
-msgstr "Le directorioobjectivo  '%1' non existe\n"
+msgstr "Le file o le directorio non existe."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:82
 #, no-c-format, kde-format
@@ -3777,9 +3777,10 @@ msgid "Leaf menu item %1 cannot be redefined as a submenu."
 msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.output.R:86
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Unspecified"
 msgid "No file name specified"
-msgstr "Nulla nomine de file specificate"
+msgstr "Non specificate"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.output.R:115
 #, kde-format
@@ -3814,9 +3815,10 @@ msgid "Plot window created"
 msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:145
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Do not close"
 msgid "Plot window closed"
-msgstr "Fenestra de Traciar (Plot)  Claudite"
+msgstr "Non Claude"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:155
 #, kde-format
@@ -4217,7 +4219,7 @@ msgstr "Detalia"
 #: rkward/rkward.cpp:604
 #, kde-format
 msgid "Check installation"
-msgstr ""
+msgstr "Verifica installation"
 
 #: rkward/rkward.cpp:608
 #, kde-format
@@ -5981,15 +5983,18 @@ msgid "Run current statement, and advance"
 msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:183
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "noun: type of preview"
+#| msgid "Preview Mode"
 msgctxt "noun: type of preview"
 msgid "<b>Preview Mode</b>"
-msgstr "<b>Modo de Vista preliminar</b>"
+msgstr "Modo de Vista preliminar"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:189
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "<b>Done</b>"
 msgid "<b>Options</b>"
-msgstr "<b>Optiones</b>"
+msgstr "<b>Facite</b>"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:411
 #, kde-format

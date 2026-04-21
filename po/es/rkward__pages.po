@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the rkward package.
 # Automatically generated, 2014.
 #
-# SPDX-FileCopyrightText: 2014, 2015, 2018, 2019 Eloy Cuadra <ecuadra@eloihr.net>
+# SPDX-FileCopyrightText: 2014, 2015 Eloy Cuadra <ecuadra@eloihr.net>
 # SPDX-FileCopyrightText: 2017, 2022, 2024, 2025 Víctor Rodrigo Córdoba <vrcordoba@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward__pages\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:48+0000\n"
-"PO-Revision-Date: 2025-09-20 17:50+0100\n"
+"POT-Creation-Date: 2025-11-17 14:38+0000\n"
+"PO-Revision-Date: 2025-09-28 19:31+0100\n"
 "Last-Translator: Víctor Rodrigo Córdoba <vrcordoba@gmail.com>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -2000,7 +2000,7 @@ msgstr ""
 #: rkward/pages/rkward_shortcuts.rkh:8
 #, kde-format
 msgid "RKWard Shortcut keys"
-msgstr "Teclas de atajos de teclado de RKWard"
+msgstr "Atajos de teclado de RKWard"
 
 #. i18n: ectx: (RKWard Shortcut keys) <summary>
 #: rkward/pages/rkward_shortcuts.rkh:9
@@ -2013,7 +2013,7 @@ msgid ""
 msgstr ""
 "Puede controlar RKWard en muchas situaciones sin usar un ratón. La manera "
 "más sencilla de descubrir atajos de teclado es navegar por los menús. Estos "
-"atajos se listan junto a su acción en los menús."
+"atajos de teclado se listan junto a su acción en los menús."
 
 #. i18n: ectx: (RKWard Shortcut keys) <summary>
 #: rkward/pages/rkward_shortcuts.rkh:9
@@ -2068,7 +2068,7 @@ msgstr ""
 #: rkward/pages/rkward_shortcuts.rkh:19
 #, kde-format
 msgid "RKWard Default Shortcut keys"
-msgstr "Teclas de atajos de teclado por omisión de RKWard"
+msgstr "Atajos de teclado por omisión de RKWard"
 
 #. i18n: ectx: (RKWard Shortcut keys) <section title="RKWard Default Shortcut keys">
 #: rkward/pages/rkward_shortcuts.rkh:19

@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward__analysis\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:48+0000\n"
-"PO-Revision-Date: 2016-09-01 20:30+0100\n"
+"POT-Creation-Date: 2025-11-17 14:38+0000\n"
+"PO-Revision-Date: 2026-04-07 12:17+0100\n"
 "Last-Translator: Roman Paholik <wizzardsk@gmail.com>\n"
 "Language-Team: Slovak <kde-sk@linux.sk>\n"
 "Language: sk\n"
@@ -1475,7 +1475,7 @@ msgstr "Show expect values"
 #: rkward/plugins/analysis/crosstab.xml:52
 #, kde-format
 msgid "Barplot Options"
-msgstr "Barplot Options"
+msgstr "Voľby stĺpcového grafu"
 
 #. i18n: ectx: (Loaded from N to N Crosstabulation)
 #: rkward/plugins/analysis/crosstab_multi.js:25
@@ -3906,7 +3906,7 @@ msgstr "Cyklus"
 #: rkward/plugins/analysis/time_series/hp_filter.xml:108
 #, kde-format
 msgid "Labels (leave empty for default)"
-msgstr "Labels (leave empty for default)"
+msgstr "Označenia (leave empty for default)"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="Plot options"> <frame label="Labels (leave empty for default)"> <input label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:110
@@ -4415,7 +4415,7 @@ msgstr "Paired test"
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.xml:29
 #, kde-format
 msgid "Save results to workspace"
-msgstr "Uložiť výsledky do pracovného priestoru"
+msgstr "Uložiť results to workspace"
 
 #. i18n: ectx: (Wilcoxon/Mann-Whitney Test) <dialog label="Wilcoxon/Mann-Whitney Test"> <tab label="Options"> <spinbox label="...">
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.xml:38
