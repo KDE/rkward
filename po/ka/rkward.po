@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-04-21 02:38+0000\n"
-"PO-Revision-Date: 2026-01-17 03:25+0100\n"
+"PO-Revision-Date: 2026-04-21 06:06+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -207,13 +207,7 @@ msgstr ""
 "გარემოს."
 
 #: rkward/core/renvironmentobject.cpp:110
-#, fuzzy, kde-format
-#| msgid ""
-#| "Your workspace contains more than 10.000 top level objects. RKWard is not "
-#| "optimized for this situation, and you may experience lag between R "
-#| "commands. Should this situation constitute a regular use case for your "
-#| "work, please let us know at rkward-devel@kde.org, so we can consider "
-#| "possible solutions."
+#, kde-format
 msgid ""
 "Your workspace contains more than 10.000 top level objects. RKWard is not "
 "optimized for this situation, and you may experience lag between R commands. "
@@ -223,7 +217,7 @@ msgstr ""
 "თქვენი სამუშაო სივრცე 10.000-ზე მეტ ზედა დონის ობექტს შეიცავს. RKWard "
 "ამნაირი სიტუაციებისთვის ოპტიმიზებული არა და შეიძლება, R-ის ბრძანებებს შორის "
 "დაყოვნებები შეამჩნიოთ. თუ ეს სიტუაცია ჩვეულებრივი მუშაობის დროს მოხდა, "
-"მოგვწერეთ ელფოსტაზე rkward-devel@kde.org და ვცდით, დაგეხმაროთ."
+"მოგვწერეთ ელფოსტაზე rkward@kde.org და ვცდით, დაგეხმაროთ."
 
 #: rkward/core/renvironmentobject.cpp:110
 #, kde-format
@@ -694,6 +688,15 @@ msgid ""
 "b></p><p>In case this is not possible for some reason, refer to <a href="
 "\"%3\">%3</a> for alternative ways of reporting issues.</p>"
 msgstr ""
+"<p><b>სად უნდა შევატყობინო შეცდომების ან სურვილების შესახებ?</b></"
+"p><p>მადლობა, რომ დროს გამოყოფთ RKWard-ის გასაუმჯობესებლად. თქვენი მოთხოვნის "
+"ეფექტურად დასამუშავებლად, გთხოვთ, გამოაგზავნეთ შეცდომების ანგარიშები ან "
+"სურვილები <a href=\"%1\">KDE-ის ხარვეზების თვალთვალის სისტემაში</a>. "
+"გაითვალისწინეთ, რომ ამისათვის გჭირდებათ მომხმარებლის ანგარიში, რათა შევძლოთ "
+"თქვენთან დაკავშირება დამატებითი კითხვების შემთხვევაში. <b>თუ არ გაქვთ "
+"ანგარიში, ჯერ <a href=\"%2\">შექმენით ის</a>.</b></p><p>იმ შემთხვევაში, თუ "
+"ეს რაიმე მიზეზით შეუძლებელია, იხილეთ <a href=\"%3\">%3</a> პრობლემების "
+"შეტყობინების ალტერნატიული გზებისთვის.</p>"
 
 #: rkward/dialogs/rkerrordialog.cpp:50
 #, kde-format
@@ -704,6 +707,12 @@ msgid ""
 "sure to fill in the missing bits - in English - where indicated, especially "
 "in the \"Comment\" field.</p>"
 msgstr ""
+"<p><b>რა ინფორმაცია უნდა მივაწოდო და როგორ?</b></p>ღილაკზე \"პრობლემის "
+"ანგარიში\" დაჭერა გადაგიყვანთ KDE-ის ხარვეზების თვალთვალის სისტემაში. "
+"ავტორიზაციის შემდეგ, გარკვეული ინფორმაცია უკვე წინასწარ იქნება შევსებული "
+"ანგარიშის ფორმაში. გთხოვთ, დარწმუნდეთ, რომ შეავსებთ გამოტოვებულ ნაწილებს - "
+"ინგლისურ ენაზე - იქ, სადაც მითითებულია, განსაკუთრებით \"კომენტარის\" ველში.</"
+"p>"
 
 #: rkward/dialogs/rkerrordialog.cpp:57
 #, kde-format
@@ -964,12 +973,7 @@ msgid "Start import dialog"
 msgstr "შემოტანის დაწყების დიალოგი"
 
 #: rkward/dialogs/rkimportdialog.cpp:108
-#, fuzzy, kde-format
-#| msgid ""
-#| "No further import methods are available at this time. Things you can try, "
-#| "include: <ul><li>Check for the availability of additional import plugins</"
-#| "li><li>Save your data to a different format in the original application</"
-#| "li><li>Ask for advice on rkward-users@kde.org</li></ul>"
+#, kde-format
 msgid ""
 "No further import methods are available at this time. Things you can try, "
 "include: <ul><li>Check for the availability of additional import plugins</"
@@ -979,7 +983,7 @@ msgstr ""
 "ამჟამად სხვა შემოტანის მეთოდები ხელმისაწვდომი არაა. რა შეგიძლიათ, ქნათ: "
 "<ul><li>შეამოწმეთ დამატებითი შემოტანის დამატებების ხელმისაწვდომობა</"
 "li><li>შეინახეთ მონაცემების სხვა ფორმატში ორიგინალ აპლიკაციაში</"
-"li><li>გვკითხეთ რჩევა ელფოსტაზე rkward-users@kde.org</li></ul>"
+"li><li>გვკითხეთ რჩევა ელფოსტაზე rkward@kde.org</li></ul>"
 
 #: rkward/dialogs/rkimportdialog.cpp:110
 #, kde-format
@@ -2216,10 +2220,9 @@ msgid "patches and helpful comments"
 msgstr "პაჩები და სასარგებლო კომენტარები"
 
 #: rkward/main.cpp:211
-#, fuzzy, kde-format
-#| msgid "Many more people on rkward-devel@kde.org"
+#, kde-format
 msgid "Many more people on rkward@kde.org"
-msgstr "და კიდევ მეტი ხალხი მისამართზე rkward-devel@kde.org"
+msgstr "და კიდევ მეტი ხალხი მისამართზე rkward@kde.org"
 
 #: rkward/main.cpp:211
 #, kde-format
@@ -4019,7 +4022,7 @@ msgstr "გრაფიკულ უკანაბოლოსთან და�
 #: rkward/rbackend/rpackages/rkward/R/public_graphics.R:93
 #, no-c-format, kde-format
 msgid "Device type \"%1\" is unknown to RKWard"
-msgstr ""
+msgstr "მოწყობილობის ტიპი \"%1\" RKWard-ისთვის უცნობია"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:66
 #, no-c-format, kde-format
@@ -4027,12 +4030,13 @@ msgid ""
 "rk.download_appimage() requires XiMpLe >= 0.11.3, but only found %1. Please "
 "update XiMpLe."
 msgstr ""
+"rk.download_appimage()-ს სჭირდება XiMpLe >= 0.11.3, მაგრამ აღმოჩენილია "
+"ვერსია %1. განაახლეთ XiMpLe."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:76
-#, fuzzy, no-c-format, kde-format
-#| msgid "The file or directory does not exist."
+#, no-c-format, kde-format
 msgid "Target directory '%1' does not exist\n"
-msgstr "ფაილი ან საქაღალდე არ არსებობს."
+msgstr "სამიზნე საქაღალდე '%1' არ არსებობს\n"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:82
 #, no-c-format, kde-format
@@ -4040,6 +4044,8 @@ msgid ""
 "Target file '%1' already exists, use the \"overwrite\" argument to replace "
 "it:\n"
 msgstr ""
+"სამიზნე ფაილი '%1' უკვე არსებობს. მისი ჩანაცვლებისთვის გამოიყენეთ არგუმენტი "
+"\"თავზე გადაწერა\":\n"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:86
 #, no-c-format, kde-format
@@ -4047,29 +4053,31 @@ msgid ""
 "Creating backup of current AppImage: %1\n"
 "  "
 msgstr ""
+"მიმდინარეობს მიმდინარე AppImage-ის მარქაფის შექმნა: %1\n"
+"  "
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:111
 #, kde-format
 msgid ""
 "Something went wrong with the download! Restored previous AppImage from "
 "backup."
-msgstr ""
+msgstr "გადმოწერისას რაღაც ცუდი მოხდა! აღდგა წინა AppImage მარქაფიდან."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:114
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:139
 #, kde-format
 msgid "Something went wrong with the download!"
-msgstr ""
+msgstr "გადმოწერისას რაღაც ცუდი მოხდა!"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:120
 #, kde-format
 msgid "Download successful, setting file permissions."
-msgstr ""
+msgstr "გადმოწერა წარმატებულია. მიმდინარეობს ფაილის წვდომების დაყენება."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:127
 #, kde-format
 msgid "Removing backup of previous AppImage."
-msgstr ""
+msgstr "წინა AppImage-ის მარქაფის წაშლა."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:133
 #, kde-format
@@ -4077,38 +4085,39 @@ msgid ""
 "Something went wrong with the download! Restoring previous AppImage from "
 "backup."
 msgstr ""
+"გადმოწერისას რაღაც ცუდი მოხდა! მიმდინარეობს წინა AppImage აღდგენა მარქაფიდან."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.filename-functions.R:146
 #, no-c-format, kde-format
 msgid "Failed to copy CSS file '%1' to '%2'"
-msgstr ""
+msgstr "CSS ფაილის ''%1'-დან '%2'-ში კოპირება ჩავარდა"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.menu.R:81
 #, no-c-format, kde-format
 msgid "Submenu %1 cannot be redefined as a leaf item."
-msgstr ""
+msgstr "ქვემენიუს %1 ვერ გადააკეთებთ ფოთლის ელემენტად."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.menu.R:113
 #: rkward/rbackend/rpackages/rkward/R/rk.menu.R:118
 #, no-c-format, kde-format
 msgid "Menu path %1 is not defined"
-msgstr ""
+msgstr "მენიუს ბილიკი %1 აღწერილი არაა"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.menu.R:114
 #, no-c-format, kde-format
 msgid "Leaf menu item %1 cannot be redefined as a submenu."
-msgstr ""
+msgstr "ფოთოლი მენიუს ელემენტს %1 ქვემენიუდ ვერ გადააკეთებთ."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.output.R:86
-#, fuzzy, kde-format
-#| msgid "Local file names"
+#, kde-format
 msgid "No file name specified"
-msgstr "ლოკალური ფაილის სახელები"
+msgstr "ფაილის სახელი მითითებული არაა"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.output.R:115
 #, kde-format
 msgid "Invalid output id. Use rk.output() to obtain a valid output handle."
 msgstr ""
+"არასწორი output id. Use rk.output() სწორი გამოტანის დამმუშავებლის მისაღებად."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:37
 #, kde-format
@@ -4138,34 +4147,32 @@ msgstr ""
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:141
 #, kde-format
 msgid "Plot window created"
-msgstr ""
+msgstr "დიაგრამის ფანჯარა შეიქმნა"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:145
-#, fuzzy, kde-format
-#| msgctxt "@action:button"
-#| msgid "Do no close"
+#, kde-format
 msgid "Plot window closed"
-msgstr "არ დახურო"
+msgstr "დიაგრამის ფანჯარა დაიხურა"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:155
 #, kde-format
 msgid "Plot updated (click to show)"
-msgstr ""
+msgstr "დიაგრამა განახლდა (წკაპი საჩვენებლად)"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.print-functions.R:115
 #, kde-format
 msgid "Please install package R2HTML to enable output!"
-msgstr ""
+msgstr "გამოტანის ჩასართავად დააყენეთ პაკეტი R2HTML!"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.print-functions.R:152
 #, kde-format
 msgid "Unnamed parameter lists are deprecated in rk.header()"
-msgstr ""
+msgstr "უსახელო პარამეტრის სიები rk.header()-ში მოძველებულია"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.print-functions.R:245
 #, no-c-format, kde-format
 msgid "Printing object of class '%1' is not implemented"
-msgstr ""
+msgstr "კლასის '%1 მქონე ობიექტის დაბეჭდვა განხორციელებული არაა"
 
 #: rkward/rkconsole.cpp:71
 #, kde-format
@@ -4336,6 +4343,9 @@ msgid ""
 "activated, automatically. To de-activate selected plugin packs, use Settings-"
 ">Configure RKWard->Plugins."
 msgstr ""
+"აღმოჩენილი და ავტომატურად გააქტიურებულია ახალი RKWard-ის დამატების პაკეტები "
+"(ჩამოთვლილია ქვემოთ). იმისათვის, რომ მოახდინოთ მონიშნული დამატების პაკეტების "
+"დეაქტივაცია, გამოიყენეთ: მორგება->RKWard-ის მორგება->დამატებები."
 
 #: rkward/rkward.cpp:373
 #, kde-format
@@ -5270,41 +5280,34 @@ msgid ""
 msgstr ""
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:94
-#, fuzzy, kde-format
-#| msgid ""
-#| "Directory where rkward may store files (setting takes effect after "
-#| "restarting RKWard)"
+#, kde-format
 msgid "HTML rendering (settings take effect after restarting RKWard)"
-msgstr ""
-"საქაღალდე, სადაც rkward-ს ფაილების შენახვა შეუძლია (ამ პარამეტრის ცვლილება, "
-"მხოლოდ, RKWard-ის გადატვირთვის შემდეგ შევა ძალაში)"
+msgstr "HTML-ის რენდერი (ძალაში RKWard-ის გადატვირთვის შემდეგ შევა)"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:96
 #, kde-format
 msgid "Engine:"
-msgstr ""
+msgstr "ძრავა:"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:97
-#, fuzzy, kde-format
-#| msgid "Platform default device"
+#, kde-format
 msgid "Platform default"
-msgstr "პლატფორმის ნაგულისხმევი მოწყობილობა"
+msgstr "პლატფორმის ნაგულისხმევი"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:99
 #, kde-format
 msgid "QWebEngine"
-msgstr ""
+msgstr "QWebEngine"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:103
-#, fuzzy, kde-format
-#| msgid "View"
+#, kde-format
 msgid "QWebView"
-msgstr "ხედი"
+msgstr "QWebView"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:109
 #, kde-format
 msgid "Disable hardware acceleration"
-msgstr ""
+msgstr "აპარატურული აჩქარების გათიშვა"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:110
 #, kde-format
@@ -5337,6 +5340,8 @@ msgid ""
 "Persistent workplace layout (i.e. which script-, data-, help-windows are "
 "open)"
 msgstr ""
+"სამუშაო სივრცის მუდმივი განლაგება (ანუ, რომელი სკრიპტის, მონაცემების და "
+"დახმარების ფანჯრებია ღია)"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:127
 #, kde-format
@@ -6385,18 +6390,15 @@ msgid "Run current statement, and advance"
 msgstr "მიმდინარე გამოსახულების გაშვება და წინ გადასვლა"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:183
-#, fuzzy, kde-format
-#| msgctxt "noun: type of preview"
-#| msgid "Preview Mode"
+#, kde-format
 msgctxt "noun: type of preview"
 msgid "<b>Preview Mode</b>"
-msgstr "გადახედვის რეჟიმი"
+msgstr "<b>გადახედვის რეჟიმი</b>"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:189
-#, fuzzy, kde-format
-#| msgid "<b>Done</b>"
+#, kde-format
 msgid "<b>Options</b>"
-msgstr "<b>მზადაა</b>"
+msgstr "<b>პარამეტრები</b>"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:411
 #, kde-format
@@ -6863,6 +6865,9 @@ msgid ""
 "loaded, or maybe you mistyped the command. Try using Help->Search R Help for "
 "more options."
 msgstr ""
+"'%1'-ის შესახებ დახმარების გვერდი აღმოჩენილი არაა. ან შესაბამისი პაკეტი "
+"დაყენებული/ჩატვირთული არაა, ან ბრძანება არასწორად აკრიფეთ. მეტი არჩევნის "
+"მისაღებად სცადეთ, გამოიყენოთ დახმარება->ძებნა R-ის დახმარებაში."
 
 #: rkward/windows/rkhelpsearchwindow.cpp:161
 #, kde-format
@@ -6890,10 +6895,9 @@ msgid "Package"
 msgstr "პაკეტი"
 
 #: rkward/windows/rkhtmlwindow.cpp:389
-#, fuzzy, kde-format
-#| msgid "RKWard output file %s does not (yet) exist"
+#, kde-format
 msgid "RKWard output file %1 does not (yet) exist"
-msgstr "RKWard-ის გამოტანის ფაილი %s (ჯერ) არ არსებობს"
+msgstr "RKWard-ის გამოტანის ფაილი %1 (ჯერ) არ არსებობს"
 
 #: rkward/windows/rkhtmlwindow.cpp:521
 #: rkward/windows/rktoplevelwindowgui.cpp:264
@@ -6928,6 +6932,8 @@ msgid ""
 "Do you really want to clear the output? This will also remove all image "
 "files used in the output. It will not be possible to restore it."
 msgstr ""
+"მართლა გნებავთ გამოტანის გასუფთავება? ეს ასევე წაშლის ყველა გამოსახულებას, "
+"რომელიც გამოტანისას იყო გამოყენებული და მათ ვერ აღადგენთ."
 
 #: rkward/windows/rkhtmlwindow.cpp:619
 #, kde-format
@@ -6970,10 +6976,9 @@ msgid "&Clear Output"
 msgstr "&გამოტანის გასუფთავება"
 
 #: rkward/windows/rkhtmlwindow.cpp:686
-#, fuzzy, kde-format
-#| msgid "Unload"
+#, kde-format
 msgid "Reload"
-msgstr "გამოტვირთვა"
+msgstr "თავიდან ჩატვირთვა"
 
 #: rkward/windows/rkhtmlwindow.cpp:690
 #, kde-format
@@ -7096,12 +7101,12 @@ msgstr "შენახვა, როგორც"
 #: rkward/windows/rkqwebview.cpp:252
 #, kde-format
 msgid "Open link in new tab"
-msgstr ""
+msgstr "ბმულის გახსნა ახალ ჩანართში"
 
 #: rkward/windows/rkqwebview.cpp:265
 #, kde-format
 msgid "Copy link address"
-msgstr ""
+msgstr "ბმულის მისამართის კოპირება"
 
 #: rkward/windows/rktexthints.cpp:34
 #, kde-format

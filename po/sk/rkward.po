@@ -202,13 +202,7 @@ msgstr ""
 "Technically, this corresponds to the <i>.GlobalEnv</i> environment."
 
 #: rkward/core/renvironmentobject.cpp:110
-#, fuzzy, kde-format
-#| msgid ""
-#| "Your workspace contains more than 10.000 top level objects. RKWard is not "
-#| "optimized for this situation, and you may experience lag between R "
-#| "commands. Should this situation constitute a regular use case for your "
-#| "work, please let us know at rkward-devel@kde.org, so we can consider "
-#| "possible solutions."
+#, kde-format
 msgid ""
 "Your workspace contains more than 10.000 top level objects. RKWard is not "
 "optimized for this situation, and you may experience lag between R commands. "
@@ -218,8 +212,8 @@ msgstr ""
 "Váš pracovný priestor obsahuje viac ako 10 000 objektov najvyššej úrovne. "
 "RKWard nie je optimalizovaný pre túto situáciu a môžete zaznamenať "
 "oneskorenie medzi príkazmi R. Ak táto situácia predstavuje bežný prípad "
-"použitia vo vašej práci, dajte nám vedieť na rkward-devel@kde.org, aby sme "
-"mohli zvážiť možné riešenia."
+"použitia vo vašej práci, dajte nám vedieť na rkward@kde.org, aby sme mohli "
+"zvážiť možné riešenia."
 
 #: rkward/core/renvironmentobject.cpp:110
 #, kde-format
@@ -973,12 +967,7 @@ msgid "Start import dialog"
 msgstr "Spustiť importný dialóg"
 
 #: rkward/dialogs/rkimportdialog.cpp:108
-#, fuzzy, kde-format
-#| msgid ""
-#| "No further import methods are available at this time. Things you can try, "
-#| "include: <ul><li>Check for the availability of additional import plugins</"
-#| "li><li>Save your data to a different format in the original application</"
-#| "li><li>Ask for advice on rkward-users@kde.org</li></ul>"
+#, kde-format
 msgid ""
 "No further import methods are available at this time. Things you can try, "
 "include: <ul><li>Check for the availability of additional import plugins</"
@@ -988,7 +977,7 @@ msgstr ""
 "V súčasnosti nie sú k dispozícii žiadne ďalšie metódy importu. Môžete "
 "skúsiť: <ul><li>Skontrolovať dostupnosť ďalších importných modulov</"
 "li><li>Uložiť vaše dáta v inom formáte v pôvodnej aplikácii</li><li>Požiadať "
-"o radu na rkward-users@kde.org</li></ul>"
+"o radu na rkward@kde.org</li></ul>"
 
 #: rkward/dialogs/rkimportdialog.cpp:110
 #, kde-format
@@ -2241,10 +2230,9 @@ msgid "patches and helpful comments"
 msgstr "záplaty a užitočné komentáre"
 
 #: rkward/main.cpp:211
-#, fuzzy, kde-format
-#| msgid "Many more people on rkward-devel@kde.org"
+#, kde-format
 msgid "Many more people on rkward@kde.org"
-msgstr "Mnoho ďalších ľudí na rkward-devel@kde.org"
+msgstr "Mnoho ďalších ľudí na rkward@kde.org"
 
 #: rkward/main.cpp:211
 #, kde-format
@@ -4107,7 +4095,7 @@ msgstr "Chyba pri pripájaní grafického backendu"
 #: rkward/rbackend/rpackages/rkward/R/public_graphics.R:93
 #, no-c-format, kde-format
 msgid "Device type \"%1\" is unknown to RKWard"
-msgstr ""
+msgstr "Typ zariadenia \"%1\" je neznámy pre RKWard"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:66
 #, no-c-format, kde-format
@@ -4115,12 +4103,13 @@ msgid ""
 "rk.download_appimage() requires XiMpLe >= 0.11.3, but only found %1. Please "
 "update XiMpLe."
 msgstr ""
+"rk.download_appimage() vyžaduje XiMpLe >= 0.11.3, ale bol nájdený iba %1. "
+"Aktualizujte prosím XiMpLe."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:76
-#, fuzzy, no-c-format, kde-format
-#| msgid "The file or directory does not exist."
+#, no-c-format, kde-format
 msgid "Target directory '%1' does not exist\n"
-msgstr "Súbor alebo priečinok neexistuje."
+msgstr "Cieľový priečinok '%1' neexistuje\n"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:82
 #, no-c-format, kde-format
@@ -4128,6 +4117,8 @@ msgid ""
 "Target file '%1' already exists, use the \"overwrite\" argument to replace "
 "it:\n"
 msgstr ""
+"Cieľový súbor '%1' už existuje, na jeho nahradenie použite argument "
+"\"overwrite\":\n"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:86
 #, no-c-format, kde-format
@@ -4135,6 +4126,8 @@ msgid ""
 "Creating backup of current AppImage: %1\n"
 "  "
 msgstr ""
+"Vytvára sa záloha aktuálneho AppImage: %1\n"
+"  "
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:111
 #, kde-format
@@ -4142,22 +4135,24 @@ msgid ""
 "Something went wrong with the download! Restored previous AppImage from "
 "backup."
 msgstr ""
+"Pri sťahovaní sa niečo pokazilo! Predchádzajúci AppImage bol obnovený zo "
+"zálohy."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:114
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:139
 #, kde-format
 msgid "Something went wrong with the download!"
-msgstr ""
+msgstr "Pri sťahovaní sa niečo pokazilo!"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:120
 #, kde-format
 msgid "Download successful, setting file permissions."
-msgstr ""
+msgstr "Sťahovanie úspešné, nastavujú sa oprávnenia súboru."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:127
 #, kde-format
 msgid "Removing backup of previous AppImage."
-msgstr ""
+msgstr "Odstraňuje sa záloha predchádzajúceho AppImage."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:133
 #, kde-format
@@ -4165,38 +4160,41 @@ msgid ""
 "Something went wrong with the download! Restoring previous AppImage from "
 "backup."
 msgstr ""
+"Pri sťahovaní sa niečo pokazilo! Obnovuje sa predchádzajúci AppImage zo "
+"zálohy."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.filename-functions.R:146
 #, no-c-format, kde-format
 msgid "Failed to copy CSS file '%1' to '%2'"
-msgstr ""
+msgstr "Zlyhalo kopírovanie CSS súboru '%1' do '%2'"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.menu.R:81
 #, no-c-format, kde-format
 msgid "Submenu %1 cannot be redefined as a leaf item."
-msgstr ""
+msgstr "Podmenu %1 nemôže byť predefinované ako listová položka."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.menu.R:113
 #: rkward/rbackend/rpackages/rkward/R/rk.menu.R:118
 #, no-c-format, kde-format
 msgid "Menu path %1 is not defined"
-msgstr ""
+msgstr "Cesta k menu %1 nie je definovaná"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.menu.R:114
 #, no-c-format, kde-format
 msgid "Leaf menu item %1 cannot be redefined as a submenu."
-msgstr ""
+msgstr "Listová položka menu %1 nemôže byť predefinovaná ako podmenu."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.output.R:86
-#, fuzzy, kde-format
-#| msgid "Local file names"
+#, kde-format
 msgid "No file name specified"
-msgstr "Lokálne názvy súborov"
+msgstr "Nebol zadaný názov súboru"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.output.R:115
 #, kde-format
 msgid "Invalid output id. Use rk.output() to obtain a valid output handle."
 msgstr ""
+"Neplatné id výstupu. Použite rk.output() na získanie platnej rukoväte "
+"výstupu."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:37
 #, kde-format
@@ -4230,34 +4228,32 @@ msgstr ""
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:141
 #, kde-format
 msgid "Plot window created"
-msgstr ""
+msgstr "Vytvorené okno grafu"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:145
-#, fuzzy, kde-format
-#| msgctxt "@action:button"
-#| msgid "Do no close"
+#, kde-format
 msgid "Plot window closed"
-msgstr "Nezatvárať"
+msgstr "Okno grafu zatvorené"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:155
 #, kde-format
 msgid "Plot updated (click to show)"
-msgstr ""
+msgstr "Graf aktualizovaný (kliknite na zobrazenie)"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.print-functions.R:115
 #, kde-format
 msgid "Please install package R2HTML to enable output!"
-msgstr ""
+msgstr "Na povolenie výstupu nainštalujte prosím balík R2HTML!"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.print-functions.R:152
 #, kde-format
 msgid "Unnamed parameter lists are deprecated in rk.header()"
-msgstr ""
+msgstr "Nepomenované zoznamy parametrov sú zastarané v rk.header()"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.print-functions.R:245
 #, no-c-format, kde-format
 msgid "Printing object of class '%1' is not implemented"
-msgstr ""
+msgstr "Tlač objektu triedy '%1' nie je implementovaná"
 
 #: rkward/rkconsole.cpp:71
 #, kde-format
@@ -5086,12 +5082,7 @@ msgid "(Attempt to) start completion whenever the cursor position changes"
 msgstr "(Pokúsiť sa) spustiť dopĺňanie pri každej zmene pozície kurzora"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:74
-#, fuzzy, kde-format
-#| msgid ""
-#| "Note: Further shortcuts can be assigned, and by default, Ctlr+Space "
-#| "invokes completions, in addition to this. Further, pressing the Tab key, "
-#| "while completions are shown, performs partial completion (if possible), "
-#| "independent of this setting."
+#, kde-format
 msgid ""
 "Note: Further shortcuts can be assigned, and by default, Ctrl+Space invokes "
 "completions, in addition to this. Further, pressing the Tab key, while "
@@ -5414,41 +5405,34 @@ msgstr ""
 "bude mať prednosť.</p>"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:94
-#, fuzzy, kde-format
-#| msgid ""
-#| "Directory where rkward may store files (setting takes effect after "
-#| "restarting RKWard)"
+#, kde-format
 msgid "HTML rendering (settings take effect after restarting RKWard)"
-msgstr ""
-"Priečinok, kam môže RKWard ukladať súbory (nastavenie sa prejaví po "
-"reštartovaní RKWard)"
+msgstr "Vykreslenie HTML (nastavenia sa prejavia po reštartovaní RKWard)"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:96
 #, kde-format
 msgid "Engine:"
-msgstr ""
+msgstr "Nástroj:"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:97
-#, fuzzy, kde-format
-#| msgid "Platform default device"
+#, kde-format
 msgid "Platform default"
-msgstr "Predvolené zariadenie platformy"
+msgstr "Predvolené platformy"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:99
 #, kde-format
 msgid "QWebEngine"
-msgstr ""
+msgstr "QWebEngine"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:103
-#, fuzzy, kde-format
-#| msgid "View"
+#, kde-format
 msgid "QWebView"
-msgstr "Zobraziť"
+msgstr "QWebView"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:109
 #, kde-format
 msgid "Disable hardware acceleration"
-msgstr ""
+msgstr "Vypnúť hardvérovú akceleráciu"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:110
 #, kde-format
@@ -5459,6 +5443,11 @@ msgid ""
 "is recommended to leave hardware acceleration disabled, unless you "
 "experience performance problems while viewing HTML content inside RKWard."
 msgstr ""
+"Je známe, že použitie hardvérovej akcelerácie pre vykreslenie HTML (napr. "
+"stránok pomocníka a výstupu zásuvných modulov) spôsobuje nestabilitu v "
+"niektorých inštaláciách a zvyčajne nie je potrebné pre - obvykle jednoduchý "
+"- obsah zobrazený v RKWard. Odporúča sa ponechať hardvérovú akceleráciu "
+"vypnutú, pokiaľ nemáte problémy s výkonom pri prezeraní HTML obsahu v RKWard."
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:117
 #, kde-format
@@ -5481,6 +5470,8 @@ msgid ""
 "Persistent workplace layout (i.e. which script-, data-, help-windows are "
 "open)"
 msgstr ""
+"Trvalé rozloženie pracovného priestoru (t.j. ktoré okná skriptov, dát, "
+"pomocníka sú otvorené)"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:127
 #, kde-format
@@ -6595,18 +6586,15 @@ msgid "Run current statement, and advance"
 msgstr "Spustiť aktuálny príkaz a pokračovať"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:183
-#, fuzzy, kde-format
-#| msgctxt "noun: type of preview"
-#| msgid "Preview Mode"
+#, kde-format
 msgctxt "noun: type of preview"
 msgid "<b>Preview Mode</b>"
-msgstr "Režim náhľadu"
+msgstr "<b>Režim náhľadu</b>"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:189
-#, fuzzy, kde-format
-#| msgid "<b>Done</b>"
+#, kde-format
 msgid "<b>Options</b>"
-msgstr "<b>Hotovo</b>"
+msgstr "<b>Možnosti</b>"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:411
 #, kde-format
@@ -7139,10 +7127,9 @@ msgid "Package"
 msgstr "Balík"
 
 #: rkward/windows/rkhtmlwindow.cpp:389
-#, fuzzy, kde-format
-#| msgid "RKWard output file %s does not (yet) exist"
+#, kde-format
 msgid "RKWard output file %1 does not (yet) exist"
-msgstr "Výstupný súbor RKWard %s (zatiaľ) neexistuje"
+msgstr "Výstupný súbor RKWard %1 (zatiaľ) neexistuje"
 
 #: rkward/windows/rkhtmlwindow.cpp:521
 #: rkward/windows/rktoplevelwindowgui.cpp:264
@@ -7221,10 +7208,9 @@ msgid "&Clear Output"
 msgstr "&Vyčistiť výstup"
 
 #: rkward/windows/rkhtmlwindow.cpp:686
-#, fuzzy, kde-format
-#| msgid "Unload"
+#, kde-format
 msgid "Reload"
-msgstr "Uvoľniť"
+msgstr "Znovu načítať"
 
 #: rkward/windows/rkhtmlwindow.cpp:690
 #, kde-format
@@ -7350,12 +7336,12 @@ msgstr "Uložiť ako"
 #: rkward/windows/rkqwebview.cpp:252
 #, kde-format
 msgid "Open link in new tab"
-msgstr ""
+msgstr "Otvoriť odkaz v novej karte"
 
 #: rkward/windows/rkqwebview.cpp:265
 #, kde-format
 msgid "Copy link address"
-msgstr ""
+msgstr "Kopírovať adresu odkazu"
 
 #: rkward/windows/rktexthints.cpp:34
 #, kde-format

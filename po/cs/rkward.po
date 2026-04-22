@@ -4039,10 +4039,9 @@ msgid "Leaf menu item %1 cannot be redefined as a submenu."
 msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.output.R:86
-#, fuzzy, kde-format
-#| msgid "Unspecified"
+#, kde-format
 msgid "No file name specified"
-msgstr "Neurčeno"
+msgstr "Nebyl zadán název souboru"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.output.R:115
 #, kde-format
@@ -5234,7 +5233,7 @@ msgstr ""
 #: rkward/settings/rksettingsmodulegeneral.cpp:96
 #, kde-format
 msgid "Engine:"
-msgstr ""
+msgstr "Nástroj:"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:97
 #, fuzzy, kde-format
@@ -6357,10 +6356,9 @@ msgid "<b>Preview Mode</b>"
 msgstr "Náhled"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:189
-#, fuzzy, kde-format
-#| msgid "<b>Done</b>"
+#, kde-format
 msgid "<b>Options</b>"
-msgstr "<b>Hotovo</b>"
+msgstr "<b>Možnosti</b>"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:411
 #, kde-format
@@ -6935,10 +6933,9 @@ msgid "&Clear Output"
 msgstr "&Vyprázdnit výstup"
 
 #: rkward/windows/rkhtmlwindow.cpp:686
-#, fuzzy, kde-format
-#| msgid "Unload"
+#, kde-format
 msgid "Reload"
-msgstr "Zrušit načtení"
+msgstr "Obnovit"
 
 #: rkward/windows/rkhtmlwindow.cpp:690
 #, kde-format
