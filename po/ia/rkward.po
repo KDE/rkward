@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-04-21 02:38+0000\n"
-"PO-Revision-Date: 2026-02-05 17:15+0100\n"
+"PO-Revision-Date: 2026-04-22 12:32+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 23.08.5\n"
+"X-Generator: Lokalize 25.04.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -3706,10 +3706,9 @@ msgid ""
 msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:76
-#, fuzzy, no-c-format, kde-format
-#| msgid "The file or directory does not exist."
+#, no-c-format, kde-format
 msgid "Target directory '%1' does not exist\n"
-msgstr "Le file o le directorio non existe."
+msgstr "Le directorioobjectivo  '%1' non existe\n"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:82
 #, no-c-format, kde-format
@@ -3777,10 +3776,9 @@ msgid "Leaf menu item %1 cannot be redefined as a submenu."
 msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.output.R:86
-#, fuzzy, kde-format
-#| msgid "Unspecified"
+#, kde-format
 msgid "No file name specified"
-msgstr "Non specificate"
+msgstr "Nulla nomine de file specificate"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.output.R:115
 #, kde-format
@@ -3815,10 +3813,9 @@ msgid "Plot window created"
 msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:145
-#, fuzzy, kde-format
-#| msgid "Do not close"
+#, kde-format
 msgid "Plot window closed"
-msgstr "Non Claude"
+msgstr "Fenestra de Traciar (Plot)  Claudite"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:155
 #, kde-format
@@ -4924,13 +4921,12 @@ msgstr ""
 #: rkward/settings/rksettingsmodulegeneral.cpp:96
 #, kde-format
 msgid "Engine:"
-msgstr ""
+msgstr "Motor:"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:97
-#, fuzzy, kde-format
-#| msgid "Restore defaults"
+#, kde-format
 msgid "Platform default"
-msgstr "Restabili a valores predefinite"
+msgstr "Platteforma predefinite"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:99
 #, kde-format
@@ -4938,10 +4934,9 @@ msgid "QWebEngine"
 msgstr ""
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:103
-#, fuzzy, kde-format
-#| msgid "View"
+#, kde-format
 msgid "QWebView"
-msgstr "Vista"
+msgstr "QWebView"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:109
 #, kde-format
@@ -5983,18 +5978,15 @@ msgid "Run current statement, and advance"
 msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:183
-#, fuzzy, kde-format
-#| msgctxt "noun: type of preview"
-#| msgid "Preview Mode"
+#, kde-format
 msgctxt "noun: type of preview"
 msgid "<b>Preview Mode</b>"
-msgstr "Modo de Vista preliminar"
+msgstr "<b>Modo de Vista preliminar</b>"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:189
-#, fuzzy, kde-format
-#| msgid "<b>Done</b>"
+#, kde-format
 msgid "<b>Options</b>"
-msgstr "<b>Facite</b>"
+msgstr "<b>Optiones</b>"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:411
 #, kde-format
@@ -6484,10 +6476,9 @@ msgid "Package"
 msgstr "Pacchetto"
 
 #: rkward/windows/rkhtmlwindow.cpp:389
-#, fuzzy, kde-format
-#| msgid "File '%1' does not exist."
+#, kde-format
 msgid "RKWard output file %1 does not (yet) exist"
-msgstr "Le file '%1' non existe."
+msgstr "Le file de exito de RKWard %1 non existe (ancora)."
 
 #: rkward/windows/rkhtmlwindow.cpp:521
 #: rkward/windows/rktoplevelwindowgui.cpp:264
@@ -6564,10 +6555,9 @@ msgid "&Clear Output"
 msgstr "&Clara Exito"
 
 #: rkward/windows/rkhtmlwindow.cpp:686
-#, fuzzy, kde-format
-#| msgid "Unload"
+#, kde-format
 msgid "Reload"
-msgstr "Discarga"
+msgstr "Recarga"
 
 #: rkward/windows/rkhtmlwindow.cpp:690
 #, kde-format
@@ -6690,12 +6680,12 @@ msgstr "Salveguarda como"
 #: rkward/windows/rkqwebview.cpp:252
 #, kde-format
 msgid "Open link in new tab"
-msgstr ""
+msgstr "Aperi ligamine in nove &scheda"
 
 #: rkward/windows/rkqwebview.cpp:265
 #, kde-format
 msgid "Copy link address"
-msgstr ""
+msgstr "Copia adresse de ligamine"
 
 #: rkward/windows/rktexthints.cpp:34
 #, kde-format
