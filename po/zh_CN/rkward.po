@@ -1991,10 +1991,9 @@ msgid "patches and helpful comments"
 msgstr "补丁和有用的评论"
 
 #: rkward/main.cpp:211
-#, fuzzy, kde-format
-#| msgid "Many more people on rkward-devel@kde.org"
+#, kde-format
 msgid "Many more people on rkward@kde.org"
-msgstr "rkward-devel@kde.org 上的许多人"
+msgstr ""
 
 #: rkward/main.cpp:211
 #, kde-format
@@ -3780,10 +3779,9 @@ msgid "Leaf menu item %1 cannot be redefined as a submenu."
 msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.output.R:86
-#, fuzzy, kde-format
-#| msgid "Unspecified"
+#, kde-format
 msgid "No file name specified"
-msgstr "未指定"
+msgstr ""
 
 #: rkward/rbackend/rpackages/rkward/R/rk.output.R:115
 #, kde-format
@@ -4944,10 +4942,9 @@ msgid "QWebEngine"
 msgstr ""
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:103
-#, fuzzy, kde-format
-#| msgid "View"
+#, kde-format
 msgid "QWebView"
-msgstr "查看  "
+msgstr ""
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:109
 #, kde-format
@@ -5989,18 +5986,15 @@ msgid "Run current statement, and advance"
 msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:183
-#, fuzzy, kde-format
-#| msgctxt "noun: type of preview"
-#| msgid "Preview Mode"
+#, kde-format
 msgctxt "noun: type of preview"
 msgid "<b>Preview Mode</b>"
-msgstr "预览模式"
+msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:189
-#, fuzzy, kde-format
-#| msgid "Options"
+#, kde-format
 msgid "<b>Options</b>"
-msgstr "选项"
+msgstr ""
 
 #: rkward/windows/rkcommandeditorwindow.cpp:411
 #, kde-format
@@ -6569,10 +6563,9 @@ msgid "&Clear Output"
 msgstr ""
 
 #: rkward/windows/rkhtmlwindow.cpp:686
-#, fuzzy, kde-format
-#| msgid "Unload"
+#, kde-format
 msgid "Reload"
-msgstr "卸载"
+msgstr ""
 
 #: rkward/windows/rkhtmlwindow.cpp:690
 #, kde-format
@@ -7273,7 +7266,3 @@ msgstr ""
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr ""
-
-#~ msgctxt "Caption: Some software is missing."
-#~ msgid "Missing software"
-#~ msgstr "软件缺失"
