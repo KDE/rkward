@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=5; plural=n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n < 11 ? "
-"3 : 4\n"
+"3 : 4;\n"
 "X-Generator: Weblate 5.16\n"
 
 #, kde-format
@@ -8110,13 +8110,11 @@ msgstr "Cuir isteach an t-ainm nua"
 msgid "View in editor (read-only)"
 msgstr "Féach san eagarthóir (léamh amháin)"
 
-#~ msgid "RKWard output file %s does not (yet) exist"
-#~ msgstr "Níl comhad aschuir RKWard %s ann (go fóill)"
-
-#, fuzzy
-#~| msgid "Export Page as HTMLDefault &Encoding"
 #~ msgid "Default &Encoding"
 #~ msgstr "Ionchódú &Réamhshocraithe"
+
+#~ msgid "RKWard output file %s does not (yet) exist"
+#~ msgstr "Níl comhad aschuir RKWard %s ann (go fóill)"
 
 #~ msgid ""
 #~ "Set the encoding to assume in case no explicit encoding has been set in "
