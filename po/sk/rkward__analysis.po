@@ -439,8 +439,8 @@ msgid ""
 "Here you can specify the alternative hypothesis. It must be one of \"two "
 "sided\", \"greater\" or \"less\"."
 msgstr ""
-"Here you can specify the alternative hypothesis. It musí byť one of \"two "
-"sided\", \"greater\" or \"less\"."
+"Tu môžete zadať alternatívnu hypotézu. Musí byť jedna z \"two sided\", "
+"\"greater\" alebo \"less\"."
 
 #. i18n: ectx: (Loaded from Ansari-Bradley two-sample exact test) <settings> <setting> (refers to element labelled "compute exact p-value")
 #: rkward/plugins/analysis/ansari_bradley/ansari_bradley_exact_test.rkh:22
@@ -454,7 +454,7 @@ msgstr "Defines whether an exact p-hodnota should be computed."
 #: rkward/plugins/analysis/ansari_bradley/ansari_bradley_test.rkh:23
 #, kde-format
 msgid "Check this if you want the confidence interval to be computed."
-msgstr "Zaškrtnite this if you want the confidence interval to be computed."
+msgstr "Začiarknite toto, ak chcete vypočítať interval spoľahlivosti."
 
 #. i18n: ectx: (Loaded from Ansari-Bradley two-sample test) <settings> <setting> (refers to element labelled "confidence level")
 #. i18n: ectx: (Loaded from Ansari-Bradley two-sample exact test) <settings> <setting> (refers to element labelled "confidence level")
@@ -759,8 +759,8 @@ msgid ""
 "value in the presence of ties, use <link href=\"rkward://component/"
 "ansari_bradley_exact_test\"/>."
 msgstr ""
-"Defines whether an exact p-value by mal byť computed. To compute an exact p-"
-"value in the presence of ties, use <link href=\"rkward://component/"
+"Definuje, či sa má vypočítať presná hodnota p. Na výpočet presnej hodnoty p "
+"v prítomnosti väzieb použite <link href=\"rkward://component/"
 "ansari_bradley_exact_test\"/>."
 
 #. i18n: ectx: (Ansari-Bradley two-sample test) <dialog label="...">
@@ -939,10 +939,10 @@ msgid ""
 "tests of bivariate normality are conducted, and also the standard errors are "
 "reported."
 msgstr ""
-"Ak je zaškrtnuté, an additional table with the (two-sided) significance "
-"values is calculated and printed. For polyserial/polychoric correlations, "
-"Chi-squared tests of bivariate normality are conducted, and also the "
-"standard errors are reported."
+"Ak je začiarknuté, vypočíta sa a vytlačí ďalšia tabuľka s hodnotami "
+"(obojstrannej) významnosti. Pre polyserálne/polychorické korelácie sa "
+"vykonajú chi-kvadrát testy bivariátnej normality a taktiež sa uvádzajú "
+"štandardné chyby."
 
 #. i18n: ectx: (Loaded from Correlation matrix) <settings> <setting> (refers to element labelled "Method")
 #: rkward/plugins/analysis/corr_matrix.rkh:21
@@ -968,9 +968,9 @@ msgid ""
 "e. even for those pairs of variables, where neither value is missing), or "
 "should they only be excluded for those pairs where it is actually missing?"
 msgstr ""
-"V prípade missing values, should be row be excluded from all calculation (t. "
-"j. even for those pairs of variables, where neither value is missing), or "
-"should they only be excluded for those pairs where it is actually missing?"
+"V prípade chýbajúcich hodnôt, má byť riadok vylúčený zo všetkých výpočtov "
+"(t. j. dokonca aj pre tie páry premenných, kde žiadna hodnota nechýba), "
+"alebo majú byť vylúčené iba pre tie páry, kde skutočne chýba?"
 
 #. i18n: ectx: (Correlation matrix) <dialog label="...">
 #: rkward/plugins/analysis/corr_matrix.xml:19
@@ -1248,12 +1248,12 @@ msgid ""
 "each table, the occurrence of combinations of values in the \"dependent\" "
 "and \"independent\" variable is counted."
 msgstr ""
-"Specify the \"dependent\" variable. This variable will be present in all "
-"created tables. Specify one or more \"independent\" variables. Každý z these "
-"will be cross-tabulated against the \"dependent\" variable. \"Dependent\" "
-"and \"Independent\", here, does not imply any inferential statistics. In "
-"each table, the occurrence of combinations of values in the \"dependent\" "
-"and \"independent\" variable is counted."
+"Zadajte \"závislú\" premennú. Táto premenná bude prítomná vo všetkých "
+"vytvorených tabuľkách. Zadajte jednu alebo viacero \"nezávislých\" "
+"premenných. Každá z nich bude krížovo tabulovaná oproti \"závislej\" "
+"premennej. \"Závislá\" a \"Nezávislá\", tu, nevznamená žiadne odvodzovacie "
+"štatistiky. V každej tabuľke sa počítajú výskyty kombinácií hodnôt \"závislej"
+"\" a \"nezávislej\" premennej."
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation) <usage>
 #: rkward/plugins/analysis/crosstab.rkh:12
@@ -1274,8 +1274,8 @@ msgid ""
 "Select any vector that can be interpreted as a factor. This variable will be "
 "present in all tables."
 msgstr ""
-"Vyberte any vector that môže byť interpreted as a factor. This variable bude "
-"present in all tables."
+"Vyberte ľubovoľný vektor, ktorý môže byť interpretovaný ako faktor. Táto "
+"premenná bude prítomná vo všetkých tabuľkách."
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation) <settings> <setting> (refers to element labelled "Independent")
 #: rkward/plugins/analysis/crosstab.rkh:21
@@ -1284,8 +1284,8 @@ msgid ""
 "Select one or more vectors that can be interpreted as a factor. Each of "
 "these will be cross-tabulated against the \"dependent\" variable."
 msgstr ""
-"Vyberte one or more vectors that môže byť interpreted as a factor. Each of "
-"these bude cross-tabulated against the \"dependent\" variable."
+"Vyberte jeden alebo viacero vektorov, ktoré môžu byť interpretované ako "
+"faktor. Každý z nich bude krížovo tabulovaný oproti \"závislej\" premennej."
 
 #. i18n: ectx: (Loaded from N to 1 Crosstabulation) <settings> <setting> (refers to element labelled "Chisquare")
 #: rkward/plugins/analysis/crosstab.rkh:22
@@ -1528,8 +1528,8 @@ msgid ""
 "Should NA (and NaN) values be excluded (default)? If this option is not "
 "checked, missing values are listed in the table just like regular values."
 msgstr ""
-"Should NA (and NaN) values be excluded (predvolené)? If this option is not "
-"checked, missing values are listed in the table just like regular values."
+"Majú byť hodnoty NA (a NaN) vylúčené (predvolene)? Ak táto voľba nie je "
+"začiarknutá, chýbajúce hodnoty sú v tabuľke uvedené ako bežné hodnoty."
 
 #. i18n: ectx: (Loaded from N to N Crosstabulation) <settings> <setting> (refers to element labelled "Row variables")
 #: rkward/plugins/analysis/crosstab_multi.rkh:21
@@ -1538,8 +1538,8 @@ msgid ""
 "Control the \"width\" of the printed table: Categories of the first n "
 "selected variables are listed as rows, the remaining ones as columns."
 msgstr ""
-"Control the \"width\" of the printed table: Categories of the first n "
-"vybrané variables are listed as rows, the remaining ones as columns."
+"Riadiť \"šírku\" vytlačenej tabuľky: Kategórie prvých n vybraných premenných "
+"sú uvedené ako riadky, zostávajúce ako stĺpce."
 
 #. i18n: ectx: (N to N Crosstabulation) <dialog label="N to N Crosstabulation"> <varslot label="...">
 #: rkward/plugins/analysis/crosstab_multi.xml:15
@@ -1604,8 +1604,8 @@ msgid ""
 "Select the data to be computed. The vectors need to be numeric, and can be "
 "of different length."
 msgstr ""
-"Vyberte the data to be computed. The vectors need to be numeric, and môže "
-"byť of different length."
+"Vyberte dáta, ktoré sa majú vypočítať. Vektory musia byť numerické a môžu "
+"mať rôznu dĺžku."
 
 #. i18n: ectx: (Loaded from sample moment) <settings> <setting> (refers to element labelled "Show Length and NAs")
 #. i18n: ectx: (Loaded from Bonett-Seier test of Geary's kurtosis) <settings> <setting> (refers to element labelled "Show Length and NAs")
@@ -1636,8 +1636,8 @@ msgid ""
 "Show the total length of the data, and the number of missing values (purely "
 "informational, does not affect the test)?"
 msgstr ""
-"Show the total length of the data, and the počet missing values (purely "
-"informational, does not affect the test)?"
+"Zobraziť celkovú dĺžku dát a počet chýbajúcich hodnôt (čisto informatívne, "
+"neovplyvňuje test)?"
 
 #. i18n: ectx: (Loaded from Bonett-Seier test of Geary's kurtosis) <settings> <setting> (refers to element labelled "Verbose alternative hypothesis")
 #. i18n: ectx: (Loaded from D'Agostino test of skewness) <settings> <setting> (refers to element labelled "Verbose alternative hypothesis")
@@ -1906,9 +1906,9 @@ msgid ""
 "multiple data. See <link href=\"rkward://rhelp/skewness\"/>, <link href="
 "\"rkward://rhelp/kurtosis\"/> and <link href=\"rkward://rhelp/geary\"/>."
 msgstr ""
-"Choose the data to compute the kurtosis and/or skewness. Môžete choose "
-"multiple data. See <link href=\"rkward://rhelp/skewness\"/>, <link href="
-"\"rkward://rhelp/kurtosis\"/> and <link href=\"rkward://rhelp/geary\"/>."
+"Vyberte dáta na výpočet kurtózy a/alebo šikmosti. Môžete vybrať viacero dát. "
+"Pozri <link href=\"rkward://rhelp/skewness\"/>, <link href=\"rkward://rhelp/"
+"kurtosis\"/> a <link href=\"rkward://rhelp/geary\"/>."
 
 #. i18n: ectx: (Loaded from Skewness and Kurtosis) <settings> <setting> (refers to element labelled "Skewness")
 #: rkward/plugins/analysis/moments/skewness_kurtosis_test.rkh:20
@@ -2024,10 +2024,10 @@ msgid ""
 "data. Please consider that this test is no longer recommended. See <link "
 "href=\"rkward://rhelp/chisq.out.test\"/>."
 msgstr ""
-"Choose the data set to find one outlier, na základe chisquared distribution "
-"of squared differences between data and sample mean. Môžete choose multiple "
-"data. Please consider that tento test is no longer recommended. See <link "
-"href=\"rkward://rhelp/chisq.out.test\"/>."
+"Vyberte dátovú sadu na nájdenie jedného odľahlého bodu na základe chi-"
+"kvadrát rozdelenia štvorcových rozdielov medzi dátami a strednou hodnotou "
+"vzorky. Môžete vybrať viacero dát. Majte prosím na pamäti, že tento test sa "
+"už neodporúča. Pozri <link href=\"rkward://rhelp/chisq.out.test\"/>."
 
 #. i18n: ectx: (Loaded from Chi-squared test for outlier) <settings> <setting> (refers to element labelled "variable(s):")
 #: rkward/plugins/analysis/outliers/chisq_out_test.rkh:18
@@ -2037,9 +2037,8 @@ msgid ""
 "of different length. For the calculation missing values are removed from the "
 "data."
 msgstr ""
-"Vyberte the data to be computed. The vectors need to be numeric, and môže "
-"byť of different length. For the calculation missing values are removed from "
-"the data."
+"Vyberte dáta, ktoré sa majú vypočítať. Vektory musia byť numerické a môžu "
+"mať rôznu dĺžku. Pre výpočet sa chýbajúce hodnoty odstraňujú z dát."
 
 #. i18n: ectx: (Loaded from Chi-squared test for outlier) <settings> <setting> (refers to element labelled "Opposite")
 #: rkward/plugins/analysis/outliers/chisq_out_test.rkh:20
@@ -2048,8 +2047,8 @@ msgid ""
 "Check if you want not the value with largest difference from the mean, but "
 "opposite (lowest, if most suspicious is highest etc.)."
 msgstr ""
-"Zaškrtnite if you want not the value with largest difference from the mean, "
-"but opposite (lowest, if most suspicious is highest etc.)."
+"Začiarknite, ak nechcete hodnotu s najväčším rozdielom od priemeru, ale "
+"opačnú (najnižšiu, ak je najviac podozrivá najvyššia atď.)."
 
 #. i18n: ectx: (Loaded from Chi-squared test for outlier) <settings> <setting> (refers to element labelled "Show additional descriptives")
 #. i18n: ectx: (Loaded from Dixon tests for outlier) <settings> <setting> (refers to element labelled "Show additional descriptives")
@@ -2140,8 +2139,8 @@ msgid ""
 "Select the data to be computed. The vectors need to be numeric, and can be "
 "of different length but there is a limit."
 msgstr ""
-"Vyberte the data to be computed. The vectors need to be numeric, and môže "
-"byť of different length but there is a limit."
+"Vyberte dáta, ktoré sa majú vypočítať. Vektory musia byť numerické a môžu "
+"mať rôznu dĺžku, ale existuje obmedzenie."
 
 #. i18n: ectx: (Loaded from Dixon tests for outlier) <settings> <setting> (refers to element labelled "Variant of test")
 #: rkward/plugins/analysis/outliers/dixon_test.rkh:20
@@ -2152,9 +2151,9 @@ msgid ""
 "suitable variant is selected automatically, according to the size of the "
 "sample."
 msgstr ""
-"Specifies the variant of test to be performed. See <link href=\"rkward://"
-"rhelp/dixon.test\"/> for details. The default value (0) means that a "
-"suitable variant is selected automatically, podľa the size of the sample."
+"Určuje variant testu, ktorý sa má vykonať. Podrobnosti nájdete na <link href="
+"\"rkward://rhelp/dixon.test\"/>. Predvolená hodnota (0) znamená, že vhodný "
+"variant sa vyberie automaticky podľa veľkosti vzorky."
 
 #. i18n: ectx: (Loaded from Dixon tests for outlier) <settings> <setting> (refers to element labelled "two-sided")
 #: rkward/plugins/analysis/outliers/dixon_test.rkh:21
@@ -2171,8 +2170,8 @@ msgid ""
 "Here you can define if you want to check not the value with largest "
 "difference from the mean, but opposite."
 msgstr ""
-"Here môžete definovať ak want to check not the value with largest difference "
-"from the mean, but opposite."
+"Tu môžete definovať, či chcete kontrolovať nie hodnotu s najväčším rozdielom "
+"od priemeru, ale opačnú."
 
 #. i18n: ectx: (Dixon tests for outlier) <dialog label="...">
 #: rkward/plugins/analysis/outliers/dixon_test.xml:11
@@ -2283,8 +2282,8 @@ msgid ""
 "Variant of test to be performed. One or two outliers can be detected, on the "
 "same, or on opposite tails."
 msgstr ""
-"Variant of test to be performed. One or two outliers môže byť detekované, on "
-"the same, or on opposite tails."
+"Variant testu, ktorý sa má vykonať. Môže byť detekovaný jeden alebo dva "
+"odľahlé body, na rovnakom alebo na opačných chvostoch."
 
 #. i18n: ectx: (Loaded from Grubbs tests for one or two outliers in data sample) <settings> <setting> (refers to element labelled "two-sided")
 #: rkward/plugins/analysis/outliers/grubbs_test.rkh:21
@@ -2484,21 +2483,21 @@ msgid ""
 "increase sample size(s) or effect size, or decrease effect power or "
 "parameter count."
 msgstr ""
-"Given three of the parameters 'power of test', 'sample size', 'effect size', "
-"and 'significance level', tento plugin will estimate the fourth, t. j. "
-"napríklad the test power of a t.test at a given sample size, effect size, "
-"and level of significance. On the left hand, specify the statistical method, "
-"vpravo hand side, enter the values of the given parameters. In the control "
-"in the middle, select which of the parameters to estimate.   Všimnite si, že "
-"in some cases it will not be possible to estimate a (finite) parameter at "
-"the given specifications. Vo všeobecnosti, this means that musíte increase "
-"sample size(s) or effect size, or decrease effect power or parameter count."
+"Pre tri zo štyroch parametrov „sila testu“, „veľkosť vzorky“, „veľkosť "
+"účinku“ a „hladina významnosti“ tento doplnok odhadne štvrtý, t. j. "
+"napríklad silu testu t.test pri danej veľkosti vzorky, veľkosti účinku a "
+"hladine významnosti. Na ľavej strane zadajte štatistickú metódu, na pravej "
+"strane zadajte hodnoty daných parametrov. V ovládacom prvku uprostred "
+"vyberte, ktorý parameter odhadnúť. Všimnite si, že v niektorých prípadoch "
+"nebude možné odhadnúť (konečný) parameter pri daných špecifikáciách. Vo "
+"všeobecnosti to znamená, že musíte zvýšiť veľkosť vzorky alebo veľkosť "
+"účinku, alebo znížiť silu účinku alebo počet parametrov."
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Select a method")
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:34
 #, kde-format
 msgid "Specify the statistical method to perform power estimation for"
-msgstr "Určite the statistical method to perform power estimation for"
+msgstr "Určte štatistickú metódu, pre ktorú sa má vykonať odhad sily"
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Number of groups")
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:37
@@ -2513,9 +2512,8 @@ msgid ""
 "Only enabled where applicable. Specify the nature of samples used in the "
 "test. For samples of different sizes, only one sample size can be estimated."
 msgstr ""
-"Only povolené where applicable. Určite the nature of samples used in the "
-"test. For samples of different sizes, only one sample size môže byť "
-"estimated."
+"Povolené iba tam, kde je to použiteľné. Zadajte charakter vzoriek použitých "
+"v teste. Pre vzorky rôznych veľkostí možno odhadnúť iba jednu veľkosť vzorky."
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Using test hypothesis")
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:43
@@ -2525,9 +2523,9 @@ msgid ""
 "\"first is greater\", a positive effect size is expected. For \"second is "
 "greater\", a negative effect size is expected."
 msgstr ""
-"Určite the hypothesis to use. Note that for the one-sided hypothesis \"first "
-"is greater\", a positive effect size is expected. For \"second is greater\", "
-"a negative effect size is expected."
+"Zadajte hypotézu, ktorá sa má použiť. Všimnite si, že pre jednostrannú "
+"hypotézu \"first is greater\" sa očakáva kladná veľkosť účinku. Pre \"second "
+"is greater\" sa očakáva záporná veľkosť účinku."
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Provided effect size")
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:47
@@ -2536,8 +2534,8 @@ msgid ""
 "Only shown where applicable. Allows you to select, whether to specify the "
 "effect size as Cohen's f, or as Eta squared."
 msgstr ""
-"Only shown where applicable. Allows you to select, či sa má specify the "
-"effect size as Cohen's f, or as Eta squared."
+"Zobrazuje sa iba tam, kde je to použiteľné. Umožňuje vybrať, či zadať "
+"veľkosť účinku ako Cohenovo f alebo ako Eta na druhú."
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Parameter to determine")
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:52
@@ -2571,9 +2569,9 @@ msgid ""
 "As a reminder, this is the number of parameters to estimate, or number of "
 "groups/samples minus 1."
 msgstr ""
-"Only shown for general linear model: Targeted numerator degrees of freedom. "
-"As a reminder, toto je the počet parameters to estimate, or počet groups/"
-"samples minus 1."
+"Zobrazuje sa iba pre všeobecný lineárny model: Cieľové stupne voľnosti "
+"čitateľa. Pripomíname, že toto je počet parametrov na odhadnutie alebo počet "
+"skupín/vzoriek mínus 1."
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Degrees of freedom for denominator")
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:68
@@ -2584,10 +2582,10 @@ msgid ""
 "total number of observations minus numerator degrees of freedom minus 1, or "
 "total number of observations minus number of groups/samples."
 msgstr ""
-"Only shown for general linear model: Available denominator degrees of "
-"freedom / degrees of freedom of the error term. As a reminder, toto je the "
-"total počet observations minus numerator degrees of freedom minus 1, or "
-"total počet observations minus počet groups/samples."
+"Zobrazuje sa iba pre všeobecný lineárny model: Dostupné stupne voľnosti "
+"menovateľa / stupne voľnosti člena chyby. Pripomíname, že toto je celkový "
+"počet pozorovaní mínus stupne voľnosti čitateľa mínus 1, alebo celkový počet "
+"pozorovaní mínus počet skupín/vzoriek."
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Sample size")
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:73
@@ -2597,9 +2595,9 @@ msgid ""
 "observations per sample, per group, or in total. Make sure to read the note "
 "shown below the control."
 msgstr ""
-"Sample size. Note that depending on the vybrané method, this can mean "
-"observations per sample, per group, or in total. Make sure to read the note "
-"shown below the control."
+"Veľkosť vzorky. Všimnite si, že v závislosti od vybranej metódy to môže "
+"znamenať pozorovania na vzorku, na skupinu alebo celkovo. Nezabudnite si "
+"prečítať poznámku zobrazenú pod ovládacím prvkom."
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Effect size")
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:77
@@ -2610,10 +2608,10 @@ msgid ""
 "control.   As a reminder, for mapping between cohen's f and Eta&sup2; use "
 "f&sup2; = Eta&sup2; / (1 &minus; Eta&sup2;)"
 msgstr ""
-"Minimum detectable effect size. Všimnite si, že effect size specifications "
-"differ between the available methods. Uistite sa to read the note shown "
-"below the control.   As a reminder, for mapping between cohen's f and "
-"Eta&sup2; use f&sup2; = Eta&sup2; / (1 &minus; Eta&sup2;)"
+"Minimálna detekovateľná veľkosť účinku. Všimnite si, že špecifikácie "
+"veľkosti účinku sa líšia medzi dostupnými metódami. Nezabudnite si prečítať "
+"poznámku zobrazenú pod ovládacím prvkom. Pripomíname, že pre mapovanie medzi "
+"Cohenovým f a Eta&sup2; použite f&sup2; = Eta&sup2; / (1 &minus; Eta&sup2;)"
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Significance level")
 #: rkward/plugins/analysis/power/Poweranalysis.rkh:84
@@ -2628,8 +2626,8 @@ msgid ""
 "<link href=\"rkward://rhelp/pwr\"> Description of the R package \"pwr\", "
 "used to perform the power calculations. </link>"
 msgstr ""
-"<link href=\"rkward://rhelp/pwr\"> Description of the R package \"pwr\", "
-"používaný na perform the power calculations. </link>"
+"<link href=\"rkward://rhelp/pwr\"> Popis balíka R \"pwr\", používaného na "
+"vykonávanie výpočtov sily. </link>"
 
 #. i18n: ectx: (Power analysis) <about shortinfo="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:14
@@ -3042,7 +3040,7 @@ msgstr ""
 #: rkward/plugins/analysis/regression/linear_regression.rkh:18
 #, kde-format
 msgid "The dependent variable. This must be numeric."
-msgstr "The dependent variable. This musí byť numeric."
+msgstr "Závislá premenná. Musí byť numerická."
 
 #. i18n: ectx: (Loaded from Fitting Linear Models) <settings> <setting> (refers to element labelled "independent variables")
 #: rkward/plugins/analysis/regression/linear_regression.rkh:19
@@ -3052,9 +3050,10 @@ msgid ""
 "Note that factor variables are treated as categorial predictors, while "
 "numeric variables are treated as continuous predictors, automatically."
 msgstr ""
-"One or more independent variables, každý z rovnaký length as the dependent. "
-"Všimnite si, že factor variables are treated as categorial predictors, while "
-"numeric variables are treated as continuous predictors, automatically."
+"Jedna alebo viacero nezávislých premenných, každá rovnakej dĺžky ako "
+"závislá. Všimnite si, že faktorové premenné sú automaticky považované za "
+"kategoriálne prediktory, zatiaľ čo numerické premenné sú považované za "
+"spojité prediktory."
 
 #. i18n: ectx: (Loaded from Fitting Linear Models) <settings> <setting> (refers to element labelled "Include intercept")
 #: rkward/plugins/analysis/regression/linear_regression.rkh:20
@@ -3279,20 +3278,20 @@ msgid ""
 "Whether to assume equal variances for the two samples (for independent "
 "samples t-test, only). This option is implied for a paired test."
 msgstr ""
-"Či sa má assume equal variances for the two samples (for independent samples "
-"t-test, only). Táto voľba is implied for a paired test."
+"Či predpokladať rovnaké rozptyly pre obe vzorky (iba pre t-test nezávislých "
+"vzoriek). Táto voľba je predpokladaná pre párový test."
 
 #. i18n: ectx: (Loaded from t-Test) <settings> <setting> (refers to element labelled "using test hypothesis")
 #: rkward/plugins/analysis/t_test.rkh:23
 #, kde-format
 msgid "Alternative hypothesis (H1) of the test."
-msgstr "Alternatívna hypotéza (H1) of the test."
+msgstr "Alternatívna hypotéza (H1) testu."
 
 #. i18n: ectx: (Loaded from t-Test) <settings> <setting> (refers to element labelled "Show Confidence Interval")
 #: rkward/plugins/analysis/t_test.rkh:25
 #, kde-format
 msgid "Whether to print the confidence interval of the estimated mean."
-msgstr "Či sa má print the confidence interval of the estimated mean."
+msgstr "Či sa má vypísať interval spoľahlivosti odhadovaného priemeru."
 
 #. i18n: ectx: (Loaded from t-Test) <settings> <setting> (refers to element labelled "confidence level")
 #: rkward/plugins/analysis/t_test.rkh:26
@@ -3345,10 +3344,10 @@ msgid ""
 "pairs or repeated measures on the same subject, select \"Paired samples\". "
 "Finally, you can also test a single sample against a constant value."
 msgstr ""
-"Select \"Independent samples\" when comparing data from two different "
-"populations (napr. treatment group vs. control group). For comparing matched "
-"pairs or repeated measures on rovnaký subject, select \"Paired samples\". "
-"Finally, môžete also test a single sample against a constant value."
+"Vyberte \"Nezávislé vzorky\" pri porovnávaní dát z dvoch rôznych populácií "
+"(napr. liečebná skupina vs. kontrolná skupina). Pri porovnávaní párovaných "
+"dvojíc alebo opakovaných meraní rovnakého subjektu vyberte \"Párované vzorky"
+"\". Nakoniec môžete tiež testovať jednu vzorku oproti konštantnej hodnote."
 
 #. i18n: ectx: (t-Test) <wizard label="Two Variable t-Test"> <page> <text>
 #: rkward/plugins/analysis/t_test.xml:68
@@ -3377,8 +3376,8 @@ msgid ""
 "Below you can specify whether one should be shown, and which confidence-"
 "level should be applied (95% corresponds to a 5% level of significance)."
 msgstr ""
-"Below you can specify whether one by mal byť shown, and which confidence-"
-"level by mal byť applied (95% corresponds to a 5% level of significance)."
+"Nižšie môžete určiť, či sa má jeden zobraziť a aká hladina spoľahlivosti sa "
+"má použiť (95% zodpovedá 5% hladine významnosti)."
 
 #. i18n: ectx: (Loaded from Mood Two-Sample Test of Scale) <summary>
 #: rkward/plugins/analysis/TESTS/mood_test.rkh:8
@@ -3414,7 +3413,7 @@ msgstr "Second sample. The vectors need to be numeric."
 #: rkward/plugins/analysis/TESTS/mood_test.rkh:19
 #, kde-format
 msgid "Alternative hypothesis to use for the test."
-msgstr "Alternatívna hypotéza to use for the test."
+msgstr "Alternatívna hypotéza pre test."
 
 #. i18n: ectx: (Mood Two-Sample Test of Scale) <dialog label="...">
 #: rkward/plugins/analysis/TESTS/mood_test.xml:11
@@ -3471,7 +3470,7 @@ msgstr ""
 #: rkward/plugins/analysis/TESTS/PP_test.rkh:19
 #, kde-format
 msgid "Which version of the truncation lag parameter should be used?"
-msgstr "Which version of the truncation lag parameter by mal byť used?"
+msgstr "Ktorá verzia parametra truncation lag sa má použiť?"
 
 #. i18n: ectx: (Loaded from Box-Pierce and Ljung-Box Tests) <settings> <setting> (refers to element labelled "Exclude missing values")
 #. i18n: ectx: (Loaded from KPSS Test for Stationarity) <settings> <setting> (refers to element labelled "Exclude missing values")
@@ -3547,13 +3546,13 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/Box_test.rkh:19
 #, kde-format
 msgid "Number of autocorrelation coefficients to base the test on."
-msgstr "Počet autocorrelation coefficients to base the test on."
+msgstr "Počet autokorelačných koeficientov, na ktorých sa má test zakladať."
 
 #. i18n: ectx: (Loaded from Box-Pierce and Ljung-Box Tests) <settings> <setting> (refers to element labelled "test to be performed")
 #: rkward/plugins/analysis/time_series/Box_test.rkh:20
 #, kde-format
 msgid "Define type of test. Either Ljung-Box or Box-Pierce can be used."
-msgstr "Definovať type of test. Either Ljung-Box or Box-Pierce môže byť used."
+msgstr "Definovať typ testu. Použiť sa môže Ljung-Box alebo Box-Pierce."
 
 #. i18n: ectx: (Box-Pierce and Ljung-Box Tests) <dialog label="Box-Pierce and Ljung-Box Tests"> <tab label="Basic settings"> <spinbox label="...">
 #: rkward/plugins/analysis/time_series/Box_test.xml:18
@@ -3613,8 +3612,8 @@ msgid ""
 "This plugin extracts and plots the long term trend of a series and "
 "(optionally) its cyclical component."
 msgstr ""
-"This plugin extracts and plots the long term trend of a series and "
-"(voliteľnély) its cyclical component."
+"Tento doplnok extrahuje a zobrazuje dlhodobý trend radu a (voliteľne) jeho "
+"cyklickú zložku."
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter) <usage>
 #: rkward/plugins/analysis/time_series/hp_filter.rkh:12
@@ -3623,8 +3622,8 @@ msgid ""
 "The Hodrick-Prescott filter is used to separate the long term trend of a "
 "time series from its cyclical (short term) component."
 msgstr ""
-"The Hodrick-Prescott filter is používaný na separate the long term trend of "
-"a time series from its cyclical (short term) component."
+"Filter Hodrick-Prescott sa používa na oddelenie dlhodobého trendu časového "
+"radu od jeho cyklickej (krátkodobej) zložky."
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter) <usage>
 #: rkward/plugins/analysis/time_series/hp_filter.rkh:12
@@ -3634,9 +3633,9 @@ msgid ""
 "relation with the original series provided so as to give a graphic view of "
 "the filtering operation."
 msgstr ""
-"Navyše to the resulting series object(s), tento plugin can plot them in "
-"relation with the original series provided so as to give a graphic view of "
-"the filtering operation."
+"Okrem výsledných objektov radov tento doplnok môže vykresliť ich v "
+"súvislosti s pôvodným radom tak, aby poskytol grafický pohľad na operáciu "
+"filtrovania."
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter) <settings> <setting> (refers to element labelled "Variable:")
 #: rkward/plugins/analysis/time_series/hp_filter.rkh:20
@@ -3645,8 +3644,8 @@ msgid ""
 "Select the data to be computed. It must be a single Time Series object or a "
 "Numeric Vector. NA values are not admitted."
 msgstr ""
-"Vyberte the data to be computed. It musí byť a single Time Series object or "
-"a Numeric Vector. NA values are not admitted."
+"Vyberte dáta, ktoré sa majú vypočítať. Musí to byť jediný objekt časového "
+"radu alebo numerický vektor. Hodnoty NA nie sú povolené."
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter) <settings> <setting> (refers to element labelled "Lambda")
 #: rkward/plugins/analysis/time_series/hp_filter.rkh:21
@@ -3679,11 +3678,11 @@ msgid ""
 "original series to avoid overwriting other variables' trend/cycle (i.e. "
 "\"myseries.hptrend\").</i>"
 msgstr ""
-"Select which resulting series should be created in the workspace. The trend "
-"of the original series is created predvolene. Write any name chcete to use "
-"as identifier for the series. Predvolene, it's <i>hp</i> followed by "
-"<i>trend</i> and/or <i>cycle</i>. <i>Tip: môžete add the name of the "
-"original series to avoid overwriting other variables' trend/cycle (t. j. "
+"Vyberte, ktoré výsledné rady sa majú vytvoriť v pracovnom priestore. Trend "
+"pôvodného radu sa vytvára predvolene. Napíšte ľubovoľný názov, ktorý chcete "
+"použiť ako identifikátor radu. Predvolene je to <i>hp</i> nasledované "
+"<i>trend</i> a/alebo <i>cycle</i>. <i>Tip: môžete pridať názov pôvodného "
+"radu, aby ste predišli prepísaniu trendu/cyklu iných premenných (t. j. "
 "\"myseries.hptrend\").</i>"
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter) <settings> <setting> (refers to element labelled "Plot Cycle")
@@ -3699,8 +3698,8 @@ msgid ""
 "Here you can adjust the line width, type and colour of each series on the "
 "plot. (Default: blue series, red trend and dark green cycle)"
 msgstr ""
-"Tu môžete adjust the line width, type and colour of each series on the plot. "
-"(Default: blue series, red trend and dark green cycle)"
+"Tu môžete nastaviť šírku čiary, typ a farbu každého radu na grafe. "
+"(Predvolene: modrý rad, červený trend a tmavozelený cyklus)"
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter) <settings> <setting> (refers to element labelled "Original series and trend Y axis label")
 #: rkward/plugins/analysis/time_series/hp_filter.rkh:28
@@ -3710,9 +3709,8 @@ msgid ""
 "If empty, the default label is the name of the original series plus <i>, "
 "Trend</i>."
 msgstr ""
-"Here you can specify text on the Y axis label of the trend plot (upper). If "
-"empty, the predvolené label is the name of the original series plus <i>, "
-"Trend</i>."
+"Tu môžete zadať text na popisku osi Y grafu trendu (horného). Ak je prázdne, "
+"predvolený popis je názov pôvodného radu plus <i>, Trend</i>."
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter) <settings> <setting> (refers to element labelled "Cycle Y axis label")
 #: rkward/plugins/analysis/time_series/hp_filter.rkh:29
@@ -3721,8 +3719,8 @@ msgid ""
 "Here you can specify the text on the Y axis label of the cycle plot (lower - "
 "if applicable). If empty, the default label is <i>Cycle</i>."
 msgstr ""
-"Here you can specify text on the Y axis label of the cycle plot (lower - if "
-"applicable). If empty, the predvolené label is <i>Cycle</i>."
+"Tu môžete zadať text na popisku osi Y grafu cyklu (dolného – ak je to "
+"použiteľné). Ak je prázdne, predvolený popis je <i>Cycle</i>."
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter) <settings> <setting> (refers to element labelled "interpret as string")
 #: rkward/plugins/analysis/time_series/hp_filter.rkh:30
@@ -3731,8 +3729,9 @@ msgid ""
 "Enable or disable the labels being evaluated as literal (quoted) strings. To "
 "achieve a line-break (in a quoted string), enter '\\n'. (Default: YES)"
 msgstr ""
-"Povoliť or disable the labels being evaluated as literal (quoted) strings. "
-"To achieve a line-break (in a quoted string), enter '\\n'. (Default: YES)"
+"Povoliť alebo zakázať vyhodnocovanie popiskov ako doslovných (citovaných) "
+"reťazcov. Na dosiahnutie zalomenia riadka (v citovanom reťazci) zadajte "
+"„\\n“. (Predvolene: ÁNO)"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:30
@@ -3987,8 +3986,8 @@ msgid ""
 "Indicates the null hypothesis and must be one of \"Level\" (default) or "
 "\"Trend\"."
 msgstr ""
-"Indicates the null hypothesis and musí byť one of \"Level\" (predvolené) or "
-"\"Trend\"."
+"Udáva nulovú hypotézu a musí byť jedna z \"Level\" (predvolene) alebo \"Trend"
+"\"."
 
 #. i18n: ectx: (Loaded from KPSS Test for Stationarity) <settings> <setting> (refers to element labelled "version of truncation lag parameter")
 #: rkward/plugins/analysis/time_series/kpss_test.rkh:20
@@ -4043,8 +4042,8 @@ msgid ""
 "The samples to be checked for equal variance. The vectors need to be "
 "numeric, but don't need to have the same length."
 msgstr ""
-"The samples to be checked for equal variance. The vectors need to be "
-"numeric, but don't need to have rovnaký length."
+"Vzorky, ktoré sa majú skontrolovať na rovnaký rozptyl. Vektory musia byť "
+"numerické, ale nemusia mať rovnakú dĺžku."
 
 #. i18n: ectx: (Bartlett Test of Homogeneity of Variances) <dialog label="...">
 #: rkward/plugins/analysis/variances/bartlett_test.xml:11
@@ -4124,7 +4123,7 @@ msgstr "Second sample (numeric vector)."
 #: rkward/plugins/analysis/variances/F_test.rkh:20
 #, kde-format
 msgid "Alternative hypothesis of the test."
-msgstr "Alternatívna hypotéza of the test."
+msgstr "Alternatívna hypotéza testu."
 
 #. i18n: ectx: (Loaded from F test) <settings> <setting> (refers to element labelled "Hypothesized ratio")
 #: rkward/plugins/analysis/variances/F_test.rkh:22
@@ -4298,9 +4297,10 @@ msgid ""
 "test on the null that the true distribution of x (or the difference between "
 "the paired vectors) is symmetric about 0 (or the specified location)."
 msgstr ""
-"Select a single vector (or paired test) to perform a Wilcoxon signed rank "
-"test on the null that the true distribution of x (or the difference between "
-"the paired vectors) is symmetric about 0 (or zadaný location)."
+"Vyberte jeden vektor (alebo párový test) na vykonanie Wilcoxonovho testu so "
+"znamienkovým poradím pre nulovú hypotézu, že skutočné rozdelenie x (alebo "
+"rozdiel medzi spárovanými vektormi) je symetrické okolo 0 (alebo zadanej "
+"polohy)."
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test) <usage>
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.rkh:12
@@ -4311,10 +4311,10 @@ msgid ""
 "details) on the null that the distributions of x and y differ (by 0 or the "
 "specified location shift)."
 msgstr ""
-"Select two vectors to perform a Wilcoxon rank sum test (equivalent to the "
-"Mann-Whitney test: see <link href=\"rkward://rhelp/wilcox.test\"/> for "
-"details) on the null that the distributions of x and y differ (by 0 or "
-"zadaný location shift)."
+"Vyberte dva vektory na vykonanie Wilcoxonovho testu súčtu poradí "
+"(ekvivalentného Mann-Whitneyho testu: pozri <link href=\"rkward://rhelp/"
+"wilcox.test\"/> pre podrobnosti) pre nulovú hypotézu, že rozdelenia x a y sa "
+"líšia (o 0 alebo zadaný posun polohy)."
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test) <settings> <setting> (refers to element labelled "using test hypothesis")
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.rkh:21
@@ -4333,21 +4333,21 @@ msgid ""
 "Check this for a paired test (Wilcoxon signed rank test of the difference "
 "between the two vectors)."
 msgstr ""
-"Zaškrtnite this for a paired test (Wilcoxon signed rank test of the "
-"difference between the two vectors)."
+"Zaškrtnite pre párový test (Wilcoxonov test so znamienkovým poradím rozdielu "
+"medzi dvoma vektormi)."
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test) <settings> <setting> (refers to element labelled "Compute confidence interval")
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.rkh:24
 #, kde-format
 msgid "Check this if you want the confidence interval to be computed/printed."
 msgstr ""
-"Zaškrtnite this if you want the confidence interval to be computed/printed."
+"Zaškrtnite, ak chcete, aby bol interval spoľahlivosti vypočítaný a vytlačený."
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test) <settings> <setting> (refers to element labelled "Confidence level")
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.rkh:25
 #, kde-format
 msgid "Confidence level of the printed confidence interval."
-msgstr "Úroveň spoľahlivosti of the printed confidence interval."
+msgstr "Úroveň spoľahlivosti vytlačeného intervalu spoľahlivosti."
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test) <settings> <setting> (refers to element labelled "Location (shift) to test against (mu)")
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.rkh:26
@@ -4373,8 +4373,7 @@ msgstr ""
 msgid ""
 "Check this option to compute an exact p-value even in the presence of ties."
 msgstr ""
-"Zaškrtnite this option to compute an exact p-value even in the presence of "
-"ties."
+"Zaškrtnite túto voľbu na výpočet presnej hodnoty p aj pri výskyte zhôd."
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test) <settings> <setting> (refers to element labelled "Apply continuity correction")
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.rkh:29
@@ -4383,8 +4382,8 @@ msgid ""
 "If checked a continuity correction in the normal approximation for the p-"
 "value is applied."
 msgstr ""
-"Ak je zaškrtnuté a continuity correction in the normal approximation for the "
-"p-value is applied."
+"Ak je zaškrtnuté, použije sa korekcia spojitosti v normálnej aproximácii pre "
+"hodnotu p."
 
 #. i18n: ectx: (Wilcoxon/Mann-Whitney Test) <dialog label="...">
 #: rkward/plugins/analysis/wilcoxon/wilcoxon_tests.xml:14
@@ -4600,14 +4599,14 @@ msgid ""
 "Each selected variable will be analysed independently of the others. NA "
 "values are excluded from the calculations."
 msgstr ""
-"Each vybrané variable bude analysed independently of the others. NA values "
-"are excluded from the calculations."
+"Každá vybraná premenná bude analyzovaná nezávisle od ostatných. Hodnoty NA "
+"sú vylúčené z výpočtov."
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <settings> <setting> (refers to element labelled "variable(s):")
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:21
 #, kde-format
 msgid "Select one or more numeric vectors to analyse"
-msgstr "Vybrať one or more numeric vectors to analyse"
+msgstr "Vyberte jeden alebo viac numerických vektorov na analýzu"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <settings> <setting> (refers to element labelled "group by:")
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:22
@@ -4619,11 +4618,12 @@ msgid ""
 "any grouping). If specifying more than one grouping factor, separate splits "
 "will be performed for each combination of values of the grouping factors."
 msgstr ""
-"Optionally select one or more grouping factors by which to split each input "
-"vector. The grouping factors have to be of rovnaký length as the input "
-"vectors (and thus, all input vectors have to be of rovnaký length, if using "
-"any grouping). If specifying more than one grouping factor, separate splits "
-"will be performed for each combination of values of the grouping factors."
+"Voliteľne vyberte jeden alebo viac faktorov zoskupenia, podľa ktorých sa "
+"rozdelí každý vstupný vektor. Faktory zoskupenia musia mať rovnakú dĺžku ako "
+"vstupné vektory (a teda všetky vstupné vektory musia mať rovnakú dĺžku, ak "
+"sa používa akékoľvek zoskupenie). Ak je zadaný viac ako jeden faktor "
+"zoskupenia, pre každú kombináciu hodnôt faktorov zoskupenia sa vykoná "
+"samostatné rozdelenie."
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <settings> <setting> (refers to element labelled "Mean")
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:24
@@ -4712,7 +4712,7 @@ msgstr "Compute the product of all values"
 #, kde-format
 msgid ""
 "Count the total number of values, and the number of missing values (NAs)"
-msgstr "Count the total počet values, and the počet missing values (NAs)"
+msgstr "Spočítať celkový počet hodnôt a počet chýbajúcich hodnôt (NA)"
 
 #. i18n: ectx: (Descriptive Statistics) <dialog label="Descriptive Statistics"> <tab label="Variables"> <varslot label="...">
 #: rkward/plugins/descriptive/descriptive_statistics.xml:20
@@ -4937,8 +4937,8 @@ msgid ""
 "Indicates which correlation coefficient (or covariance) is to be computed. "
 "One of \"pearson\", \"kendall\", or \"spearman\", can be used"
 msgstr ""
-"Indicates which correlation coefficient (or covariance) is to be computed. "
-"One of \"pearson\", \"kendall\", or \"spearman\", môže byť used"
+"Určuje, ktorý korelačný koeficient (alebo kovariancia) sa má vypočítať. Môže "
+"sa použiť jeden z: \"pearson\", \"kendall\", alebo \"spearman\""
 
 #. i18n: ectx: (Loaded from Correlation Matrix Plot) <settings> <setting> (refers to element labelled "Exclude missing values")
 #: rkward/plugins/plots/cor_graph.rkh:21
