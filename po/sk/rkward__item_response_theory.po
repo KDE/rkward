@@ -171,8 +171,9 @@ msgid ""
 "The complete results can be stored as a new object in the current workspace "
 "for further use (e.g. plotting item characteristic curves)."
 msgstr ""
-"The complete results môže byť stored as a new object in the current "
-"workspace for further use (e.g. plotting item characteristic curves)."
+"Úplné výsledky môžu byť uložené ako nový objekt v aktuálnom pracovnom "
+"priestore na ďalšie použitie (napr. vykresľovanie kriviek charakteristík "
+"položiek)."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model) <usage>
 #: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.rkh:12
@@ -235,10 +236,10 @@ msgid ""
 "specific layout of that matrix please refer to the manual for the <link href="
 "\"rkward://rhelp/ltm\">ltm()</link> function."
 msgstr ""
-"Ak want to fix parameters, musíte prepare a matrix of fixed-value "
-"constraints first and then select it here. For detailed information on the "
-"specific layout of that matrix prosím pozrite the manual for the <link href="
-"\"rkward://rhelp/ltm\">ltm()</link> function."
+"Ak chcete fixovať parametre, musíte najprv pripraviť maticu obmedzení s "
+"pevnými hodnotami a potom ju tu vybrať. Podrobné informácie o rozložení "
+"tejto matice nájdete v príručke funkcie <link href=\"rkward://rhelp/ltm"
+"\">ltm()</link>."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model) <settings> <setting> (refers to element labelled "Start values")
 #: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.rkh:28
@@ -250,11 +251,11 @@ msgid ""
 "of that matrix please refer to the manual for the <link href=\"rkward://"
 "rhelp/ltm\">ltm()</link> function."
 msgstr ""
-"Predvolene start values for the parameters are computed automatically. "
-"Alternatively, môžete force the use of random start values, or give a matrix "
-"of values to be used. For detailed information on the specific layout of "
-"that matrix prosím pozrite the manual for the <link href=\"rkward://rhelp/ltm"
-"\">ltm()</link> function."
+"Predvolene sa počiatočné hodnoty parametrov vypočítavajú automaticky. "
+"Prípadne môžete vynútiť použitie náhodných počiatočných hodnôt alebo zadať "
+"maticu hodnôt, ktoré sa majú použiť. Podrobné informácie o rozložení tejto "
+"matice nájdete v príručke funkcie <link href=\"rkward://rhelp/ltm\">ltm()</"
+"link>."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Rasch model) <settings> <setting> (refers to element labelled "Use only complete cases")
 #. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model) <settings> <setting> (refers to element labelled "Use only complete cases")
@@ -271,8 +272,9 @@ msgid ""
 "Specifies how missing values are to be treated. By default all available "
 "cases are used. If checked, only complete cases will be considered."
 msgstr ""
-"Specifies how missing values are to be treated. By predvolené all dostupné "
-"cases are used. If checked, only complete cases bude considered."
+"Určuje, ako sa majú spracovávať chýbajúce hodnoty. Predvolene sa použijú "
+"všetky dostupné prípady. Ak je zaškrtnuté, budú sa uvažovať len úplné "
+"prípady."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Rasch model) <settings> <setting> (refers to element labelled "Usual IRT parameterization")
 #. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model) <settings> <setting> (refers to element labelled "Usual IRT parameterization")
@@ -289,8 +291,8 @@ msgid ""
 "If checked, the coefficients' estimates are reported under the usual Item "
 "Response Theory parameterization (which is the default)."
 msgstr ""
-"If checked, the coefficients' estimates are reported under the usual Item "
-"Response Theory parameterization (which is the predvolené)."
+"Ak je zaškrtnuté, odhady koeficientov sa uvádzajú podľa štandardnej "
+"parametrizácie teórie odozvy na položku (čo je predvolené)."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model) <settings> <setting title="..."> (refers to element labelled "Number of EM iterations:")
 #: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.rkh:39
@@ -378,9 +380,9 @@ msgid ""
 "BFGS-B, or SANN instead. Please refer to the <link href=\"rkward://rhelp/"
 "optim\">optim()</link> manual for details."
 msgstr ""
-"The predvolené optimization method is BFGS. It môže byť set to Nelder-Mead, "
-"CG, L-BFGS-B, or SANN instead. Please refer to the <link href=\"rkward://"
-"rhelp/optim\">optim()</link> manual for details."
+"Predvolená metóda optimalizácie je BFGS. Namiesto toho ju možno nastaviť na "
+"Nelder-Mead, CG, L-BFGS-B alebo SANN. Podrobnosti nájdete v príručke funkcie "
+"<link href=\"rkward://rhelp/optim\">optim()</link>."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Rasch model) <settings> <setting> (refers to element labelled "Print verbose info about optimization")
 #. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model) <settings> <setting> (refers to element labelled "Print verbose info about optimization")
@@ -411,8 +413,8 @@ msgid ""
 "Please refer to the <code>ltm</code> manuals for further information and "
 "detailed command line options:"
 msgstr ""
-"Prosím pozrite the <code>ltm</code> manuals for further information and "
-"detailed command line options:"
+"Ďalšie informácie a podrobné možnosti príkazového riadku nájdete v "
+"príručkách balíka <code>ltm</code>:"
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Two parameter logistic model) <technical>
 #: rkward/plugins/analysis/irt/dichotomous/par_est_2pl.rkh:64
@@ -873,10 +875,10 @@ msgid ""
 "specific layout of that matrix please refer to the manual for the <link href="
 "\"rkward://rhelp/tpm\">tpm()</link> function."
 msgstr ""
-"Ak want to fix parameters, musíte prepare a matrix of fixed-value "
-"constraints first and then select it here. For detailed information on the "
-"specific layout of that matrix prosím pozrite the manual for the <link href="
-"\"rkward://rhelp/tpm\">tpm()</link> function."
+"Ak chcete fixovať parametre, musíte najprv pripraviť maticu obmedzení s "
+"pevnými hodnotami a potom ju tu vybrať. Podrobné informácie o rozložení "
+"tejto matice nájdete v príručke funkcie <link href=\"rkward://rhelp/tpm"
+"\">tpm()</link>."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Birnbaum three parameter model) <settings> <setting> (refers to element labelled "Upper bound for guessing parameter")
 #: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.rkh:28
@@ -896,11 +898,11 @@ msgid ""
 "of that matrix please refer to the manual for the <link href=\"rkward://"
 "rhelp/tpm\">tpm()</link> function."
 msgstr ""
-"Predvolene start values for the parameters are computed automatically. "
-"Alternatively, môžete force the use of random start values, or give a matrix "
-"of values to be used. For detailed information on the specific layout of "
-"that matrix prosím pozrite the manual for the <link href=\"rkward://rhelp/tpm"
-"\">tpm()</link> function."
+"Predvolene sa počiatočné hodnoty parametrov vypočítavajú automaticky. "
+"Prípadne môžete vynútiť použitie náhodných počiatočných hodnôt alebo zadať "
+"maticu hodnôt, ktoré sa majú použiť. Podrobné informácie o rozložení tejto "
+"matice nájdete v príručke funkcie <link href=\"rkward://rhelp/tpm\">tpm()</"
+"link>."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Birnbaum three parameter model) <settings> <setting> (refers to element labelled "Assume equal discrimination parameters")
 #: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.rkh:34
@@ -910,9 +912,9 @@ msgid ""
 "items, as in the 1PL Rasch model. That leaves difficulty and guessing "
 "parameters to be estimated."
 msgstr ""
-"Ak je zaškrtnuté it is assumed that discrimination parameters are equal for "
-"all items, as in the 1PL Rasch model. That leaves difficulty and guessing "
-"parameters to be estimated."
+"Ak je zaškrtnuté, predpokladá sa, že parametre diskriminácie sú rovnaké pre "
+"všetky položky, ako v modeli 1PL Rasch. To ponecháva na odhadnutie parametre "
+"obtiažnosti a hádania."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Birnbaum three parameter model) <settings> <setting title="Number of quasi-Newton iterations"> (refers to element labelled "Number of quasi-Newton iterations:")
 #: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.rkh:45
@@ -950,9 +952,9 @@ msgid ""
 "for optimization. Alternatively, <link href=\"rkward://rhelp/nlminb"
 "\">nlminb()</link> can be called."
 msgstr ""
-"By predvolené <link href=\"rkward://rhelp/optim\">optim()</link> is being "
-"used for optimization. Alternatively, <link href=\"rkward://rhelp/nlminb"
-"\">nlminb()</link> môže byť called."
+"Predvolene sa na optimalizáciu používa <link href=\"rkward://rhelp/optim"
+"\">optim()</link>. Prípadne možno zavolať <link href=\"rkward://rhelp/nlminb"
+"\">nlminb()</link>."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Birnbaum three parameter model) <settings> <setting title="Optimization method"> (refers to element labelled "Optimization method:")
 #: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.rkh:54
@@ -963,10 +965,10 @@ msgid ""
 "refer to the <link href=\"rkward://rhelp/optim\">optim()</link> manual for "
 "details."
 msgstr ""
-"<i>Only if <code>optim()</code> is used:</i> The default optimization method "
-"is BFGS. It can be set to Nelder-Mead, CG, L-BFGS-B, or SANN instead. Prosím "
-"pozrite the <link href=\"rkward://rhelp/optim\">optim()</link> manual for "
-"details."
+"<i>Iba ak sa používa <code>optim()</code>:</i> Predvolená metóda "
+"optimalizácie je BFGS. Namiesto toho ju možno nastaviť na Nelder-Mead, CG, L-"
+"BFGS-B alebo SANN. Podrobnosti nájdete v príručke funkcie <link href="
+"\"rkward://rhelp/optim\">optim()</link>."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Birnbaum three parameter model) <settings> <setting> (refers to element labelled "Step-length for approximation")
 #: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.rkh:57
@@ -1128,11 +1130,11 @@ msgid ""
 "expected layout of matrices and vectors please refer to the manual for the "
 "<link href=\"rkward://rhelp/LLTM\">LLTM()</link> function."
 msgstr ""
-"To fit the linear logistic test model with default settings, just the matrix "
-"of manifest variables (dichotomous item responses) must be selected. Further "
-"options are described in the sections below. For detailed information on the "
-"expected layout of matrices and vectors prosím pozrite the manual for the "
-"<link href=\"rkward://rhelp/LLTM\">LLTM()</link> function."
+"Na prispôsobenie lineárneho logistického testovacieho modelu s predvolenými "
+"nastaveniami stačí vybrať maticu manifestovaných premenných (dichotomické "
+"odpovede na položky). Ďalšie možnosti sú popísané v nasledujúcich sekciách. "
+"Podrobné informácie o očakávanom rozložení matíc a vektorov nájdete v "
+"príručke funkcie <link href=\"rkward://rhelp/LLTM\">LLTM()</link>."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Linear logistic test model) <settings> <setting> (refers to element labelled "Number of measurement points")
 #. i18n: ectx: (Loaded from IRT parameter estimation: Linear rating scale model) <settings> <setting> (refers to element labelled "Number of measurement points")
@@ -1146,9 +1148,9 @@ msgid ""
 "data matrix (defaults to 1). This will divide the columns in the matrix into "
 "equally sized subsets of data."
 msgstr ""
-"If repeated measurement applies, specify how many are represented in the "
-"data matrix (predvolenés to 1). This will divide the columns in the matrix "
-"into equally sized subsets of data."
+"Ak sa použije opakované meranie, uveďte, koľko ich je zastúpených v dátovej "
+"matici (predvolene 1). Tým sa stĺpce v matici rozdelia na rovnako veľké "
+"podmnožiny údajov."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Linear logistic test model) <settings> <setting> (refers to element labelled "Group contrasts")
 #. i18n: ectx: (Loaded from IRT parameter estimation: Linear rating scale model) <settings> <setting> (refers to element labelled "Group contrasts")
@@ -1162,9 +1164,9 @@ msgid ""
 "membership of each subject must be given. By default no group contrasts are "
 "imposed."
 msgstr ""
-"If you want to compute group contrasts, a vector determining the group "
-"membership of each subject musí byť given. By predvolené no group contrasts "
-"are imposed."
+"Ak chcete vypočítať skupinové kontrasty, musí byť zadaný vektor určujúci "
+"príslušnosť každého subjektu ku skupine. Predvolene sa žiadne skupinové "
+"kontrasty neukladajú."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Linear logistic test model) <settings> <setting> (refers to element labelled "Design matrix")
 #: rkward/plugins/analysis/irt/dichotomous/par_est_lltm.rkh:31
@@ -1173,8 +1175,8 @@ msgid ""
 "By default the design matrix for the LLTM will be computed automatically. "
 "Alternatively, you may specify your own design matrix here."
 msgstr ""
-"By predvolené the design matrix for the LLTM bude computed automatically. "
-"Alternatively, you may specify your own design matrix here."
+"Predvolene sa dizajnová matica pre LLTM vypočíta automaticky. Prípadne tu "
+"môžete zadať vlastnú dizajnovú maticu."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Linear logistic test model) <settings> <setting> (refers to element labelled "Eta start values")
 #. i18n: ectx: (Loaded from IRT parameter estimation: Rating scale model) <settings> <setting> (refers to element labelled "Eta start values")
@@ -1191,8 +1193,8 @@ msgid ""
 "By default eta values start with the 0-vector. To change this, a vector of "
 "starting values can be specified."
 msgstr ""
-"By predvolené eta values start with the 0-vector. To change this, a vector "
-"of starting values môže byť specified."
+"Predvolene hodnoty eta začínajú nulovým vektorom. Ak to chcete zmeniť, možno "
+"zadať vektor počiatočných hodnôt."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Linear logistic test model) <settings> <setting> (refers to element labelled "Compute standard error")
 #. i18n: ectx: (Loaded from IRT parameter estimation: Rating scale model) <settings> <setting> (refers to element labelled "Compute standard error")
@@ -1206,7 +1208,7 @@ msgstr ""
 #: rkward/plugins/analysis/irt/polytomous/par_est_rsm.rkh:31
 #, kde-format
 msgid "If checked, standard errors are computed (which is the default)."
-msgstr "If checked, standard chybas are computed (which is the predvolené)."
+msgstr "Ak je zaškrtnuté, vypočítajú sa štandardné chyby (čo je predvolené)."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Linear logistic test model) <settings> <setting> (refers to element labelled "Normalize parameters to sum-0")
 #. i18n: ectx: (Loaded from IRT parameter estimation: Rating scale model) <settings> <setting> (refers to element labelled "Normalize parameters to sum-0")
@@ -1223,9 +1225,8 @@ msgid ""
 "By default parameters are normalized to sum-0 by specifying an appropriate "
 "design matrix. Uncheck this box to restrict the first parameter to 0."
 msgstr ""
-"By predvolené parameters are normalized to sum-0 by specifying an "
-"appropriate design matrix. Odškrtnite this box to restrict the first "
-"parameter to 0."
+"Predvolene sa parametre normalizujú na súčet 0 zadaním príslušnej dizajnovej "
+"matice. Odškrtnutím tohto políčka obmedzíte prvý parameter na 0."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Linear logistic test model) <related>
 #. i18n: ectx: (Loaded from IRT parameter estimation: Rating scale model) <related>
@@ -1242,8 +1243,8 @@ msgid ""
 "Please refer to the <code>eRm</code> manuals for further information and "
 "detailed command line options:"
 msgstr ""
-"Prosím pozrite the <code>eRm</code> manuals for further information and "
-"detailed command line options:"
+"Ďalšie informácie a podrobné možnosti príkazového riadku nájdete v "
+"príručkách balíka <code>eRm</code>:"
 
 #. i18n: ectx: (IRT parameter estimation: Linear logistic test model) <dialog label="...">
 #: rkward/plugins/analysis/irt/dichotomous/par_est_lltm.xml:24
@@ -1441,9 +1442,9 @@ msgid ""
 "variables (dichotomous item responses) must be selected. Further options are "
 "described in the sections below."
 msgstr ""
-"To fit the Rasch model with predvolené settings, just the matrix of manifest "
-"variables (dichotomous item responses) musí byť vybrané. Further options are "
-"described in the sections below."
+"Na prispôsobenie Raschového modelu s predvolenými nastaveniami stačí vybrať "
+"maticu manifestovaných premenných (dichotomické odpovede na položky). Ďalšie "
+"možnosti sú popísané v nasledujúcich sekciách."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Rasch model) <settings> <setting> (refers to element labelled "Should parameters be fixed (constraints)?")
 #: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.rkh:25
@@ -1454,10 +1455,10 @@ msgid ""
 "specific layout of that matrix please refer to the manual for the <link href="
 "\"rkward://rhelp/rasch\">rasch()</link> function."
 msgstr ""
-"Ak want to fix parameters, musíte prepare a matrix of fixed-value "
-"constraints first and then select it here. For detailed information on the "
-"specific layout of that matrix prosím pozrite the manual for the <link href="
-"\"rkward://rhelp/rasch\">rasch()</link> function."
+"Ak chcete fixovať parametre, musíte najprv pripraviť maticu obmedzení s "
+"pevnými hodnotami a potom ju tu vybrať. Podrobné informácie o rozložení "
+"tejto matice nájdete v príručke funkcie <link href=\"rkward://rhelp/rasch"
+"\">rasch()</link>."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Rasch model) <settings> <setting> (refers to element labelled "Start values")
 #: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.rkh:28
@@ -1469,11 +1470,11 @@ msgid ""
 "of that matrix please refer to the manual for the <link href=\"rkward://"
 "rhelp/rasch\">rasch()</link> function."
 msgstr ""
-"Predvolene start values for the parameters are computed automatically. "
-"Alternatively, môžete force the use of random start values, or give a matrix "
-"of values to be used. For detailed information on the specific layout of "
-"that matrix prosím pozrite the manual for the <link href=\"rkward://rhelp/"
-"rasch\">rasch()</link> function."
+"Predvolene sa počiatočné hodnoty parametrov vypočítavajú automaticky. "
+"Prípadne môžete vynútiť použitie náhodných počiatočných hodnôt alebo zadať "
+"maticu hodnôt, ktoré sa majú použiť. Podrobné informácie o rozložení tejto "
+"matice nájdete v príručke funkcie <link href=\"rkward://rhelp/rasch"
+"\">rasch()</link>."
 
 #. i18n: ectx: (IRT parameter estimation: Rasch model) <dialog label="...">
 #: rkward/plugins/analysis/irt/dichotomous/par_est_rasch.xml:18
@@ -1518,8 +1519,8 @@ msgid ""
 "If you only want to use a subset of items from selected object, you can "
 "specify these here."
 msgstr ""
-"If you only want to use a subset of items from vybrané object, you can "
-"specify these here."
+"Ak chcete použiť iba podmnožinu položiek z vybraného objektu, môžete ich tu "
+"zadať."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Generalized partial credit model) <settings> <setting> (refers to element labelled "Should parameters be fixed (constrained)?")
 #: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.rkh:28
@@ -1529,9 +1530,9 @@ msgid ""
 "individually. Alternatively, you can estimate one discrimination parameter "
 "that is equal for all items, or fix it at 1 for all items."
 msgstr ""
-"Choose if discrimination parameters should be computed for each item "
-"individually. Alternatively, môžete estimate one discrimination parameter "
-"that is equal for all items, or fix it at 1 for all items."
+"Vyberte, či sa majú parametre diskriminácie vypočítavať pre každú položku "
+"samostatne. Prípadne môžete odhadnúť jeden parameter diskriminácie, ktorý je "
+"rovnaký pre všetky položky, alebo ho fixovať na hodnote 1 pre všetky položky."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Generalized partial credit model) <settings> <setting> (refers to element labelled "Start values")
 #: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.rkh:31
@@ -1543,11 +1544,11 @@ msgid ""
 "that list please refer to the manual for the <link href=\"rkward://rhelp/gpcm"
 "\">gpcm()</link> function."
 msgstr ""
-"Predvolene start values for the parameters are computed automatically. "
-"Alternatively, môžete force the use of random start values, or give a zoznam "
-"values to be used. For detailed information on the specific layout of that "
-"list prosím pozrite the manual for the <link href=\"rkward://rhelp/gpcm"
-"\">gpcm()</link> function."
+"Predvolene sa počiatočné hodnoty parametrov vypočítavajú automaticky. "
+"Prípadne môžete vynútiť použitie náhodných počiatočných hodnôt alebo zadať "
+"zoznam hodnôt, ktoré sa majú použiť. Podrobné informácie o rozložení tohto "
+"zoznamu nájdete v príručke funkcie <link href=\"rkward://rhelp/gpcm"
+"\">gpcm()</link>."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Generalized partial credit model) <settings> <setting> (refers to element labelled "Numerical derivative algorithm to approximate Hessian matrix:")
 #: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.rkh:54
@@ -1556,8 +1557,8 @@ msgid ""
 "Options are forward difference approximation (the default) and central "
 "difference approximation."
 msgstr ""
-"Options are forward difference approximation (the predvolené) and central "
-"difference approximation."
+"Možnosti sú aproximácia doprednou diferenciou (predvolená) a aproximácia "
+"centrálnou diferenciou."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Generalized partial credit model) <settings> <setting> (refers to element labelled "Step-length for approximation")
 #: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.rkh:57
@@ -1673,9 +1674,9 @@ msgid ""
 "manifest variables (polytomous item responses) must be selected. Further "
 "options are described in the sections below."
 msgstr ""
-"To fit the graded response model with predvolené settings, just the matrix "
-"of manifest variables (polytomous item responses) musí byť vybrané. Further "
-"options are described in the sections below."
+"Na prispôsobenie modelu odstupňovanej odozvy s predvolenými nastaveniami "
+"stačí vybrať maticu manifestovaných premenných (polytomické odpovede na "
+"položky). Ďalšie možnosti sú popísané v nasledujúcich sekciách."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Graded response model) <settings> <setting> (refers to element labelled "Should parameters be fixed (constraints)?")
 #: rkward/plugins/analysis/irt/polytomous/par_est_grm.rkh:25
@@ -1684,8 +1685,8 @@ msgid ""
 "If checked it is assumed that discrimination parameters are equal for all "
 "items."
 msgstr ""
-"Ak je zaškrtnuté it is assumed that discrimination parameters are equal for "
-"all items."
+"Ak je zaškrtnuté, predpokladá sa, že parametre diskriminácie sú rovnaké pre "
+"všetky položky."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Graded response model) <settings> <setting> (refers to element labelled "Start values")
 #: rkward/plugins/analysis/irt/polytomous/par_est_grm.rkh:28
@@ -1697,11 +1698,11 @@ msgid ""
 "that list please refer to the manual for the <link href=\"rkward://rhelp/grm"
 "\">grm()</link> function."
 msgstr ""
-"Predvolene start values for the parameters are computed automatically. "
-"Alternatively, môžete force the use of random start values, or give a zoznam "
-"values to be used. For detailed information on the specific layout of that "
-"list prosím pozrite the manual for the <link href=\"rkward://rhelp/grm"
-"\">grm()</link> function."
+"Predvolene sa počiatočné hodnoty parametrov vypočítavajú automaticky. "
+"Prípadne môžete vynútiť použitie náhodných počiatočných hodnôt alebo zadať "
+"zoznam hodnôt, ktoré sa majú použiť. Podrobné informácie o rozložení tohto "
+"zoznamu nájdete v príručke funkcie <link href=\"rkward://rhelp/grm\">grm()</"
+"link>."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Graded response model) <settings> <setting> (refers to element labelled "Compute Hessian matrix")
 #: rkward/plugins/analysis/irt/polytomous/par_est_grm.rkh:31
@@ -1763,11 +1764,11 @@ msgid ""
 "expected layout of matrices and vectors please refer to the manual for the "
 "<link href=\"rkward://rhelp/LPCM\">LPCM()</link> function."
 msgstr ""
-"To fit the linear partial credit model with default settings, just the "
-"matrix of manifest variables (item responses) must be selected. Further "
-"options are described in the sections below. For detailed information on the "
-"expected layout of matrices and vectors prosím pozrite the manual for the "
-"<link href=\"rkward://rhelp/LPCM\">LPCM()</link> function."
+"Na prispôsobenie lineárneho modelu čiastočného kreditu s predvolenými "
+"nastaveniami stačí vybrať maticu manifestovaných premenných (odpovede na "
+"položky). Ďalšie možnosti sú popísané v nasledujúcich sekciách. Podrobné "
+"informácie o očakávanom rozložení matíc a vektorov nájdete v príručke "
+"funkcie <link href=\"rkward://rhelp/LPCM\">LPCM()</link>."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Rating scale model) <settings> <setting title="Matrix of manifest variables"> (refers to element labelled "Matrix of manifest variables:")
 #. i18n: ectx: (Loaded from IRT parameter estimation: Partial credit model) <settings> <setting title="Matrix of manifest variables"> (refers to element labelled "Matrix of manifest variables:")
@@ -1789,8 +1790,8 @@ msgid ""
 "By default the design matrix for the LPCM will be computed automatically. "
 "Alternatively, you may specify your own design matrix here."
 msgstr ""
-"By predvolené the design matrix for the LPCM bude computed automatically. "
-"Alternatively, you may specify your own design matrix here."
+"Predvolene sa dizajnová matica pre LPCM vypočíta automaticky. Prípadne tu "
+"môžete zadať vlastnú dizajnovú maticu."
 
 #. i18n: ectx: (IRT parameter estimation: Linear partial credit model) <dialog label="...">
 #: rkward/plugins/analysis/irt/polytomous/par_est_lpcm.xml:24
@@ -1814,11 +1815,11 @@ msgid ""
 "layout of matrices and vectors please refer to the manual for the <link href="
 "\"rkward://rhelp/LRSM\">LRSM()</link> function."
 msgstr ""
-"To fit the linear rating scale model with default settings, just the matrix "
-"of manifest variables (item responses) must be selected. Further options are "
-"described in the sections below. For detailed information on the expected "
-"layout of matrices and vectors prosím pozrite the manual for the <link href="
-"\"rkward://rhelp/LRSM\">LRSM()</link> function."
+"Na prispôsobenie lineárneho modelu hodnotiacej škály s predvolenými "
+"nastaveniami stačí vybrať maticu manifestovaných premenných (odpovede na "
+"položky). Ďalšie možnosti sú popísané v nasledujúcich sekciách. Podrobné "
+"informácie o očakávanom rozložení matíc a vektorov nájdete v príručke "
+"funkcie <link href=\"rkward://rhelp/LRSM\">LRSM()</link>."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Linear rating scale model) <settings> <setting> (refers to element labelled "Design matrix")
 #: rkward/plugins/analysis/irt/polytomous/par_est_lrsm.rkh:31
@@ -1827,8 +1828,8 @@ msgid ""
 "By default the design matrix for the LRSM will be computed automatically. "
 "Alternatively, you may specify your own design matrix here."
 msgstr ""
-"By predvolené the design matrix for the LRSM bude computed automatically. "
-"Alternatively, you may specify your own design matrix here."
+"Predvolene sa dizajnová matica pre LRSM vypočíta automaticky. Prípadne tu "
+"môžete zadať vlastnú dizajnovú maticu."
 
 #. i18n: ectx: (IRT parameter estimation: Linear rating scale model) <dialog label="...">
 #: rkward/plugins/analysis/irt/polytomous/par_est_lrsm.xml:27
@@ -1852,11 +1853,11 @@ msgid ""
 "layout of matrices and vectors please refer to the manual for the <link href="
 "\"rkward://rhelp/PCM\">PCM()</link> function."
 msgstr ""
-"To fit the partial credit model with default settings, just the matrix of "
-"manifest variables (item responses) must be selected. Further options are "
-"described in the sections below. For detailed information on the expected "
-"layout of matrices and vectors prosím pozrite the manual for the <link href="
-"\"rkward://rhelp/PCM\">PCM()</link> function."
+"Na prispôsobenie modelu čiastočného kreditu s predvolenými nastaveniami "
+"stačí vybrať maticu manifestovaných premenných (odpovede na položky). Ďalšie "
+"možnosti sú popísané v nasledujúcich sekciách. Podrobné informácie o "
+"očakávanom rozložení matíc a vektorov nájdete v príručke funkcie <link href="
+"\"rkward://rhelp/PCM\">PCM()</link>."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Partial credit model) <settings> <setting> (refers to element labelled "Design matrix")
 #: rkward/plugins/analysis/irt/polytomous/par_est_pcm.rkh:25
@@ -1865,8 +1866,8 @@ msgid ""
 "By default the design matrix for the PCM will be computed automatically. "
 "Alternatively, you may specify your own design matrix here."
 msgstr ""
-"By predvolené the design matrix for the PCM bude computed automatically. "
-"Alternatively, you may specify your own design matrix here."
+"Predvolene sa dizajnová matica pre PCM vypočíta automaticky. Prípadne tu "
+"môžete zadať vlastnú dizajnovú maticu."
 
 #. i18n: ectx: (IRT parameter estimation: Partial credit model) <dialog label="...">
 #: rkward/plugins/analysis/irt/polytomous/par_est_pcm.xml:24
@@ -1890,11 +1891,11 @@ msgid ""
 "layout of matrices and vectors please refer to the manual for the <link href="
 "\"rkward://rhelp/RSM\">RSM()</link> function."
 msgstr ""
-"To fit the rating scale model with default settings, just the matrix of "
-"manifest variables (item responses) must be selected. Further options are "
-"described in the sections below. For detailed information on the expected "
-"layout of matrices and vectors prosím pozrite the manual for the <link href="
-"\"rkward://rhelp/RSM\">RSM()</link> function."
+"Na prispôsobenie modelu hodnotiacej škály s predvolenými nastaveniami stačí "
+"vybrať maticu manifestovaných premenných (odpovede na položky). Ďalšie "
+"možnosti sú popísané v nasledujúcich sekciách. Podrobné informácie o "
+"očakávanom rozložení matíc a vektorov nájdete v príručke funkcie <link href="
+"\"rkward://rhelp/RSM\">RSM()</link>."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Rating scale model) <settings> <setting> (refers to element labelled "Design matrix")
 #: rkward/plugins/analysis/irt/polytomous/par_est_rsm.rkh:25
@@ -1903,8 +1904,8 @@ msgid ""
 "By default the design matrix for the RSM will be computed automatically. "
 "Alternatively, you may specify your own design matrix here."
 msgstr ""
-"By predvolené the design matrix for the RSM bude computed automatically. "
-"Alternatively, you may specify your own design matrix here."
+"Predvolene sa dizajnová matica pre RSM vypočíta automaticky. Prípadne tu "
+"môžete zadať vlastnú dizajnovú maticu."
 
 #. i18n: ectx: (IRT parameter estimation: Rating scale model) <dialog label="...">
 #: rkward/plugins/analysis/irt/polytomous/par_est_rsm.xml:24
@@ -2206,7 +2207,7 @@ msgstr "Počet kategórií"
 #: rkward/plugins/analysis/irt/tests/ltm_item_fit.xml:34
 #, kde-format
 msgid "Summarize the ability estimates by"
-msgstr "Súčetmarize the ability estimates by"
+msgstr "Sumarizovať odhady schopností podľa"
 
 #. i18n: ectx: (Item-fit statistics for Rasch, LTM and 3PM) <dialog label="Item-fit statistics for Rasch, LTM and 3PM"> [...] <dropdown label="Summarize the ability estimates by"> <option label="...">
 #: rkward/plugins/analysis/irt/tests/ltm_item_fit.xml:35
@@ -2318,7 +2319,7 @@ msgstr "Compute for given response pattern"
 #: rkward/plugins/analysis/irt/tests/ltm_person_fit.xml:46
 #, kde-format
 msgid "Select matrix or data.frame with pattern to use:"
-msgstr "Vybrať matrix or data.frame with pattern to use:"
+msgstr "Vyberte maticu alebo data.frame so vzorom, ktorý sa má použiť:"
 
 #. i18n: ectx: (Person-fit statistics for Rasch, LTM and 3PM) <dialog label="Person-fit statistics for Rasch, LTM and 3PM"> <tab label="Options"> <radio label="p value assumptions"> <option label="...">
 #: rkward/plugins/analysis/irt/tests/ltm_person_fit.xml:48
@@ -2622,7 +2623,7 @@ msgstr "first some values are generated..."
 #, kde-format
 msgctxt "R code comment"
 msgid "... and then they're used to plot the curves:"
-msgstr "... and then they're používaný na plot the curves:"
+msgstr "... a potom sa používajú na vykreslenie kriviek:"
 
 #. i18n: ectx: (Loaded from Plotting fitted Rasch model)
 #. i18n: ectx: (Loaded from Plotting fitted 2PL model)

@@ -181,9 +181,10 @@ msgid ""
 "Please look at these files, edit them as appropriate, and save them. When "
 "done, press the \"Done\"-button, or close this dialog to resume.<ul><li>"
 msgstr ""
-"A command running in the R-engine wants you to edit nasledujúce file(s). "
-"Please look at these files, edit them as appropriate, and save them. When "
-"done, press the \"Done\"-button, or close this dialog to resume.<ul><li>"
+"Príkaz spustený v R engine vás žiada o úpravu nasledujúcich súborov. Pozrite "
+"sa na tieto súbory, upravte ich podľa potreby a uložte ich. Po dokončení "
+"stlačte tlačidlo \"Hotovo\", alebo zatvorte tento dialóg a pokračujte."
+"<ul><li>"
 
 #: rkward/agents/showedittextfileagent.cpp:85
 #, kde-format
@@ -197,9 +198,9 @@ msgid ""
 "created or imported, in contrast to data contained in a loaded R package. "
 "Technically, this corresponds to the <i>.GlobalEnv</i> environment."
 msgstr ""
-"Táto sekcia contains data in your \"workspace\". Toto je data that you "
-"created or imported, in contrast to data contained in a loaded R package. "
-"Technically, this corresponds to the <i>.GlobalEnv</i> environment."
+"Táto sekcia obsahuje dáta vo vašom \"pracovnom priestore\". Ide o dáta, "
+"ktoré ste vytvorili alebo importovali, na rozdiel od dát obsiahnutých v "
+"načítanom balíku R. Technicky to zodpovedá prostrediu <i>.GlobalEnv</i>."
 
 #: rkward/core/renvironmentobject.cpp:110
 #, kde-format
@@ -396,14 +397,14 @@ msgid ""
 "that would take too long to load. To unlist the package, visit Settings-"
 ">Configure RKWard->Workspace."
 msgstr ""
-"The package '%1' (probably you just loaded it) is currently blacklisted for "
-"retrieving structure information. Practically this means, the objects in "
-"this package will not appear in the object browser, and there will be no "
-"object name completion or function argument hinting for objects in this "
-"package.\n"
-"Packages will typically be blacklisted, if they contain huge množstvo data, "
-"that would take too long to load. To unlist the package, visit Settings-"
-">Configure RKWard->Workspace."
+"Balík „%1“ (pravdepodobne ste ho práve načítali) je momentálne na čiernej "
+"listine pre získavanie informácií o štruktúre. V praxi to znamená, že "
+"objekty v tomto balíku sa nezobrazia v prehliadači objektov a nebude k "
+"dispozícii doplňovanie názvov objektov ani nápoveda argumentov funkcií pre "
+"objekty v tomto balíku.\n"
+"Balíky sú zvyčajne zaradené na čiernu listinu, ak obsahujú obrovské množstvo "
+"dát, ktorých načítanie by trvalo príliš dlho. Ak chcete odstrániť balík z "
+"čiernej listiny, prejdite do Nastavenia->Nastaviť RKWard->Pracovný priestor."
 
 #: rkward/core/robject.cpp:281
 #, kde-format
@@ -417,9 +418,9 @@ msgid ""
 "your \"workspace\". Most importantly, this includes loaded packages, but "
 "also objects added to R's <i>search()<i>-path using <i>attach()</i>."
 msgstr ""
-"Táto sekcia contains environments that are not súčasť <i>.GlobalEnv</i> / "
-"your \"workspace\". Most importantly, this includes loaded packages, but "
-"also objects added to R's <i>search()<i>-path using <i>attach()</i>."
+"Táto sekcia obsahuje prostredia, ktoré nie sú súčasťou <i>.GlobalEnv</i> / "
+"vášho \"pracovného priestoru\". Predovšetkým to zahŕňa načítané balíky, ale "
+"aj objekty pridané do cesty <i>search()</i> v R pomocou <i>attach()</i>."
 
 #: rkward/core/robjectlist.cpp:87
 #, kde-format
@@ -723,9 +724,9 @@ msgid ""
 "continue to see this page for more than a few seconds (e.g. if JavaScript is "
 "disabled), please click \"Proceed\", below."
 msgstr ""
-"You are now being forwarded to the KDE bugtracking system. Should you "
-"continue to see this page for more than a few seconds (e.g. if JavaScript is "
-"zakázané), please click \"Proceed\", below."
+"Teraz ste presmerovaný do systému sledovania chýb KDE. Ak sa táto stránka "
+"zobrazuje dlhšie ako niekoľko sekúnd (napr. ak je JavaScript zakázaný), "
+"kliknite na \"Pokračovať\" nižšie."
 
 #: rkward/dialogs/rkerrordialog.cpp:79
 #, kde-format
@@ -857,9 +858,9 @@ msgid ""
 "In case the backend has died or hung up, you may want to press 'Cancel' to "
 "skip this step."
 msgstr ""
-"Please stand by while gathering some information on your setup.\n"
-"In case the backend has died or hung up, môžete want to press 'Cancel' to "
-"skip this step."
+"Čakajte prosím, kým sa zhromažďujú informácie o vašej konfigurácii.\n"
+"V prípade, že backend zlyhal alebo zamrzol, môžete stlačiť „Zrušiť“ na "
+"preskočenie tohto kroku."
 
 #: rkward/dialogs/rkerrordialog.cpp:155
 #, kde-format
@@ -908,9 +909,9 @@ msgid ""
 "formats, but requires a number of additional R packages to be installed (you "
 "will be prompted for missing packages). Do you want to give that a try?"
 msgstr ""
-"The 'rio' package offers generic support for importing many different file "
-"formats, but requires a počet additional R packages to be installed (you "
-"will be prompted for missing packages). Do chcete to give that a try?"
+"Balík „rio“ ponúka všeobecnú podporu importovania mnohých rôznych formátov "
+"súborov, ale vyžaduje inštaláciu viacerých ďalších balíkov R (budete vyzvaní "
+"na chýbajúce balíky). Chcete to vyskúšať?"
 
 #: rkward/dialogs/rkimportdialog.cpp:74
 #, kde-format
@@ -958,8 +959,8 @@ msgid ""
 "<b>Ready to go</b><p>Click \"Finish\" to start the selected import dialog, "
 "or \"Back\" to explore other options.</p>"
 msgstr ""
-"<b>Ready to go</b><p>Click \"Finish\" to start the vybrané import dialog, or "
-"\"Back\" to explore other options.</p>"
+"<b>Pripravené</b><p>Kliknite na \"Dokončiť\" na spustenie vybraného "
+"importného dialógu, alebo na \"Späť\" na preskúmanie ďalších možností.</p>"
 
 #: rkward/dialogs/rkimportdialog.cpp:104
 #, kde-format
@@ -1117,10 +1118,10 @@ msgid ""
 "instead (you can also press \"Cancel\" and use the \"Configure Repositories"
 "\"-button to set up a different directory)?</p>"
 msgstr ""
-"<p>The directory you have selected for installation (%1) is not writable "
-"with your current user permissions.</p><p>Would you like to install to %2, "
-"instead (môžete also press \"Cancel\" and use the \"Configure Repositories\"-"
-"button to set up a different directory)?</p>"
+"<p>Adresár, ktorý ste vybrali pre inštaláciu (%1), nie je zapisovateľný s "
+"vašimi aktuálnymi používateľskými oprávneniami.</p><p>Chceli by ste namiesto "
+"toho nainštalovať do %2 (môžete tiež stlačiť \"Zrušiť\" a použiť tlačidlo "
+"\"Nastaviť repozitáre\" na nastavenie iného adresára)?</p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:249
 #, kde-format
@@ -1283,10 +1284,9 @@ msgid ""
 "functionality. Check this option to include such additional suggested "
 "packages."
 msgstr ""
-"Some packages \"suggest\" additional packages, which are not strictly "
-"necessary for using that package, but which may provide additional related "
-"functionality. Check táto voľba to include such additional suggested "
-"packages."
+"Niektoré balíky \"navrhujú\" ďalšie balíky, ktoré nie sú striktne nevyhnutné "
+"na používanie daného balíka, ale môžu poskytovať ďalšie súvisiace funkcie. "
+"Začiarknite túto voľbu na zahrnutie takýchto ďalších odporúčaných balíkov."
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:698
 #, kde-format
@@ -1316,10 +1316,10 @@ msgid ""
 "maybe you need to add additional repositories via the \"Configure "
 "Repositories\" button."
 msgstr ""
-"Nasledujúce package(s) requested by the backend have not been found in the "
-"package repositories: \"%1\". Maybe the package name was mis-spelled. Or "
-"maybe potrebujete to add additional repositories via the \"Configure "
-"Repositories\" button."
+"Nasledujúce balíky požadované backendom neboli nájdené v repozitároch "
+"balíkov: \"%1\". Možno bol názov balíka zle napísaný. Alebo možno "
+"potrebujete pridať ďalšie repozitáre pomocou tlačidla \"Nastaviť repozitáre"
+"\"."
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:797
 #, kde-format
@@ -2579,10 +2579,10 @@ msgid ""
 "objects that are not (or do not contain) functions, or to those that are (or "
 "contain) functions."
 msgstr ""
-"When looking for a particular function, môžete want to exclude 'data' "
-"objects, and vice versa. This control allows you to limit the list to "
-"objects that are not (or do not contain) functions, or to those that are (or "
-"contain) functions."
+"Pri hľadaní konkrétnej funkcie možno budete chcieť vylúčiť objekty „data“ a "
+"naopak. Tento ovládací prvok vám umožňuje obmedziť zoznam na objekty, ktoré "
+"nie sú (alebo neobsahujú) funkcie, alebo na tie, ktoré sú (alebo obsahujú) "
+"funkcie."
 
 #: rkward/misc/rkobjectlistview.cpp:315
 #, kde-format
@@ -3645,8 +3645,8 @@ msgid ""
 "Below you can preview the result of your settings, and the R commands to be "
 "run. Click 'Submit' to run the commands."
 msgstr ""
-"Below môžete preview the result of your settings, and the R commands to be "
-"run. Click 'Submit' to run the commands."
+"Nižšie si môžete zobraziť náhľad výsledku vašich nastavení a príkazov R, "
+"ktoré sa majú spustiť. Kliknite na „Odoslať“ na spustenie príkazov."
 
 #: rkward/plugin/rkstandardcomponentgui.cpp:582
 #: rkward/plugin/rkstandardcomponentgui.cpp:600
@@ -3945,9 +3945,9 @@ msgid ""
 "package-management tool, and there you can try to locate and install the "
 "needed package."
 msgstr ""
-"The R-backend has indicated that aby ste carry out aktuálny task it needs "
-"the package '%1', which is not currently installed. We will open the package-"
-"management tool, and ttu môžete try to locate and install the needed package."
+"Backend R naznačil, že na vykonanie aktuálnej úlohy potrebuje balík „%1“, "
+"ktorý momentálne nie je nainštalovaný. Otvoríme nástroj správy balíkov a tam "
+"môžete skúsiť nájsť a nainštalovať potrebný balík."
 
 #: rkward/rbackend/rkrinterface.cpp:578
 #, kde-format
@@ -3972,15 +3972,15 @@ msgid ""
 "RKWard). In this case, please choose 'Cancel' now, then close the data "
 "windows, save, and retry."
 msgstr ""
-"A command in the R backend is trying to change the character encoding. While "
-"RKWard offers support for this, and will try to adjust to the new locale, "
-"this operation may cause subtle bugs, if data windows are currently open. "
-"Also the feature is not well tested, yet, and it may be advisschopný save "
-"your workspace before proceeding.\n"
-"Ak have any data editor opened, or in any doubt, it is recommended to close "
-"those first (this will probably be auto-detected in later versions of "
-"RKWard). V tomto prípade, please choose 'Cancel' now, then close the data "
-"windows, save, and retry."
+"Príkaz v backende R sa snaží zmeniť kódovanie znakov. Hoci RKWard to "
+"podporuje a pokúsi sa prispôsobiť novému nastaveniu, táto operácia môže "
+"spôsobiť nenápadné chyby, ak sú momentálne otvorené dátové okná. Táto "
+"funkcia tiež ešte nie je dobre otestovaná a pred pokračovaním môže byť "
+"vhodné uložiť váš pracovný priestor.\n"
+"Ak máte otvorený editor dát alebo máte akékoľvek pochybnosti, odporúča sa "
+"ich najprv zavrieť (v neskorších verziách RKWard to bude pravdepodobne auto-"
+"detekované). V tomto prípade zvoľte teraz „Zrušiť“, potom zatvorte dátové "
+"okná, uložte a skúste znova."
 
 #: rkward/rbackend/rkrinterface.cpp:612
 #, kde-format
@@ -4064,7 +4064,9 @@ msgstr ""
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:694
 #, kde-format
 msgid "<p>Press Enter to see next plot, or click 'Cancel' to abort.</p>"
-msgstr "<p>Stlačte Zadajte to see next plot, or click 'Cancel' to abort.</p>"
+msgstr ""
+"<p>Stlačte Enter pre zobrazenie nasledujúceho grafu alebo kliknite na "
+"„Zrušiť“ pre prerušenie.</p>"
 
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:698
 #, kde-format
@@ -4220,10 +4222,10 @@ msgid ""
 "external application, using the link, below, or you can change the preview "
 "mode to 'R Markdown (HTML)'.</p>"
 msgstr ""
-"<h1>Unsupported format</h1><p>The preview cannot be shown, here, because the "
-"output format is neither HTML, nor PDF. Môžete try opening it in an external "
-"application, using the link, below, or môžete change the preview mode to 'R "
-"Markdown (HTML)'.</p>"
+"<h1>Nepodporovaný formát</h1><p>Náhľad tu nemožno zobraziť, pretože výstupný "
+"formát nie je ani HTML, ani PDF. Môžete ho skúsiť otvoriť v externej "
+"aplikácii pomocou odkazu nižšie, alebo môžete zmeniť režim náhľadu na „R "
+"Markdown (HTML)“.</p>"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:141
 #, kde-format
@@ -4455,10 +4457,10 @@ msgid ""
 "version of RKWard, or not meant for direct loading (see the 'Details' for "
 "more information). They have been disabled."
 msgstr ""
-"Nasledujúce RKWard pluginmap files could not be loaded, and have been "
-"disabled. This could be because they are broken, not compatible with this "
-"version of RKWard, or not meant for direct loading (see the 'Details' for "
-"more information). They have been disabled."
+"Nasledujúce súbory mapy doplnkov RKWard sa nepodarilo načítať a boli "
+"zakázané. Môže to byť preto, že sú poškodené, nie sú kompatibilné s touto "
+"verziou RKWard alebo nie sú určené na priame načítanie (viac informácií "
+"nájdete v časti „Podrobnosti“). Boli zakázané."
 
 #: rkward/rkward.cpp:377 rkward/rkward.cpp:381
 #, kde-format
@@ -4473,10 +4475,10 @@ msgid ""
 "with this version of RKWard (see the 'Details' for more information). Other "
 "plugins were loaded, successfully, however."
 msgstr ""
-"Some errors were encountered while loading nasledujúce RKWard pluginmap "
-"files. This could be because individual plugins are broken or not compatible "
-"with this version of RKWard (see the 'Details' for more information). Other "
-"plugins were loaded, successfully, however."
+"Pri načítaní nasledujúcich súborov mapy doplnkov RKWard sa vyskytli niektoré "
+"chyby. Môže to byť preto, že jednotlivé doplnky sú poškodené alebo nie sú "
+"kompatibilné s touto verziou RKWard (viac informácií nájdete v časti "
+"„Podrobnosti“). Ostatné doplnky sa však úspešne načítali."
 
 #: rkward/rkward.cpp:381
 #, kde-format
@@ -4941,7 +4943,7 @@ msgstr "Prehliadač objektov: %1"
 #: rkward/robjectviewer.cpp:127
 #, kde-format
 msgid "The object was changed. You may want to click \"Update\""
-msgstr "The object was changed. Môžete want to click \"Update\""
+msgstr "Objekt bol zmenený. Možno budete chcieť kliknúť na \"Aktualizovať\"."
 
 #: rkward/robjectviewer.cpp:164 rkward/windows/robjectbrowser.cpp:110
 #, kde-format
@@ -5554,13 +5556,13 @@ msgid ""
 "<i>quartz()</i>, depending on the platform.</p><p>You can also specify the "
 "name of a function such as <i>Cairo</i>.</p>"
 msgstr ""
-"<p>The default device to be používaný na plotting, t. j. when new plot is "
-"created, while no graphics device is active (see <i>options(\"device\")</i>)."
-"</p><p>The RKWard native device is the recommended choice for most users. "
-"This corresponds to the R command <i>RK()</i>.</p><p>The 'Platform default "
-"device' corresponds to jedna z <i>X11()</i>, <i>windows()</i>, or "
-"<i>quartz()</i>, depending on the platform.</p><p>Môžete also specify the "
-"name of a function ako napríklad <i>Cairo</i>.</p>"
+"<p>Predvolené zariadenie, ktoré sa má používať na vykresľovanie, t. j. keď "
+"sa vytvorí nový graf, pričom nie je aktívne žiadne grafické zariadenie "
+"(pozri <i>options(\"device\")</i>).</p><p>Natívne zariadenie RKWard je "
+"odporúčaná voľba pre väčšinu používateľov. To zodpovedá príkazu R <i>RK()</"
+"i>.</p><p>„Predvolené zariadenie platformy“ zodpovedá jednému z <i>X11()</"
+"i>, <i>windows()</i> alebo <i>quartz()</i>, v závislosti od platformy.</"
+"p><p>Môžete tiež zadať názov funkcie, napríklad <i>Cairo</i>.</p>"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:64
 #, kde-format
@@ -5672,12 +5674,12 @@ msgid ""
 "not make a whole lot of sense in the context of RKWard. Plugins shown in "
 "<b>bold</b> have been reported as \"useful\" by RKWard users.</p>"
 msgstr ""
-"<p>Kate plugins to load in RKWard. Všimnite si, že some loaded plugins will "
-"not become visible until certain conditions are met, napr. you are loading a "
-"version controlled file for the <i>Project</i> plugin.</p><p>The plugins "
-"listed here have not been developed specifically for RKWard, and several do "
-"not make a whole lot of sense in the context of RKWard. Plugins shown in "
-"<b>bold</b> have been reported as \"useful\" by RKWard users.</p>"
+"<p>Doplnky Kate na načítanie v RKWard. Všimnite si, že niektoré načítané "
+"doplnky nebudú viditeľné, kým nebudú splnené určité podmienky, napr. "
+"načítavate verziovane riadený súbor pre doplnok <i>Projekt</i>.</"
+"p><p>Doplnky uvedené tu neboli vyvinuté špeciálne pre RKWard a mnohé z nich "
+"nemajú v kontexte RKWard veľký zmysel. Doplnky zobrazené <b>tučným písmom</"
+"b> boli označené ako \"užitočné\" používateľmi RKWard.</p>"
 
 #: rkward/settings/rksettingsmoduleobjectbrowser.cpp:46
 #, kde-format
@@ -6149,9 +6151,9 @@ msgid ""
 "installed from development repositories. Use the button \"%1\", to install "
 "such packages, comfortably."
 msgstr ""
-"Some add-on packages are not dostupné in the CRAN repository, but môže byť "
-"installed from development repositories. Use the button \"%1\", to install "
-"such packages, comfortably."
+"Niektoré doplnkové balíky nie sú dostupné v repozitári CRAN, ale môžu byť "
+"nainštalované z vývojových repozitárov. Použite tlačidlo \"%1\" na pohodlnú "
+"inštaláciu takýchto balíkov."
 
 #: rkward/settings/rksettingsmoduler.cpp:383
 #, kde-format
@@ -6172,11 +6174,11 @@ msgid ""
 "this is recommended, because R packages compiled for one version of R will "
 "often fail to work correctly in a different version of R."
 msgstr ""
-"Specify or select library location to add.\n"
-"Všimnite si, že locations may contain a '%v', which will expand to the first "
-"two components of the R version number (napr. to 3.5), automatically. "
-"Including toto je recommended, because R packages compiled for one version "
-"of R will often fail to work correctly in a different version of R."
+"Zadajte alebo vyberte umiestnenie knižnice, ktoré chcete pridať.\n"
+"Všimnite si, že umiestnenia môžu obsahovať „%v“, ktoré sa automaticky "
+"rozšíri na prvé dve zložky čísla verzie R (napr. na 3.5). Odporúča sa to "
+"zahrnúť, pretože balíky R skompilované pre jednu verziu R často nedokážu "
+"správne fungovať v inej verzii R."
 
 #: rkward/settings/rksettingsmoduler.cpp:400
 #, kde-format
@@ -6209,13 +6211,13 @@ msgid ""
 "in the directory name, it offers no protection against using packages built "
 "for an incompatible version of R."
 msgstr ""
-"The configured library locations (where R packages will be installed on this "
-"system) contains the directory '%1', which was suggested as a default "
-"library location in earlier versions of RKWard. Use of this directory is no "
-"longer recommended, as it is not accessible to R sessions outside of RKWard "
-"(unless configured, explicitly). Also kvôli the lack of an R version number "
-"in the directory name, it offers no protection against using packages built "
-"for an incompatible version of R."
+"Nakonfigurované umiestnenia knižníc (kde sa budú inštalovať balíky R v tomto "
+"systéme) obsahujú adresár „%1“, ktorý bol navrhovaný ako predvolené "
+"umiestnenie knižnice v starších verziách RKWard. Používanie tohto adresára "
+"sa už neodporúča, pretože nie je prístupný pre relácie R mimo RKWard (pokiaľ "
+"nie je explicitne nakonfigurovaný). Taktiež kvôli absencii čísla verzie R v "
+"názve adresára neposkytuje žiadnu ochranu proti používaniu balíkov "
+"zostavených pre nekompatibilnú verziu R."
 
 #: rkward/settings/rksettingsmoduler.cpp:583
 #, kde-format
@@ -6380,9 +6382,9 @@ msgid ""
 "\" (letter 'S' in the type column). Cancelling such commands could lead to "
 "loss of data. These commands have _not_ been cancelled."
 msgstr ""
-"Niektoré z the commands you were trying to cancel are marked as \"sync"
-"\" (letter 'S' in the type column). Cancelling such commands could lead to "
-"loss of data. These commands have _not_ been cancelled."
+"Niektoré príkazy, ktoré ste sa pokúšali zrušiť, sú označené ako \"sync"
+"\" (písmeno „S“ v stĺpci typu). Zrušenie takýchto príkazov by mohlo viesť k "
+"strate dát. Tieto príkazy _neboli_ zrušené."
 
 #: rkward/windows/rcontrolwindow.cpp:123
 #, kde-format
@@ -6954,10 +6956,11 @@ msgid ""
 "calling function will never be reached, because the call was the last step "
 "in the caller. In these cases, the behavior is identical to 'Continue'.</p>"
 msgstr ""
-"<p>Continue until the caller of this function is reached (unless another "
-"debug statement is hit, earlier)</p><p><b>Poznámka:</b> In some cases, the "
-"calling function will never be reached, because the call was the last step "
-"in the caller. In these cases, the behavior is identical to 'Continue'.</p>"
+"<p>Pokračovať, kým sa nedosiahne volajúca funkcia (pokiaľ skôr nedôjde k "
+"ďalšiemu ladiacemu príkazu)</p><p><b>Poznámka:</b> V niektorých prípadoch "
+"volajúca funkcia nikdy nebude dosiahnutá, pretože volanie bolo posledným "
+"krokom vo volajúcej funkcii. V týchto prípadoch je správanie totožné s "
+"„Pokračovať“.</p>"
 
 #: rkward/windows/rkdebugconsole.cpp:49
 #, kde-format
@@ -6991,9 +6994,9 @@ msgid ""
 "idea what this means, and you want to get out, press the 'Cancel' button on "
 "the right hand side of this window."
 msgstr ""
-"This window nemôže byť closed, while a debugger is active. If you have no "
-"idea what this means, and you want to get out, press the 'Cancel' button on "
-"the right hand side of this window."
+"Toto okno nemožno zavrieť, pokiaľ je aktívny debugger. Ak neviete, čo to "
+"znamená, a chcete odísť, stlačte tlačidlo „Zrušiť“ na pravej strane tohto "
+"okna."
 
 #: rkward/windows/rkdebugmessagewindow.cpp:70
 #, kde-format
@@ -7097,9 +7100,9 @@ msgid ""
 "loaded, or maybe you mistyped the command. Try using Help->Search R Help for "
 "more options."
 msgstr ""
-"No help found on '%1'. Maybe the corresponding package nie je nainštalovaný/"
-"loaded, or maybe you mistyped the command. Try using Help->Search R Help for "
-"more options."
+"Pre „%1“ sa nenašla žiadna nápoveda. Možno príslušný balík nie je "
+"nainštalovaný/načítaný, alebo ste príkaz zle napísali. Skúste použiť "
+"Pomocník->Vyhľadať nápovedu R pre ďalšie možnosti."
 
 #: rkward/windows/rkhelpsearchwindow.cpp:161
 #, kde-format
@@ -7610,7 +7613,7 @@ msgstr "Zadajte názov objektu R, do ktorého chcete uložiť graf"
 #: rkward/windows/rkwindowcatcher.cpp:636
 #, kde-format
 msgid "Save contents of graphics device number %1 to object '%2'"
-msgstr "Uložiť contents of graphics device number %1 to object '%2'"
+msgstr "Uložiť obsah grafického zariadenia číslo %1 do objektu „%2“"
 
 #: rkward/windows/rkwindowcatcher.cpp:647
 #, kde-format
@@ -7787,9 +7790,9 @@ msgid ""
 "not supported by RKWard. Do you want to open the url in the default "
 "application?"
 msgstr ""
-"The url you are trying to open ('%1') is not a local file or súbortype nie "
-"je podporovaný by RKWard. Do you want to open the url in the predvolené "
-"application?"
+"Adresa URL, ktorú sa pokúšate otvoriť („%1“), nie je miestny súbor alebo typ "
+"súboru nie je podporovaný v RKWard. Chcete otvoriť URL adresu v predvolenej "
+"aplikácii?"
 
 #: rkward/windows/rkworkplace.cpp:451
 #, kde-format
@@ -7815,16 +7818,16 @@ msgid ""
 ">Configure RKWard->General.\n"
 "Really edit object?"
 msgstr ""
-"You are about to edit object \"%1\", which is very large (%2 fields). RKWard "
-"is not optimized to handle very large objects in the built in data editor. "
-"This will use a lot of memory, and - depending on your system - might be "
-"very slow. For large objects it is generally recommended to edit using "
-"command line means or to split into smaller chunks before editing. Na druhej "
-"strane, ak have enough memory, or the data is simple enough (numeric data is "
-"easier to handle, than factor), editing may not be a problem at all. Môžete "
-"configure this warning (or turn it off entirely) under Settings->Configure "
-"RKWard->General.\n"
-"Really edit object?"
+"Chystáte sa upraviť objekt \"%1\", ktorý je veľmi veľký (%2 polí). RKWard "
+"nie je optimalizovaný na spracovanie veľmi veľkých objektov vo vstavanom "
+"editore dát. To spotrebuje veľa pamäte a – v závislosti od vášho systému – "
+"môže byť veľmi pomalé. Pre veľké objekty sa vo všeobecnosti odporúča "
+"upravovať pomocou príkazového riadka alebo ich pred úpravou rozdeliť na "
+"menšie časti. Na druhej strane, ak máte dostatok pamäte alebo sú dáta "
+"dostatočne jednoduché (numerické dáta sa spracovávajú ľahšie ako faktory), "
+"úprava nemusí byť vôbec problémom. Toto upozornenie môžete nakonfigurovať "
+"(alebo ho úplne vypnúť) v Nastavenia->Nastaviť RKWard->Všeobecné.\n"
+"Naozaj upraviť objekt?"
 
 #: rkward/windows/rkworkplace.cpp:648
 #, kde-format

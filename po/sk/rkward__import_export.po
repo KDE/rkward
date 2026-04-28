@@ -220,13 +220,13 @@ msgstr "Stiahnuť AppImage"
 #: rkward/plugins/00saveload/DownloadAppImage.rkh:17
 #, kde-format
 msgid "Adds a dialog to install or update an AppImage of RKWard"
-msgstr "Pridaťs a dialog to install or update an AppImage of RKWard"
+msgstr "Pridá dialóg na inštaláciu alebo aktualizáciu AppImage RKWard"
 
 #. i18n: ectx: (Download AppImage) <settings> <setting> (refers to element labelled "Save to")
 #: rkward/plugins/00saveload/DownloadAppImage.rkh:30
 #, kde-format
 msgid "Select a target file to save the AppImage to."
-msgstr "Vybrať a target file to save the AppImage to."
+msgstr "Vyberte cieľový súbor, do ktorého sa uloží AppImage."
 
 #. i18n: ectx: (Download AppImage) <settings> <setting> (refers to element labelled "RKWard release branch")
 #: rkward/plugins/00saveload/DownloadAppImage.rkh:36
@@ -236,9 +236,9 @@ msgid ""
 "release, the latest development build (used for testing and probably buggy/"
 "unstable) or an AppImage from a custom source."
 msgstr ""
-"Definovať which branch of RKWard you want to download: The latest stable "
-"release, the latest development build (used for testing and probably buggy/"
-"unstable) or an AppImage from a vlastné source."
+"Definujte, ktorú vetvu RKWard chcete stiahnuť: najnovšie stabilné vydanie, "
+"najnovšie vývojové zostavenie (používané na testovanie, pravdepodobne s "
+"chybami/nestabilné) alebo AppImage z vlastného zdroja."
 
 #. i18n: ectx: (Download AppImage) <settings> <setting> (refers to element labelled "URL")
 #: rkward/plugins/00saveload/DownloadAppImage.rkh:39
@@ -276,7 +276,7 @@ msgstr ""
 #: rkward/plugins/00saveload/DownloadAppImage.rkh:52
 #, kde-format
 msgid "The number of seconds allowed to try downloading the AppImage."
-msgstr "The počet seconds allowed to try downloading the AppImage."
+msgstr "Počet sekúnd povolených na pokus o stiahnutie AppImage."
 
 #. i18n: ectx: (Download AppImage) <dialog label="Download AppImage"> <tabbook label="...">
 #: rkward/plugins/00saveload/DownloadAppImage.xml:40
@@ -780,9 +780,10 @@ msgid ""
 "probably uses a different locale than your R session. In this case, check "
 "this option, and specify the correct character encoding below."
 msgstr ""
-"If special character (napr. umlauts) do not show up correctly, the data file "
-"probably uses a different locale than your R session. V tomto prípade, check "
-"táto voľba, and specify the correct character encoding below."
+"Ak sa špeciálne znaky (napr. prehlasovanie) nezobrazujú správne, dátový "
+"súbor pravdepodobne používa iné lokálne nastavenie ako vaša relácia R. V "
+"takom prípade zaškrtnite túto voľbu a nižšie zadajte správne kódovanie "
+"znakov."
 
 #. i18n: ectx: (Loaded from Loaded from Import SPSS file) <snippet> <setting> (refers to element labelled "Convert from:")
 #. i18n: ectx: (Loaded from Import SPSS file) <snippet> <setting> (refers to element labelled "Convert from:")
@@ -798,8 +799,8 @@ msgid ""
 "Select character encoding to convert from. The option above needs to be "
 "checked, for this to be enabled."
 msgstr ""
-"Vyberte character encoding to convert from. The option above needs to be "
-"checked, for this to be povolené."
+"Vyberte kódovanie znakov, z ktorého sa má konvertovať. Aby bola táto voľba "
+"povolená, musí byť zaškrtnutá voľba vyššie."
 
 #. i18n: ectx: (Loaded from Loaded from Import SPSS file) <snippet> <setting> (refers to element labelled "Other encoding")
 #. i18n: ectx: (Loaded from Import SPSS file) <snippet> <setting> (refers to element labelled "Other encoding")
@@ -816,10 +817,10 @@ msgid ""
 "Note that the available encodings may differ from platform to platform. See "
 "<link href=\"rkward://rhelp/iconvlist\"/> for a list of available encodings."
 msgstr ""
-"If njedna z the encodings above matches, môžete specify an encoding here. "
-"Všimnite si, že the available encodings may differ from platform to "
-"platform. See <link href=\"rkward://rhelp/iconvlist\"/> for a zoznam "
-"available encodings."
+"Ak žiadne z vyššie uvedených kódovaní nezodpovedá, môžete tu zadať "
+"kódovanie. Všimnite si, že dostupné kódovania sa môžu líšiť od platformy k "
+"platforme. Pozri <link href=\"rkward://rhelp/iconvlist\"/> pre zoznam "
+"dostupných kódovaní."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data)
 #: rkward/plugins/00saveload/import/import_csv.js:46
@@ -865,7 +866,7 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:23
 #, kde-format
 msgid "The filename of the file to import"
-msgstr "The filename of súbor to import"
+msgstr "Názov súboru, ktorý sa má importovať"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Data format")
 #: rkward/plugins/00saveload/import/import_csv.rkh:19
@@ -885,9 +886,7 @@ msgstr ""
 msgid ""
 "Whether the first row of the file contains should be interpreted as column "
 "names"
-msgstr ""
-"Whether the first row of súbor contains by mal byť interpreted as column "
-"names"
+msgstr "Určuje, či prvý riadok súboru má byť interpretovaný ako názvy stĺpcov"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Decimal point character")
 #: rkward/plugins/00saveload/import/import_csv.rkh:21
@@ -901,7 +900,7 @@ msgstr "Decimal character used in the imported file"
 #: rkward/plugins/00saveload/import/import_csv.rkh:24
 #, kde-format
 msgid "If you selected \"other\" above, specify the character, here."
-msgstr "If you vybrané \"other\" above, specify the character, here."
+msgstr "Ak ste vybrali \"iné\" vyššie, tu zadajte znak."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Field separator character")
 #: rkward/plugins/00saveload/import/import_csv.rkh:23
@@ -936,7 +935,7 @@ msgstr ""
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:29
 #, kde-format
 msgid "Whether the object should be opened for editing after it was imported"
-msgstr "Whether the object by mal byť opened for editing after it was imported"
+msgstr "Či sa má objekt po importovaní otvoriť na úpravu"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Preview")
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Preview")
@@ -958,9 +957,9 @@ msgid ""
 "can specify a single column containing the row names (typically the first). "
 "Or you can provide a character vector of names."
 msgstr ""
-"How to determine row names? Either the rows môže byť numbered 1...n. Or you "
-"can specify a single column containing the row names (typically the first). "
-"Or you can provide a character vector of names."
+"Ako určiť názvy riadkov? Buď môžu byť riadky číslované 1...n. Alebo môžete "
+"zadať jeden stĺpec obsahujúci názvy riadkov (zvyčajne prvý). Alebo môžete "
+"poskytnúť znakový vektor názvov."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Column number or variable name")
 #: rkward/plugins/00saveload/import/import_csv.rkh:31
@@ -980,9 +979,9 @@ msgid ""
 "\"), but you can also specify the name of an R object containing the names "
 "to use)"
 msgstr ""
-"See above. A vector of row names (napr. c (\"row1\", \"row2\", ..., \"rown"
-"\"), but môžete also specify the name of an R object containing the names to "
-"use)"
+"Pozri vyššie. Vektor názvov riadkov (napr. c (\"row1\", \"row2\", ..., \"rown"
+"\"), ale môžete tiež zadať názov objektu R obsahujúceho názvy, ktoré sa majú "
+"použiť)"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Column names")
 #: rkward/plugins/00saveload/import/import_csv.rkh:33
@@ -1002,9 +1001,9 @@ msgid ""
 "\"col2\", ..., \"coln\"), but you can also specify the name of an R object "
 "containing the names to use)"
 msgstr ""
-"See above. Určite a character vector of column names (e.g. c (\"col1\", "
-"\"col2\", ..., \"coln\"), but you can also specify the name of an R object "
-"containing the names to use)"
+"Pozri vyššie. Zadajte znakový vektor názvov stĺpcov (napr. c (\"col1\", "
+"\"col2\", ..., \"coln\"), ale môžete tiež zadať názov objektu R obsahujúceho "
+"názvy, ktoré sa majú použiť)"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Check syntax of column names")
 #: rkward/plugins/00saveload/import/import_csv.rkh:35
@@ -1027,8 +1026,8 @@ msgid ""
 "See above. Specify a character vector with the names of the classes to use "
 "for each column."
 msgstr ""
-"See above. Určite a character vector with the names of the classes to use "
-"for each column."
+"Pozri vyššie. Zadajte znakový vektor s názvami tried, ktoré sa majú použiť "
+"pre každý stĺpec."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Skip trailing fields")
 #: rkward/plugins/00saveload/import/import_csv.rkh:38
@@ -1087,8 +1086,9 @@ msgid ""
 "How are missing values (NAs) written in the file to be imported? (Blank "
 "fields are also interpreted as NAs in columns that are not strings.)"
 msgstr ""
-"How are missing values (NAs) written in súbor to be imported? (Blank fields "
-"are also interpreted as NAs in columns that are not strings.)"
+"Ako sú chýbajúce hodnoty (NA) zapísané v súbore, ktorý sa má importovať? "
+"(Prázdne polia sa tiež interpretujú ako NA v stĺpcoch, ktoré nie sú "
+"reťazcami.)"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "String delimiter")
 #: rkward/plugins/00saveload/import/import_csv.rkh:47
@@ -1104,9 +1104,9 @@ msgid ""
 "use, here. Simply enter all character to use (without spaces or comma, e.g. "
 "\"'@ to use \", ', and @ as string delimiters)."
 msgstr ""
-"If you vybrané \"other\" above, you can specify which quoting character to "
-"use, here. Simply enter all character to use (without spaces or comma, e.g. "
-"\"'@ to use \", ', and @ as string delimiters)."
+"Ak ste vybrali \"iné\" vyššie, tu môžete zadať, ktorý znak úvodzoviek sa má "
+"použiť. Jednoducho zadajte všetky znaky, ktoré sa majú použiť (bez medzier "
+"alebo čiarky, napr. \"'@ na použitie \", ', a @ ako oddeľovačov reťazcov)."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Skip x lines at the start of the file")
 #: rkward/plugins/00saveload/import/import_csv.rkh:50
@@ -1115,14 +1115,14 @@ msgid ""
 "This many rows will be skipped at the start of the file. Use, for instance, "
 "if the file contains a text header."
 msgstr ""
-"This many rows bude skipped at the start of súbor. Use, for instance, if "
-"súbor contains a text header."
+"Toľko riadkov bude preskočených na začiatku súboru. Použite napríklad vtedy, "
+"ak súbor obsahuje textovú hlavičku."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Max number of lines to read (-1 for no limit)")
 #: rkward/plugins/00saveload/import/import_csv.rkh:51
 #, kde-format
 msgid "Maximum number of rows to read (-1 to read all lines)"
-msgstr "Maximum počet rows to read (-1 to read all lines)"
+msgstr "Maximálny počet riadkov na čítanie (-1 na čítanie všetkých riadkov)"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Character for comments")
 #: rkward/plugins/00saveload/import/import_csv.rkh:52
@@ -1595,13 +1595,13 @@ msgstr "Preskočiť"
 #: rkward/plugins/00saveload/import/import_csv.xml:212
 #, kde-format
 msgid "Skip x lines at the start of the file"
-msgstr "Skip x lines at the start of súbor"
+msgstr "Preskočiť x riadkov na začiatku súboru"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="Further Options"> <frame label="Skip"> <input label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:213
 #, kde-format
 msgid "Max number of lines to read (-1 for no limit)"
-msgstr "Max počet lines to read (-1 for no limit)"
+msgstr "Max počet riadkov na čítanie (-1 pre bez obmedzenia)"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="Further Options"> <frame label="Skip"> <input label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:214
@@ -1647,11 +1647,11 @@ msgid ""
 "usually be preferable, as it will provide more specific options, and with "
 "less packages to install."
 msgstr ""
-"Import a variety of formats. Toto je a generic approach na základe the \"rio"
-"\" R package, which in turn závisí od a variety of further packages. If "
-"existuje a dedicated plugin for the format you wish to import, using that "
-"will usually be preferable, as it will provide more specific options, and "
-"with less packages to install."
+"Importovať rôzne formáty. Toto je všeobecný prístup založený na balíku R "
+"\"rio\", ktorý zasa závisí od rôznych ďalších balíkov. Ak existuje vyhradený "
+"zásuvný modul pre formát, ktorý chcete importovať, jeho použitie bude "
+"zvyčajne vhodnejšie, pretože poskytne špecifickejšie možnosti a bude "
+"potrebné nainštalovať menej balíkov."
 
 #. i18n: ectx: (Loaded from Generic data import) <usage>
 #: rkward/plugins/00saveload/import/import_generic_rio.rkh:16
@@ -1673,9 +1673,9 @@ msgid ""
 "Currently, this is only possible, if the object is saved as a data.frame "
 "(see next option)."
 msgstr ""
-"Whether the object by mal byť opened for editing after it was imported. "
-"Currently, this is only possible, if the object is saved as a data.frame "
-"(see next option)."
+"Určuje, či sa má objekt po importovaní otvoriť na úpravy. V súčasnosti je to "
+"možné iba vtedy, ak je objekt uložený ako data.frame (pozri nasledujúcu "
+"voľbu)."
 
 #. i18n: ectx: (Loaded from Generic data import) <settings> <setting> (refers to element labelled "Import a list of all datasets")
 #: rkward/plugins/00saveload/import/import_generic_rio.rkh:25
@@ -1684,9 +1684,9 @@ msgid ""
 "Some data files may contain more than one set of data (e.g. several sheets "
 "inside one excel file). Check this option to import all datasets as a list."
 msgstr ""
-"Some data files may contain more than one set of data (e.g. several sheets "
-"inside one excel file). Zaškrtnite this option to import all datasets as a "
-"list."
+"Niektoré dátové súbory môžu obsahovať viac ako jednu sadu údajov (napr. "
+"niekoľko hárkov v jednom súbore Excel). Zaškrtnite túto voľbu na import "
+"všetkých sád údajov ako zoznam."
 
 #. i18n: ectx: (Loaded from Generic data import) <settings> <setting> (refers to element labelled "Import specific sub-set")
 #: rkward/plugins/00saveload/import/import_generic_rio.rkh:26
@@ -1695,8 +1695,8 @@ msgid ""
 "For datasets containing more than one set of data, specify which set to "
 "import (this will usually be a name or a number)."
 msgstr ""
-"For datasets containing more than one množina data, specify which set to "
-"import (this will usually be a name or a number)."
+"Pre sady údajov obsahujúce viac ako jednu sadu dát zadajte, ktorá sada sa má "
+"importovať (zvyčajne to bude názov alebo číslo)."
 
 #. i18n: ectx: (Loaded from Generic data import) <settings> <setting> (refers to element labelled "Preview")
 #: rkward/plugins/00saveload/import/import_generic_rio.rkh:27
@@ -1706,9 +1706,9 @@ msgid ""
 "performance reasons (and only the first dataset in case of multiple sets in "
 "the file)."
 msgstr ""
-"Preview imported data. Only the first 50 rows and columns are shown, for "
-"performance reasons (and only the first dataset in case of multiple sets in "
-"súbor)."
+"Náhľad importovaných údajov. Z výkonnostných dôvodov sa zobrazí iba prvých "
+"50 riadkov a stĺpcov (a iba prvá sada údajov v prípade viacerých sád v "
+"súbore)."
 
 #. i18n: ectx: (Import SPSS file) <dialog label="Import SPSS file"> <tab label="General"> <checkbox label="...">
 #. i18n: ectx: (Import STATA file) <dialog label="Import STATA file"> <tab label="General"> <checkbox label="...">
@@ -1790,8 +1790,8 @@ msgid ""
 "Whether to save the data as a data.frame. The alternative is saving as a "
 "list (useful, if the columns in your SPSS data have different lengths)"
 msgstr ""
-"Či sa má save the data as a data.frame. The alternative is saving as a list "
-"(useful, if the columns in your SPSS data have different lengths)"
+"Určuje, či sa majú údaje uložiť ako data.frame. Alternatívou je uloženie ako "
+"zoznam (užitočné, ak majú stĺpce vo vašich dátach SPSS rôzne dĺžky)"
 
 #. i18n: ectx: (Loaded from Import SPSS file) <settings> <setting> (refers to element labelled "Convert Variable labels to RKWard format")
 #: rkward/plugins/00saveload/import/import_spss.rkh:26
@@ -1803,10 +1803,10 @@ msgid ""
 "as an attribute \"variable.labels\" (see <link href=\"rkward://rhelp/read."
 "spss\"/>)"
 msgstr ""
-"RKWard can display SPSS like variable labels. Check táto voľba, ak would "
-"like to convert the SPSS variable labels to RKWard format. Ak leave the "
-"option unchecked, the SPSS variable labels will still be available as an "
-"attribute \"variable.labels\" (see <link href=\"rkward://rhelp/read.spss\"/>)"
+"RKWard dokáže zobrazovať popisy premenných podobne ako SPSS. Zaškrtnite túto "
+"voľbu, ak chcete konvertovať popisy premenných SPSS do formátu RKWard. Ak "
+"ponecháte voľbu nezaškrtnutú, popisy premenných SPSS budú stále dostupné ako "
+"atribút \"variable.labels\" (pozri <link href=\"rkward://rhelp/read.spss\"/>)"
 
 #. i18n: ectx: (Loaded from Import SPSS file) <settings> <setting> (refers to element labelled "Use value labels")
 #: rkward/plugins/00saveload/import/import_spss.rkh:27
@@ -1919,15 +1919,14 @@ msgid ""
 "The filename of the file to import. This may also be a URL (http://, http:// "
 "and ftp:// are supported)."
 msgstr ""
-"The filename of súbor to import. This may also be a URL (http://, http:// "
-"and ftp:// are supported)."
+"Názov súboru, ktorý sa má importovať. Môže to byť tiež URL (http://, http:// "
+"a ftp:// sú podporované)."
 
 #. i18n: ectx: (Loaded from Import STATA file) <settings> <setting> (refers to element labelled "Edit Object")
 #: rkward/plugins/00saveload/import/import_stata.rkh:23
 #, kde-format
 msgid "Whether the object should be opened for editing after it was imported."
-msgstr ""
-"Whether the object by mal byť opened for editing after it was imported."
+msgstr "Určuje, či sa má objekt po importovaní otvoriť na úpravy."
 
 #. i18n: ectx: (Loaded from Import STATA file) <settings> <setting> (refers to element labelled "Convert Stata dates to 'Date' class")
 #: rkward/plugins/00saveload/import/import_stata.rkh:25
@@ -1957,9 +1956,9 @@ msgid ""
 "values. If this option is set, this information is stored in an attribute of "
 "the imported data. See <link href=\"rkward://rhelp/read.dta\"/> for details."
 msgstr ""
-"Stata version 8 and above differentiates various different type of missing "
-"values. If táto voľba is set, this information is stored in an attribute of "
-"the imported data. See <link href=\"rkward://rhelp/read.dta\"/> for details."
+"Stata verzia 8 a vyššia rozlišuje rôzne typy chýbajúcich hodnôt. Ak je táto "
+"voľba nastavená, tieto informácie sú uložené v atribúte importovaných "
+"údajov. Pozri <link href=\"rkward://rhelp/read.dta\"/> pre podrobnosti."
 
 #. i18n: ectx: (Loaded from Import STATA file) <settings> <setting> (refers to element labelled "Convert '_' in Stata variable names to '.' in R names")
 #: rkward/plugins/00saveload/import/import_stata.rkh:28
@@ -2036,8 +2035,8 @@ msgid ""
 "Preview not available, because package gdata is not installed or cannot be "
 "loaded."
 msgstr ""
-"Preview not dostupné, because package gdata nie je nainštalovaný or nemôže "
-"byť loaded."
+"Náhľad nie je dostupný, pretože balík gdata nie je nainštalovaný alebo ho "
+"nie je možné načítať."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet)
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="...">
@@ -2053,7 +2052,7 @@ msgstr "Importovať Microsoft EXCEL sheet"
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:12
 #, kde-format
 msgid "Import a sheet of a Microsoft Excel file into a data frame."
-msgstr "Importovať a sheet of a Microsoft Excel file into a data frame."
+msgstr "Importovať list zo súboru Microsoft Excel do dátového rámca."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <usage>
 #: rkward/plugins/00saveload/import/import_xls.rkh:12
@@ -2066,12 +2065,12 @@ msgid ""
 "you may want to try the Java-based alternative <link href=\"rkward://"
 "component/import_xls_xlconnect\"/>."
 msgstr ""
-"Choose the Microsoft Excel file to import a sheet from. An R object "
-"containing the data will be created. This method of importing Excel sheets "
-"is na základe R package \"gdata\", and requires a working Perl setup. In "
-"case this does not work on your system, or does not produce the expected "
-"results, môžete want to try the Java-based alternative <link href=\"rkward://"
-"component/import_xls_xlconnect\"/>."
+"Vyberte súbor Microsoft Excel, z ktorého sa má importovať hárok. Vytvorí sa "
+"objekt R obsahujúci údaje. Táto metóda importu excelových hárkov je založená "
+"na balíku R \"gdata\" a vyžaduje funkčné nastavenie Perl. Ak to na vašom "
+"systéme nefunguje alebo neposkytuje očakávané výsledky, môžete vyskúšať "
+"alternatívu na báze Java <link href=\"rkward://component/import_xls_xlconnect"
+"\"/>."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Name or number of sheet")
 #: rkward/plugins/00saveload/import/import_xls.rkh:22
@@ -2104,7 +2103,7 @@ msgstr "Maximum počet rows to import"
 #: rkward/plugins/00saveload/import/import_xls.rkh:27
 #, kde-format
 msgid "Whether the first row of the file should be interpreted as column names"
-msgstr "Whether the first row of súbor by mal byť interpreted as column names"
+msgstr "Či sa má prvý riadok súboru interpretovať ako názvy stĺpcov"
 
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="General"> <input label="...">
 #: rkward/plugins/00saveload/import/import_xls.xml:19
@@ -2124,7 +2123,7 @@ msgstr "Rozsah"
 #: rkward/plugins/00saveload/import/import_xls.xml:33
 #, kde-format
 msgid "Max number of rows to read (-1 for no limit)"
-msgstr "Max počet rows to read (-1 for no limit)"
+msgstr "Max počet riadkov na čítanie (-1 pre bez obmedzenia)"
 
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="Further Options"> <frame label="Range"> <input label="...">
 #: rkward/plugins/00saveload/import/import_xls.xml:34
@@ -2159,8 +2158,8 @@ msgid ""
 "Preview not available, because package XLConnect is not installed or cannot "
 "be loaded."
 msgstr ""
-"Preview not dostupné, because package XLConnect nie je nainštalovaný or "
-"nemôže byť loaded."
+"Náhľad nie je dostupný, pretože balík XLConnect nie je nainštalovaný alebo "
+"ho nie je možné načítať."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <usage>
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:16
@@ -2172,11 +2171,11 @@ msgid ""
 "case this does not work on your system, you may want to try the Perl-based "
 "alternative <link href=\"rkward://component/import_xls\"/>."
 msgstr ""
-"Choose the Microsoft Excel file to import a sheet from. An R object "
-"containing the data will be created. This method of importing Excel sheets "
-"is na základe R package \"XLconnect\", and requires a working Java-setup. In "
-"case this does not work on your system, môžete want to try the Perl-based "
-"alternative <link href=\"rkward://component/import_xls\"/>."
+"Vyberte súbor Microsoft Excel, z ktorého sa má importovať hárok. Vytvorí sa "
+"objekt R obsahujúci údaje. Táto metóda importu excelových hárkov je založená "
+"na balíku R \"XLconnect\" a vyžaduje funkčné nastavenie Java. Ak to na vašom "
+"systéme nefunguje, môžete vyskúšať alternatívu na báze Perl <link href="
+"\"rkward://component/import_xls\"/>."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Index or \"name\" of sheet")
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:24
@@ -2185,8 +2184,8 @@ msgid ""
 "Numeric index or name/label of the sheet to import from the file. If you "
 "specify a name, here, make sure to quote it."
 msgstr ""
-"Numeric index or name/label of the sheet to import from súbor. If you "
-"specify a name, here, make sure to quote it."
+"Číselný index alebo názov/popis hárka, ktorý sa má importovať zo súboru. Ak "
+"tu zadáte názov, uistite sa, že ho dáte do úvodzoviek."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Use first row as column names")
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:25
@@ -2195,8 +2194,8 @@ msgid ""
 "Whether the first row of data should be used as column headers. "
 "Alternatively, columns are named, automatically (by index)."
 msgstr ""
-"Whether the first row of data by mal byť used as column headers. "
-"Alternatively, columns are named, automatically (by index)."
+"Určuje, či sa má prvý riadok údajov použiť ako hlavičky stĺpcov. Prípadne sú "
+"stĺpce pomenované automaticky (podľa indexu)."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Index or \"name\" of column with row names (if any)")
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:26
@@ -2218,9 +2217,9 @@ msgid ""
 "the start row will be determined, automatically. Alternatively, you can "
 "specify a range in spreadsheet notation, below."
 msgstr ""
-"First row of data to import within the sheet. If left to 0 (the predvolené), "
-"the start row bude determined, automatically. Alternatively, you can specify "
-"a range in spreadsheet notation, below."
+"Prvý riadok údajov, ktorý sa má importovať v rámci hárka. Ak je ponechané na "
+"0 (predvolené), počiatočný riadok sa určí automaticky. Prípadne môžete "
+"nižšie zadať rozsah v tabuľkovom zápise."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Column")
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:35
@@ -2259,8 +2258,8 @@ msgid ""
 "Specify the range to import within the sheet in spreadsheet notation (e.g. "
 "\"A10:B20\")."
 msgstr ""
-"Určite the range to import within the sheet in spreadsheet notation (e.g. "
-"\"A10:B20\")."
+"Zadajte rozsah, ktorý sa má importovať v rámci hárka v tabuľkovom zápise "
+"(napr. \"A10:B20\")."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Skip empty leading or trailing rows")
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:40
@@ -2293,13 +2292,13 @@ msgid ""
 "this control empty, entirely. Also note that most common type conversions "
 "can also be done <i>after</i> the data has been imported."
 msgstr ""
-"Allows you to override the automatic data type detection. Specify R data "
-"types ako napríklad \"character\" or \"numeric\", here. Any specification "
-"you make here will be applied to <b>all</b> imported columns (the "
-"specification will be \"recycled\", if necessary). To use automatic data "
-"type detection, leave this control empty, entirely. Also všimnite si, že "
-"most common type conversions can also be done <i>after</i> the data has been "
-"imported."
+"Umožňuje vám prepísať automatické zisťovanie dátového typu. Tu zadajte "
+"dátové typy R, ako napríklad \"character\" alebo \"numeric\". Akákoľvek "
+"špecifikácia, ktorú tu zadáte, sa použije na <b>všetky</b> importované "
+"stĺpce (špecifikácia sa v prípade potreby „recykluje”). Ak chcete použiť "
+"automatické zisťovanie dátového typu, nechajte tento ovládací prvok úplne "
+"prázdny. Všimnite si tiež, že väčšinu bežných konverzií typov možno vykonať "
+"aj <i>po</i> importovaní údajov."
 
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="General"> <input label="...">
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.xml:22
@@ -2435,10 +2434,10 @@ msgid ""
 "not yet exist, it will be created. If it already exists, it will be "
 "overwritten completely, i.e. deleting all objects inside it!"
 msgstr ""
-"Check táto voľba (and specify an environment), aby ste load the data into an "
-"environment other than .GlobalEnv. If zadaný environment does not yet exist, "
-"it will be created. If it already exists, it will be overwritten completely, "
-"t. j. deleting all objects inside it!"
+"Zaškrtnite túto voľbu (a zadajte prostredie), aby ste načítali údaje do "
+"iného prostredia ako .GlobalEnv. Ak zadané prostredie ešte neexistuje, "
+"vytvorí sa. Ak už existuje, bude úplne prepísané, t. j. všetky objekty v ňom "
+"budú vymazané!"
 
 #. i18n: ectx: (Load an R data file) <dialog label="...">
 #: rkward/plugins/00saveload/import/load_data.xml:14
@@ -2529,11 +2528,11 @@ msgid ""
 "create new objects (in contrast to just producing printed output), it will "
 "have to be run in the global environment."
 msgstr ""
-"Ak je zaškrtnuté, the source file is interpreted in a local environment, "
-"namiesto the global environment. Toto je much safer, as no existing objects "
-"will be overwritten. Na druhej strane, if the purpose of the source file is "
-"to create new objects (in contrast to just producing printed output), it "
-"will have to be run in the global environment."
+"Ak je zaškrtnuté, zdrojový súbor sa interpretuje v lokálnom prostredí "
+"namiesto globálneho prostredia. Je to oveľa bezpečnejšie, pretože sa "
+"neprepíšu žiadne existujúce objekty. Na druhej strane, ak je účelom "
+"zdrojového súboru vytváranie nových objektov (na rozdiel od iba generovania "
+"tlačeného výstupu), bude sa musieť spustiť v globálnom prostredí."
 
 #. i18n: ectx: (Loaded from Source an R file) <settings> <setting> (refers to element labelled "Echo source statements")
 #: rkward/plugins/00saveload/import/source.rkh:22
@@ -2550,8 +2549,8 @@ msgid ""
 "What should be printed at the start of each echoed source line (to "
 "differentiate it from the output)? Leave empty for the default."
 msgstr ""
-"What by mal byť printed at the start of each echoed source line (to "
-"differentiate it from the output)? Leave empty for the predvolené."
+"Čo sa má vytlačiť na začiatku každého echovaného riadku zdroja (na odlíšenie "
+"od výstupu)? Ponechajte prázdne pre predvolenú hodnotu."
 
 #. i18n: ectx: (Loaded from Source an R file) <settings> <setting> (refers to element labelled "Maximal length of echoed statements")
 #: rkward/plugins/00saveload/import/source.rkh:24
@@ -2622,7 +2621,7 @@ msgstr "Echo source statements"
 #: rkward/plugins/00saveload/import/source.xml:29
 #, kde-format
 msgid "Prompt for echoed lines (empty for default)"
-msgstr "Prompt for echoed lines (empty for predvolené)"
+msgstr "Výzva pre echované riadky (prázdne pre predvolené)"
 
 #. i18n: ectx: (Source an R file) <dialog label="Source an R file"> <tab label="Output options"> <spinbox label="...">
 #: rkward/plugins/00saveload/import/source.xml:30
@@ -2892,8 +2891,9 @@ msgid ""
 "Save one or more selected R objects to a file. <b>Note:</b> Use <i>Workspace-"
 ">Save Workspace</i> for saving the complete workspace."
 msgstr ""
-"Save one or more vybrané R objects to a file. <b>Note:</b> Use <i>Workspace-"
-">Save Workspace</i> for saving the complete workspace."
+"Uložiť jeden alebo viac vybraných objektov R do súboru. <b>Poznámka:</b> Na "
+"uloženie celého pracovného priestoru použite <i>Pracovný priestor->Uložiť "
+"pracovný priestor</i>."
 
 #. i18n: ectx: (Loaded from Save R objects) <usage>
 #: rkward/plugins/00saveload/save/save.rkh:12
@@ -2902,8 +2902,9 @@ msgid ""
 "Select the objects to save, and a filename to save to. Created data files "
 "can be loaded using <link href=\"rkward://component/load_r_object\"/>."
 msgstr ""
-"Vyberte the objects to save, and a filename to save to. Created data files "
-"môže byť loaded using <link href=\"rkward://component/load_r_object\"/>."
+"Vyberte objekty, ktoré sa majú uložiť, a názov súboru, do ktorého sa majú "
+"uložiť. Vytvorené dátové súbory možno načítať pomocou <link href=\"rkward://"
+"component/load_r_object\"/>."
 
 #. i18n: ectx: (Loaded from Save R objects) <settings> <setting> (refers to element labelled "Object")
 #: rkward/plugins/00saveload/save/save.rkh:16
@@ -2931,9 +2932,9 @@ msgid ""
 "allows to select the method of compression. Some methods are not available "
 "for versions of R before 2.10.0."
 msgstr ""
-"The file môže byť compressed to achieve a smaller file size. This control "
-"allows to select the method of compression. Some methods are not dostupné "
-"for versions of R before 2.10.0."
+"Súbor možno komprimovať na dosiahnutie menšej veľkosti súboru. Tento "
+"ovládací prvok umožňuje vybrať metódu kompresie. Niektoré metódy nie sú "
+"dostupné pre verzie R pred 2.10.0."
 
 #. i18n: ectx: (Loaded from Save R objects) <settings> <setting> (refers to element labelled "Compression level")
 #: rkward/plugins/00saveload/save/save.rkh:20
@@ -3113,7 +3114,7 @@ msgstr "Exportovať Table / CSV files"
 #: rkward/plugins/00saveload/save/write_csv.rkh:13
 #, kde-format
 msgid "Export data to CSV or similar file formats."
-msgstr "Exportovať data to CSV or similar file formats."
+msgstr "Exportovať údaje do formátu CSV alebo podobných formátov súborov."
 
 #. i18n: ectx: (Export Table / CSV files) <usage>
 #: rkward/plugins/00saveload/save/write_csv.rkh:16
@@ -3123,9 +3124,10 @@ msgid ""
 "to save to. All other options allow you to define the file format, handling "
 "of column and row names as well as special character handling."
 msgstr ""
-"Select a tabular data object (like a data frame or matrix) and choose a file "
-"to save to. All other options allow you to define the file format, handling "
-"of column and row names tiež as special character handling."
+"Vyberte tabuľkový dátový objekt (ako dátový rámec alebo matica) a zvoľte "
+"súbor, do ktorého sa má uložiť. Všetky ostatné možnosti vám umožňujú "
+"definovať formát súboru, spracovanie názvov stĺpcov a riadkov, ako aj "
+"spracovanie špeciálnych znakov."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Data")
 #: rkward/plugins/00saveload/save/write_csv.rkh:25
@@ -3154,8 +3156,8 @@ msgid ""
 "Should existing files be overwritten or the data appended? If this is greyed "
 "out, the selected preset sets this for you."
 msgstr ""
-"Should existing files be overwritten or the data appended? If this is greyed "
-"out, the vybrané preset sets this for you."
+"Majú sa existujúce súbory prepísať alebo sa majú údaje pripojiť? Ak je táto "
+"voľba sivá, zvolená predvoľba to nastaví za vás."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "File format")
 #: rkward/plugins/00saveload/save/write_csv.rkh:35
@@ -3165,9 +3167,9 @@ msgid ""
 "options (like field separator and decimal point) with reasonable defaults. "
 "Use the custom format if you need more control."
 msgstr ""
-"Vyberte one of the predvolené file formats here. They will set some of the "
-"options (like field separator and decimal point) with reasonable "
-"predvolenés. Use the vlastné format if you need more control."
+"Tu vyberte jeden z predvolených formátov súborov. Nastavia niektoré možnosti "
+"(ako oddeľovač polí a desatinná čiarka) s rozumnými predvolenými hodnotami. "
+"Použite vlastný formát, ak potrebujete väčšiu kontrolu."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Decimal point character")
 #: rkward/plugins/00saveload/save/write_csv.rkh:39
@@ -3176,14 +3178,14 @@ msgid ""
 "Specify the desired decimal point character. If this is greyed out, the "
 "selected preset sets this for you."
 msgstr ""
-"Určite the desired decimal point character. If this is greyed out, the "
-"vybrané preset sets this for you."
+"Zadajte požadovaný znak desatinnej čiarky. Ak je táto voľba sivá, zvolená "
+"predvoľba to nastaví za vás."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "")
 #: rkward/plugins/00saveload/save/write_csv.rkh:42
 #, kde-format
 msgid "Use this value as the custom decimal point character."
-msgstr "Use this value as the vlastné decimal point character."
+msgstr "Použite túto hodnotu ako vlastný znak desatinnej čiarky."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Field separator character")
 #: rkward/plugins/00saveload/save/write_csv.rkh:45
@@ -3192,14 +3194,14 @@ msgid ""
 "Specify the desired field separator character. If this is greyed out, the "
 "selected preset sets this for you."
 msgstr ""
-"Určite the desired field separator character. If this is greyed out, the "
-"vybrané preset sets this for you."
+"Zadajte požadovaný znak oddeľovača polí. Ak je táto voľba sivá, zvolená "
+"predvoľba to nastaví za vás."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "")
 #: rkward/plugins/00saveload/save/write_csv.rkh:48
 #, kde-format
 msgid "Use this value as the custom field separator character."
-msgstr "Use this value as the vlastné field separator character."
+msgstr "Použite túto hodnotu ako vlastný znak oddeľovača polí."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Row names")
 #: rkward/plugins/00saveload/save/write_csv.rkh:53
@@ -3211,7 +3213,7 @@ msgstr "Decide ako deal with row names."
 #: rkward/plugins/00saveload/save/write_csv.rkh:56
 #, kde-format
 msgid "Select a character vector to use for custom row names."
-msgstr "Vybrať a character vector to use for custom row names."
+msgstr "Vyberte znakový vektor, ktorý sa použije pre vlastné názvy riadkov."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Column names")
 #: rkward/plugins/00saveload/save/write_csv.rkh:60
@@ -3220,14 +3222,14 @@ msgid ""
 "Decide how to deal with column names. If this is greyed out, the selected "
 "preset sets this for you."
 msgstr ""
-"Decide how to deal with column names. If this is greyed out, the vybrané "
-"preset sets this for you."
+"Rozhodnite, ako sa má zaobchádzať s názvami stĺpcov. Ak je táto voľba sivá, "
+"zvolená predvoľba to nastaví za vás."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Column names (character vector)")
 #: rkward/plugins/00saveload/save/write_csv.rkh:63
 #, kde-format
 msgid "Select a character vector to use for custom column names."
-msgstr "Vybrať a character vector to use for custom column names."
+msgstr "Vyberte znakový vektor, ktorý sa použije pre vlastné názvy stĺpcov."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "File encoding")
 #: rkward/plugins/00saveload/save/write_csv.rkh:68
@@ -3236,8 +3238,8 @@ msgid ""
 "If the default character encoding doesn't work for you, you can set a "
 "specific one here."
 msgstr ""
-"If the predvolené character encoding doesn't work for you, you can set a "
-"specific one here."
+"Ak predvolené kódovanie znakov u vás nefunguje, môžete tu nastaviť konkrétne "
+"kódovanie."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Custom encoding")
 #: rkward/plugins/00saveload/save/write_csv.rkh:71
@@ -3246,14 +3248,14 @@ msgid ""
 "Use this field to set a custom encoding, in case the dropdown menu doesn't "
 "list the one you need."
 msgstr ""
-"Use this field to set a vlastné encoding, in case the dropdown menu doesn't "
-"list the one you need."
+"Toto pole použite na nastavenie vlastného kódovania pre prípad, že "
+"rozbaľovacia ponuka neobsahuje to, ktoré potrebujete."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Quote all strings")
 #: rkward/plugins/00saveload/save/write_csv.rkh:75
 #, kde-format
 msgid "Check this to have all string values quoted."
-msgstr "Zaškrtnite this to have all string values quoted."
+msgstr "Zaškrtnite, aby boli všetky hodnoty reťazcov v úvodzovkách."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Handling double quote characters")
 #: rkward/plugins/00saveload/save/write_csv.rkh:78
@@ -3263,15 +3265,15 @@ msgid ""
 "escaped or double quoted. If this is greyed out, the selected preset sets "
 "this for you."
 msgstr ""
-"Controls how existing quotes in values are handled -- they can either be "
-"escaped or double quoted. If this is greyed out, the vybrané preset sets "
-"this for you."
+"Ovláda, ako sa zaobchádza s existujúcimi úvodzovkami v hodnotách — môžu byť "
+"buď escapované alebo zdvojené. Ak je táto voľba sivá, zvolená predvoľba to "
+"nastaví za vás."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Character for missing values")
 #: rkward/plugins/00saveload/save/write_csv.rkh:81
 #, kde-format
 msgid "Set the character to indicate missing data."
-msgstr "Nastaviť the character to indicate missing data."
+msgstr "Nastaviť znak na označenie chýbajúcich údajov."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Newline character")
 #: rkward/plugins/00saveload/save/write_csv.rkh:84
@@ -3281,9 +3283,9 @@ msgid ""
 "operating systems, changing this option might help in case you run into "
 "problems when exchanging files with other people."
 msgstr ""
-"Nastaviť the character used to indicate a line break (EOL). This varies "
-"between operating systems, changing this option might help in case you run "
-"into problems when exchanging files with other people."
+"Nastaviť znak používaný na označenie konca riadka (EOL). Toto sa líši medzi "
+"operačnými systémami; zmena tejto voľby môže pomôcť, ak narazíte na problémy "
+"pri výmene súborov s inými ľuďmi."
 
 #. i18n: ectx: (Export Table / CSV files) <related>
 #: rkward/plugins/00saveload/save/write_csv.rkh:88
@@ -3463,7 +3465,7 @@ msgstr "\\n\\r (LF+CR: RISC OS)"
 #: rkward/plugins/00saveload/setworkdir.rkh:8
 #, kde-format
 msgid "Set or change the current working directory."
-msgstr "Nastaviť or change the current working directory."
+msgstr "Nastaviť alebo zmeniť aktuálny pracovný priečinok."
 
 #. i18n: ectx: (Loaded from Set the working directory) <usage>
 #: rkward/plugins/00saveload/setworkdir.rkh:11

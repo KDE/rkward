@@ -709,8 +709,8 @@ msgid ""
 "Note: For the binomial distribution, quantiles can be interpreted as number "
 "of successes in the given number of trials."
 msgstr ""
-"Note: For the binomial distribution, quantiles môže byť interpreted as "
-"number of successes in the given number of trials."
+"Poznámka: Pre binomické rozdelenie možno kvantily interpretovať ako počet "
+"úspechov v danom počte pokusov."
 
 #. i18n: ectx: (Loaded from Binomial probabilities, quantiles, densities) <settings> <setting> (refers to element labelled "Binomial trials")
 #. i18n: ectx: (Loaded from Plot binomial probabilities) <settings> <setting> (refers to element labelled "Number of trials")
@@ -728,9 +728,9 @@ msgid ""
 "affected by the \"log probabilities\" setting, i.e. always specify the plain "
 "probability, here."
 msgstr ""
-"Probability of success in each trial. Všimnite si, že toto nastavenie is "
-"<b>not</b> affected by the \"log probabilities\" setting, t. j. always "
-"specify the plain probability, here."
+"Pravdepodobnosť úspechu v každom pokuse. Všimnite si, že toto nastavenie "
+"<b>nie je</b> ovplyvnené nastavením „logaritmické pravdepodobnosti”, t. j. "
+"vždy tu zadajte obyčajnú pravdepodobnosť."
 
 #. i18n: ectx: (Binomial probabilities, quantiles, densities)
 #: rkward/plugins/distributions/binomial.xml:13
@@ -738,9 +738,7 @@ msgstr ""
 msgid ""
 "Quantiles can be interpreted as number of successes in the given number of "
 "trials."
-msgstr ""
-"Quantiles môže byť interpreted as number of successes in the given number of "
-"trials."
+msgstr "Kvantily možno interpretovať ako počet úspechov v danom počte pokusov."
 
 #. i18n: ectx: (Binomial probabilities, quantiles, densities) <snippets> <snippet> <spinbox label="...">
 #: rkward/plugins/distributions/binomial.xml:18
@@ -1029,12 +1027,12 @@ msgid ""
 "histograms or distribution functions. For brevity, D will denote the "
 "contending distribution (<label id=\"dist_name\"/> here)."
 msgstr ""
-"Normal approximation to <label id=\"dist_name\"/> Sample averages. Most of "
-"this help file is generic description of CLT plugins. Sample averages from a "
-"contending distribution (<label id=\"dist_name\"/> here) are compared to a "
-"target Normal distribution. The comparison is made na základe either "
-"histograms or distribution functions. For brevity, D will denote the "
-"contending distribution (<label id=\"dist_name\"/> here)."
+"Normálna aproximácia pre <label id=\"dist_name\"/> priemery vzoriek. Väčšina "
+"tohto súboru pomocníka je všeobecným popisom zásuvných modulov CLT. Priemery "
+"vzoriek z porovnávaného rozdelenia (<label id=\"dist_name\"/> tu) sa "
+"porovnávajú s cieľovým normálnym rozdelením. Porovnanie sa vykonáva na "
+"základe histogramov alebo distribučných funkcií. Pre stručnosť bude D "
+"označovať porovnávané rozdelenie (<label id=\"dist_name\"/> tu)."
 
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <usage>
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <usage>
@@ -1088,9 +1086,9 @@ msgid ""
 "value of the parameters, one would be interested in seeing how the "
 "distribution of the sample averages change as this number increases."
 msgstr ""
-"These many samples (nAvg) are používaný na calculate sample average. For a "
-"fixed value of the parameters, one would be interested in seeing how the "
-"distribution of the sample averages change as this number increases."
+"Toľko vzoriek (nAvg) sa používa na výpočet priemeru vzorky. Pre pevnú "
+"hodnotu parametrov by bolo zaujímavé sledovať, ako sa rozdelenie priemerov "
+"vzoriek mení s rastúcim týmto číslom."
 
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <settings> <setting> (refers to element labelled "Samples for distribution")
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <settings> <setting> (refers to element labelled "Samples for distribution")
@@ -1117,10 +1115,9 @@ msgid ""
 "these averages are used to construct the 'Histogram' or the 'Distribution "
 "function'."
 msgstr ""
-"These many sets-of-samples (nDist) are používaný na get some idea about the "
-"distribution of the sample averages. Each set provides an average. Then "
-"these averages are používaný na construct the 'Histogram' or the "
-"'Distribution function'."
+"Toľko sád vzoriek (nDist) sa používa na získanie predstavy o rozdelení "
+"priemerov vzoriek. Každá sada poskytuje jeden priemer. Tieto priemery sa "
+"potom používajú na zostrojenie „Histogramu” alebo „Distribučnej funkcie”."
 
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <settings> <setting> (refers to element labelled "Choose type of function plot")
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <settings> <setting> (refers to element labelled "Choose type of function plot")
@@ -1230,7 +1227,7 @@ msgstr ""
 #: rkward/plugins/distributions/clt/plot_clt_help_snippets.xml:23
 #, kde-format
 msgid "Pointtype for the Normal curve."
-msgstr "Pointtype for the Normálna curve."
+msgstr "Typ bodu pre normálnu krivku."
 
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <settings> <setting> (refers to element labelled "Color")
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <settings> <setting> (refers to element labelled "Color")
@@ -1375,8 +1372,8 @@ msgid ""
 "See the help on the <link href=\"rkward://component/plot_stepfun_options\"/> "
 "plugin. The 'Add to current plot' option is unavailable."
 msgstr ""
-"See the help on the <link href=\"rkward://component/plot_stepfun_options\"/> "
-"plugin. The 'Add to current plot' option is undostupné."
+"Pozrite si pomocníka k zásuvnému modulu <link href=\"rkward://component/"
+"plot_stepfun_options\"/>. Voľba „Pridať do aktuálneho grafu” nie je dostupná."
 
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <related>
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <related>
@@ -2750,8 +2747,8 @@ msgid ""
 "Specify the quantity to be calculated (probabilities, densities, or "
 "quantiles), and the quantity given (probabilities or quantiles)"
 msgstr ""
-"Určite the quantity to be calculated (probabilities, densities, or "
-"quantiles), and the quantity given (probabilities or quantiles)"
+"Zadajte veličinu, ktorá sa má vypočítať (pravdepodobnosti, hustoty alebo "
+"kvantily), a zadanú veličinu (pravdepodobnosti alebo kvantily)"
 
 #. i18n: ectx: (Loaded from Loaded from Beta distribution calculator) <snippet> <setting> (refers to element labelled "Number of quantiles")
 #. i18n: ectx: (Loaded from Loaded from Binomial probabilities, quantiles, densities) <snippet> <setting> (refers to element labelled "Number of quantiles")
@@ -2779,8 +2776,9 @@ msgid ""
 "When calculating densities or probabilities, specify the number of evenly "
 "spaces quantiles to show. Alternatively, use the setting above."
 msgstr ""
-"When calculating densities or probabilities, specify the počet evenly spaces "
-"quantiles to show. Alternatively, use the setting above."
+"Pri výpočte hustôt alebo pravdepodobností zadajte počet rovnomerne "
+"rozmiestnených kvantilov, ktoré sa majú zobraziť. Prípadne použite "
+"nastavenie vyššie."
 
 #. i18n: ectx: (Loaded from Loaded from Beta distribution calculator) <snippet> <setting> (refers to element labelled "Specify Quantiles (optional)")
 #. i18n: ectx: (Loaded from Loaded from Binomial probabilities, quantiles, densities) <snippet> <setting> (refers to element labelled "Specify Quantiles (optional)")
@@ -2838,9 +2836,9 @@ msgid ""
 "probabilities (optionally logarithmic) to show. Alternatively, use the "
 "setting below."
 msgstr ""
-"When calculating quantiles, specify the number of evenly spaced "
-"probabilities (voliteľnély logarithmic) to show. Alternatively, use the "
-"setting below."
+"Pri výpočte kvantilov zadajte počet rovnomerne rozmiestnených "
+"pravdepodobností (voliteľne logaritmických), ktoré sa majú zobraziť. "
+"Prípadne použite nastavenie nižšie."
 
 #. i18n: ectx: (Loaded from Loaded from Beta distribution calculator) <snippet> <setting> (refers to element labelled "Specify Probabilities (optional)")
 #. i18n: ectx: (Loaded from Loaded from Binomial probabilities, quantiles, densities) <snippet> <setting> (refers to element labelled "Specify Probabilities (optional)")
@@ -2869,9 +2867,9 @@ msgid ""
 "logarithmic (see below). If this setting is left empty, the setting above is "
 "used, instead."
 msgstr ""
-"When calculating quantiles, specify one or more probabilities, voliteľnély "
-"logarithmic (see below). If this setting is left empty, the setting above is "
-"used, instead."
+"Pri výpočte kvantilov zadajte jednu alebo viac pravdepodobností, voliteľne "
+"logaritmických (pozri nižšie). Ak je toto nastavenie prázdne, použije sa "
+"nastavenie vyššie."
 
 #. i18n: ectx: (Loaded from Loaded from Beta distribution calculator) <snippet> <setting> (refers to element labelled "Logarithmic probabilities")
 #. i18n: ectx: (Loaded from Loaded from Binomial probabilities, quantiles, densities) <snippet> <setting> (refers to element labelled "Logarithmic probabilities")
@@ -2953,8 +2951,8 @@ msgid ""
 "If checked (the default) probabilities are P[X ≤ x]. Otherwise (upper tail) "
 "probabilities are P[X &gt; x]"
 msgstr ""
-"If checked (the predvolené) probabilities are P[X ≤ x]. Otherwise (upper "
-"tail) probabilities are P[X &gt; x]"
+"Ak je zaškrtnuté (predvolené), pravdepodobnosti sú P[X ≤ x]. Inak (horný "
+"chvost) sú pravdepodobnosti P[X &gt; x]"
 
 #. i18n: ectx: (Loaded from Loaded from Beta distribution calculator) <snippet> <setting>
 #. i18n: ectx: (Loaded from Loaded from Binomial probabilities, quantiles, densities) <snippet> <setting>
@@ -3470,8 +3468,8 @@ msgid ""
 "Quantiles in the geometric distribution represent the number of failures in "
 "a sequence of Bernoulli trials before the first success."
 msgstr ""
-"Quantiles in the geometric distribution represent the počet failures in a "
-"sequence of Bernoulli trials before the first success."
+"Kvantily v geometrickom rozdelení predstavujú počet neúspechov v postupnosti "
+"Bernoulliho pokusov pred prvým úspechom."
 
 #. i18n: ectx: (Loaded from Geometric distribution calculator) <settings> <setting> (refers to element labelled "probability of success in each trial")
 #: rkward/plugins/distributions/geom.rkh:19
@@ -3481,9 +3479,9 @@ msgid ""
 "affected by the \"log probabilities\" setting, i.e. always specify the plain "
 "probability,"
 msgstr ""
-"Probability of success in each trial. Všimnite si, že toto nastavenie is "
-"<b>not</b> affected by the \"log probabilities\" setting, t. j. always "
-"specify the plain probability,"
+"Pravdepodobnosť úspechu v každom pokuse. Všimnite si, že toto nastavenie "
+"<b>nie je</b> ovplyvnené nastavením „logaritmické pravdepodobnosti”, t. j. "
+"vždy zadajte obyčajnú pravdepodobnosť,"
 
 #. i18n: ectx: (Geometric distribution calculator)
 #: rkward/plugins/distributions/geom.xml:13
@@ -3492,8 +3490,8 @@ msgid ""
 "Quantiles represent the number of failures in a sequence of Bernoulli trials "
 "before the first success."
 msgstr ""
-"Quantiles represent the počet failures in a sequence of Bernoulli trials "
-"before the first success."
+"Kvantily predstavujú počet neúspechov v postupnosti Bernoulliho pokusov pred "
+"prvým úspechom."
 
 #. i18n: ectx: (Geometric distribution calculator) <snippets> <snippet> <spinbox label="...">
 #: rkward/plugins/distributions/geom.xml:18
@@ -3566,8 +3564,8 @@ msgid ""
 "Quantiles represent the number of white balls drawn in k draws without "
 "replacement from an urn containing m white and n black balls."
 msgstr ""
-"Quantiles represent the počet white balls drawn in k draws without "
-"replacement from an urn containing m white and n black balls."
+"Kvantily predstavujú počet bielych gulí vytiahnutých v k ťahoch bez vrátenia "
+"z urny obsahujúcej m bielych a n čiernych gulí."
 
 #. i18n: ectx: (Loaded from Hypergeometric distribution calculator) <settings> <setting> (refers to element labelled "m (Number of white balls in the urn)")
 #. i18n: ectx: (Hypergeometric distribution calculator) <snippets> <snippet> <spinbox label="...">
@@ -3595,7 +3593,7 @@ msgstr "k (Počet draws from the urn)"
 #: rkward/plugins/distributions/hypergeometric.xml:20
 #, kde-format
 msgid "k (Number of balls drawn from the urn)"
-msgstr "k (Počet balls drawn from the urn)"
+msgstr "k (Počet gulí vytiahnutých z urny)"
 
 #. i18n: ectx: (Loaded from Log Normal distribution calculator)
 #: rkward/plugins/distributions/log_normal.js:9
@@ -3682,8 +3680,8 @@ msgid ""
 "Note: Quantiles represents the number of failures in a sequence of Bernoulli "
 "trials before the target number of successes is reached."
 msgstr ""
-"Poznámka: Quantiles represents the počet failures in a sequence of Bernoulli "
-"trials before the target počet successes is reached."
+"Poznámka: Kvantily predstavujú počet neúspechov v postupnosti Bernoulliho "
+"pokusov pred dosiahnutím cieľového počtu úspechov."
 
 #. i18n: ectx: (Loaded from Negative Binomial distribution calculator) <settings> <setting> (refers to element labelled "Target number of successful trials")
 #: rkward/plugins/distributions/negative_binomial.rkh:19
@@ -3699,9 +3697,9 @@ msgid ""
 "affected by the \"log probabilities\" setting, i.e. always specify the plain "
 "probability."
 msgstr ""
-"Probability of success in each trial. Všimnite si, že toto nastavenie is "
-"<b>not</b> affected by the \"log probabilities\" setting, t. j. always "
-"specify the plain probability."
+"Pravdepodobnosť úspechu v každom pokuse. Všimnite si, že toto nastavenie "
+"<b>nie je</b> ovplyvnené nastavením „logaritmické pravdepodobnosti”, t. j. "
+"vždy zadajte obyčajnú pravdepodobnosť."
 
 #. i18n: ectx: (Negative Binomial distribution calculator)
 #: rkward/plugins/distributions/negative_binomial.xml:13
@@ -3710,8 +3708,8 @@ msgid ""
 "Quantiles represent the number of failures in a sequence of Bernoulli trials "
 "before the target number of successes is reached."
 msgstr ""
-"Quantiles represent the počet failures in a sequence of Bernoulli trials "
-"before the target počet successes is reached."
+"Kvantily predstavujú počet neúspechov v postupnosti Bernoulliho pokusov pred "
+"dosiahnutím cieľového počtu úspechov."
 
 #. i18n: ectx: (Loaded from Plot binomial probabilities) <settings> <setting> (refers to element labelled "Probability of success on each trial")
 #. i18n: ectx: (Negative Binomial distribution calculator) <snippets> <snippet> <spinbox label="...">
@@ -3756,8 +3754,8 @@ msgid ""
 "Various tests for normality of observed measures are available, for instance "
 "<link href=\"rkward://component/rkward/jb_test\"/>."
 msgstr ""
-"Various tests for normality of observed measures are dostupné, for instance "
-"<link href=\"rkward://component/rkward/jb_test\"/>."
+"K dispozícii sú rôzne testy normality pozorovaných meraní, napríklad <link "
+"href=\"rkward://component/rkward/jb_test\"/>."
 
 #. i18n: ectx: (Normal distribution calculator) <snippets> <snippet> <spinbox label="...">
 #: rkward/plugins/distributions/normal.xml:15
@@ -4216,7 +4214,7 @@ msgstr "dolný chvost"
 #: rkward/plugins/distributions/plot_dist_common_snippets.xml:40
 #, kde-format
 msgid "Check this box if log of the function values are to be plotted."
-msgstr "Zaškrtnite this box if log of the function values are to be plotted."
+msgstr "Zaškrtnite toto políčko, ak sa má vykresliť logaritmus hodnôt funkcie."
 
 #. i18n: ectx: (Loaded from Loaded from Plot Beta probabilities) <snippet> <setting> (refers to element labelled "Lower Tail")
 #. i18n: ectx: (Loaded from Plot Beta probabilities) <snippet> <setting> (refers to element labelled "Lower Tail")
@@ -4263,9 +4261,9 @@ msgid ""
 "this box if the upper tail of the distribution function (P[X > x]) is to be "
 "plotted."
 msgstr ""
-"This option is valid only for plotting the distribution function. Odškrtnite "
-"this box if the upper tail of the distribution function (P[X > x]) is to be "
-"plotted."
+"Táto voľba je platná iba pre vykresľovanie distribučnej funkcie. Odškrtnite "
+"toto políčko, ak sa má vykresliť horný chvost distribučnej funkcie (P[X > "
+"x])."
 
 #. i18n: ectx: (Loaded from Loaded from Plot Beta probabilities) <snippet> <setting> (refers to element labelled "Preview")
 #. i18n: ectx: (Loaded from Plot Beta probabilities) <snippet> <setting> (refers to element labelled "Preview")
@@ -4316,13 +4314,13 @@ msgid ""
 "try again. If it still persists, use only the \"Submit\" button to view the "
 "exported plot in the Output window."
 msgstr ""
-"Zaškrtnite toto políčko for previewing the function plot. A new graphics "
-"window will pop up and it will be dynamically updated na základe the choice "
-"of parameters. It may take a while for the window to show up. Sometimes, "
-"only an empty graphics device may get displayed, in which case, close the "
-"device (dev.off() or may be even graphics.off()), uncheck the box, wait for "
-"a while and try again. If it still persists, use only the \"Submit\" button "
-"to view the exported plot in the Output window."
+"Zaškrtnite toto políčko pre náhľad grafu funkcie. Zobrazí sa nové grafické "
+"okno, ktoré sa bude dynamicky aktualizovať na základe výberu parametrov. "
+"Zobrazenie okna môže chvíľu trvať. Niekedy sa môže zobraziť iba prázdne "
+"grafické zariadenie — v takom prípade zatvorte zariadenie (dev.off() alebo "
+"prípadne graphics.off()), odškrtnite políčko, chvíľu počkajte a skúste "
+"znova. Ak problém pretrváva, použite iba tlačidlo \"Submit\" na zobrazenie "
+"exportovaného grafu vo výstupnom okne."
 
 #. i18n: ectx: (Loaded from Loaded from Plot Beta probabilities) <snippet> <setting> (refers to element labelled "Plot Options")
 #. i18n: ectx: (Loaded from Plot Beta probabilities) <snippet> <setting> (refers to element labelled "Plot Options")
@@ -4549,7 +4547,7 @@ msgstr "Distribučná funkcia"
 #: rkward/plugins/distributions/plot_dist_common_snippets.xml:57
 #, kde-format
 msgid "Number of observations (points) for constructing the plot (n)."
-msgstr "Počet observations (points) for constructing the plot (n)."
+msgstr "Počet pozorovaní (bodov) na zostrojenie grafu (n)."
 
 #. i18n: ectx: (Loaded from Loaded from Plot Beta probabilities) <snippet> <setting> (refers to element labelled "Lower quantile")
 #. i18n: ectx: (Loaded from Plot Beta probabilities) <snippet> <setting> (refers to element labelled "Lower quantile")
@@ -5123,8 +5121,7 @@ msgstr ""
 #, kde-format
 msgid ""
 "Only the distribution function can be plotted for the Tukey distribution."
-msgstr ""
-"Only the distribution function môže byť plotted for the Tukey distribution."
+msgstr "Pre Tukeyovo rozdelenie možno vykresliť iba distribučnú funkciu."
 
 #. i18n: ectx: (Loaded from Studentized Range (Tukey) distribution calculator) <settings> <setting> (refers to element labelled "Number of observations")
 #. i18n: ectx: (Loaded from Plot Studentized Range (Tukey) probabilities) <settings> <setting> (refers to element labelled "Number of observations")
@@ -5132,7 +5129,7 @@ msgstr ""
 #: rkward/plugins/distributions/tukey.rkh:19
 #, kde-format
 msgid "Number of independent observations whose range to consider."
-msgstr "Number of nezávislý observations whose range to consider."
+msgstr "Počet nezávislých pozorovaní, ktorých rozsah sa má zvažovať."
 
 #. i18n: ectx: (Loaded from Studentized Range (Tukey) distribution calculator) <settings> <setting> (refers to element labelled "Degrees of freedom for standard deviation estimate")
 #. i18n: ectx: (Loaded from Plot Studentized Range (Tukey) probabilities) <settings> <setting> (refers to element labelled "Degrees of freedom for standard deviation estimate")
@@ -5281,15 +5278,15 @@ msgid ""
 "g. a fixed number of trials, or a fixed period of time), where λ (lambda) is "
 "the expected (mean) number of such events."
 msgstr ""
-"Quantiles represent the počet events observed in a specified region (napr. a "
-"fixed počet trials, or a fixed period of time), where λ (lambda) is the "
-"expected (mean) počet such events."
+"Kvantily predstavujú počet udalostí pozorovaných v zadanej oblasti (napr. "
+"pevný počet pokusov alebo pevné časové obdobie), kde λ (lambda) je očakávaný "
+"(stredný) počet takýchto udalostí."
 
 #. i18n: ectx: (Loaded from Poisson distribution calculator) <settings> <setting> (refers to element labelled "λ (Lambda)")
 #: rkward/plugins/distributions/poisson.rkh:19
 #, kde-format
 msgid "The expected (mean) number of events in the region of interest."
-msgstr "The expected (mean) počet events in the region of interest."
+msgstr "Očakávaný (priemerný) počet udalostí v skúmanej oblasti."
 
 #. i18n: ectx: (Poisson distribution calculator) <snippets> <snippet> <spinbox label="...">
 #: rkward/plugins/distributions/poisson.xml:18
@@ -5448,8 +5445,8 @@ msgid ""
 "Select the data to be computed (one or more variables). The vectors need to "
 "be numeric and can be of different length."
 msgstr ""
-"Vyberte the data to be computed (one or more variables). The vectors need to "
-"be numeric and môže byť of different length."
+"Vyberte údaje, ktoré sa majú vypočítať (jedna alebo viac premenných). "
+"Vektory musia byť numerické a môžu mať rôznu dĺžku."
 
 #. i18n: ectx: (Loaded from Jarque-Bera Normality Test) <settings> <setting> (refers to element labelled "Show Length and NAs")
 #: rkward/plugins/distributions/tests/jb_test.rkh:22
@@ -5523,13 +5520,13 @@ msgstr "n.classes-1 degrees of freedom"
 #: rkward/plugins/distributions/tests/sf_test.xml:18
 #, kde-format
 msgid "Note: Objects must have between 5 and 5000 values"
-msgstr "Poznámka: Objects must have between 5 and 5000 values"
+msgstr "Poznámka: Objekty musia mať 5 až 5000 hodnôt"
 
 #. i18n: ectx: (Shapiro-Wilk Normality Test) <dialog label="Shapiro-Wilk Normality Test"> <tab label="Select Variables"> <text>
 #: rkward/plugins/distributions/tests/shapiro_test.xml:18
 #, kde-format
 msgid "Note: Objects must have between 3 and 5000 values"
-msgstr "Poznámka: Objects must have between 3 and 5000 values"
+msgstr "Poznámka: Objekty musia mať 3 až 5000 hodnôt"
 
 #. i18n: ectx: (Loaded from Studentized Range (Tukey) distribution calculator)
 #: rkward/plugins/distributions/tukey.js:9
@@ -5544,9 +5541,9 @@ msgid ""
 "Provides a calculator for probabilities, quantiles in the Standardized Range "
 "(Tukey) distribution. Calculating densities is not supported by this plugin."
 msgstr ""
-"Provides a calculator for probabilities, quantiles in the Standardized Range "
-"(Tukey) distribution. Calculating densities nie je podporovaný by this "
-"plugin."
+"Poskytuje kalkulátor pre pravdepodobnosti a kvantily v štandardizovanom "
+"rozsahovom (Tukeyovom) rozdelení. Výpočet hustôt tento zásuvný modul "
+"nepodporuje."
 
 #. i18n: ectx: (Loaded from Studentized Range (Tukey) distribution calculator) <summary>
 #: rkward/plugins/distributions/tukey.rkh:11
@@ -5556,9 +5553,9 @@ msgid ""
 "observations, and the standard deviation estimate (based on given number of "
 "degrees of freedom) of an independent sample."
 msgstr ""
-"Quantiles are the ratio between the observed range in the given počet "
-"observations, and the standard deviation estimate (na základe given počet "
-"degrees of freedom) of an independent sample."
+"Kvantily sú pomerom medzi pozorovaným rozsahom v danom počte pozorovaní a "
+"odhadom smerodajnej odchýlky (na základe daného počtu stupňov voľnosti) "
+"nezávislej vzorky."
 
 #. i18n: ectx: (Loaded from Uniform distribution calculator)
 #: rkward/plugins/distributions/uniform.js:11
@@ -5654,8 +5651,8 @@ msgid ""
 "the number of pairs from sample x and y, for which y[j] is not greater than "
 "x[i]."
 msgstr ""
-"Quantiles correspond to the value of the Wilcoxon Rank Sum statistic, t. j. "
-"the počet pairs from sample x and y, for which y[j] is not greater than x[i]."
+"Kvantily zodpovedajú hodnote štatistiky Wilcoxonovho súčtu poradí, t. j. "
+"počtu dvojíc zo vzoriek x a y, pre ktoré y[j] nie je väčšie ako x[i]."
 
 #. i18n: ectx: (Loaded from Wilcoxon Rank Sum distribution calculator) <settings> <setting> (refers to element labelled "m (Numbers of observations in the first sample)")
 #. i18n: ectx: (Wilcoxon Rank Sum distribution calculator) <snippets> <snippet> <spinbox label="...">

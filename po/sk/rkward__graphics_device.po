@@ -74,8 +74,8 @@ msgid ""
 "The \"cairo\" library, providing SVG-support, is not compiled in by default "
 "on some systems."
 msgstr ""
-"The \"cairo\" library, providing SVG-support, is not compiled in by "
-"predvolené on some systems."
+"Knižnica \"cairo\", ktorá poskytuje podporu SVG, nie je na niektorých "
+"systémoch predvolene skompilovaná."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <summary>
 #: rkward/plugins/x11device/export.rkh:8
@@ -84,8 +84,8 @@ msgid ""
 "Export the current contents of a graphics device to a postscript/pdf/png/"
 "jpeg file either using the native functions or using ghostscript."
 msgstr ""
-"Export aktuálny contents of a graphics device to a postscript/pdf/png/jpeg "
-"file either using the native functions or using ghostscript."
+"Exportujte aktuálny obsah grafického zariadenia do súboru postscript/pdf/png/"
+"jpeg buď pomocou natívnych funkcií, alebo pomocou ghostscriptu."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <usage>
 #: rkward/plugins/x11device/export.rkh:11
@@ -121,7 +121,7 @@ msgstr ""
 #: rkward/plugins/x11device/export.rkh:11
 #, kde-format
 msgid "This plugin is only available in the context of a graphics device."
-msgstr "This plugin is only dostupné in the context of a graphics device."
+msgstr "Tento doplnok je dostupný iba v kontexte grafického zariadenia."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "File name")
 #: rkward/plugins/x11device/export.rkh:19
@@ -149,12 +149,11 @@ msgid ""
 "relevant extension is appended to the filename above to construct the full "
 "filename. This option is disabled for exporting via ghostscript."
 msgstr ""
-"Zaškrtnite toto políčko to let RKWard detect the file extension "
-"automatically. If the filename specified in the 'File name' box already has "
-"a relevant extension, then nothing is done, that is, zadaný filename is "
-"used. Otherwise a relevant extension is appended to the filename above to "
-"construct the full filename. Táto voľba is disabled for exporting via "
-"ghostscript."
+"Zaškrtnite toto políčko, aby RKWard automaticky zistil príponu súboru. Ak "
+"zadaný názov súboru v poli „Názov súboru” už má príslušnú príponu, nič sa "
+"nevykoná, t. j. použije sa zadaný názov súboru. Inak sa k názvu súboru "
+"vyššie pripojí príslušná prípona na zostrojenie úplného názvu súboru. Táto "
+"voľba je pre export cez ghostscript zakázaná."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Output format")
 #: rkward/plugins/x11device/export.rkh:21
@@ -165,10 +164,10 @@ msgid ""
 "is chosen then the output format of the ghostscript device will need to be "
 "provided (see below under 'Ghostscript specific options')."
 msgstr ""
-"Choose či sa má use postscript, pdf, svg, png or jpeg for exporting the "
-"file. Toto je the <i>device</i> parameter to dev.print. If 'via Ghostscript' "
-"is chosen then the output format of the ghostscript device will need to be "
-"provided (see below under 'Ghostscript specific options')."
+"Vyberte, či sa má na export súboru použiť postscript, pdf, svg, png alebo "
+"jpeg. Toto je parameter <i>device</i> funkcie dev.print. Ak je zvolená "
+"možnosť „cez Ghostscript”, bude potrebné zadať výstupný formát zariadenia "
+"ghostscript (pozri nižšie pod „Možnosti špecifické pre Ghostscript”)."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "EPS compatible")
 #: rkward/plugins/x11device/export.rkh:22
@@ -180,11 +179,11 @@ msgid ""
 "can not be set in this case. This sets the <i>onefile</i> parameter to "
 "postscript to FALSE."
 msgstr ""
-"When exporting in postscript format, this allows you to select, whether an "
-"EPSF (.eps-file) header should be generated. This seems to generate more "
-"portable files, so is recommended in most cases. Papersize and orientation "
-"can not be set v tomto prípade. This sets the <i>onefile</i> parameter to "
-"postscript to FALSE."
+"Pri exporte vo formáte postscript vám to umožňuje vybrať, či sa má "
+"vygenerovať hlavička EPSF (súbor .eps). Zdá sa, že sa tým vytvárajú "
+"prenositeľnejšie súbory, preto sa to odporúča vo väčšine prípadov. Veľkosť "
+"papiera a orientáciu v tomto prípade nie je možné nastaviť. Toto nastavuje "
+"parameter <i>onefile</i> funkcie postscript na FALSE."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Automatic Width")
 #: rkward/plugins/x11device/export.rkh:25
@@ -192,8 +191,7 @@ msgstr ""
 msgid ""
 "Check this box to let the export function determine the width automatically."
 msgstr ""
-"Zaškrtnite this box to let the export function determine the width "
-"automatically."
+"Zaškrtnite toto políčko, aby exportná funkcia určila šírku automaticky."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Automatic Height")
 #: rkward/plugins/x11device/export.rkh:26
@@ -235,11 +233,11 @@ msgid ""
 "as the width (in pixels) parameter value. Again, none of these are required "
 "for exporting to Postscript/PDF."
 msgstr ""
-"<b>jpeg</b> or <b>png</b> functions need aspoň jedna z width/height to be "
-"provided. We override this restriction by reading in the width (in inches) "
-"from <b>par(\"din\")[1]</b> and then setting 'par(\"din\")[1] * resolution' "
-"as the width (in pixels) parameter value. Again, njedna z these are required "
-"for exporting to Postscript/PDF."
+"Funkcie <b>jpeg</b> alebo <b>png</b> vyžadujú zadanie aspoň jednej z hodnôt "
+"šírky/výšky. Toto obmedzenie obchádzame načítaním šírky (v palcoch) z "
+"<b>par(\"din\")[1]</b> a následným nastavením 'par(\"din\")[1] * resolution' "
+"ako hodnoty parametra šírky (v pixeloch). Pre export do Postscriptu/PDF "
+"žiadna z týchto hodnôt nie je potrebná."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Height in inches")
 #: rkward/plugins/x11device/export.rkh:30
@@ -267,11 +265,11 @@ msgid ""
 "resolution (when 'Default Resolution' is checked) is 96 for PNG/JPEG exports "
 "and it is 72 for Ghostscript exports."
 msgstr ""
-"Available only for PNG/JPEG/Ghostscript, toto je the <i>res</i> parameter to "
-"dev.print or dev2bitmap. This value is used in converting from width/height "
-"in pixels to inches ako je popísané above (under 'Width'). The default "
-"resolution (when 'Default Resolution' is checked) is 96 for PNG/JPEG exports "
-"and it is 72 for Ghostscript exports."
+"K dispozícii iba pre PNG/JPEG/Ghostscript, toto je parameter <i>res</i> "
+"funkcie dev.print alebo dev2bitmap. Táto hodnota sa používa pri prevode "
+"šírky/výšky z pixelov na palce, ako je popísané vyššie (v časti „Šírka”). "
+"Predvolené rozlíšenie (keď je zaškrtnuté „Predvolené rozlíšenie”) je 96 pre "
+"exporty PNG/JPEG a 72 pre exporty Ghostscript."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "JPEG Quality")
 #: rkward/plugins/x11device/export.rkh:35
@@ -280,8 +278,8 @@ msgid ""
 "Available only for JPEG, this is the <i>quality</i> parameter to <b>jpeg</"
 "b>. Sets the quality for JPEG exporting. The default quality is 75."
 msgstr ""
-"Available only for JPEG, this is the <i>quality</i> parameter to <b>jpeg</"
-"b>. Sets the quality for JPEG exporting. The predvolené quality is 75."
+"K dispozícii iba pre JPEG, toto je parameter <i>quality</i> funkcie <b>jpeg</"
+"b>. Nastavuje kvalitu pre export JPEG. Predvolená kvalita je 75."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Paper Size")
 #: rkward/plugins/x11device/export.rkh:38
@@ -304,8 +302,8 @@ msgid ""
 "Uncheck this for NOT centering the image on the page. This is the "
 "<i>pagecentre</i> parameter."
 msgstr ""
-"Odškrtnite this for NOT centering obrázok on the page. This is the "
-"<i>pagecentre</i> parameter."
+"Odškrtnite toto, ak obrázok NEMÁ byť vycentrovaný na stránke. Toto je "
+"parameter <i>pagecentre</i>."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Horizontal (ps/gs)")
 #: rkward/plugins/x11device/export.rkh:40
@@ -355,10 +353,9 @@ msgid ""
 "this is not displayed on the plot, but rather it is embedded inside the "
 "graphics file. This is the <i>title</i> parameter to <b>postscript</b>."
 msgstr ""
-"Unzaškrtnite toto políčko, to specify a custom title to the graphics file. "
-"Všimnite si, že toto je not displayed on the plot, but rather it is embedded "
-"inside the graphics file. Toto je the <i>title</i> parameter to "
-"<b>postscript</b>."
+"Odškrtnite toto políčko na zadanie vlastného titulu grafického súboru. "
+"Všimnite si, že toto sa nezobrazuje v grafe, ale je vložené do grafického "
+"súboru. Toto je parameter <i>title</i> funkcie <b>postscript</b>."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "GS Output device")
 #: rkward/plugins/x11device/export.rkh:46
@@ -388,7 +385,7 @@ msgstr ""
 #: rkward/plugins/x11device/export.xml:63
 #, kde-format
 msgid "Export contents of graphics device to various formats"
-msgstr "Exportovať contents of graphics device to various formats"
+msgstr "Exportovať obsah grafického zariadenia do rôznych formátov"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="...">
 #: rkward/plugins/x11device/export.xml:65

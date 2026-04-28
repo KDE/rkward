@@ -45,8 +45,9 @@ msgid ""
 "Generic plugin to limit a single numeric vector to the n largest / smallest "
 "values. This plugin is designed to be embedded into other plugins."
 msgstr ""
-"Generic plugin to limit a single numeric vector to the n largest / smallest "
-"values. Tento plugin is navrhnutý na be embedded into other plugins."
+"Všeobecný zásuvný modul na obmedzenie jedného numerického vektora na n "
+"najväčších/najmenších hodnôt. Tento zásuvný modul je navrhnutý na vkladanie "
+"do iných zásuvných modulov."
 
 #. i18n: ectx: (Loaded from Limit Vector Length) <usage>
 #: rkward/plugins/distributions/../data/limit_vector_length.rkh:12
@@ -55,8 +56,8 @@ msgid ""
 "Specify the desired length cutoff and sorting. Note that the result is "
 "always sorted, with the sum of remainder values appended at the end."
 msgstr ""
-"Specify the desired length cutoff and sorting. Všimnite si, že the result is "
-"always sorted, with the sum of remainder values appended at the end."
+"Zadajte požadovanú hranicu dĺžky a zoradenie. Všimnite si, že výsledok je "
+"vždy zoradený, pričom súčet zostatkových hodnôt je pripojený na konci."
 
 #. i18n: ectx: (Loaded from Limit Vector Length) <settings> <setting> (refers to element labelled "Limit")
 #: rkward/plugins/distributions/../data/limit_vector_length.rkh:17
@@ -65,8 +66,8 @@ msgid ""
 "Maximum number of regular groups to display. One additional group \"others\" "
 "will be displayed, if appropriate."
 msgstr ""
-"Maximum počet regular groups to display. One additional group \"others\" "
-"will be displayed, if appropriate."
+"Maximálny počet bežných skupín, ktoré sa majú zobraziť. V prípade potreby sa "
+"zobrazí jedna dodatočná skupina „ostatní”."
 
 #. i18n: ectx: (Loaded from Limit Vector Length) <settings> <setting> (refers to element labelled "Sorting")
 #: rkward/plugins/distributions/../data/limit_vector_length.rkh:18
@@ -85,8 +86,8 @@ msgid ""
 "Should a category be added for the remaining value (those which have been "
 "cut off)? Note: This will always be appended to the end of the vector."
 msgstr ""
-"Should a category be added for the remaining value (those which have been "
-"cut off)? Poznámka: This will always be appended to the end of the vector."
+"Má sa pridať kategória pre zostatkové hodnoty (tie, ktoré boli odrezané)? "
+"Poznámka: Táto kategória bude vždy pripojená na koniec vektora."
 
 #. i18n: ectx: (Loaded from Limit Vector Length) <settings> <setting> (refers to element labelled "Statistic")
 #: rkward/plugins/distributions/../data/limit_vector_length.rkh:20
@@ -111,8 +112,8 @@ msgid ""
 "Label to use for the \"others\" category. Note: If your data is not labeled, "
 "emptying this field will sometimes be preferable."
 msgstr ""
-"Label to use for the \"others\" category. Poznámka: Akr data is not labeled, "
-"emptying this field will sometimes be preferable."
+"Popis pre kategóriu „ostatní”. Poznámka: Ak vaše údaje nie sú označené, "
+"niekedy bude vhodnejšie toto pole vyprázdniť."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
@@ -134,7 +135,8 @@ msgid ""
 "General users may skip this section of help, this is primarily for "
 "developers."
 msgstr ""
-"General users may skip táto sekcia of help, toto je primarily for developers."
+"Bežní používatelia môžu túto časť pomocníka preskočiť, je určená "
+"predovšetkým pre vývojárov."
 
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
@@ -154,7 +156,8 @@ msgid ""
 "The following external properties are provided for use in the embedding "
 "plugin."
 msgstr ""
-"Nasledujúce external properties are provided for use in the embedding plugin."
+"Nasledujúce externé vlastnosti sú poskytnuté na použitie vo vkladajúcom "
+"zásuvnom module."
 
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Limit Vector Length) <technical>
@@ -164,8 +167,8 @@ msgid ""
 "<i>invar</i>: Symbol name of the input variable to be limited. Defaults to "
 "'x'."
 msgstr ""
-"<i>invar</i>: Symbol name of the input varischopný be limited. Defaults to "
-"'x'."
+"<i>invar</i>: Symbolický názov vstupnej premennej, ktorá sa má obmedziť. "
+"Predvolená hodnota je 'x'."
 
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Limit Vector Length) <technical>
@@ -371,7 +374,8 @@ msgid ""
 "The following external properties are provided for use in the embedding "
 "plugin:"
 msgstr ""
-"Nasledujúce external properties are provided for use in the embedding plugin:"
+"Nasledujúce externé vlastnosti sú poskytnuté na použitie vo vkladajúcom "
+"zásuvnom module:"
 
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Tabulate) <technical>
@@ -394,8 +398,8 @@ msgid ""
 "<i>outvar</i>: By default, the plugin produces a table in a variable called "
 "\"x\". You can set it to use a different name, here."
 msgstr ""
-"<i>outvar</i>: Predvolene, the plugin produces a table in a variable called "
-"\"x\". Môžete set it to use a different name, here."
+"<i>outvar</i>: Predvolene zásuvný modul vytvára tabuľku v premennej s názvom "
+"\"x\". Tu môžete nastaviť iný názov."
 
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Tabulate) <technical>
@@ -644,8 +648,8 @@ msgid ""
 "Choose if you want stacked bars, legend, and rainbow colors. Also you can "
 "choose if you want to display or not bar values (labels) and in what place."
 msgstr ""
-"Choose ak want stacked bars, legend, and rainbow colors. Also môžete choose "
-"ak want to display or not bar values (labels) and in what place."
+"Vyberte, či chcete skladané stĺpce, legendu a dúhové farby. Tiež môžete "
+"vybrať, či sa majú zobrazovať hodnoty stĺpcov (popisy) a na akom mieste."
 
 #. i18n: ectx: (Loaded from Barplot Options) <settings> <setting> (refers to element labelled "Draw Legend")
 #: rkward/plugins/distributions/../plots/barplot_embed.rkh:17
@@ -655,9 +659,9 @@ msgid ""
 "used to construct the legend, so this option has no effect, if the rows are "
 "not named."
 msgstr ""
-"Should a legend be added to the barplot? The row names of the data will be "
-"používaný na construct the legend, so táto voľba has no effect, if the rows "
-"are not named."
+"Má sa do stĺpcového grafu pridať legenda? Na zostrojenie legendy sa použijú "
+"názvy riadkov údajov, takže táto voľba nemá žiadny efekt, ak riadky nie sú "
+"pomenované."
 
 #. i18n: ectx: (Loaded from Barplot Options) <settings> <setting> (refers to element labelled "Colors")
 #: rkward/plugins/distributions/../plots/barplot_embed.rkh:18
@@ -673,9 +677,9 @@ msgid ""
 "meaningful for two-dimensional data. If you choose stacked bars you can not "
 "display bar values, below."
 msgstr ""
-"Select a type between juxtaposed bars and stacked bars. Toto nastavenie is "
-"only meaningful for two-dimensional data. Ak choose stacked bars môžete not "
-"display bar values, below."
+"Vyberte typ medzi vedľa seba umiestnenými stĺpcami a skladanými stĺpcami. "
+"Toto nastavenie má zmysel iba pre dvojrozmerné údaje. Ak zvolíte skladané "
+"stĺpce, nemôžete zobrazovať hodnoty stĺpcov (nižšie)."
 
 #. i18n: ectx: (Loaded from Barplot Options) <settings> <setting> (refers to element labelled "Display values")
 #: rkward/plugins/distributions/../plots/barplot_embed.rkh:20
@@ -690,8 +694,8 @@ msgid ""
 "If you have selected to display bar values (labels) you can select where "
 "should they be displayed:"
 msgstr ""
-"Ak have selected to display bar values (labels) môžete select where should "
-"they be displayed:"
+"Ak ste zvolili zobrazenie hodnôt stĺpcov (popisov), môžete vybrať, kde sa "
+"majú zobrazovať:"
 
 #. i18n: ectx: (Loaded from Barplot Options) <settings> <setting> (refers to element labelled "Placement")
 #: rkward/plugins/distributions/../plots/barplot_embed.rkh:21
@@ -728,9 +732,9 @@ msgid ""
 "provide a means to select input data. When embedding this plugin, you will "
 "be interested in the following properties:"
 msgstr ""
-"Tento plugin is určený na be embedded in other plugins. It does not by "
-"itself provide a means to select input data. When embedding tento plugin, "
-"you will be interested in nasledujúce properties:"
+"Tento zásuvný modul je určený na vkladanie do iných zásuvných modulov. Sám o "
+"sebe neposkytuje prostriedok na výber vstupných údajov. Pri vkladaní tohto "
+"zásuvného modulu vás budú zaujímať nasledujúce vlastnosti:"
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Barplot Options) <technical>
@@ -740,8 +744,8 @@ msgid ""
 "<i>xvar</i>: The name of the data variable. You can connect this to a "
 "varslot, or set it to a fixed string such as \"x\". This is required."
 msgstr ""
-"<i>xvar</i>: The name of the data variable. Môžete connect this to a "
-"varslot, or set it to a fixed string ako napríklad \"x\". Toto je required."
+"<i>xvar</i>: Názov dátovej premennej. Môžete to pripojiť k varslotu alebo "
+"nastaviť na pevný reťazec, ako napríklad \"x\". Toto je povinné."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Barplot Options) <technical>
@@ -854,8 +858,8 @@ msgid ""
 "This plugin is meant to be used embedded, and you should not really ever see "
 "this help page."
 msgstr ""
-"Tento plugin is určený na be used embedded, and by ste mali not really ever "
-"see this help page."
+"Tento zásuvný modul je určený na vkladané použitie a túto stránku pomocníka "
+"by ste vlastne nikdy nemali vidieť."
 
 #. i18n: ectx: (Loaded from Choose color) <settings> <setting> (refers to element labelled "Color")
 #: rkward/plugins/distributions/../plots/color_chooser.rkh:19
@@ -1417,8 +1421,8 @@ msgid ""
 "Check this box if the histogram is to be added to the current plot. This is "
 "the <i>add</i> parameter."
 msgstr ""
-"Zaškrtnite toto políčko if the histogram is to be added to aktuálny plot. "
-"Toto je the <i>add</i> parameter."
+"Zaškrtnite toto políčko, ak sa má histogram pridať do aktuálneho grafu. Toto "
+"je parameter <i>add</i>."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Frequency")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:16
@@ -1455,12 +1459,12 @@ msgid ""
 "points in the range of the variable. The number of break points in this case "
 "is provided by 'Vector length' (see below)."
 msgstr ""
-"Toto je the <i>breaks</i> parameter to <b>hist</b>, unless either 'Integer "
-"numbers' or 'Vector of break points' is chosen. The 'Integer numbers' option "
-"sets the break points as the integers between the minimum and the maximum of "
-"the variable. The 'Vector of break points' option sets equally spaced break "
-"points in the range of the variable. The počet break points v tomto prípade "
-"is provided by 'Vector length' (see below)."
+"Toto je parameter <i>breaks</i> funkcie <b>hist</b>, pokiaľ nie je zvolená "
+"možnosť „Celé čísla” alebo „Vektor hraničných bodov”. Možnosť „Celé čísla” "
+"nastavuje hraničné body ako celé čísla medzi minimom a maximom premennej. "
+"Možnosť „Vektor hraničných bodov” nastavuje rovnomerne rozmiestnené hraničné "
+"body v rozsahu premennej. Počet hraničných bodov v tomto prípade poskytuje "
+"„Dĺžka vektora” (pozri nižšie)."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Suggested cells")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:22
@@ -1470,9 +1474,8 @@ msgid ""
 "suggestion to the number of cells. This is the <i>breaks</i> parameter with "
 "a single number argument."
 msgstr ""
-"If 'A single number' is chosen in vyššie uvedený field, then this provides a "
-"suggestion to the počet cells. Toto je the <i>breaks</i> parameter with a "
-"single number argument."
+"Ak je vo vyššie uvedenom poli zvolené „Jedno číslo”, toto poskytuje návrh "
+"počtu buniek. Toto je parameter <i>breaks</i> s argumentom jedného čísla."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Vector length")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:23
@@ -1485,13 +1488,12 @@ msgid ""
 "code). The range of the variable is extended by 10% before obtaining the "
 "sequence, so that both the minimum and maximum points are included."
 msgstr ""
-"If 'Vector of break points' is chosen in vyššie uvedený field, then this "
-"provides the length of the vector of equally spaced break points in the "
-"range of the variable. Toto je the <i>breaks</i> parameter with a vector "
-"argument. The actual sequence is calculated by an inline function call (see "
-"the generated code). The range of the variable is extended by 10% before "
-"obtaining the sequence, so that both the minimum and maximum points are "
-"included."
+"Ak je vo vyššie uvedenom poli zvolený „Vektor hraničných bodov”, toto "
+"poskytuje dĺžku vektora rovnomerne rozmiestnených hraničných bodov v rozsahu "
+"premennej. Toto je parameter <i>breaks</i> s vektorovým argumentom. Skutočná "
+"postupnosť sa vypočíta volaním inline funkcie (pozri vygenerovaný kód). "
+"Rozsah premennej sa pred získaním postupnosti rozšíri o 10 %, aby boli "
+"zahrnuté minimálny aj maximálny bod."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Draw border")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:25
@@ -1501,9 +1503,9 @@ msgid ""
 "<i>border=FALSE</i> is added to the code. Otherwise a color is provided as "
 "the argument to <i>border</i>."
 msgstr ""
-"Whether border to the histogram bars are to be drawn. Ak nie je zaškrtnuté "
-"then, <i>border=FALSE</i> is added to the code. Otherwise a color is "
-"provided as the argument to <i>border</i>."
+"Určuje, či sa majú kresliť okraje stĺpcov histogramu. Ak nie je zaškrtnuté, "
+"do kódu sa pridá <i>border=FALSE</i>. Inak sa ako argument pre <i>border</i> "
+"zadá farba."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Color")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:26
@@ -1512,8 +1514,8 @@ msgid ""
 "This is the <i>border</i> argument which provides the color of the border. "
 "Check the above box to use this option."
 msgstr ""
-"Toto je the <i>border</i> argument which provides the color of the border. "
-"Check vyššie uvedený box to use táto voľba."
+"Toto je argument <i>border</i>, ktorý určuje farbu okraja. Zaškrtnite "
+"políčko vyššie, aby ste použili túto voľbu."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Line type for histogram")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:28
@@ -1547,7 +1549,8 @@ msgstr "Toto je the <i>angle</i> parameter."
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:32
 #, kde-format
 msgid "Check this box to use a fill color for the histogram bars."
-msgstr "Zaškrtnite toto políčko to use a fill color for the histogram bars."
+msgstr ""
+"Zaškrtnite toto políčko, aby sa pre stĺpce histogramu použila výplňová farba."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Color")
 #: rkward/plugins/distributions/../plots/histogram_options.rkh:33
@@ -1557,9 +1560,9 @@ msgid ""
 "color. If it is empty, then <i>col</i> is not used in the code, otherwise "
 "the chosen color is used to fill the bars."
 msgstr ""
-"Toto je the <i>col</i> parameter. The embedding plugin might set a default "
-"color. If it is empty, then <i>col</i> is not used in the code, otherwise "
-"the chosen color is používaný na fill the bars."
+"Toto je parameter <i>col</i>. Vkladajúci zásuvný modul môže nastaviť "
+"predvolenú farbu. Ak je prázdny, <i>col</i> sa v kóde nepoužíva, inak sa na "
+"vyplnenie stĺpcov použije zvolená farba."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
@@ -1574,7 +1577,8 @@ msgstr ""
 msgid ""
 "The following external tags are provided for use in the embedding plugin."
 msgstr ""
-"Nasledujúce external tags are provided for use in the embedding plugin."
+"Nasledujúce externé značky sú poskytnuté na použitie vo vkladajúcom zásuvnom "
+"module."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: i18n: "true", "false, and terms inside <i></i> or <b></b> should not be translated, here
@@ -1940,7 +1944,7 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/plot_options.rkh:22
 #, kde-format
 msgid "Enable this option, if you want to customize the margins."
-msgstr "Enable táto voľba, ak want to customize the margins."
+msgstr "Povoľte túto voľbu, ak chcete prispôsobiť okraje."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Top")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:23
@@ -1974,8 +1978,8 @@ msgid ""
 "Uncheck this box to avoid drawing the X axis. This is the <i>xaxt</i> "
 "argument to par. See R reference on <b>par</b>."
 msgstr ""
-"Unzaškrtnite toto políčko to avoid drawing the X axis. Toto je the <i>xaxt</"
-"i> argument to par. See R reference on <b>par</b>."
+"Odškrtnite toto políčko, aby sa os X nekreslila. Toto je argument <i>xaxt</"
+"i> funkcie par. Pozri referenciu R pre <b>par</b>."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Draw Y axis")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:30
@@ -1984,8 +1988,8 @@ msgid ""
 "Uncheck this box to avoid drawing the Y axis. This is the <i>yaxt</i> "
 "argument to par. See R reference on <b>par</b>."
 msgstr ""
-"Unzaškrtnite toto políčko to avoid drawing the Y axis. Toto je the <i>yaxt</"
-"i> argument to par. See R reference on <b>par</b>."
+"Odškrtnite toto políčko, aby sa os Y nekreslila. Toto je argument <i>yaxt</"
+"i> funkcie par. Pozri referenciu R pre <b>par</b>."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "X axis logarithmic")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:31
@@ -1994,8 +1998,9 @@ msgid ""
 "This specifies the <i>log</i> argument to plot.default. Check this box to "
 "set <i>log=\"x\"</i>. See R reference on <b>plot.default</b>."
 msgstr ""
-"This specifies the <i>log</i> argument to plot.default. Zaškrtnite toto "
-"políčko to set <i>log=\"x\"</i>. See R reference on <b>plot.default</b>."
+"Toto určuje argument <i>log</i> funkcie plot.default. Zaškrtnite toto "
+"políčko na nastavenie <i>log=\"x\"</i>. Pozri referenciu R pre <b>plot."
+"default</b>."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Y axis logarithmic")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:32
@@ -2005,9 +2010,9 @@ msgid ""
 "set <i>log=\"y\"</i>. Check both the boxes to set <i>log=\"xy\"</i>. See R "
 "reference on <b>plot.default</b>."
 msgstr ""
-"This specifies the <i>log</i> argument to plot.default. Zaškrtnite toto "
-"políčko to set <i>log=\"y\"</i>. Check both the boxes to set <i>log=\"xy\"</"
-"i>. See R reference on <b>plot.default</b>."
+"Toto určuje argument <i>log</i> funkcie plot.default. Zaškrtnite toto "
+"políčko na nastavenie <i>log=\"y\"</i>. Zaškrtnite obidve políčka na "
+"nastavenie <i>log=\"xy\"</i>. Pozri referenciu R pre <b>plot.default</b>."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Labels (leave empty for default)")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:34
@@ -2074,25 +2079,25 @@ msgid ""
 "not for <b>plot.default</b> but rather for the function <b>grid</b>. For "
 "this to be functional the embedding plugin should implement it internally."
 msgstr ""
-"Zaškrtnite toto políčko to add a grid to aktuálny plot. For various grid "
-"options see <link href=\"rkward://component/x11grid\"/>. Všimnite si, že "
-"these options are not for <b>plot.default</b> but rather for the function "
-"<b>grid</b>. For this to be functional the embedding plugin should implement "
-"it internally."
+"Zaškrtnite toto políčko, aby sa do aktuálneho grafu pridala mriežka. Pre "
+"rôzne možnosti mriežky pozri <link href=\"rkward://component/x11grid\"/>. "
+"Všimnite si, že tieto možnosti nie sú pre <b>plot.default</b>, ale pre "
+"funkciu <b>grid</b>. Aby to fungovalo, vkladajúci zásuvný modul by to mal "
+"implementovať interne."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
 #: rkward/plugins/distributions/../plots/plot_options.rkh:58
 #, kde-format
 msgid "<i>xvar</i>: The variable to be used for the x-coordinates."
-msgstr "<i>xvar</i>: The varischopný be používaný na the x-coordinates."
+msgstr "<i>xvar</i>: Premenná, ktorá sa má použiť pre súradnice x."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
 #: rkward/plugins/distributions/../plots/plot_options.rkh:58
 #, kde-format
 msgid "<i>yvar</i>: The variable to be used for the y-coordinates."
-msgstr "<i>yvar</i>: The varischopný be používaný na the y-coordinates."
+msgstr "<i>yvar</i>: Premenná, ktorá sa má použiť pre súradnice y."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
@@ -2135,11 +2140,11 @@ msgid ""
 "unquoted. If you want to specify a literal string add quotes, explicitly, as "
 "\"&amp;<i>quote;</i>\"."
 msgstr ""
-"<i>default_main</i>: A string specifying the <i>main</i> argument to <b>plot."
-"default</b>. Predvolene toto je \"\" which means that the main title "
-"generated by the plotting function is used. Poznámka: The default is always "
-"used unquoted. Ak want to specify a literal string add quotes, explicitly, "
-"as \"&amp;<i>quote;</i>\"."
+"<i>default_main</i>: Reťazec určujúci argument <i>main</i> funkcie <b>plot."
+"default</b>. Predvolene je to \"\", čo znamená, že sa použije hlavný nadpis "
+"vygenerovaný funkciou vykresľovania. Poznámka: Predvolená hodnota sa vždy "
+"používa bez úvodzoviek. Ak chcete zadať doslovný reťazec, explicitne "
+"pridajte úvodzovky ako \"&amp;<i>quote;</i>\"."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
@@ -2246,13 +2251,14 @@ msgid ""
 "following call:<br> printIndented (\"\\t\", getRK_val (\"plot_options.code."
 "calculate\"));</br><br> after the plotting function should do the job.</br>"
 msgstr ""
-"<i>allow_grid</i>: Setting this to \"true\" (\"false\") enables (disables) "
-"the display of the '<label id=\"tab_grid\"/>' tab. If \"true\", the actual "
-"code for grid options can be extracted from code.calculate (see below) which "
-"in turn extracts it from grid_options.code.printout. Specifically, if the "
-"plot options plugin is embedded using an <i>id=\"plot_options\"</i> then "
-"nasledujúce call:<br> printIndented (\"\\t\", getRK_val (\"plot_options.code."
-"calculate\"));</br><br> after the plotting function should do the job.</br>"
+"<i>allow_grid</i>: Nastavením na \"true\" (\"false\") sa povolí (zakáže) "
+"zobrazenie karty '<label id=\"tab_grid\"/>'. Ak je \"true\", skutočný kód "
+"pre možnosti mriežky možno extrahovať z code.calculate (pozri nižšie), ktorý "
+"ho zase extrahuje z grid_options.code.printout. Konkrétne, ak je zásuvný "
+"modul možností grafu vložený pomocou <i>id=\"plot_options\"</i>, potom "
+"nasledujúce volanie:<br> printIndented (\"\\t\", getRK_val (\"plot_options."
+"code.calculate\"));</br><br> po funkcii vykresľovania by malo splniť účel.</"
+"br>"
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
@@ -2572,9 +2578,9 @@ msgid ""
 "that one data unit in the x direction is equal in length to asp * one data "
 "unit in the y direction."
 msgstr ""
-"Všimnite si, že if Aspect is a finite positive value then the window is set "
-"up so that one data unit in the x direction is equal in length to asp * one "
-"data unit in the y direction."
+"Všimnite si, že ak je Pomer kladná konečná hodnota, okno sa nastaví tak, aby "
+"jedna dátová jednotka v smere x mala rovnakú dĺžku ako asp * jedna dátová "
+"jednotka v smere y."
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Aspect ratio y/x"> <text>
 #: rkward/plugins/distributions/../plots/plot_options.xml:168
@@ -2584,9 +2590,9 @@ msgid ""
 "are represented accurately on screen. Values with Aspect > 1 can be used to "
 "produce more accurate maps when using latitude and longitude."
 msgstr ""
-"The special case Aspect == 1 produces plots where distances between points "
-"are represented accurately on screen. Values with Aspect > 1 can be "
-"používaný na produce more accurate maps when using latitude and longitude."
+"Špeciálny prípad Pomer == 1 vytvára grafy, kde sú vzdialenosti medzi bodmi "
+"na obrazovke presne zobrazené. Hodnoty s Pomerom > 1 možno použiť na tvorbu "
+"presnejších máp pri použití zemepisnej šírky a dĺžky."
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:172
@@ -2631,8 +2637,8 @@ msgid ""
 "This is the <i>add</i> argument. This option might be disabled by the "
 "embedding plugin."
 msgstr ""
-"Toto je the <i>add</i> argument. Táto voľba might be disabled by the "
-"embedding plugin."
+"Toto je argument <i>add</i>. Táto voľba môže byť zakázaná vkladajúcim "
+"zásuvným modulom."
 
 #. i18n: ectx: (Loaded from Step function plot options) <settings> <setting> (refers to element labelled "Line type for all lines")
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:16
@@ -2647,8 +2653,8 @@ msgid ""
 "This is the <i>do.points</i> argument. Uncheck this option if points are NOT "
 "to be drawn."
 msgstr ""
-"Toto je the <i>do.points</i> argument. Uncheck táto voľba if points are NOT "
-"to be drawn."
+"Toto je argument <i>do.points</i>. Odškrtnite túto voľbu, ak sa body NEMAJÚ "
+"kresliť."
 
 #. i18n: ectx: (Loaded from Step function plot options) <settings> <setting> (refers to element labelled "Color")
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:18
@@ -2673,8 +2679,8 @@ msgid ""
 "This is the <i>verticals</i> arguments. Uncheck this option if vertical "
 "lines are NOT to be drawn."
 msgstr ""
-"Toto je the <i>verticals</i> arguments. Uncheck táto voľba if vertical lines "
-"are NOT to be drawn."
+"Toto je argument <i>verticals</i>. Odškrtnite túto voľbu, ak sa zvislé čiary "
+"NEMAJÚ kresliť."
 
 #. i18n: ectx: (Loaded from Step function plot options) <settings> <setting> (refers to element labelled "Color")
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:21
@@ -2694,14 +2700,12 @@ msgid ""
 "of the same (specified) color. Otherwise (i.e., when both the colors are "
 "provided) both the colors are provided as a character vector of length two."
 msgstr ""
-"Vyššie uvedený two options are not for <b>plot.stepfun</b>, but rather for "
-"<b>ecdf</b>. These are visible only in the context of 'ecdf'. They are "
-"používaný na set the color for the horizontal lines at y = 0 and y = 1 "
-"respectively. Specifically, toto je the <i>col.01line</i> argument to "
-"<b>ecdf</b>. If only one is provided (i.e the other is set as 'Default') "
-"then both the line are of rovnaký (specified) color. Otherwise (t. j., when "
-"both the colors are provided) both the colors are provided as a character "
-"vector of length two."
+"Vyššie uvedené dve voľby nie sú pre <b>plot.stepfun</b>, ale pre <b>ecdf</"
+"b>. Sú viditeľné iba v kontexte 'ecdf'. Používajú sa na nastavenie farby "
+"vodorovných čiar pri y = 0 a y = 1. Konkrétne je to argument <i>col.01line</"
+"i> funkcie <b>ecdf</b>. Ak je zadaná iba jedna (t. j. druhá je nastavená ako "
+"'Predvolená'), obidve čiary majú rovnakú (zadanú) farbu. Inak (t. j. keď sú "
+"zadané obidve farby) sú obidve farby poskytnuté ako znakový vektor dĺžky dva."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Step function plot options) <technical>
@@ -2836,12 +2840,11 @@ msgid ""
 "trellis graphics devices (see <link href=\"rkward://rhelp/Lattice\"/> for "
 "some information)."
 msgstr ""
-"Various parameters for the <b>grid</b>. For detailed description of the "
-"individual parameters see the R reference on 'grid'. Všimnite si, že this "
-"works only when standard (traditional S) graphics functions (see "
-"library(help=\"graphics\")) are používaný na construct the plot. This does "
-"not work for trellis graphics devices (see <link href=\"rkward://rhelp/"
-"Lattice\"/> for some information)."
+"Rôzne parametre pre <b>grid</b>. Pre podrobný popis jednotlivých parametrov "
+"pozri referenciu R pre 'grid'. Všimnite si, že toto funguje iba pri použití "
+"štandardných (tradičných S) grafických funkcií (pozri library(help=\"graphics"
+"\")) na zostrojenie grafu. Nefunguje pre grafické zariadenia trellis (pozri "
+"<link href=\"rkward://rhelp/Lattice\"/> pre niektoré informácie)."
 
 #. i18n: ectx: (Loaded from Grid options) <usage>
 #: rkward/plugins/distributions/../x11device/grid.rkh:11
@@ -2862,10 +2865,10 @@ msgid ""
 "vertical lines. Select 'Specify below' to provide a specified (to be "
 "specified below) number of vertical lines in the grid."
 msgstr ""
-"Toto je the <i>nx</i> argument. The default is NULL, in which case, the "
-"vertical lines are drawn at the xaxis ticks. Select None to not draw the "
-"vertical lines. Select 'Specify below' to provide a specified (to be "
-"specified below) počet vertical lines in the grid."
+"Toto je argument <i>nx</i>. Predvolená hodnota je NULL, v takom prípade sa "
+"zvislé čiary kreslia pri značkách osi x. Vyberte Žiadne, ak sa nemajú "
+"kresliť zvislé čiary. Vyberte „Zadať nižšie” na zadanie počtu zvislých čiar "
+"v mriežke."
 
 #. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "X Cells")
 #: rkward/plugins/distributions/../x11device/grid.rkh:16
@@ -2874,8 +2877,8 @@ msgid ""
 "This is the <i>nx</i> argument, when 'Specify below' is selected in the "
 "above option list."
 msgstr ""
-"Toto je the <i>nx</i> argument, when 'Specify below' is selected in vyššie "
-"uvedený option list."
+"Toto je argument <i>nx</i>, keď je vo vyššie uvedenom zozname volieb zvolené "
+"„Zadať nižšie”."
 
 #. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "Number of Y cells")
 #: rkward/plugins/distributions/../x11device/grid.rkh:17
@@ -2884,8 +2887,8 @@ msgid ""
 "This is the <i>ny</i> argument. Similar to <i>nx</i>. See the explanation on "
 "number of x cells above."
 msgstr ""
-"Toto je the <i>ny</i> argument. Podobne ako <i>nx</i>. See the explanation "
-"on počet x cells above."
+"Toto je argument <i>ny</i>. Podobne ako <i>nx</i>. Pozri vysvetlenie počtu "
+"buniek x vyššie."
 
 #. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "Y Cells")
 #: rkward/plugins/distributions/../x11device/grid.rkh:18
@@ -2894,8 +2897,8 @@ msgid ""
 "This is the <i>ny</i> argument when a specified (by the user) number of y "
 "cells are to be used. Similar to x cells."
 msgstr ""
-"Toto je the <i>ny</i> argument when a specified (by the user) počet y cells "
-"are to be used. Podobne ako x cells."
+"Toto je argument <i>ny</i>, keď sa má použiť zadaný (používateľom) počet "
+"buniek y. Podobne ako bunky x."
 
 #. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "Custom Line width")
 #: rkward/plugins/distributions/../x11device/grid.rkh:19
@@ -2904,15 +2907,15 @@ msgid ""
 "Check this option to use a custom line width. In which case, provide the "
 "width below."
 msgstr ""
-"Check táto voľba to use a custom line width. In which case, provide the "
-"width below."
+"Zaškrtnite túto voľbu na použitie vlastnej hrúbky čiary. V takom prípade "
+"zadajte hrúbku nižšie."
 
 #. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "Line width")
 #: rkward/plugins/distributions/../x11device/grid.rkh:20
 #, kde-format
 msgid "This is the <i>lwd</i> argument. Check the above option to use this."
 msgstr ""
-"Toto je the <i>lwd</i> argument. Check vyššie uvedený option to use this."
+"Toto je argument <i>lwd</i>. Zaškrtnite voľbu vyššie, aby ste to použili."
 
 #. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "Line type")
 #: rkward/plugins/distributions/../x11device/grid.rkh:21
@@ -2941,7 +2944,7 @@ msgid ""
 "This is the <i>equilogs</i> argument. Uncheck this option to set "
 "<i>equilogs=FALSE</i>."
 msgstr ""
-"Toto je the <i>equilogs</i> argument. Uncheck táto voľba to set "
+"Toto je argument <i>equilogs</i>. Odškrtnite túto voľbu na nastavenie "
 "<i>equilogs=FALSE</i>."
 
 #. i18n: ectx: (Grid options) <dialog label="...">

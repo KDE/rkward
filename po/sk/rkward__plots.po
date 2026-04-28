@@ -542,8 +542,9 @@ msgid ""
 "Choose numerical data to be plotted. Data can be organized in separate "
 "vectors, or in a single outcome variable and one or more grouping variables."
 msgstr ""
-"Vyberte numerical data to be plotted. Data môže byť organized in separate "
-"vectors, or in a single outcome variable and one or more grouping variables."
+"Vyberte číselné údaje na vykreslenie. Údaje môžu byť usporiadané v "
+"samostatných vektoroch alebo v jednej výsledkovej premennej a jednej alebo "
+"viacerých zoskupovacích premenných."
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Data format")
 #: rkward/plugins/plots/box_plot.rkh:18
@@ -641,9 +642,9 @@ msgid ""
 "defines the fraction of observations to be trimmed from each end of a "
 "variable before the arithmetic mean is computed."
 msgstr ""
-"Trim applies only to the arithmetic mean. By predvolené trim is set to zero. "
-"It defines the fraction of observations to be trimmed from each end of a "
-"variable before the arithmetic mean is computed."
+"Orezanie sa vzťahuje iba na aritmetický priemer. Predvolene je orezanie "
+"nastavené na nulu. Definuje podiel pozorovaní, ktoré sa majú odstrániť z "
+"každého konca premennej pred výpočtom aritmetického priemeru."
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "mean symbol")
 #: rkward/plugins/plots/box_plot.rkh:31
@@ -659,9 +660,9 @@ msgid ""
 "the default. Others include the geometric mean, the harmonic mean and "
 "interquartile mean (IQM)."
 msgstr ""
-"Use this option to select a specific type of mean. The arithmetic mean is "
-"the predvolené. Others include the geometric mean, the harmonic mean and "
-"interquartile mean (IQM)."
+"Túto voľbu použite na výber konkrétneho typu priemeru. Predvolený je "
+"aritmetický priemer. Ďalšie zahŕňajú geometrický priemer, harmonický priemer "
+"a medzikvartilov priemer (IQM)."
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "show standard deviation")
 #: rkward/plugins/plots/box_plot.rkh:33
@@ -696,8 +697,9 @@ msgid ""
 "Size of mean / sd indicators. This option is only available, if at least one "
 "of mean or sd are to be drawn."
 msgstr ""
-"Size of mean / sd indicators. This option is only dostupné, if at least one "
-"of mean or sd are to be drawn."
+"Veľkosť indikátorov priemeru / smerodajnej odchýlky. Táto voľba je dostupná "
+"iba v prípade, že sa má kresliť aspoň jeden z priemeru alebo smerodajnej "
+"odchýlky."
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "Color")
 #: rkward/plugins/plots/box_plot.rkh:37
@@ -706,8 +708,9 @@ msgid ""
 "Color of mean / sd indicators. This option is only available, if at least "
 "one of mean or sd are to be drawn."
 msgstr ""
-"Color of mean / sd indicators. This option is only dostupné, if at least one "
-"of mean or sd are to be drawn."
+"Farba indikátorov priemeru / smerodajnej odchýlky. Táto voľba je dostupná "
+"iba v prípade, že sa má kresliť aspoň jeden z priemeru alebo smerodajnej "
+"odchýlky."
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting title="..."> (refers to element labelled "Plot Options")
 #: rkward/plugins/plots/box_plot.rkh:38
@@ -979,9 +982,9 @@ msgid ""
 "regions marked up. For the second option, only the gaussian smoothing kernel "
 "is available (see below)."
 msgstr ""
-"Zadajte of plot: Plain density curve, or density curve with highest density "
-"regions marked up. For the second option, only the gaussian smoothing kernel "
-"is dostupné (see below)."
+"Typ grafu: Jednoduchá krivka hustoty alebo krivka hustoty s vyznačenými "
+"oblasťami najvyššej hustoty. Pre druhú voľbu je dostupné iba gaussovské "
+"vyhladzovanie jadra (pozri nižšie)."
 
 #. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "Smoothing Kernel")
 #: rkward/plugins/plots/density_plot.rkh:24
@@ -990,8 +993,8 @@ msgid ""
 "Smoothing kernel to use. See <link href=\"rkward://rhelp/density\"/> for "
 "details on the available kernels."
 msgstr ""
-"Smoothing kernel to use. See <link href=\"rkward://rhelp/density\"/> for "
-"details on the dostupné kernels."
+"Vyhladzovanie jadra, ktoré sa má použiť. Podrobnosti o dostupných jadrách "
+"nájdete v <link href=\"rkward://rhelp/density\"/>."
 
 #. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "Bandwidth")
 #: rkward/plugins/plots/density_plot.rkh:25
@@ -1020,8 +1023,8 @@ msgid ""
 "Whether missing values should be removed. Otherwise missing values lead to "
 "an error during density estimation."
 msgstr ""
-"Whether missing values by mal byť removed. Otherwise missing values lead to "
-"an chyba during density estimation."
+"Či by mali byť chýbajúce hodnoty odstránené. Inak chýbajúce hodnoty vedú k "
+"chybe počas odhadovania hustoty."
 
 #. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "Resolution")
 #: rkward/plugins/plots/density_plot.rkh:28
@@ -1030,8 +1033,8 @@ msgid ""
 "Resolution of the density estimation, i.e. the number of (equally spaced) "
 "points at which the density is estimated."
 msgstr ""
-"Resolution of the density estimation, t. j. the počet (equally spaced) "
-"points at which the density is estimated."
+"Rozlíšenie odhadovania hustoty, t. j. počet (rovnomerne rozmiestnených) "
+"bodov, v ktorých sa hustota odhaduje."
 
 #. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "Add rug")
 #. i18n: ectx: (Loaded from Empirical Distribution Function) <settings> <setting> (refers to element labelled "Add rug to plot")
@@ -1061,7 +1064,7 @@ msgstr "Line width of the rug."
 #: rkward/plugins/plots/density_plot.rkh:34
 #, kde-format
 msgid "Should the rug be shown at the top or at the bottom of the plot?"
-msgstr "Should the rug be shown v hornej časti or v dolnej časti of the plot?"
+msgstr "Má sa rug zobraziť v hornej alebo v dolnej časti grafu?"
 
 #. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "Color")
 #: rkward/plugins/plots/density_plot.rkh:35
@@ -1381,8 +1384,8 @@ msgid ""
 "Select a variable to plot an ECDF for. The theoretical normal distribution "
 "and a rug can be added to the plot."
 msgstr ""
-"Vyberte a variable to plot an ECDF for. The theoretical normal distribution "
-"and a rug môže byť added to the plot."
+"Vyberte premennú na vykreslenie ECDF. K grafu možno pridať teoretické "
+"normálne rozdelenie a koberček."
 
 #. i18n: ectx: (Loaded from Empirical Distribution Function) <settings> <setting> (refers to element labelled "variable(s):")
 #: rkward/plugins/plots/ecdf_plot.rkh:16
@@ -1544,13 +1547,13 @@ msgstr "Graf a histogram."
 msgid ""
 "Select a variable to plot a histogram. For available options, see below."
 msgstr ""
-"Vyberte a variable to plot a histogram. For dostupné options, see below."
+"Vyberte premennú na vykreslenie histogramu. Dostupné možnosti nájdete nižšie."
 
 #. i18n: ectx: (Loaded from Histogram) <settings> <setting> (refers to element labelled "variable(s):")
 #: rkward/plugins/plots/histogram.rkh:16
 #, kde-format
 msgid "The variable to plot the histogram for"
-msgstr "The varischopný plot the histogram for"
+msgstr "Premenná, pre ktorú sa má vykresliť histogram"
 
 #. i18n: ectx: (Loaded from Histogram) <settings> <setting> (refers to element labelled "Histogram Options")
 #: rkward/plugins/plots/histogram.rkh:18
@@ -1569,8 +1572,8 @@ msgid ""
 "Should a density curve be plotted over the histogram? This option is only "
 "available, if the histogram is density scaled."
 msgstr ""
-"Should a density curve be plotted over the histogram? This option is only "
-"dostupné, if the histogram is density scaled."
+"Má sa nad histogram vykresliť krivka hustoty? Táto voľba je dostupná iba v "
+"prípade, že je histogram škálovaný hustotou."
 
 #. i18n: ectx: (Loaded from Histogram) <settings> <setting> (refers to element labelled "Color")
 #: rkward/plugins/plots/histogram.rkh:21
@@ -1585,8 +1588,8 @@ msgid ""
 "The smoothing bandwidth used to calculate the density estimate. See <link "
 "href=\"rkward://rhelp/density\"/> for details."
 msgstr ""
-"The smoothing bandwidth používaný na calculate the density estimate. See "
-"<link href=\"rkward://rhelp/density\"/> for details."
+"Šírka vyhladzovacieho pásma použitá na výpočet odhadu hustoty. Podrobnosti "
+"nájdete v <link href=\"rkward://rhelp/density\"/>."
 
 #. i18n: ectx: (Loaded from Histogram) <settings> <setting> (refers to element labelled "Remove Missing Values")
 #: rkward/plugins/plots/histogram.rkh:24
@@ -1600,7 +1603,8 @@ msgstr ""
 #: rkward/plugins/plots/histogram.rkh:25
 #, kde-format
 msgid "Number of equally spaced points to estimate the density at."
-msgstr "Počet equally spaced points to estimate the density at."
+msgstr ""
+"Počet rovnomerne rozmiestnených bodov, v ktorých sa má odhadnúť hustota."
 
 #. i18n: ectx: (Histogram) <dialog label="Histogram"> <tab label="Variable(s)"> <embed label="...">
 #: rkward/plugins/plots/histogram.xml:41
@@ -1656,7 +1660,7 @@ msgstr "Paretov diagram"
 #: rkward/plugins/plots/pareto.rkh:8
 #, kde-format
 msgid "Creates a pareto chart, and (optionally) prints the values."
-msgstr "Creates a pareto chart, and (voliteľnély) prints the values."
+msgstr "Vytvorí paretov graf a (voliteľne) vypíše hodnoty."
 
 #. i18n: ectx: (Loaded from Pareto chart) <usage>
 #: rkward/plugins/plots/pareto.rkh:12
@@ -1688,8 +1692,8 @@ msgid ""
 "Whether to print the frequency, cumulative frequency, percentage and "
 "cumulative percentage below the plot in the output window."
 msgstr ""
-"Či sa má print the frequency, cumulative frequency, percentage and "
-"cumulative percentage below the plot in the output window."
+"Či sa má pod grafom v okne výstupu vytlačiť frekvencia, kumulatívna "
+"frekvencia, percentuálny podiel a kumulatívny percentuálny podiel."
 
 #. i18n: ectx: (Loaded from Pareto chart) <settings> <setting> (refers to element labelled "Plot Options")
 #: rkward/plugins/plots/pareto.rkh:24
@@ -1753,8 +1757,8 @@ msgid ""
 "Draws a pie chart from numerical data, or from tabulated data. Further "
 "options are available on the second tab."
 msgstr ""
-"Draws a pie chart from numerical data, or from tabulated data. Further "
-"options are dostupné on the second tab."
+"Vykreslí koláčový graf z číselných údajov alebo z tabelovaných údajov. "
+"Ďalšie možnosti sú dostupné na druhej karte."
 
 #. i18n: ectx: (Loaded from Pie chart) <settings> <setting> (refers to element labelled "Colors")
 #: rkward/plugins/plots/piechart.rkh:28
@@ -1766,7 +1770,9 @@ msgstr "Zadajte of colors to use."
 #: rkward/plugins/plots/piechart.rkh:30
 #, kde-format
 msgid "Define if slices should be drawn clockwise or counter clockwise."
-msgstr "Definovať if slices by mal byť drawn clockwise or counter clockwise."
+msgstr ""
+"Definovať, či sa majú výseče kresliť v smere hodinových ručičiek alebo proti "
+"smeru hodinových ručičiek."
 
 #. i18n: ectx: (Loaded from Pie chart) <settings> <setting> (refers to element labelled "Radius")
 #: rkward/plugins/plots/piechart.rkh:31
@@ -1775,8 +1781,8 @@ msgid ""
 "Radius of the pie. For long labels it may be necessary to make the pie "
 "smaller than the default."
 msgstr ""
-"Radius of the pie. For long labels it may be necessary to make the pie "
-"smaller than the predvolené."
+"Polomer koláča. Pre dlhé popisky môže byť potrebné zmenšiť koláč pod "
+"predvolenú veľkosť."
 
 #. i18n: ectx: (Loaded from Pie chart) <settings> <setting> (refers to element labelled "density")
 #: rkward/plugins/plots/piechart.rkh:32
@@ -1785,8 +1791,8 @@ msgid ""
 "Density of shading lines (lines per inch). The default value of -1 means no "
 "shading lines are drawn."
 msgstr ""
-"Density of shading lines (lines per inch). The predvolené value of -1 means "
-"no shading lines are drawn."
+"Hustota šrafovacích čiar (čiary na palec). Predvolená hodnota -1 znamená, že "
+"sa nekreslia žiadne šrafovacie čiary."
 
 #. i18n: ectx: (Loaded from Pie chart) <settings> <setting> (refers to element labelled "increment in density")
 #: rkward/plugins/plots/piechart.rkh:33
@@ -1795,9 +1801,9 @@ msgid ""
 "The density of shading lines can be varied per pie slice. Set this to values "
 "other than 0 to get different densities of shading lines for each slice."
 msgstr ""
-"The density of shading lines môže byť varied per pie slice. Nastaviť this to "
-"values other than 0 to get different densities of shading lines for each "
-"slice."
+"Hustota šrafovacích čiar sa môže líšiť podľa výseče koláča. Nastavte toto na "
+"hodnoty iné ako 0, aby ste dostali rôzne hustoty šrafovacích čiar pre každú "
+"výseč."
 
 #. i18n: ectx: (Loaded from Pie chart) <settings> <setting> (refers to element labelled "angle")
 #: rkward/plugins/plots/piechart.rkh:34
@@ -1807,9 +1813,9 @@ msgid ""
 "This option is only available, if shading lines are drawn, as controlled by "
 "the density options above."
 msgstr ""
-"Slope of shading lines, given as an angle in degrees (counter-clockwise). "
-"This option is only dostupné, if shading lines are drawn, as controlled by "
-"the density options above."
+"Sklon šrafovacích čiar, zadaný ako uhol v stupňoch (proti smeru hodinových "
+"ručičiek). Táto voľba je dostupná iba v prípade, že sa kreslia šrafovacie "
+"čiary, ako je riadené voľbami hustoty vyššie."
 
 #. i18n: ectx: (Loaded from Pie chart) <settings> <setting> (refers to element labelled "increment in angle")
 #: rkward/plugins/plots/piechart.rkh:35
@@ -1820,10 +1826,10 @@ msgid ""
 "option is only available, if shading lines are drawn, as controlled by the "
 "density options above."
 msgstr ""
-"The slope of shading lines can be varied per pie slice. Set this to values "
-"other than 0 to get different slopes of shading lines for each slice. Táto "
-"voľba is only available, if shading lines are drawn, as controlled by the "
-"density options above."
+"Sklon šrafovacích čiar sa môže líšiť podľa výseče koláča. Nastavte toto na "
+"hodnoty iné ako 0, aby ste dostali rôzne sklony šrafovacích čiar pre každú "
+"výseč. Táto voľba je dostupná iba v prípade, že sa kreslia šrafovacie čiary, "
+"ako je riadené voľbami hustoty vyššie."
 
 #. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Options"> <radio label="...">
 #: rkward/plugins/plots/piechart.xml:76
@@ -1906,8 +1912,7 @@ msgstr ""
 #, kde-format
 msgid ""
 "Choose the X and Y variables and customize the options to draw the plot."
-msgstr ""
-"Vyberte the X and Y variables and vlastnéize the options to draw the plot."
+msgstr "Vyberte premenné X a Y a prispôsobte voľby na vykreslenie grafu."
 
 #. i18n: ectx: (Loaded from Generic Plot) <usage>
 #: rkward/plugins/plots/plot.rkh:11
@@ -1920,12 +1925,11 @@ msgid ""
 "meaningful visualization of the data, but does not allow for fine grained "
 "control."
 msgstr ""
-"Poznámka: <b>plot</b> is a generic function. The type of plot you will "
-"actually get závisí od the type of the input variables. Napríklad, for "
-"numeric vectors a scatterplot is produced (see below), while for data.frames "
-"as scatterplot matrix is plotted, atď. Toto je often useful to provide a "
-"meaningful visualization of the data, but does not allow for fine grained "
-"control."
+"Poznámka: <b>plot</b> je generická funkcia. Typ grafu, ktorý skutočne "
+"dostanete, závisí od typu vstupných premenných. Napríklad pre číselné "
+"vektory sa vytvorí bodový graf (pozri nižšie), zatiaľ čo pre data.frames sa "
+"vykreslí matica bodových grafov atď. To je často užitočné na poskytnutie "
+"zmysluplnej vizualizácie údajov, ale neumožňuje jemnú kontrolu."
 
 #. i18n: ectx: (Loaded from Generic Plot) <settings> <setting> (refers to element labelled "X variable")
 #: rkward/plugins/plots/plot.rkh:18
@@ -1950,8 +1954,8 @@ msgid ""
 "This is the <i>y</i> argument. Note that this is not always needed, and does "
 "not have an effect for some types of x variables."
 msgstr ""
-"Toto je the <i>y</i> argument. Všimnite si, že toto je not always needed, "
-"and does not have an effect for some types of x variables."
+"Toto je argument <i>y</i>. Všimnite si, že toto nie je vždy potrebné a nemá "
+"žiadny efekt pre niektoré typy premenných x."
 
 #. i18n: ectx: (Loaded from Generic Plot) <settings> <setting> (refers to element labelled "Plot Options")
 #: rkward/plugins/plots/plot.rkh:21
@@ -1961,9 +1965,9 @@ msgid ""
 "plot_options\"/> for details. Note that some of these settings may not have "
 "an effect, depending on the type of plot actually produced."
 msgstr ""
-"Further generic plot options. Refer to <link href=\"rkward://component/"
-"plot_options\"/> for details. Všimnite si, že niektoré z these settings may "
-"not have an effect, depending on the type of plot actually produced."
+"Ďalšie generické voľby grafu. Podrobnosti nájdete v <link href=\"rkward://"
+"component/plot_options\"/>. Všimnite si, že niektoré z týchto nastavení "
+"nemusia mať žiadny efekt v závislosti od skutočne vytvoreného typu grafu."
 
 #. i18n: ectx: (Generic Plot) <dialog label="Generic Plot"> <tab label="Variables"> <varslot label="...">
 #: rkward/plugins/plots/plot.xml:21
@@ -2141,8 +2145,8 @@ msgid ""
 "A numerical value giving the amount by which plotting text and symbols "
 "should be scaled relative to the default."
 msgstr ""
-"A numerical value giving the amount by which plotting text and symbols by "
-"mal byť scaled relative to the predvolené."
+"Číselná hodnota udávajúca množstvo, o ktoré by sa text a symboly grafu mali "
+"škálovať relatívne k predvolenej hodnote."
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Further options"> <input label="...">
 #: rkward/plugins/plots/scatterplot.xml:86
@@ -2163,8 +2167,8 @@ msgid ""
 "Either an integer specifying a symbol or a single character to be used as "
 "the default in plotting points."
 msgstr ""
-"Either an integer specifying a symbol or a single character to be used as "
-"the predvolené in plotting points."
+"Buď celé číslo určujúce symbol alebo jednotlivý znak, ktorý sa má použiť ako "
+"predvolený pri vykresľovaní bodov."
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Further options"> <input label="...">
 #: rkward/plugins/plots/scatterplot.xml:100
@@ -2189,8 +2193,8 @@ msgid ""
 "Choose one or more objects to be plotted. Choose the diagonal plot and how "
 "the scatterplots should be plotted from the options tab."
 msgstr ""
-"Vyberte one or more objects to be plotted. Vyberte the diagonal plot and how "
-"the scatterplots by mal byť plotted from the options tab."
+"Vyberte jeden alebo viac objektov na vykreslenie. Na karte volieb vyberte "
+"diagonálny graf a spôsob vykresľovania bodových grafov."
 
 #. i18n: ectx: (Loaded from Scatterplot Matrix) <settings> <setting> (refers to element labelled "variable(s):")
 #: rkward/plugins/plots/scatterplot_matrix.rkh:18
@@ -2242,7 +2246,7 @@ msgstr "No plot. Do not plot anything in the diagonal"
 #: rkward/plugins/plots/scatterplot_matrix.rkh:27
 #, kde-format
 msgid "Select it if you want points to be plotted in scatterplots."
-msgstr "Vybrať it if you want points to be plotted in scatterplots."
+msgstr "Vyberte, ak chcete, aby sa v bodových grafoch vykresľovali body."
 
 #. i18n: ectx: (Loaded from Scatterplot Matrix) <settings> <setting> (refers to element labelled "Plot smooth")
 #: rkward/plugins/plots/scatterplot_matrix.rkh:28
@@ -2335,8 +2339,8 @@ msgid ""
 "This controls the length of the plot. A scale of 2 will make the plot "
 "roughly twice as long as the default."
 msgstr ""
-"This controls the length of the plot. A scale of 2 will make the plot "
-"roughly twice as long as the predvolené."
+"Toto riadi dĺžku grafu. Mierka 2 spôsobí, že graf bude zhruba dvakrát dlhší "
+"ako predvolený."
 
 #. i18n: ectx: (Loaded from Stem-and-Leaf Plots) <settings> <setting> (refers to element labelled "Plot width")
 #: rkward/plugins/plots/stem.rkh:21
