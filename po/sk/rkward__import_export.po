@@ -1601,7 +1601,7 @@ msgstr "Preskočiť x riadkov na začiatku súboru"
 #: rkward/plugins/00saveload/import/import_csv.xml:213
 #, kde-format
 msgid "Max number of lines to read (-1 for no limit)"
-msgstr "Max počet riadkov na čítanie (-1 pre bez obmedzenia)"
+msgstr "Max. počet riadkov na čítanie (-1 bez obmedzenia)"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="Further Options"> <frame label="Skip"> <input label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:214
@@ -2123,7 +2123,7 @@ msgstr "Rozsah"
 #: rkward/plugins/00saveload/import/import_xls.xml:33
 #, kde-format
 msgid "Max number of rows to read (-1 for no limit)"
-msgstr "Max počet riadkov na čítanie (-1 pre bez obmedzenia)"
+msgstr "Max. počet riadkov na čítanie (-1 bez obmedzenia)"
 
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="Further Options"> <frame label="Range"> <input label="...">
 #: rkward/plugins/00saveload/import/import_xls.xml:34
@@ -2621,7 +2621,7 @@ msgstr "Echo source statements"
 #: rkward/plugins/00saveload/import/source.xml:29
 #, kde-format
 msgid "Prompt for echoed lines (empty for default)"
-msgstr "Výzva pre echované riadky (prázdne pre predvolené)"
+msgstr "Výzva pre echované riadky (prázdne pre predvolenú hodnotu)"
 
 #. i18n: ectx: (Source an R file) <dialog label="Source an R file"> <tab label="Output options"> <spinbox label="...">
 #: rkward/plugins/00saveload/import/source.xml:30

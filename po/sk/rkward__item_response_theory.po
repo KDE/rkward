@@ -913,8 +913,8 @@ msgid ""
 "parameters to be estimated."
 msgstr ""
 "Ak je zaškrtnuté, predpokladá sa, že parametre diskriminácie sú rovnaké pre "
-"všetky položky, ako v modeli 1PL Rasch. To ponecháva na odhadnutie parametre "
-"obtiažnosti a hádania."
+"všetky položky, ako v modeli 1PL Rasch. Parametre obtiažnosti a hádania "
+"zostávajú na odhadnutie."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Birnbaum three parameter model) <settings> <setting title="Number of quasi-Newton iterations"> (refers to element labelled "Number of quasi-Newton iterations:")
 #: rkward/plugins/analysis/irt/dichotomous/par_est_3pl.rkh:45
