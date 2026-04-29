@@ -1251,7 +1251,7 @@ msgstr ""
 "Zadajte \"závislú\" premennú. Táto premenná bude prítomná vo všetkých "
 "vytvorených tabuľkách. Zadajte jednu alebo viacero \"nezávislých\" "
 "premenných. Každá z nich bude krížovo tabulovaná oproti \"závislej\" "
-"premennej. \"Závislá\" a \"Nezávislá\", tu, nevznamená žiadne odvodzovacie "
+"premennej. \"Závislá\" a \"Nezávislá\", tu, neznamená žiadne odvodzovacie "
 "štatistiky. V každej tabuľke sa počítajú výskyty kombinácií hodnôt \"závislej"
 "\" a \"nezávislej\" premennej."
 
