@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: RKWard\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-04-19 00:39+0000\n"
-"PO-Revision-Date: 2026-04-11 21:05+0300\n"
+"PO-Revision-Date: 2026-05-02 19:53+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -19,13 +19,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 25.12.2\n"
+"X-Generator: Lokalize 25.12.3\n"
 "X-Launchpad-Export-Date: 2014-09-29 04:56+0000\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Kaan Özdinçer, Emir SARI"
+msgstr "Kaan ÖZDİNÇER, Emir SARI"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
@@ -102,7 +102,7 @@ msgstr "Bitirmek için R Bekleniyor"
 msgid ""
 "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
 msgstr ""
-"“%1” adlı bir dosya halihazırda var. Üzerine yazmak istediğinizden emin "
+"“%1” adlı bir dosya hâlihazırda var. Üzerine yazmak istediğinizden emin "
 "misiniz?"
 
 #: rkward/agents/rksaveagent.cpp:51
@@ -111,7 +111,7 @@ msgid ""
 "A file named \"%1\" already exists, and will be overwritten when saving to "
 "\"%2\". Are you sure you want to overwrite it?"
 msgstr ""
-"“%1” adlı bir dosya halihazırda var ve “%2” konumuna kaydedilirken üzerine "
+"“%1” adlı bir dosya hâlihazırda var ve “%2” konumuna kaydedilirken üzerine "
 "yazılacak. Üzerine yazmak istediğinizden emin misiniz?"
 
 #: rkward/agents/rksaveagent.cpp:53
@@ -120,7 +120,7 @@ msgid ""
 "Files named \"%1\" and \"%2\" already exist, and will both be overwritten. "
 "Are you sure you want to overwrite them?"
 msgstr ""
-"“%1” ve “%2” adlı dosyalar halihazırda var ve her ikisinin de üzerine "
+"“%1” ve “%2” adlı dosyalar hâlihazırda var ve her ikisinin de üzerine "
 "yazılacak. Üzerilerine yazmak istediğinizden emin misiniz?"
 
 #: rkward/agents/rksaveagent.cpp:56
@@ -454,7 +454,7 @@ msgstr "%1 paketi yüklenmemiş gibi görünüyor"
 #, kde-format
 msgid "The name you specified was already in use or not valid. Renamed to %1"
 msgstr ""
-"Belirttiğiniz ad halihazırda kullanılıyordu veya geçerli değildi. %1 olarak "
+"Belirttiğiniz ad hâlihazırda kullanılıyordu veya geçerli değildi. %1 olarak "
 "yeniden adlandırıldı"
 
 #: rkward/dataeditor/rkeditordataframe.cpp:49
@@ -2685,7 +2685,7 @@ msgstr "%1 açılamadı. Bir RKWard çıktı dosyası olmayabilir mi?"
 #: rkward/misc/rkoutputdirectory.cpp:219
 #, kde-format
 msgid "Output directory %1 is already in use."
-msgstr "Çıktı dizini %1, halihazırda kullanımda."
+msgstr "Çıktı dizini %1, hâlihazırda kullanımda."
 
 #: rkward/misc/rkoutputdirectory.cpp:229
 #, kde-format
@@ -2767,12 +2767,12 @@ msgstr "Çıktı, kendiliğinden etkinleştirildi"
 #: rkward/misc/rkoutputdirectory.cpp:508
 #, kde-format
 msgid "Output '%1' is already loaded in this session. Cannot create it."
-msgstr "“%1” çıktısı bu oturumda halihazırda yüklü. Oluşturulamıyor."
+msgstr "“%1” çıktısı bu oturumda hâlihazırda yüklü. Oluşturulamıyor."
 
 #: rkward/misc/rkoutputdirectory.cpp:509
 #, kde-format
 msgid "A file named '%1' already exists. Cannot create it."
-msgstr "“%1” adlı bir dosya halihazırda var. Oluşturulamıyor."
+msgstr "“%1” adlı bir dosya hâlihazırda var. Oluşturulamıyor."
 
 #: rkward/misc/rkoutputdirectory.cpp:520
 #, kde-format
@@ -2872,7 +2872,7 @@ msgstr "Üzerine Yaz"
 #: rkward/misc/rksaveobjectchooser.cpp:57
 #, kde-format
 msgid "The given object name already exists"
-msgstr "Verilen nesne adı halihazırda var"
+msgstr "Verilen nesne adı hâlihazırda var"
 
 #: rkward/misc/rksaveobjectchooser.cpp:89
 #, kde-format
@@ -3547,7 +3547,7 @@ msgid ""
 "<b>Note:</b> The given file already exists, and will be modified / "
 "overwritten."
 msgstr ""
-"<b>Not:</b> Verilen dosya halihazırda var ve değiştirilecek/üzerine "
+"<b>Not:</b> Verilen dosya hâlihazırda var ve değiştirilecek/üzerine "
 "yazılacak."
 
 #: rkward/plugin/rkpluginbrowser.cpp:160
@@ -4131,7 +4131,7 @@ msgid ""
 "Target file '%1' already exists, use the \"overwrite\" argument to replace "
 "it:\n"
 msgstr ""
-"Hedef dosya “%1” halihazırda var; onu değiştirmek için “overwrite” "
+"Hedef dosya “%1” hâlihazırda var; onu değiştirmek için “overwrite” "
 "argümanını kullanın:\n"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:86
@@ -7966,13 +7966,13 @@ msgid ""
 "An object named '%1' already exists in the GlobalEnv. Created the copy as "
 "'%2' instead."
 msgstr ""
-"GlobalEnv’de “%1” adlı bir nesne halihazırda var. Bunun yerine “%2” kopyası "
+"GlobalEnv’de “%1” adlı bir nesne hâlihazırda var. Bunun yerine “%2” kopyası "
 "olarak oluşturuldu."
 
 #: rkward/windows/robjectbrowser.cpp:203
 #, kde-format
 msgid "Name already in use"
-msgstr "Ad Halihazırda Kullanımda"
+msgstr "Ad Hâlihazırda Kullanımda"
 
 #: rkward/windows/robjectbrowser.cpp:233
 #, kde-format

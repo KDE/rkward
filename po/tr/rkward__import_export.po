@@ -1,21 +1,21 @@
 # Copyright (C) 2024 This file is copyright:
 # This file is distributed under the same license as the rkward package.
 #
-# SPDX-FileCopyrightText: 2024, 2025 Emir SARI <emir_sari@icloud.com>
+# SPDX-FileCopyrightText: 2024, 2025, 2026 Emir SARI <emir_sari@icloud.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 11:48+0000\n"
-"PO-Revision-Date: 2025-05-06 23:54+0300\n"
-"Last-Translator: Emir SARI <emir_sari@îcloud.com>\n"
+"PO-Revision-Date: 2026-05-02 19:18+0300\n"
+"Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 25.04.0\n"
+"X-Generator: Lokalize 25.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2449,7 +2449,7 @@ msgid ""
 msgstr ""
 "Verileri .GlobalEnv dışında bir ortama yüklemek için bu seçeneği işaretleyin "
 "(ve bir ortam belirtin). Belirtilen ortam henüz yoksa oluşturulacaktır. "
-"Halihazırda varsa tümüyle üzerine yazılacaktır, yani içindeki tüm nesneler "
+"Hâlihazırda varsa tümüyle üzerine yazılacaktır, yani içindeki tüm nesneler "
 "silinecektir!"
 
 #. i18n: ectx: (Load an R data file) <dialog label="...">
@@ -2486,7 +2486,7 @@ msgstr "Ortama Kaydet"
 msgid ""
 "WARNING: If the environment already exists, all objects inside it will be "
 "lost."
-msgstr "UYARI: Ortam halihazırda varsa içindeki tüm nesneler kaybolacaktır."
+msgstr "UYARI: Ortam hâlihazırda varsa içindeki tüm nesneler kaybolacaktır."
 
 #. i18n: ectx: (Loaded from Source an R file)
 #: rkward/plugins/00saveload/import/source.js:27
@@ -3522,7 +3522,7 @@ msgid ""
 "Plugins for reading and writing data in various formats. Part of the "
 "official RKWard distribution"
 msgstr ""
-"Çeşitli biçimlerdeki veriyi okumak ve yazmak için eklentiler. Resmi RKWard "
+"Çeşitli biçimlerdeki veriyi okumak ve yazmak için eklentiler. Resmî RKWard "
 "dağıtımının bir parçasıdır."
 
 #. i18n: ectx: <components> <component label="...">
