@@ -1,13 +1,13 @@
 # Copyright (C) 2024 This file is copyright:
 # This file is distributed under the same license as the rkward package.
 #
-# SPDX-FileCopyrightText: 2024 Emir SARI <emir_sari@icloud.com>
+# SPDX-FileCopyrightText: 2024, 2026 Emir SARI <emir_sari@icloud.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 08:59+0000\n"
-"PO-Revision-Date: 2024-05-02 13:13+0300\n"
+"PO-Revision-Date: 2026-05-02 18:46+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 24.07.70\n"
+"X-Generator: Lokalize 25.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2061,7 +2061,7 @@ msgid ""
 msgstr ""
 "Verileri .GlobalEnv dışında bir ortama yüklemek için bu seçeneği işaretleyin "
 "(ve bir ortam belirtin). Belirtilen ortam henüz yoksa oluşturulacaktır. "
-"Halihazırda varsa tümüyle üzerine yazılacaktır, yani içindeki tüm nesneler "
+"Hâlihazırda varsa tümüyle üzerine yazılacaktır, yani içindeki tüm nesneler "
 "silinecektir!"
 
 #. i18n: ectx: (Load an R data file) <dialog label="...">
@@ -2098,7 +2098,7 @@ msgstr "Ortama Kaydet"
 msgid ""
 "WARNING: If the environment already exists, all objects inside it will be "
 "lost."
-msgstr "UYARI: Ortam halihazırda varsa içindeki tüm nesneler kaybolacaktır."
+msgstr "UYARI: Ortam hâlihazırda varsa içindeki tüm nesneler kaybolacaktır."
 
 #. i18n: ectx: (Loaded from Source an R file)
 #: rkward/plugins/00saveload/import/source.js:27
