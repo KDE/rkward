@@ -1,5 +1,5 @@
 --- Version 0.8.4 - UNRELEASED
-
+- Fixed: Setting options(warn=...) resulted in an error with R 4.6.0
 
 --- Version 0.8.3 - Apr-24-2026
 - Fixed: Remove obsolete dep# on dbus

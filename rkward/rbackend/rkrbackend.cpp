@@ -1207,7 +1207,7 @@ RCommandProxy *RKRBackend::runDirectCommand(const QString &command, RCommand::Co
 
 static void setWarnOption(int level, bool tryeval = false) {
 	SEXP s, t;
-	RFn::Rf_protect(t = s = RFn::Rf_lcons(ROb(R_NilValue), RFn::Rf_allocList(2)));
+	RFn::Rf_protect(t = s = RFn::Rf_lcons(ROb(R_NilValue), RFn::Rf_allocList(1)));
 	RFn::SETCAR(t, RFn::Rf_install("options"));
 	t = RFn::CDR(t);
 	RFn::SETCAR(t, RFn::Rf_ScalarInteger(level));
