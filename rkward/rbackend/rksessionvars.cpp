@@ -98,7 +98,13 @@ QStringList RKSessionVars::frontendSessionInfo() {
 	lines.append(QStringLiteral("KDE Frameworks version (compile time): " KCOREADDONS_VERSION_STRING));
 	lines.append(QStringLiteral("Qt version (runtime): ") + QString::fromLatin1(qVersion()));
 	lines.append(QStringLiteral("Qt version (compile time): " QT_VERSION_STR));
-	lines.append(QStringLiteral("Using QWebEngine for HTML rendering"));
+	if (RKSettingsModuleGeneral::htmlEngine() == RKSettingsModuleGeneral::QWebEngineRenderingEngine) {
+		lines.append(QStringLiteral("Using QWebEngine for HTML rendering"));
+	} else if (RKSettingsModuleGeneral::htmlEngine() == RKSettingsModuleGeneral::QWebViewRenderingEngine) {
+		lines.append(QStringLiteral("Using QWebView for HTML rendering"));
+	} else {
+		lines.append(QStringLiteral("Using platform default for HTML rendering"));
+	}
 	lines.append(QStringLiteral("Running on: ") + QSysInfo::prettyProductName());
 	lines.append(u"Local config directory: "_s + QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation));
 	lines.append(u"RKWard storage directory: "_s + RKSettingsModuleGeneral::filesPath());
