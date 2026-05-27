@@ -4763,7 +4763,7 @@ msgstr "Est-ce que la valeur moyenne géométrique doit être calculée ?"
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:27
 #, kde-format
 msgid "Should the interquantile mean value be computed?"
-msgstr "Faut-il calculer la valeur moyenne interquantile ?"
+msgstr "Faut-il calculer la valeur moyenne inter-quantile ?"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <settings> <setting> (refers to element labelled "Standard deviation")
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:28
