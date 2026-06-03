@@ -39,6 +39,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
   <name xml:lang="sl">RKWard</name>
   <name xml:lang="sv">RKward</name>
   <name xml:lang="tr">RKWard</name>
+  <name xml:lang="ug">RKWard</name>
   <name xml:lang="uk">RKWard</name>
   <name xml:lang="zh-TW">RKWard</name>
   <summary>KDE frontend to the R statistics language</summary>
@@ -72,6 +73,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
   <summary xml:lang="sl">KDE začelje za statistični paket R</summary>
   <summary xml:lang="sv">KDE-gränssnitt till statistikspråket R</summary>
   <summary xml:lang="tr">R istatistik dili için KDE ön yüzü</summary>
+  <summary xml:lang="ug">R ئىستاتىستىكا تىلى ئۈچۈن KDE ئالدى ئۇچى</summary>
   <summary xml:lang="uk">Оболонка KDE до мови для статичних обчислень R</summary>
   <summary xml:lang="zh-TW">KDE 的 R 統計語言前端</summary>
   <description>
