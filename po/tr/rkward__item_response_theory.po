@@ -1,13 +1,13 @@
 # Copyright (C) 2024 This file is copyright:
 # This file is distributed under the same license as the rkward package.
 #
-# SPDX-FileCopyrightText: 2024 Emir SARI <emir_sari@icloud.com>
+# SPDX-FileCopyrightText: 2024, 2026 Emir SARI <emir_sari@icloud.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 08:59+0000\n"
-"PO-Revision-Date: 2024-02-22 13:07+0300\n"
+"PO-Revision-Date: 2026-06-04 15:05+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 23.08.4\n"
+"X-Generator: Lokalize 26.04.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1626,7 +1626,7 @@ msgstr "Ögeler arasında kaliteli ayrımcılık parametresi"
 #: rkward/plugins/analysis/irt/polytomous/par_est_gpcm.xml:46
 #, kde-format
 msgid "Discrimination parameter fixed at 1 across items"
-msgstr "Ayrım parametresi öğeler arasında 1'de sabittir"
+msgstr "Ayrım parametresi ögeler arasında 1'de sabittir"
 
 #. i18n: ectx: (IRT parameter estimation: Graded response model) <dialog label="IRT parameter estimation: Graded response model"> <tab label="Options"> <radio label="Start values"> <option label="...">
 #. i18n: ectx: (IRT parameter estimation: Generalized partial credit model) <dialog label="IRT parameter estimation: Generalized partial credit model"> <tab label="Options"> <radio label="Start values"> <option label="...">
@@ -2176,7 +2176,7 @@ msgstr "Monte Carlo örneklemleri:"
 #: rkward/plugins/analysis/irt/tests/ltm_item_fit.js:49
 #, kde-format
 msgid "Item-Fit Statistics and P-values:"
-msgstr "Öğe uyumu istatistikleri ve P değerleri:"
+msgstr "Öge uyumu istatistikleri ve P değerleri:"
 
 #. i18n: ectx: (Item-fit statistics for Rasch, LTM and 3PM) <dialog label="...">
 #: rkward/plugins/analysis/irt/tests/ltm_item_fit.xml:17
@@ -2493,7 +2493,7 @@ msgstr "Uyum İyiliği (Rasch)"
 #: rkward/plugins/irt.pluginmap:40
 #, kde-format
 msgid "Item-fit statistics (Rasch, LTM, 3PM)"
-msgstr "Öğe uyum istatistikleri (Rasch, LTM, 3PM)"
+msgstr "Öge uyum istatistikleri (Rasch, LTM, 3PM)"
 
 #. i18n: ectx: <components> <component label="...">
 #: rkward/plugins/irt.pluginmap:41
