@@ -6613,7 +6613,7 @@ msgstr ""
 #: rkward/windows/rkhtmlwindow.cpp:822
 #, kde-format
 msgid "Summary"
-msgstr "总计"
+msgstr "概要"
 
 #: rkward/windows/rkhtmlwindow.cpp:829
 #, kde-format
