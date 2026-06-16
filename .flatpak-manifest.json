@@ -29,8 +29,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://cloud.r-project.org/src/base/R-4/R-4.5.2.tar.gz",
-                    "sha256": "0d71ff7106ec69cd7c67e1e95ed1a3cee355880931f2eb78c530014a9e379f20",
+                    "url": "https://cloud.r-project.org/src/base/R-4/R-4.6.0.tar.gz",
+                    "sha256": "b8dc9b4543660c7b596b87938df532394350360976527d344228ee0ed12e45ec",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 4150,
