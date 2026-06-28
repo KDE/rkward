@@ -2160,7 +2160,7 @@ msgid ""
 "Enter value - for diff.col. enter a vector -<br/> eg: c(1,2) or "
 "c('red','green')"
 msgstr ""
-"Introduïu un valor - per a «diff.col.» introduïu un vector -<br/> p. ex.: "
+"Introduïu un valor – per a «diff.col.» introduïu un vector -<br/> p. ex.: "
 "c(1,2) o c('roig','verd')"
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Options"> <input label="...">
@@ -2199,7 +2199,7 @@ msgstr ""
 #: rkward/plugins/plots/scatterplot.xml:86
 #, kde-format
 msgid "Enter value - for diff.size. enter a vector -"
-msgstr "Introduïu un valor - for «diff.size.» introduïu un vector -"
+msgstr "Introduïu un valor – for «diff.size.» introduïu un vector -"
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Further options"> <radio label="...">
 #: rkward/plugins/plots/scatterplot.xml:92
@@ -2223,7 +2223,7 @@ msgstr ""
 #: rkward/plugins/plots/scatterplot.xml:100
 #, kde-format
 msgid "Enter value - for diff.symbol. enter a vector -"
-msgstr "Introduïu un valor - for «diff.symbol.» introduïu un vector -"
+msgstr "Introduïu un valor – for «diff.symbol.» introduïu un vector -"
 
 # skip-rule: apps-edu_scatter
 #

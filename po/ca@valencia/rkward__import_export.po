@@ -2931,7 +2931,7 @@ msgid ""
 ">Save Workspace</i> for saving the complete workspace."
 msgstr ""
 "Guarda un o més objectes R seleccionats a un fitxer. <b>Nota:</b> Utilitzeu "
-"«<i>Espai de treball -> Guarda l'espai de treball</i>» per a guardar l'espai "
+"«<i>Espai de treball → Guarda l'espai de treball</i>» per a guardar l'espai "
 "de treball complet."
 
 #. i18n: ectx: (Loaded from Save R objects) <usage>
@@ -3085,7 +3085,7 @@ msgstr "Nom del paquet"
 #: rkward/plugins/00saveload/save/skeleton/description.xml:22
 #, kde-format
 msgid "Directory"
-msgstr "Directori"
+msgstr "Carpeta"
 
 #. i18n: ectx: (Create package skeleton) <dialog label="Create package skeleton"> <tab label="Select variables"> <frame label="Options"> <checkbox label="...">
 #: rkward/plugins/00saveload/save/skeleton/description.xml:23
@@ -3311,7 +3311,7 @@ msgid ""
 "escaped or double quoted. If this is greyed out, the selected preset sets "
 "this for you."
 msgstr ""
-"Controla com es gestionen les cometes existents en els valors - es poden "
+"Controla com es gestionen les cometes existents en els valors – es poden "
 "escapar o fer-les dobles. Si està en gris, el valor predefinit seleccionat "
 "ho ha establit per tu."
 
