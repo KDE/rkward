@@ -3785,7 +3785,7 @@ msgid ""
 "if applicable). If empty, the default label is <i>Cycle</i>."
 msgstr ""
 "Ací podeu especificar el text en l'etiqueta de l'eix Y del dibuix del cicle "
-"(inferior - si escau). Si està buit, l'etiqueta predeterminada és <i>Cicle</"
+"(inferior – si escau). Si està buit, l'etiqueta predeterminada és <i>Cicle</"
 "i>."
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter) <settings> <setting> (refers to element labelled "interpret as string")

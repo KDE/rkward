@@ -421,7 +421,7 @@ msgstr ""
 "de funció per als objectes en este paquet.\n"
 "Habitualment un paquet es fica en la llista negra, si té una enorme "
 "quantitat de dades i es tardaria molt a carregar-lo. Per a traure'l de la "
-"llista, anar fins a «Configuració -> Configura RKWard… -> Espai de treball»."
+"llista, anar fins a «Configuració → Configura RKWard… → Espai de treball»."
 
 #: rkward/core/robject.cpp:275
 #, kde-format
@@ -711,7 +711,7 @@ msgstr ""
 "damunt «Informeu d'un problema» anireu fins al sistema de seguiment d'errors "
 "de KDE. Després d'iniciar la sessió, hi haurà certa informació que estarà "
 "emplenada en el formulari d'informe. Assegureu-vos que empleneu els dades "
-"que falten - en anglés - a on s'indiquen, especialment en el camp de "
+"que falten – en anglés – a on s'indiquen, especialment en el camp de "
 "«Comentari».</p>"
 
 #: rkward/dialogs/rkerrordialog.cpp:58
@@ -797,7 +797,7 @@ msgid ""
 "###Please fill in###\n"
 "\n"
 msgstr ""
-"Què - en detall - heu fet directament abans de trobar este problema?\n"
+"Què – en detall – heu fet directament abans de trobar este problema?\n"
 "###Empleneu-ho###\n"
 "\n"
 
@@ -1987,7 +1987,7 @@ msgstr "Frontal per al llenguatge estadístic R"
 #: rkward/main.cpp:260
 #, kde-format
 msgid "(c) 2002 - 2022"
-msgstr "(c) 2002 - 2022"
+msgstr "(c) 2002 – 2022"
 
 #: rkward/main.cpp:261
 #, kde-format
@@ -3171,7 +3171,7 @@ msgid ""
 msgstr ""
 "Heu intentat executar el connector «%1», però este connector és desconegut. "
 "Probablement necessiteu carregar el fitxer corresponent PluginMap "
-"(Configuració -> Configura RKWard… -> Connectors), o potser el connector ha "
+"(Configuració → Configura RKWard… → Connectors), o potser el connector ha "
 "sigut canviat el nom."
 
 #: rkward/plugin/rkcomponentmap.cpp:465
@@ -3838,7 +3838,7 @@ msgid ""
 "and fix your installation</b>. For help with that, see <a href=\"https://"
 "rkward.kde.org/compiling\">https://rkward.kde.org/compiling</a>.</p>\n"
 msgstr ""
-"<p>\t- No s'ha pogut carregar la biblioteca «rkward» d'R, o no és la versió "
+"<p>\t– No s'ha pogut carregar la biblioteca «rkward» d'R, o no és la versió "
 "correcta. Açò pot provocar tota mena d'errors, des de la falta d'alguna "
 "funcionalitat fins que totes les funcions fallen. La causa més probable és "
 "que l'última instal·lació no va situar els fitxers en el lloc correcte. "
@@ -3857,7 +3857,7 @@ msgid ""
 "\"https://rkward.kde.org/compiling\">https://rkward.kde.org/compiling</a>.</"
 "p></p>\n"
 msgstr ""
-"<p>\t- Hi ha hagut un problema establint la comunicació amb R. Probablement, "
+"<p>\t– Hi ha hagut un problema establint la comunicació amb R. Probablement, "
 "açò indica una instal·lació trencada.</p>\t\t<p><b>Ara heu d'eixir de "
 "RKWard, i arreglar la instal·lació</b>. Per ajuda sobre açò, consulteu <a "
 "href=\"https://rkward.kde.org/compiling\">https://rkward.kde.org/compiling</"
@@ -4271,7 +4271,7 @@ msgid ""
 msgstr ""
 "S'han trobat paquets nous (llistats davall) de connectors de RKWard, i s'han "
 "activat automàticament. Per a desactivar els paquets de connectors "
-"seleccionats, utilitzeu «Configuració -> Configura RKWard… -> Connectors»."
+"seleccionats, utilitzeu «Configuració → Configura RKWard… → Connectors»."
 
 #: rkward/rkward.cpp:350
 #, kde-format
@@ -4318,7 +4318,7 @@ msgid ""
 msgstr ""
 "Nota: No tornarà a aparéixer l'avís quant a estos fitxers del mapa de "
 "connectors, fins que actualitzeu RKWard, o els elimineu i els torneu a "
-"afegir a «Configuració -> Configura RKWard… -> Connectors»."
+"afegir a «Configuració → Configura RKWard… → Connectors»."
 
 #: rkward/rkward.cpp:414
 #, kde-format
@@ -5450,7 +5450,7 @@ msgstr ""
 "(<i>RK()</i>). Alguns però no tots els arguments de funcions coincidiran, "
 "els altres s'ignoraran.</li><li>Es poden utilitzar els dispositius originals "
 "específics de plataforma, però incrustats dins de finestres de RKWard. Esta "
-"opció no està disponible a macOS X.</li><li>Es poden utilitzar els "
+"opció no està disponible en macOS X.</li><li>Es poden utilitzar els "
 "dispositius originals específics de plataforma sense canviar, sense "
 "l'addició de les característiques específiques de RKWard.</li></"
 "ul><p>Independentment d'este paràmetre, els dispositius originals sempre són "
@@ -6628,7 +6628,7 @@ msgstr ""
 "<b>No</b> oferix cap característica per a depurar el codi d'R.</p><p>Cal "
 "tindre en compte que la llista de missatges es neteja cada vegada que es "
 "tanca la finestra.</p><p>Es pot controlar el tipus i el nivell de gravetat "
-"dels missatges a «Configuració -> Configura RKWard… -> Depuració»</p>"
+"dels missatges a «Configuració → Configura RKWard… → Depuració»</p>"
 
 #: rkward/windows/rkdebugmessagewindow.cpp:71
 #, kde-format
@@ -6719,7 +6719,7 @@ msgid ""
 msgstr ""
 "No s'ha trobat cap ajuda sobre «%1». Potser el paquet corresponent no està "
 "instal·lat / carregat, o potser heu escrit malament l'ordre. Per a més "
-"opcions, intenteu utilitzar «Ajuda -> Busca ajuda quant a R»."
+"opcions, intenteu utilitzar «Ajuda → Busca ajuda quant a R»."
 
 #: rkward/windows/rkhelpsearchwindow.cpp:160
 #, kde-format
@@ -7133,7 +7133,7 @@ msgstr ""
 "RKWard. Tanmateix, no s'ha creat cap finestra, o RKWard ha fallat en "
 "detectar la finestra nova. Si creieu que RKWard ho podria haver fet millor, "
 "considereu informar-ho com un error. De manera alternativa, podríeu voler "
-"ajustar «Configuració -> Configura RKWard… -> Gràfics en pantalla»."
+"ajustar «Configuració → Configura RKWard… → Gràfics en pantalla»."
 
 #: rkward/windows/rkwindowcatcher.cpp:294
 #, kde-format
@@ -7154,7 +7154,7 @@ msgid ""
 msgstr ""
 "La finestra actual pareix massa gran per a ajustar-se a la pantalla. Si açò "
 "passa sovint, podríeu voler ajustar la mida predeterminada de la finestra "
-"gràfica a «Configuració -> Configura RKWard… -> Gràfics en pantalla»."
+"gràfica a «Configuració → Configura RKWard… → Gràfics en pantalla»."
 
 #: rkward/windows/rkwindowcatcher.cpp:351
 #, kde-format
@@ -7459,7 +7459,7 @@ msgstr ""
 "petits abans d'editar-los. D'altra banda, si teniu memòria suficient, o les "
 "dades són prou simples (les dades numèriques són més fàcils de gestionar que "
 "els factors), es podran editar sense problemes. Podeu configurar este avís "
-"(o desactivar-lo del tot) a «Configuració -> Configura RKWard… -> General».\n"
+"(o desactivar-lo del tot) a «Configuració → Configura RKWard… → General».\n"
 "Edite l'objecte?"
 
 #: rkward/windows/rkworkplace.cpp:647
