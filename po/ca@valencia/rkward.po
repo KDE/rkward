@@ -649,8 +649,8 @@ msgstr "Mostra els detalls"
 msgid ""
 "You may want to create an editable subset using Data->Subset data.frame."
 msgstr ""
-"Potser voleu crear un subconjunt editable fent servir Dades->Subconjunt data."
-"frame."
+"Potser voleu crear un subconjunt editable fent servir «Dades → Subconjunt "
+"«data.frame»»."
 
 #: rkward/dataeditor/twintable.cpp:225
 #, kde-format
