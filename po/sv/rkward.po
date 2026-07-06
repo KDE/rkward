@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-04-21 02:38+0000\n"
-"PO-Revision-Date: 2026-07-04 15:12+0200\n"
+"PO-Revision-Date: 2026-07-05 10:12+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
@@ -4126,12 +4126,13 @@ msgstr ""
 "den:\n"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:86
-#, fuzzy, no-c-format, kde-format
-#| msgid "Creating backup of current AppImage: %1\n"
+#, no-c-format, kde-format
 msgid ""
 "Creating backup of current AppImage: %1\n"
 "  "
-msgstr "Skapar säkerhetskopia av aktuell AppImage: %1\n"
+msgstr ""
+"Skapar säkerhetskopia av aktuell AppImage: %1\n"
+"  "
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:111
 #, kde-format
