@@ -1,13 +1,13 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 #
-# SPDX-FileCopyrightText: 2015, 2016, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026 Stefan Asserhäll <stefan.asserhall@gmail.com>
+# SPDX-FileCopyrightText: 2015-2016, 2018-2026 Stefan Asserhäll <stefan.asserhall@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-04-19 00:39+0000\n"
-"PO-Revision-Date: 2026-01-20 20:58+0100\n"
+"PO-Revision-Date: 2026-07-07 10:13+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 25.12.1\n"
+"X-Generator: Lokalize 26.04.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -5091,20 +5091,15 @@ msgid "(Attempt to) start completion whenever the cursor position changes"
 msgstr "(Försök) starta komplettering så fort markörpositionen ändras"
 
 #: rkward/settings/rksettingsmodulecommandeditor.cpp:74
-#, fuzzy, kde-format
-#| msgid ""
-#| "Note: Further shortcuts can be assigned, and by default, Ctlr+Space "
-#| "invokes completions, in addition to this. Further, pressing the Tab key, "
-#| "while completions are shown, performs partial completion (if possible), "
-#| "independent of this setting."
+#, kde-format
 msgid ""
 "Note: Further shortcuts can be assigned, and by default, Ctrl+Space invokes "
 "completions, in addition to this. Further, pressing the Tab key, while "
 "completions are shown, performs partial completion (if possible), "
 "independent of this setting."
 msgstr ""
-"Observera: Ytterligare genvägar kan tilldelas, och normalt aktiverar Ctrl + "
-"mellanslag kompletteringar. Förutom detta, utförs dessutom partiell "
+"Observera: Ytterligare genvägar kan tilldelas, och normalt aktiverar Ctrl"
+"+mellanslag kompletteringar. Förutom detta, utförs dessutom partiell "
 "komplettering (om möjligt) genom att trycka på tabulatortangenten medan "
 "kompletteringar visas, oberoende av inställningen."
 
@@ -5420,41 +5415,35 @@ msgstr ""
 "katalogen för inlästa arbetsytor, får den katalogen företräde.</p>"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:94
-#, fuzzy, kde-format
-#| msgid ""
-#| "Directory where rkward may store files (setting takes effect after "
-#| "restarting RKWard)"
+#, kde-format
 msgid "HTML rendering (settings take effect after restarting RKWard)"
 msgstr ""
-"Katalog där RKWard kan lagra filer (inställningen får effekt efter att "
-"RKWard har startats om)"
+"HTML-återgivning (inställningen får effekt efter att RKWard har startats om)"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:96
 #, kde-format
 msgid "Engine:"
-msgstr ""
+msgstr "Gränssnitt:"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:97
-#, fuzzy, kde-format
-#| msgid "Platform default device"
+#, kde-format
 msgid "Platform default"
-msgstr "Plattformens standardenhet"
+msgstr "Plattformens standardvärde"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:99
 #, kde-format
 msgid "QWebEngine"
-msgstr ""
+msgstr "QWebEngine"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:103
-#, fuzzy, kde-format
-#| msgid "View"
+#, kde-format
 msgid "QWebView"
-msgstr "Visa"
+msgstr "QWebView"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:109
 #, kde-format
 msgid "Disable hardware acceleration"
-msgstr ""
+msgstr "Inaktivera maskinvaruacceleration"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:110
 #, kde-format
@@ -5465,6 +5454,12 @@ msgid ""
 "is recommended to leave hardware acceleration disabled, unless you "
 "experience performance problems while viewing HTML content inside RKWard."
 msgstr ""
+"Användningen av maskinvaruacceleration för HTML-återgivning (t.ex. "
+"hjälpsidor och utdata från insticksprogram) är känd för att orsaka "
+"instabilitet i vissa installationer och behövs generellt inte för det "
+"(vanligtvis enkla) innehåll som visas i RKWard. Det rekommenderas att låta "
+"maskinvaruacceleration vara inaktiverad, såvida inte prestandaproblem "
+"uppstår när HTML-innehåll visas i RKWard."
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:117
 #, kde-format
@@ -5486,6 +5481,8 @@ msgid ""
 "Persistent workplace layout (i.e. which script-, data-, help-windows are "
 "open)"
 msgstr ""
+"Beständig layout av arbetsyta (dvs. vilka skript-, data- och hjälpfönster "
+"som är öppna)"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:127
 #, kde-format
@@ -7144,10 +7141,9 @@ msgid "Package"
 msgstr "Paket"
 
 #: rkward/windows/rkhtmlwindow.cpp:389
-#, fuzzy, kde-format
-#| msgid "RKWard output file %s does not (yet) exist"
+#, kde-format
 msgid "RKWard output file %1 does not (yet) exist"
-msgstr "RKWard utdatafilen %s finns inte (ännu)"
+msgstr "RKWard utdatafilen %1 finns inte (ännu)"
 
 #: rkward/windows/rkhtmlwindow.cpp:521
 #: rkward/windows/rktoplevelwindowgui.cpp:264
@@ -7226,10 +7222,9 @@ msgid "&Clear Output"
 msgstr "&Rensa utdata"
 
 #: rkward/windows/rkhtmlwindow.cpp:686
-#, fuzzy, kde-format
-#| msgid "Unload"
+#, kde-format
 msgid "Reload"
-msgstr "Ladda ur"
+msgstr "Uppdatera"
 
 #: rkward/windows/rkhtmlwindow.cpp:690
 #, kde-format
@@ -7355,12 +7350,12 @@ msgstr "Spara som"
 #: rkward/windows/rkqwebview.cpp:252
 #, kde-format
 msgid "Open link in new tab"
-msgstr ""
+msgstr "Öppna länk under ny flik"
 
 #: rkward/windows/rkqwebview.cpp:265
 #, kde-format
 msgid "Copy link address"
-msgstr ""
+msgstr "Kopiera länkadress"
 
 #: rkward/windows/rktexthints.cpp:34
 #, kde-format
