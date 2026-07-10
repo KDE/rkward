@@ -13,7 +13,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <QMenu>
 #include <kparts/partmanager.h>
 #include <kselectaction.h>
-#include <kwidgetsaddons_version.h>
 
 #include <QContextMenuEvent>
 #include <QHBoxLayout>

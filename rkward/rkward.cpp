@@ -37,7 +37,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <ksqueezedtextlabel.h>
 #include <kstandardaction.h>
 #include <ktoolbar.h>
-#include <kwidgetsaddons_version.h>
 #include <kxmlguifactory.h>
 
 // application specific includes

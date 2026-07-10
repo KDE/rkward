@@ -12,7 +12,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <KConfigGroup>
 #include <KRecentFilesAction>
 #include <KSharedConfig>
-#include <kconfigwidgets_version.h>
 
 #include "../rkward.h"
 #include "rksettingsmodulegeneral.h"

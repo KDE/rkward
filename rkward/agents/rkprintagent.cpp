@@ -18,7 +18,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <KPluginFactory>
-#include <kcoreaddons_version.h>
 
 #include "../rkward.h"
 #include "../windows/rkpdfwindow.h"

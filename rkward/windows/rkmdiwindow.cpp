@@ -20,7 +20,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <kmessagewidget.h>
 #include <kparts/partactivateevent.h>
 #include <kparts/readwritepart.h>
-#include <kwidgetsaddons_version.h>
 #include <kxmlguifactory.h>
 
 #include "../misc/rkstandardicons.h"

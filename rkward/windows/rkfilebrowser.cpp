@@ -16,7 +16,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <kfileitemactions.h>
 #include <kfileitemlistproperties.h>
 #include <kio/copyjob.h>
-#include <kio_version.h>
 #include <ktoolbar.h>
 #include <kurlcombobox.h>
 #include <kurlcompletion.h>

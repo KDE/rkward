@@ -41,8 +41,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <kmessagebox.h>
 #include <krandom.h>
 #include <kstandardaction.h>
-#include <ktexteditor_version.h>
-#include <kwidgetsaddons_version.h>
 
 #include "../core/robjectlist.h"
 #include "../misc/rkcommonfunctions.h"

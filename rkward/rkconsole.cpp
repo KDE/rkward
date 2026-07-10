@@ -35,7 +35,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <kmessagebox.h>
 #include <kshellcompletion.h>
 #include <ktexteditor/editor.h>
-#include <ktexteditor_version.h>
 #include <kxmlguifactory.h>
 
 #include "core/rfunctionobject.h"

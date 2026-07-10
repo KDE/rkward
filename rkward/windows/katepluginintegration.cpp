@@ -24,7 +24,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <KTextEditor/Plugin>
 #include <KTextEditor/SessionConfigInterface>
 #include <KXMLGUIFactory>
-#include <kcoreaddons_version.h>
 
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkdummypart.h"

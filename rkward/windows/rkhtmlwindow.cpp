@@ -12,10 +12,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <KMessageBox>
 #include <kactioncollection.h>
 #include <kcodecaction.h>
-#include <kconfigwidgets_version.h>
 #include <kdirwatch.h>
-#include <kio_version.h>
-#include <kparts_version.h>
 #include <kservice.h>
 
 #include <QBuffer>
