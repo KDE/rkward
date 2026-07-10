@@ -16,9 +16,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include <KMessageBox>
 #include <kaboutapplicationdialog.h>
 #include <kactioncollection.h>
-#include <kcolorscheme_version.h>
 #include <kshortcutsdialog.h>
-#include <kxmlgui_version.h>
 #include <kxmlguifactory.h>
 
 #include <QDomDocument>
