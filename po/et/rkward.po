@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-04-19 00:39+0000\n"
+"POT-Creation-Date: 2026-07-12 00:39+0000\n"
 "PO-Revision-Date: 2022-11-14 20:26+0100\n"
 "Last-Translator: Mihkel Tõnnov <mihhkel@gmail.com>\n"
 "Language-Team: Estonian <>\n"
@@ -61,7 +61,7 @@ msgstr ""
 msgid "Error loading workspace"
 msgstr "Tõrge töötsooni laadimisel"
 
-#: rkward/agents/rkprintagent.cpp:41
+#: rkward/agents/rkprintagent.cpp:40
 #, kde-format
 msgid ""
 "No service was found to provide a KDE print dialog for PostScript files. We "
@@ -75,7 +75,7 @@ msgstr ""
 "siis seadistada RKWard nii, et see ei üritaks trükkida KDE trükkimisdialoogi "
 "abil."
 
-#: rkward/agents/rkprintagent.cpp:41
+#: rkward/agents/rkprintagent.cpp:40
 #, kde-format
 msgid "Unable to open KDE print dialog"
 msgstr "KDE trükkimisdialoogi avamine nurjus"
@@ -123,7 +123,7 @@ msgstr ""
 msgid "Overwrite File?"
 msgstr "Kas kirjutada fail üle?"
 
-#: rkward/agents/rksaveagent.cpp:63 rkward/rkward.cpp:908
+#: rkward/agents/rksaveagent.cpp:63 rkward/rkward.cpp:907
 #, kde-format
 msgid "R Workspace Files [%1](%1);;All files [*](*)"
 msgstr "R-i töötsooni failid [%1](%1);;Kõik failid [*](*)"
@@ -2432,7 +2432,7 @@ msgstr "Edasiotsing (otsitava järgmine esinemine)"
 msgid "Match case"
 msgstr "Tõstutundlik"
 
-#: rkward/misc/rkfindbar.cpp:92 rkward/windows/rkhtmlwindow.cpp:699
+#: rkward/misc/rkfindbar.cpp:92 rkward/windows/rkhtmlwindow.cpp:696
 #, kde-format
 msgid "Find as you type"
 msgstr "Otsimine kirjutamise ajal"
@@ -2726,7 +2726,7 @@ msgid "Output"
 msgstr "Väljund"
 
 #: rkward/misc/rkprogresscontrol.cpp:285
-#: rkward/windows/rktoplevelwindowgui.cpp:88
+#: rkward/windows/rktoplevelwindowgui.cpp:86
 #, fuzzy, kde-format
 #| msgid "Show &Output"
 msgid "Show Output"
@@ -3503,7 +3503,7 @@ msgid "Enter value:"
 msgstr "Väärtuse sisestamine:"
 
 #: rkward/plugin/rkpreviewbox.cpp:50
-#: rkward/windows/rkcommandeditorwindow.cpp:618
+#: rkward/windows/rkcommandeditorwindow.cpp:616
 #, kde-format
 msgid "Preview"
 msgstr "Eelvaatlus"
@@ -4187,7 +4187,7 @@ msgstr ""
 msgid "Printing object of class '%1' is not implemented"
 msgstr ""
 
-#: rkward/rkconsole.cpp:71
+#: rkward/rkconsole.cpp:70
 #, kde-format
 msgid ""
 "The 'katepart' component could not be loaded. RKWard cannot run without "
@@ -4196,82 +4196,82 @@ msgstr ""
 "Komponendi \"katepart\" laadimine nurjus. RKWard ei saa ilma selleta töötada "
 "ja lõpetab seepärast kohe töö. Palun paigalda katepart ja proovi uuesti."
 
-#: rkward/rkconsole.cpp:71
+#: rkward/rkconsole.cpp:70
 #, kde-format
 msgid "'katepart' component could not be found"
 msgstr "Komponenti \"katepart\" ei leitud"
 
-#: rkward/rkconsole.cpp:114 rkward/windows/rkcommandeditorwindow.cpp:885
+#: rkward/rkconsole.cpp:113 rkward/windows/rkcommandeditorwindow.cpp:883
 #, kde-format
 msgid "R Console"
 msgstr "R-i konsool"
 
-#: rkward/rkconsole.cpp:120
+#: rkward/rkconsole.cpp:119
 #, kde-format
 msgid "Scrollbar minimap"
 msgstr ""
 
-#: rkward/rkconsole.cpp:122
+#: rkward/rkconsole.cpp:121
 #, kde-format
 msgid "Dynamic word wrap"
 msgstr ""
 
-#: rkward/rkconsole.cpp:464
+#: rkward/rkconsole.cpp:463
 #, kde-format
 msgid "Syntax error\n"
 msgstr "Süntaksi viga\n"
 
-#: rkward/rkconsole.cpp:665
+#: rkward/rkconsole.cpp:664
 #, kde-format
 msgid "Select command history file to load"
 msgstr "Laaditava käsuajaloo faili valimine"
 
-#: rkward/rkconsole.cpp:667
+#: rkward/rkconsole.cpp:666
 #, kde-format
 msgid "R history files [*.Rhistory](*.Rhistory);;All files [*](*)"
 msgstr "R-i ajaloofailid [*.Rhistory](*.Rhistory);;Kõik failid [*](*)"
 
-#: rkward/rkconsole.cpp:700
+#: rkward/rkconsole.cpp:699
 #, kde-format
 msgid "Select filename to save command history"
 msgstr "Failinime valimine käsuajaloo salvestamiseks"
 
-#: rkward/rkconsole.cpp:701
+#: rkward/rkconsole.cpp:700
 #, kde-format
 msgid "R history files [*.Rhistory] (*.Rhistory);;All files [*] (*)"
 msgstr "R-i ajaloofailid [*.Rhistory] (*.Rhistory);;Kõik failid [*] (*)"
 
-#: rkward/rkconsole.cpp:835
+#: rkward/rkconsole.cpp:834
 #, kde-format
 msgid "Interrupt running command"
 msgstr "Katkesta töötav käsk"
 
-#: rkward/rkconsole.cpp:842
+#: rkward/rkconsole.cpp:841
 #, kde-format
 msgid "Copy selection literally"
 msgstr "Kopeeri valik nagu on"
 
-#: rkward/rkconsole.cpp:845
+#: rkward/rkconsole.cpp:844
 #, kde-format
 msgid "Copy commands, only"
 msgstr "Kopeeri ainult käsud"
 
-#: rkward/rkconsole.cpp:852
+#: rkward/rkconsole.cpp:851
 #, kde-format
 msgid "Print Console"
 msgstr "Näita konsooli sisu"
 
-#: rkward/rkconsole.cpp:858
+#: rkward/rkconsole.cpp:857
 #, kde-format
 msgid "Import command history..."
 msgstr "Impordi käsuajalugu ..."
 
-#: rkward/rkconsole.cpp:860
+#: rkward/rkconsole.cpp:859
 #, kde-format
 msgid "Export command history..."
 msgstr "Ekspordi käsuajalugu ..."
 
-#: rkward/rkconsole.cpp:879
+#: rkward/rkconsole.cpp:878
 #, kde-format
 msgid ""
 "You have configured RKWard to pipe script editor commands through the R "
@@ -4284,17 +4284,17 @@ msgstr ""
 "või kõigepealt konsool lähtestada? Klõpsa \"Loobu\", kui sa ei soovi uut "
 "käsku praegu käivitada."
 
-#: rkward/rkconsole.cpp:879
+#: rkward/rkconsole.cpp:878
 #, kde-format
 msgid "R Console is busy"
 msgstr "R-i konsool on hõivatud"
 
-#: rkward/rkconsole.cpp:879
+#: rkward/rkconsole.cpp:878
 #, kde-format
 msgid "Append"
 msgstr "Lisa"
 
-#: rkward/rkconsole.cpp:879
+#: rkward/rkconsole.cpp:878
 #, kde-format
 msgid "Reset, then submit"
 msgstr "Lähtesta ja siis saada"
@@ -4328,7 +4328,7 @@ msgstr "&Vaade"
 msgid "&Run"
 msgstr "&Käivitamine"
 
-#: rkward/rkward.cpp:326
+#: rkward/rkward.cpp:325
 #, kde-format
 msgid ""
 "<p>You are about to start an RKWard dialog from outside of RKWard, probably "
@@ -4353,17 +4353,17 @@ msgstr ""
 "p><p><i>Märkus</i>: valiku \"Rohkem ei küsita\" märkimine avaldab mõju "
 "ainult seansi lõpuni."
 
-#: rkward/rkward.cpp:327
+#: rkward/rkward.cpp:326
 #, kde-format
 msgid "A note on external links"
 msgstr "Märkus välislinkide kohta"
 
-#: rkward/rkward.cpp:339
+#: rkward/rkward.cpp:338
 #, kde-format
 msgid "Setting up plugins..."
 msgstr "Pluginate seadistamine ..."
 
-#: rkward/rkward.cpp:373
+#: rkward/rkward.cpp:372
 #, kde-format
 msgid ""
 "New RKWard plugin packs (listed below) have been found, and have been "
@@ -4374,12 +4374,12 @@ msgstr ""
 "aktiveeriti automaatselt. Pluginapaketi deaktiveerimiseks vali Seadistused-"
 ">RKWardi seadistamine->Pluginad."
 
-#: rkward/rkward.cpp:373
+#: rkward/rkward.cpp:372
 #, kde-format
 msgid "New plugins found"
 msgstr "Leiti uusi pluginaid"
 
-#: rkward/rkward.cpp:377
+#: rkward/rkward.cpp:376
 #, kde-format
 msgid ""
 "The following RKWard pluginmap files could not be loaded, and have been "
@@ -4392,12 +4392,12 @@ msgstr ""
 "versiooniga või ei ole mõeldud otselaadimiseks (rohkem teavet leiab "
 "\"Üksikasjade\" alt). Need on keelatud."
 
-#: rkward/rkward.cpp:377 rkward/rkward.cpp:381
+#: rkward/rkward.cpp:376 rkward/rkward.cpp:380
 #, kde-format
 msgid "Failed to load some plugin maps"
 msgstr "Mõningate pluginmap-failide laadimine nurjus"
 
-#: rkward/rkward.cpp:381
+#: rkward/rkward.cpp:380
 #, kde-format
 msgid ""
 "Some errors were encountered while loading the following RKWard pluginmap "
@@ -4410,7 +4410,7 @@ msgstr ""
 "versiooniga (täpsematl teavet leiab \"Üksikasjade\" alt). Teised pluginad "
 "laaditi siiski edukalt."
 
-#: rkward/rkward.cpp:381
+#: rkward/rkward.cpp:380
 #, kde-format
 msgid ""
 "Note: You will not be warned about these pluginmap files again, until you "
@@ -4421,215 +4421,215 @@ msgstr ""
 "RKWardi uuendanud või pluginaid eemaldanud ja uuesti lisanud (Seadistused-"
 ">RKWardi seadistamine->Pluginad)."
 
-#: rkward/rkward.cpp:443
+#: rkward/rkward.cpp:442
 #, kde-format
 msgid "Carbon Copy Settings"
 msgstr "Koopia seadistused"
 
-#: rkward/rkward.cpp:461 rkward/settings/rksettingsmoduleobjectbrowser.cpp:36
+#: rkward/rkward.cpp:460 rkward/settings/rksettingsmoduleobjectbrowser.cpp:36
 #, kde-format
 msgid "Workspace"
 msgstr "Töötsoon"
 
-#: rkward/rkward.cpp:470
+#: rkward/rkward.cpp:469
 #, kde-format
 msgid "Files"
 msgstr "Failid"
 
-#: rkward/rkward.cpp:474
+#: rkward/rkward.cpp:473
 #, kde-format
 msgid "Pending Jobs"
 msgstr "Ootel tööd"
 
-#: rkward/rkward.cpp:486
+#: rkward/rkward.cpp:485
 #, kde-format
 msgid "Debugger Frames"
 msgstr "Siluri kaadrid"
 
-#: rkward/rkward.cpp:491
+#: rkward/rkward.cpp:490
 #, kde-format
 msgid "Debugger Console"
 msgstr "Siluri konsool"
 
-#: rkward/rkward.cpp:495
+#: rkward/rkward.cpp:494
 #, kde-format
 msgid "RKWard Debug Messages"
 msgstr "RKWardi silumisteated"
 
-#: rkward/rkward.cpp:507
+#: rkward/rkward.cpp:506
 #, kde-format
 msgid "Dataset"
 msgstr "Andmekogum"
 
-#: rkward/rkward.cpp:509
+#: rkward/rkward.cpp:508
 #, kde-format
 msgid "Creates new empty dataset and opens it for editing"
 msgstr "Uue tühja andmekogumi loomine ja avamine muutmiseks"
 
-#: rkward/rkward.cpp:512
+#: rkward/rkward.cpp:511
 #, kde-format
 msgid "Script File"
 msgstr "Skriptifail"
 
-#: rkward/rkward.cpp:516
+#: rkward/rkward.cpp:515
 #, fuzzy, kde-format
 #| msgid "Output Window"
 msgid "Output document"
 msgstr "Väljundiaken"
 
-#: rkward/rkward.cpp:518
+#: rkward/rkward.cpp:517
 #, kde-format
 msgid "Creates and activates a new output document"
 msgstr ""
 
-#: rkward/rkward.cpp:523
+#: rkward/rkward.cpp:522
 #, kde-format
 msgid "Open R Script File..."
 msgstr "Ava R-i skriptifail ..."
 
-#: rkward/rkward.cpp:527
+#: rkward/rkward.cpp:526
 #, fuzzy, kde-format
 #| msgid "Open R Script File..."
 msgid "Open RKWard Output File..."
 msgstr "Ava R-i skriptifail ..."
 
-#: rkward/rkward.cpp:531
+#: rkward/rkward.cpp:530
 #, kde-format
 msgid "Open any File..."
 msgstr "Ava suvaline fail ..."
 
-#: rkward/rkward.cpp:536
+#: rkward/rkward.cpp:535
 #, kde-format
 msgid "Open Recent R Script File"
 msgstr "Ava hiljuti kasutatud R-i skriptifail"
 
-#: rkward/rkward.cpp:540
+#: rkward/rkward.cpp:539
 #, fuzzy, kde-format
 #| msgid "Import Data"
 msgid "Import Assistant"
 msgstr "Impordi andmeid"
 
-#: rkward/rkward.cpp:541
+#: rkward/rkward.cpp:540
 #, fuzzy, kde-format
 #| msgid "Import data from a variety of file formats"
 msgid ""
 "Assistant to find the best method to import data from a variety of formats"
 msgstr "Andmete import mitmesugustest failivormingutest"
 
-#: rkward/rkward.cpp:545
+#: rkward/rkward.cpp:544
 #, kde-format
 msgid "Open Workspace..."
 msgstr "Ava töötsoon ..."
 
-#: rkward/rkward.cpp:547
+#: rkward/rkward.cpp:546
 #, kde-format
 msgid "Opens an existing document"
 msgstr "Olemasoleva dokumendi avamine"
 
-#: rkward/rkward.cpp:552
+#: rkward/rkward.cpp:551
 #, kde-format
 msgid "Open Recent Workspace"
 msgstr "Ava hiljuti kasutatud töötsoon"
 
-#: rkward/rkward.cpp:553
+#: rkward/rkward.cpp:552
 #, kde-format
 msgid "Opens a recently used file"
 msgstr "Hiljuti kasutatud faili avamine"
 
-#: rkward/rkward.cpp:556
+#: rkward/rkward.cpp:555
 #, kde-format
 msgid "Save Workspace"
 msgstr "Salvesta töötsoon"
 
-#: rkward/rkward.cpp:558
+#: rkward/rkward.cpp:557
 #, kde-format
 msgid "Saves the actual document"
 msgstr "Aktiivse dokumendi salvestamine"
 
-#: rkward/rkward.cpp:562
+#: rkward/rkward.cpp:561
 #, kde-format
 msgid "Save Workspace As"
 msgstr "Salvesta töötsoon kui"
 
-#: rkward/rkward.cpp:563
+#: rkward/rkward.cpp:562
 #, kde-format
 msgid "Saves the actual document as..."
 msgstr "Aktiivse dokumendi salvestamine kui ..."
 
-#: rkward/rkward.cpp:566
+#: rkward/rkward.cpp:565
 #, kde-format
 msgid "Quits the application"
 msgstr "Rakendusest väljumine"
 
-#: rkward/rkward.cpp:569
+#: rkward/rkward.cpp:568
 #, kde-format
 msgid "Interrupt all commands"
 msgstr "Katkesta kõik käsud"
 
-#: rkward/rkward.cpp:575
+#: rkward/rkward.cpp:574
 #, kde-format
 msgid "CC commands to output..."
 msgstr "Kopeeri käsud väljundisse ..."
 
-#: rkward/rkward.cpp:579 rkward/rkward.cpp:583
+#: rkward/rkward.cpp:578 rkward/rkward.cpp:582
 #, kde-format
 msgid "Manage R packages and plugins..."
 msgstr "R-i pakettide ja pluginate haldamine ..."
 
-#: rkward/rkward.cpp:590
+#: rkward/rkward.cpp:589
 #, kde-format
 msgid "Close All Data"
 msgstr "Sulge kõik andmed"
 
-#: rkward/rkward.cpp:591
+#: rkward/rkward.cpp:590
 #, kde-format
 msgid "Closes all open data editors"
 msgstr "Kõigi avatud andmeredaktorite sulgemine"
 
-#: rkward/rkward.cpp:596
+#: rkward/rkward.cpp:595
 #, kde-format
 msgid "Close All"
 msgstr "Sulge kõik"
 
-#: rkward/rkward.cpp:600 rkward/windows/rktoolwindowbar.cpp:304
+#: rkward/rkward.cpp:599 rkward/windows/rktoolwindowbar.cpp:303
 #: rkward/windows/rkworkplaceview.cpp:96
 #, kde-format
 msgid "Detach"
 msgstr "Haagi lahti"
 
-#: rkward/rkward.cpp:604
+#: rkward/rkward.cpp:603
 #, fuzzy, kde-format
 #| msgid "Broken installation"
 msgid "Check installation"
 msgstr "Katkine paigaldus"
 
-#: rkward/rkward.cpp:608
+#: rkward/rkward.cpp:607
 #, kde-format
 msgid "[No actions available for current view]"
 msgstr "[Aktiivsele vaatele pole ühtegi toimingut]"
 
-#: rkward/rkward.cpp:615
+#: rkward/rkward.cpp:614
 #, kde-format
 msgid "Open..."
 msgstr "Ava ..."
 
-#: rkward/rkward.cpp:629
+#: rkward/rkward.cpp:628
 #, kde-format
 msgid "Create..."
 msgstr "Loo ..."
 
-#: rkward/rkward.cpp:636
+#: rkward/rkward.cpp:635
 #, kde-format
 msgid "Save..."
 msgstr "Salvesta ..."
 
-#: rkward/rkward.cpp:652
+#: rkward/rkward.cpp:651
 #, fuzzy, kde-format
 #| msgid "Message from the R backend"
 msgid "Restart R Backend"
 msgstr "R-i taustaprogrammi teade"
 
-#: rkward/rkward.cpp:660
+#: rkward/rkward.cpp:659
 #, kde-format
 msgid ""
 "<p><b>Restarting the backend will discard all unsaved data in this workspace!"
@@ -4637,13 +4637,13 @@ msgid ""
 "sure you want to proceed?</p>"
 msgstr ""
 
-#: rkward/rkward.cpp:661
+#: rkward/rkward.cpp:660
 #, fuzzy, kde-format
 #| msgid "Message from the R backend"
 msgid "Restart R backend"
 msgstr "R-i taustaprogrammi teade"
 
-#: rkward/rkward.cpp:668
+#: rkward/rkward.cpp:667
 #, kde-format
 msgid ""
 "<p>One or more operations are pending.</p><p>If you have recently chosen to "
@@ -4651,139 +4651,139 @@ msgid ""
 "saved, yet!</b></p><p>How do you want to proceed?</p>"
 msgstr ""
 
-#: rkward/rkward.cpp:669
+#: rkward/rkward.cpp:668
 #, kde-format
 msgid "R commands still pending"
 msgstr ""
 
-#: rkward/rkward.cpp:669
+#: rkward/rkward.cpp:668
 #, kde-format
 msgid "Force restart now"
 msgstr ""
 
-#: rkward/rkward.cpp:669
+#: rkward/rkward.cpp:668
 #, fuzzy, kde-format
 #| msgid "Broken installation"
 msgid "Check again"
 msgstr "Katkine paigaldus"
 
-#: rkward/rkward.cpp:669
+#: rkward/rkward.cpp:668
 #, kde-format
 msgid "Cancel restarting"
 msgstr ""
 
-#: rkward/rkward.cpp:806
+#: rkward/rkward.cpp:805
 #, kde-format
 msgid "Current working directory"
 msgstr "Aktiivne töökataloog"
 
-#: rkward/rkward.cpp:824 rkward/windows/rcontrolwindow.cpp:41
+#: rkward/rkward.cpp:823 rkward/windows/rcontrolwindow.cpp:41
 #, kde-format
 msgid "Configure R backend"
 msgstr "Seadista R-i taustaprogrammi"
 
-#: rkward/rkward.cpp:875
+#: rkward/rkward.cpp:874
 #, kde-format
 msgid "Exiting..."
 msgstr "Väljumine ..."
 
-#: rkward/rkward.cpp:893
+#: rkward/rkward.cpp:892
 #, kde-format
 msgid "New dataset"
 msgstr "Uus andmekogum"
 
-#: rkward/rkward.cpp:893
+#: rkward/rkward.cpp:892
 #, kde-format
 msgid "Enter name for the new dataset"
 msgstr "Uue andmekogumi nimi"
 
-#: rkward/rkward.cpp:905
+#: rkward/rkward.cpp:904
 #, kde-format
 msgid "Opening workspace..."
 msgstr "Töötsooni avamine ..."
 
-#: rkward/rkward.cpp:908
+#: rkward/rkward.cpp:907
 #, kde-format
 msgid "Select workspace to open..."
 msgstr "Avatava töötsooni valimine ..."
 
-#: rkward/rkward.cpp:979
+#: rkward/rkward.cpp:978
 #, kde-format
 msgid "The <b>R</b> engine is busy."
 msgstr "<b>R-i</b> mootor on hõivatud."
 
-#: rkward/rkward.cpp:983
+#: rkward/rkward.cpp:982
 #, kde-format
 msgid "The <b>R</b> engine is idle."
 msgstr "<b>R-i</b> mootor on jõude."
 
-#: rkward/rkward.cpp:992
+#: rkward/rkward.cpp:991
 #, kde-format
 msgid "The <b>R</b> engine is being initialized."
 msgstr "<b>R-i</b> mootor käivitatakse."
 
-#: rkward/rkward.cpp:995
+#: rkward/rkward.cpp:994
 #, fuzzy, kde-format
 #| msgid "The <b>R</b> engine is idle."
 msgid "The <b>R</b> engine is unavailable."
 msgstr "<b>R-i</b> mootor on jõude."
 
-#: rkward/rkward.cpp:1001
+#: rkward/rkward.cpp:1000
 #, kde-format
 msgid ""
 "R engine unavailable. See <a href=\"rkward://page/rkward_trouble_shooting"
 "\">troubleshooting</a> for possible solutions."
 msgstr ""
 
-#: rkward/rkward.cpp:1033
+#: rkward/rkward.cpp:1032
 #, kde-format
 msgid "Open"
 msgstr "Avamine"
 
-#: rkward/rkward.cpp:1037
+#: rkward/rkward.cpp:1036
 #, kde-format
 msgid "Opening mode:"
 msgstr "Avamisrežiim:"
 
-#: rkward/rkward.cpp:1039
+#: rkward/rkward.cpp:1038
 #, kde-format
 msgid "Guess file type, automatically"
 msgstr "Failitüübi automaatne äraarvamine"
 
-#: rkward/rkward.cpp:1039
+#: rkward/rkward.cpp:1038
 #, kde-format
 msgid "Open as text / script file"
 msgstr "Avamine teksti-/skriptifailina"
 
-#: rkward/rkward.cpp:1040
+#: rkward/rkward.cpp:1039
 #, kde-format
 msgid "Open as text file and force R highlighting"
 msgstr "Avamine tekstifailina ja jõuga R-i esiletõstmise kasutamine"
 
-#: rkward/rkward.cpp:1040
+#: rkward/rkward.cpp:1039
 #, fuzzy, kde-format
 #| msgid "Open Recent Workspace"
 msgid "Open as R workspace"
 msgstr "Ava hiljuti kasutatud töötsoon"
 
-#: rkward/rkward.cpp:1077
+#: rkward/rkward.cpp:1076
 #, fuzzy, kde-format
 #| msgid "Select workspace to open..."
 msgid "Select RKWard Output file to open..."
 msgstr "Avatava töötsooni valimine ..."
 
-#: rkward/rkward.cpp:1077
+#: rkward/rkward.cpp:1076
 #, fuzzy, kde-format
 #| msgid "R Workspace Files [%1](%1);;All files [*](*)"
 msgid "RKWard Output Files [*.rko](*.rko);;All files [*](*)"
 msgstr "R-i töötsooni failid [%1](%1);;Kõik failid [*](*)"
 
-#: rkward/rkward.cpp:1086
+#: rkward/rkward.cpp:1085
 #, kde-format
 msgid "Open script file(s)"
 msgstr "Skriptifaili(de) avamine"
 
-#: rkward/rkward.cpp:1100
+#: rkward/rkward.cpp:1099
 #, kde-format
 msgid "[Unnamed Workspace]"
 msgstr "[Nimetu töötsoon]"
@@ -5764,7 +5764,7 @@ msgid "Height:"
 msgstr "Kõrgus:"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:51
-#: rkward/windows/rktoplevelwindowgui.cpp:155
+#: rkward/windows/rktoplevelwindowgui.cpp:153
 #, kde-format
 msgid "RKWard Plugins"
 msgstr "RKWardi pluginad"
@@ -5825,7 +5825,7 @@ msgid ""
 msgstr ""
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:471
-#: rkward/windows/rkhtmlwindow.cpp:923
+#: rkward/windows/rkhtmlwindow.cpp:920
 #, kde-format
 msgid "Dependencies"
 msgstr "Sõltuvused"
@@ -6307,13 +6307,13 @@ msgstr "Ajalu&gu"
 msgid "&Window"
 msgstr "&Aken"
 
-#: rkward/windows/katepluginintegration.cpp:681
+#: rkward/windows/katepluginintegration.cpp:680
 #, kde-format
 msgctxt "where to search"
 msgid "in Current Script"
 msgstr "aktiivses skriptis"
 
-#: rkward/windows/katepluginintegration.cpp:682
+#: rkward/windows/katepluginintegration.cpp:681
 #, kde-format
 msgctxt "where to search"
 msgid "in Open Scripts"
@@ -6546,71 +6546,71 @@ msgstr "&Käivitamine"
 msgid "Run current statement, and advance"
 msgstr ""
 
-#: rkward/windows/rkcommandeditorwindow.cpp:183
+#: rkward/windows/rkcommandeditorwindow.cpp:181
 #, fuzzy, kde-format
 #| msgid "Preview"
 msgctxt "noun: type of preview"
 msgid "<b>Preview Mode</b>"
 msgstr "Eelvaatlus"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:189
+#: rkward/windows/rkcommandeditorwindow.cpp:187
 #, fuzzy, kde-format
 #| msgid "<b>Select one:</b>"
 msgid "<b>Options</b>"
 msgstr "<b>Vali üks:</b>"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:411
+#: rkward/windows/rkcommandeditorwindow.cpp:409
 #, kde-format
 msgid "Unable to open \"%1\""
 msgstr "\"%1\" avamine nurjus"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:411
+#: rkward/windows/rkcommandeditorwindow.cpp:409
 #, kde-format
 msgid "Could not open command file"
 msgstr "Käsufaili avamine nurjus"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:451
+#: rkward/windows/rkcommandeditorwindow.cpp:449
 #, kde-format
 msgid "Script Editor"
 msgstr "Skriptiredaktor"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:594
+#: rkward/windows/rkcommandeditorwindow.cpp:592
 #, kde-format
 msgid "Insert line break and run"
 msgstr "Lisa reavahetus ja käivita"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:601
+#: rkward/windows/rkcommandeditorwindow.cpp:599
 #, kde-format
 msgid "Run block"
 msgstr "Käivita plokk"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:605
+#: rkward/windows/rkcommandeditorwindow.cpp:603
 #, kde-format
 msgid "Mark selection as block"
 msgstr "Märgi valik plokiks"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:608
+#: rkward/windows/rkcommandeditorwindow.cpp:606
 #, kde-format
 msgid "Unmark block"
 msgstr "Tühista ploki märkimine"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:613
+#: rkward/windows/rkcommandeditorwindow.cpp:611
 #, kde-format
 msgid "CD to script directory"
 msgstr "Suundu skripti kataloogi"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:614
+#: rkward/windows/rkcommandeditorwindow.cpp:612
 #, kde-format
 msgid "Change the working directory to the directory of this script"
 msgstr "Töökataloogiks võetakse selle skripti kataloog"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:620
+#: rkward/windows/rkcommandeditorwindow.cpp:618
 #, kde-format
 msgctxt "Checkable action: the preview gets updated while typing"
 msgid "Update as you type"
 msgstr "Uuendamine kirjutamise ajal"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:623
+#: rkward/windows/rkcommandeditorwindow.cpp:621
 #, kde-format
 msgid ""
 "When this option is enabled, an update of the preview will be triggered "
@@ -6620,54 +6620,54 @@ msgstr ""
 "Selle märkimisel uuendatakse eelvaatlust iga kord, kui skripti muudad. Kui "
 "see pole lubatud, uuendatakse eelvaatlust ainult siis, kui skripti salvestad,"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:633
+#: rkward/windows/rkcommandeditorwindow.cpp:631
 #, kde-format
 msgid "Save Script..."
 msgstr "Salvesta skript ..."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:635
+#: rkward/windows/rkcommandeditorwindow.cpp:633
 #, kde-format
 msgid "Save Script As..."
 msgstr "Salvesta skript kui ..."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:715
-#: rkward/windows/rkcommandeditorwindow.cpp:1134
+#: rkward/windows/rkcommandeditorwindow.cpp:713
+#: rkward/windows/rkcommandeditorwindow.cpp:1132
 #, kde-format
 msgid " [modified]"
 msgstr " [muudetud]"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:722
+#: rkward/windows/rkcommandeditorwindow.cpp:720
 #, kde-format
 msgid "The document \"%1\" has been modified. Close it anyway?"
 msgstr "Dokumenti \"%1\" on muudetud. Kas ikkagi see sulgeda?"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:722
+#: rkward/windows/rkcommandeditorwindow.cpp:720
 #, kde-format
 msgid "File not saved"
 msgstr "Faili ei ole salvestatud"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:846
+#: rkward/windows/rkcommandeditorwindow.cpp:844
 #, kde-format
 msgid "No preview"
 msgstr "Eelvaatluseta"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:847
+#: rkward/windows/rkcommandeditorwindow.cpp:845
 #, kde-format
 msgid "Disable preview"
 msgstr "Eelvaatluse keelamine"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:853
+#: rkward/windows/rkcommandeditorwindow.cpp:851
 #, fuzzy, kde-format
 #| msgid "R Markdown"
 msgid "R Markdown"
 msgstr "R-i Markdown"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:855
+#: rkward/windows/rkcommandeditorwindow.cpp:853
 #, kde-format
 msgid "Preview of rendered R Markdown"
 msgstr "R-i Markdowni renderdatud eelvaatlus"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:856
+#: rkward/windows/rkcommandeditorwindow.cpp:854
 #, fuzzy, kde-format
 #| msgid ""
 #| "Preview the script as rendered from RMarkdown format (appropriate for ."
@@ -6677,39 +6677,39 @@ msgstr ""
 "Skripti eelvaatlus renderdatuna RMarkdowni vormingust (sobilik .Rmd-"
 "failidele)."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:858
+#: rkward/windows/rkcommandeditorwindow.cpp:856
 #, fuzzy, kde-format
 #| msgid "File format"
 msgid "Render format"
 msgstr "Failivorming"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:859
+#: rkward/windows/rkcommandeditorwindow.cpp:857
 #, kde-format
 msgid "Render as HTML"
 msgstr ""
 
-#: rkward/windows/rkcommandeditorwindow.cpp:860
+#: rkward/windows/rkcommandeditorwindow.cpp:858
 #, kde-format
 msgid "Render as PDF"
 msgstr ""
 
-#: rkward/windows/rkcommandeditorwindow.cpp:861
+#: rkward/windows/rkcommandeditorwindow.cpp:859
 #, fuzzy, kde-format
 #| msgid "Automatic"
 msgid "Auto Format"
 msgstr "Automaatne"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:871
+#: rkward/windows/rkcommandeditorwindow.cpp:869
 #, kde-format
 msgid "RKWard Output"
 msgstr "RKWardi väljund"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:873
+#: rkward/windows/rkcommandeditorwindow.cpp:871
 #, kde-format
 msgid "Preview of generated RKWard output"
 msgstr "Genereeritud RKWardi väljundi eelvaatlus"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:874
+#: rkward/windows/rkcommandeditorwindow.cpp:872
 #, kde-format
 msgid ""
 "Preview any output to the RKWard Output Window. This preview will be empty, "
@@ -6718,53 +6718,53 @@ msgstr ""
 "Kogu RKWardi väljundiakna väljundi eelvaatlus. Kui väljakutses pole käsku "
 "<i>rk.print()</i> ega teisi RKWardi väljundikäske, on eelvaatlus tühi."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:887
+#: rkward/windows/rkcommandeditorwindow.cpp:885
 #, kde-format
 msgid "Preview of script running in interactive R Console"
 msgstr "Interaktiivses R-i konsoolis töötava skripti eelvaatlus"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:888
+#: rkward/windows/rkcommandeditorwindow.cpp:886
 #, kde-format
 msgid "Preview the script as if it was run in the interactive R Console"
 msgstr "Skripti eelvaatlus, nagu see töötas interaktiivses R-i konsoolis"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:889
+#: rkward/windows/rkcommandeditorwindow.cpp:887
 #, fuzzy, kde-format
 #| msgid "Incomplete statement.\n"
 msgid "Echo statements"
 msgstr "Ebatäielik lause.\n"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:890
+#: rkward/windows/rkcommandeditorwindow.cpp:888
 #, fuzzy, kde-format
 #| msgid "Convert warnings to errors"
 msgid "Continue on error"
 msgstr "Hoiatuste teisendamine tõrgeteks"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:892
+#: rkward/windows/rkcommandeditorwindow.cpp:890
 #, fuzzy, kde-format
 #| msgid "Environment"
 msgid "Evaluation environment"
 msgstr "Keskkond"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:893
+#: rkward/windows/rkcommandeditorwindow.cpp:891
 #, fuzzy, kde-format
 #| msgid "Copy to .GlobalEnv"
 msgid ".GlobalEnv"
 msgstr "Kopeeri .GlobalEnv-sse"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:895
+#: rkward/windows/rkcommandeditorwindow.cpp:893
 #, kde-format
 msgid ""
 "Evaluate code directly in .GlobalEnv. Assignments can access <b>and modify</"
 "b> objects in .GlobalEnv."
 msgstr ""
 
-#: rkward/windows/rkcommandeditorwindow.cpp:896
+#: rkward/windows/rkcommandeditorwindow.cpp:894
 #, kde-format
 msgid "Scoped"
 msgstr ""
 
-#: rkward/windows/rkcommandeditorwindow.cpp:898
+#: rkward/windows/rkcommandeditorwindow.cpp:896
 #, kde-format
 msgid ""
 "Evaluate code in a child scope of .GlobalEnv. Objects in .GlobalEnv can be "
@@ -6772,13 +6772,13 @@ msgid ""
 "modify them. (Other assignment operations could still modify them!)"
 msgstr ""
 
-#: rkward/windows/rkcommandeditorwindow.cpp:899
+#: rkward/windows/rkcommandeditorwindow.cpp:897
 #, fuzzy, kde-format
 #| msgid "Location"
 msgid "Local"
 msgstr "Asukoht"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:900
+#: rkward/windows/rkcommandeditorwindow.cpp:898
 #, kde-format
 msgid ""
 "Evaluate code in true local environment. Objects in .GlobalEnv are not on "
@@ -6787,17 +6787,17 @@ msgid ""
 "them!)"
 msgstr ""
 
-#: rkward/windows/rkcommandeditorwindow.cpp:915
+#: rkward/windows/rkcommandeditorwindow.cpp:913
 #, kde-format
 msgid "Plot"
 msgstr "Diagramm"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:917
+#: rkward/windows/rkcommandeditorwindow.cpp:915
 #, kde-format
 msgid "Preview of generated plot"
 msgstr "Genereeritud diagrammi eelvaatlus"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:918
+#: rkward/windows/rkcommandeditorwindow.cpp:916
 #, kde-format
 msgid ""
 "Preview any onscreen graphics produced by running this script. This preview "
@@ -6807,7 +6807,7 @@ msgstr ""
 "Skripti töötamisel loodud ekraanigraafika eelvaatlus. Kui väljakutses polnud "
 "käsku <i>plot()</i> või teisi graafikakäske, on eelvaatlus tühi."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:941
+#: rkward/windows/rkcommandeditorwindow.cpp:939
 #, fuzzy, kde-format
 #| msgid ""
 #| "<p>The preview feature <b>tries</b> to avoid making any lasting changes "
@@ -6843,28 +6843,28 @@ msgstr ""
 "eelvaatluse tarvitamisel meeles, eriti siis, kui kasutad seda skriptidega, "
 "mis on pärit ebausaldusväärsest allikast.</p>"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:941
+#: rkward/windows/rkcommandeditorwindow.cpp:939
 #, kde-format
 msgid "Potential side-effects of previews"
 msgstr "Eelvaatluse võimalikud kõrvalmõjud"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1059
+#: rkward/windows/rkcommandeditorwindow.cpp:1057
 #, kde-format
 msgid ""
 "An error occurred while trying to create an autosave of the script file '%1':"
 msgstr "Skriptifaili \"%1\" automaatsel salvestamisel tekkis tõrge:"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1133
+#: rkward/windows/rkcommandeditorwindow.cpp:1131
 #, kde-format
 msgid "Unnamed"
 msgstr "Nimeta"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1266
+#: rkward/windows/rkcommandeditorwindow.cpp:1264
 #, kde-format
 msgid "%1 (Active)"
 msgstr "%1 (aktiivne)"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1285
+#: rkward/windows/rkcommandeditorwindow.cpp:1283
 #, kde-format
 msgid "%1 (Unused)"
 msgstr "%1 (kasutamata)"
@@ -6989,22 +6989,22 @@ msgstr ""
 msgid "About this window"
 msgstr "Teave selle akna kohta"
 
-#: rkward/windows/rkfilebrowser.cpp:114
+#: rkward/windows/rkfilebrowser.cpp:113
 #, kde-format
 msgid "Working directory"
 msgstr "Töökataloog"
 
-#: rkward/windows/rkfilebrowser.cpp:125 rkward/windows/robjectbrowser.cpp:119
+#: rkward/windows/rkfilebrowser.cpp:124 rkward/windows/robjectbrowser.cpp:119
 #, kde-format
 msgid "Rename"
 msgstr "Muuda nime"
 
-#: rkward/windows/rkfilebrowser.cpp:155
+#: rkward/windows/rkfilebrowser.cpp:154
 #, kde-format
 msgid "Rename..."
 msgstr "Nime muutmine ..."
 
-#: rkward/windows/rkfilebrowser.cpp:155
+#: rkward/windows/rkfilebrowser.cpp:154
 #, kde-format
 msgid "New name for '%1':"
 msgstr "\"%1\" uus nimi:"
@@ -7100,42 +7100,42 @@ msgstr "Teema"
 msgid "Package"
 msgstr "Pakett"
 
-#: rkward/windows/rkhtmlwindow.cpp:389
+#: rkward/windows/rkhtmlwindow.cpp:386
 #, fuzzy, kde-format
 #| msgid "The file or directory does not exist."
 msgid "RKWard output file %1 does not (yet) exist"
 msgstr "Faili või kataloogi ei ole olemas."
 
-#: rkward/windows/rkhtmlwindow.cpp:521
-#: rkward/windows/rktoplevelwindowgui.cpp:264
+#: rkward/windows/rkhtmlwindow.cpp:518
+#: rkward/windows/rktoplevelwindowgui.cpp:262
 #, fuzzy, kde-format
 #| msgid "Active"
 msgid "[Active]"
 msgstr "Aktiivsed"
 
-#: rkward/windows/rkhtmlwindow.cpp:532
+#: rkward/windows/rkhtmlwindow.cpp:529
 #, fuzzy, kde-format
 #| msgid "Output %1"
 msgctxt "noun, the output"
 msgid "Output %1"
 msgstr "Väljund %1"
 
-#: rkward/windows/rkhtmlwindow.cpp:577
+#: rkward/windows/rkhtmlwindow.cpp:574
 #, kde-format
 msgid "Output Window"
 msgstr "Väljundiaken"
 
-#: rkward/windows/rkhtmlwindow.cpp:579
+#: rkward/windows/rkhtmlwindow.cpp:576
 #, kde-format
 msgid "&Refresh Output"
 msgstr "&Värskenda väljundit"
 
-#: rkward/windows/rkhtmlwindow.cpp:605
+#: rkward/windows/rkhtmlwindow.cpp:602
 #, kde-format
 msgid "Page does not exist or is broken"
 msgstr "Lehekülge ei ole olemas või on see katki"
 
-#: rkward/windows/rkhtmlwindow.cpp:618
+#: rkward/windows/rkhtmlwindow.cpp:615
 #, kde-format
 msgid ""
 "Do you really want to clear the output? This will also remove all image "
@@ -7144,88 +7144,88 @@ msgstr ""
 "Kas tõesti puhastada väljund? See eemaldab ka kõik väljundis kasutatud "
 "pildifailid. Seda ei ole võimalik tagasi võtta."
 
-#: rkward/windows/rkhtmlwindow.cpp:619
+#: rkward/windows/rkhtmlwindow.cpp:616
 #, kde-format
 msgid "Flush output?"
 msgstr "Kas puhastada väljund?"
 
-#: rkward/windows/rkhtmlwindow.cpp:624
+#: rkward/windows/rkhtmlwindow.cpp:621
 #, kde-format
 msgid "Flushing output"
 msgstr "Väljundi puhastamine"
 
-#: rkward/windows/rkhtmlwindow.cpp:653
+#: rkward/windows/rkhtmlwindow.cpp:650
 #, kde-format
 msgid "Zoom In"
 msgstr "Suurenda"
 
-#: rkward/windows/rkhtmlwindow.cpp:655
+#: rkward/windows/rkhtmlwindow.cpp:652
 #, kde-format
 msgid "Zoom Out"
 msgstr "Vähenda"
 
-#: rkward/windows/rkhtmlwindow.cpp:663
+#: rkward/windows/rkhtmlwindow.cpp:660
 #, fuzzy, kde-format
 #| msgid "Export page as HTML"
 msgid "Export Page as HTML"
 msgstr "Lehekülje eksport HTML-ina"
 
-#: rkward/windows/rkhtmlwindow.cpp:677
+#: rkward/windows/rkhtmlwindow.cpp:674
 #, fuzzy, kde-format
 #| msgid "Save Output as HTML"
 msgid "Save Output"
 msgstr "Väljundi salvestamine HTML-ina"
 
-#: rkward/windows/rkhtmlwindow.cpp:679
+#: rkward/windows/rkhtmlwindow.cpp:676
 #, fuzzy, kde-format
 #| msgid "Save Output as HTML"
 msgid "Save Output As"
 msgstr "Väljundi salvestamine HTML-ina"
 
-#: rkward/windows/rkhtmlwindow.cpp:682
+#: rkward/windows/rkhtmlwindow.cpp:679
 #, fuzzy, kde-format
 #| msgid "&Refresh Output"
 msgid "&Clear Output"
 msgstr "&Värskenda väljundit"
 
-#: rkward/windows/rkhtmlwindow.cpp:686
+#: rkward/windows/rkhtmlwindow.cpp:683
 #, fuzzy, kde-format
 #| msgid "Unload"
 msgid "Reload"
 msgstr "Laadi maha"
 
-#: rkward/windows/rkhtmlwindow.cpp:690
+#: rkward/windows/rkhtmlwindow.cpp:687
 #, kde-format
 msgid "&Revert to last saved state"
 msgstr ""
 
-#: rkward/windows/rkhtmlwindow.cpp:694
+#: rkward/windows/rkhtmlwindow.cpp:691
 #, fuzzy, kde-format
 #| msgid "Save Output as HTML"
 msgid "Set Output as &Active"
 msgstr "Väljundi salvestamine HTML-ina"
 
-#: rkward/windows/rkhtmlwindow.cpp:696
+#: rkward/windows/rkhtmlwindow.cpp:693
 #, kde-format
 msgid "Set this output as the file to append output to."
 msgstr ""
 
-#: rkward/windows/rkhtmlwindow.cpp:718
+#: rkward/windows/rkhtmlwindow.cpp:715
 #, kde-format
 msgid "Print output"
 msgstr "Väljundi näitamine"
 
-#: rkward/windows/rkhtmlwindow.cpp:726
+#: rkward/windows/rkhtmlwindow.cpp:723
 #, kde-format
 msgid "Print page"
 msgstr "Lehekülje näitamine"
 
-#: rkward/windows/rkhtmlwindow.cpp:783
+#: rkward/windows/rkhtmlwindow.cpp:780
 #, kde-format
 msgid "No Title"
 msgstr "Pealkiri puudub"
 
-#: rkward/windows/rkhtmlwindow.cpp:799
+#: rkward/windows/rkhtmlwindow.cpp:796
 #, kde-format
 msgid ""
 "<h1>Help page missing</h1>\n"
@@ -7236,73 +7236,73 @@ msgstr ""
 "<p>Selle komponendid abilehekülge pole veel kirja pandud (või on see katki). "
 "Palun kaalu võimalust see ise valmis kirjutada.</p>\n"
 
-#: rkward/windows/rkhtmlwindow.cpp:805
+#: rkward/windows/rkhtmlwindow.cpp:802
 #, kde-format
 msgid "Use %1 now"
 msgstr ""
 
-#: rkward/windows/rkhtmlwindow.cpp:822
+#: rkward/windows/rkhtmlwindow.cpp:819
 #, kde-format
 msgid "Summary"
 msgstr "Kokkuvõte"
 
-#: rkward/windows/rkhtmlwindow.cpp:829
+#: rkward/windows/rkhtmlwindow.cpp:826
 #, kde-format
 msgid "Usage"
 msgstr "Kasutus"
 
-#: rkward/windows/rkhtmlwindow.cpp:858
+#: rkward/windows/rkhtmlwindow.cpp:855
 #, fuzzy, kde-format
 #| msgid "<<Open another file>>"
 msgid "Choose another file"
 msgstr "<<Avada teine fail>>"
 
-#: rkward/windows/rkhtmlwindow.cpp:881
+#: rkward/windows/rkhtmlwindow.cpp:878
 #, kde-format
 msgid "GUI settings"
 msgstr "Graafilise kasutajaliidese seadistused"
 
-#: rkward/windows/rkhtmlwindow.cpp:906
+#: rkward/windows/rkhtmlwindow.cpp:903
 #, kde-format
 msgid "Related functions and pages"
 msgstr "Seonduvad funktsioonid ja leheküljed"
 
-#: rkward/windows/rkhtmlwindow.cpp:914
+#: rkward/windows/rkhtmlwindow.cpp:911
 #, kde-format
 msgid "Technical details"
 msgstr "Tehnilised üksikasjad"
 
-#: rkward/windows/rkhtmlwindow.cpp:937
+#: rkward/windows/rkhtmlwindow.cpp:934
 #, kde-format
 msgid "About"
 msgstr "Teave"
 
-#: rkward/windows/rkhtmlwindow.cpp:944
+#: rkward/windows/rkhtmlwindow.cpp:941
 #, kde-format
 msgid "<h1>On this page:</h1>"
 msgstr "<h1>Sellel leheküljel:</h1>"
 
-#: rkward/windows/rkhtmlwindow.cpp:967
+#: rkward/windows/rkhtmlwindow.cpp:964
 #, kde-format
 msgid "Unnamed GUI element"
 msgstr "Nimetu graafilise kasutajaliidese element"
 
-#: rkward/windows/rkhtmlwindow.cpp:1041
+#: rkward/windows/rkhtmlwindow.cpp:1038
 #, kde-format
 msgid "R Reference on '%1'"
 msgstr "R-i viited \"%1\" kohta"
 
-#: rkward/windows/rkhtmlwindow.cpp:1053
+#: rkward/windows/rkhtmlwindow.cpp:1050
 #, kde-format
 msgid "BROKEN REFERENCE"
 msgstr "KATKINE VIIDE"
 
-#: rkward/windows/rkmdiwindow.cpp:428
+#: rkward/windows/rkmdiwindow.cpp:427
 #, kde-format
 msgid "Help on %1"
 msgstr "Abi %1 kohta"
 
-#: rkward/windows/rkmdiwindow.cpp:432
+#: rkward/windows/rkmdiwindow.cpp:431
 #, kde-format
 msgid "Configure %1"
 msgstr "%1 seadistamine"
@@ -7332,93 +7332,93 @@ msgstr ""
 msgid "The name <i>%1</i> might refer to:<br>"
 msgstr ""
 
-#: rkward/windows/rktoolwindowbar.cpp:304
+#: rkward/windows/rktoolwindowbar.cpp:303
 #, kde-format
 msgid "Attach"
 msgstr "Haagi"
 
-#: rkward/windows/rktoolwindowbar.cpp:307
+#: rkward/windows/rktoolwindowbar.cpp:306
 #, kde-format
 msgid "Position"
 msgstr "Asukoht"
 
-#: rkward/windows/rktoolwindowbar.cpp:308
+#: rkward/windows/rktoolwindowbar.cpp:307
 #, kde-format
 msgid "Left Sidebar"
 msgstr "Vasak külgriba"
 
-#: rkward/windows/rktoolwindowbar.cpp:309
+#: rkward/windows/rktoolwindowbar.cpp:308
 #, kde-format
 msgid "Right Sidebar"
 msgstr "Parem külgriba"
 
-#: rkward/windows/rktoolwindowbar.cpp:310
+#: rkward/windows/rktoolwindowbar.cpp:309
 #, kde-format
 msgid "Top Sidebar"
 msgstr "Ülemine külgriba"
 
-#: rkward/windows/rktoolwindowbar.cpp:311
+#: rkward/windows/rktoolwindowbar.cpp:310
 #, kde-format
 msgid "Bottom Sidebar"
 msgstr "Alumine külgriba"
 
-#: rkward/windows/rktoolwindowbar.cpp:312
+#: rkward/windows/rktoolwindowbar.cpp:311
 #, kde-format
 msgid "Not shown in sidebar"
 msgstr "Külgribal ei näidata"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:57
+#: rkward/windows/rktoplevelwindowgui.cpp:55
 #, kde-format
 msgid "Help on R"
 msgstr "R-i abi"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:59
+#: rkward/windows/rktoplevelwindowgui.cpp:57
 #, kde-format
 msgid "Search R Help"
 msgstr "R-i abi otsimine"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:61
+#: rkward/windows/rktoplevelwindowgui.cpp:59
 #, kde-format
 msgid "RKWard Dashboard and Help"
 msgstr ""
 
-#: rkward/windows/rktoplevelwindowgui.cpp:68
+#: rkward/windows/rktoplevelwindowgui.cpp:66
 #, kde-format
 msgid "Shows the R help index"
 msgstr "R-i abi registri näitamine"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:69
+#: rkward/windows/rktoplevelwindowgui.cpp:67
 #, kde-format
 msgid "Shows/raises the R Help Search window"
 msgstr "R-i abi otsinguakna näitamine/tõstmine"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:70
+#: rkward/windows/rktoplevelwindowgui.cpp:68
 #, kde-format
 msgid ""
 "Show the RKWard dashboard with links to important settings and documentation"
 msgstr ""
 
-#: rkward/windows/rktoplevelwindowgui.cpp:75
+#: rkward/windows/rktoplevelwindowgui.cpp:73
 #, kde-format
 msgid "Previous Window"
 msgstr "Eelmine aken"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:79
+#: rkward/windows/rktoplevelwindowgui.cpp:77
 #, kde-format
 msgid "Next Window"
 msgstr "Järgmine aken"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:84
+#: rkward/windows/rktoplevelwindowgui.cpp:82
 #, kde-format
 msgid "Activate Document view"
 msgstr "Aktiveeri dokumendivaade"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:135
+#: rkward/windows/rktoplevelwindowgui.cpp:133
 #, kde-format
 msgid "Show/Hide %1"
 msgstr "Näita/peida %1"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:148
+#: rkward/windows/rktoplevelwindowgui.cpp:146
 #, kde-format
 msgid ""
 "For technical reasons, the following dialog allows you to configure the "
@@ -7434,13 +7434,13 @@ msgstr ""
 "Kui aga soovid seadistada kiirklahve mujal, näiteks skriptiredaktoris, siis "
 "tuleb avada skriptiredaktori aken ja see aktiveerida."
 
-#: rkward/windows/rktoplevelwindowgui.cpp:148
-#: rkward/windows/rktoplevelwindowgui.cpp:162
+#: rkward/windows/rktoplevelwindowgui.cpp:146
+#: rkward/windows/rktoplevelwindowgui.cpp:160
 #, kde-format
 msgid "Note"
 msgstr "Märkus"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:162
+#: rkward/windows/rktoplevelwindowgui.cpp:160
 #, kde-format
 msgid ""
 "For technical reasons, the following dialog allows you to configure the "

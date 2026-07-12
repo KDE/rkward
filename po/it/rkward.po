@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-04-19 00:39+0000\n"
+"POT-Creation-Date: 2026-07-12 00:39+0000\n"
 "PO-Revision-Date: 2026-04-12 08:40+0200\n"
 "Last-Translator: Vincenzo Reale <smart2128vr@gmail.com>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
@@ -67,7 +67,7 @@ msgstr ""
 msgid "Error loading workspace"
 msgstr "Errore nel caricamento dello spazio di lavoro"
 
-#: rkward/agents/rkprintagent.cpp:41
+#: rkward/agents/rkprintagent.cpp:40
 #, kde-format
 msgid ""
 "No service was found to provide a KDE print dialog for PostScript files. We "
@@ -81,7 +81,7 @@ msgstr ""
 "considerazione l'installazione di «Okular», oppure configura RKWard in modo "
 "che non tenti di usare la finestra di stampa di KDE."
 
-#: rkward/agents/rkprintagent.cpp:41
+#: rkward/agents/rkprintagent.cpp:40
 #, kde-format
 msgid "Unable to open KDE print dialog"
 msgstr "Impossibile aprire la finestra di stampa di KDE"
@@ -129,7 +129,7 @@ msgstr ""
 msgid "Overwrite File?"
 msgstr "Vuoi sovrascrivere il file?"
 
-#: rkward/agents/rksaveagent.cpp:63 rkward/rkward.cpp:908
+#: rkward/agents/rksaveagent.cpp:63 rkward/rkward.cpp:907
 #, kde-format
 msgid "R Workspace Files [%1](%1);;All files [*](*)"
 msgstr "File dello spazio di lavoro di R [%1](%1);;Tutti i file [*](*)"
@@ -2530,7 +2530,7 @@ msgstr "Cerca in avanti (successive occorrenze del termine di ricerca)"
 msgid "Match case"
 msgstr "Distingui le maiuscole"
 
-#: rkward/misc/rkfindbar.cpp:92 rkward/windows/rkhtmlwindow.cpp:699
+#: rkward/misc/rkfindbar.cpp:92 rkward/windows/rkhtmlwindow.cpp:696
 #, kde-format
 msgid "Find as you type"
 msgstr "Cerca durante la digitazione"
@@ -2829,7 +2829,7 @@ msgid "Output"
 msgstr "Output"
 
 #: rkward/misc/rkprogresscontrol.cpp:285
-#: rkward/windows/rktoplevelwindowgui.cpp:88
+#: rkward/windows/rktoplevelwindowgui.cpp:86
 #, kde-format
 msgid "Show Output"
 msgstr "Mostra l'uscita"
@@ -3617,7 +3617,7 @@ msgid "Enter value:"
 msgstr "Inserisci valore:"
 
 #: rkward/plugin/rkpreviewbox.cpp:50
-#: rkward/windows/rkcommandeditorwindow.cpp:618
+#: rkward/windows/rkcommandeditorwindow.cpp:616
 #, kde-format
 msgid "Preview"
 msgstr "Anteprima"
@@ -4322,7 +4322,7 @@ msgstr "Gli elenchi di parametri senza nome sono deprecati in rk.header()"
 msgid "Printing object of class '%1' is not implemented"
 msgstr "La stampa dell'oggetto di classe «%1» non è implementata"
 
-#: rkward/rkconsole.cpp:71
+#: rkward/rkconsole.cpp:70
 #, kde-format
 msgid ""
 "The 'katepart' component could not be loaded. RKWard cannot run without "
@@ -4331,83 +4331,83 @@ msgstr ""
 "Il componente «katepart» non può essere caricato. RKWard non può avviarsi "
 "senza di esso, quindi verrà chiuso. Installa katepart e prova di nuovo."
 
-#: rkward/rkconsole.cpp:71
+#: rkward/rkconsole.cpp:70
 #, kde-format
 msgid "'katepart' component could not be found"
 msgstr "il componente «katepart» non può essere trovato"
 
-#: rkward/rkconsole.cpp:114 rkward/windows/rkcommandeditorwindow.cpp:885
+#: rkward/rkconsole.cpp:113 rkward/windows/rkcommandeditorwindow.cpp:883
 #, kde-format
 msgid "R Console"
 msgstr "Console di R"
 
-#: rkward/rkconsole.cpp:120
+#: rkward/rkconsole.cpp:119
 #, kde-format
 msgid "Scrollbar minimap"
 msgstr "Minimappa della barra di scorrimento"
 
-#: rkward/rkconsole.cpp:122
+#: rkward/rkconsole.cpp:121
 #, kde-format
 msgid "Dynamic word wrap"
 msgstr "A capo automatico dinamico"
 
-#: rkward/rkconsole.cpp:464
+#: rkward/rkconsole.cpp:463
 #, kde-format
 msgid "Syntax error\n"
 msgstr "Errore di sintassi\n"
 
-#: rkward/rkconsole.cpp:665
+#: rkward/rkconsole.cpp:664
 #, kde-format
 msgid "Select command history file to load"
 msgstr "Seleziona un file di cronologia dei comandi da caricare"
 
-#: rkward/rkconsole.cpp:667
+#: rkward/rkconsole.cpp:666
 #, kde-format
 msgid "R history files [*.Rhistory](*.Rhistory);;All files [*](*)"
 msgstr "File di cronologia di R [*.Rhistory](*.Rhistory);;Tutti i file [*](*)"
 
-#: rkward/rkconsole.cpp:700
+#: rkward/rkconsole.cpp:699
 #, kde-format
 msgid "Select filename to save command history"
 msgstr "Seleziona un nome di file per salvare la cronologia dei comandi"
 
-#: rkward/rkconsole.cpp:701
+#: rkward/rkconsole.cpp:700
 #, kde-format
 msgid "R history files [*.Rhistory] (*.Rhistory);;All files [*] (*)"
 msgstr ""
 "File di cronologia di R [*.Rhistory] (*.Rhistory);;Tutti i file [*] (*)"
 
-#: rkward/rkconsole.cpp:835
+#: rkward/rkconsole.cpp:834
 #, kde-format
 msgid "Interrupt running command"
 msgstr "Interrompi comando in esecuzione"
 
-#: rkward/rkconsole.cpp:842
+#: rkward/rkconsole.cpp:841
 #, kde-format
 msgid "Copy selection literally"
 msgstr "Copia la selezione letteralmente"
 
-#: rkward/rkconsole.cpp:845
+#: rkward/rkconsole.cpp:844
 #, kde-format
 msgid "Copy commands, only"
 msgstr "Copia solo i comandi"
 
-#: rkward/rkconsole.cpp:852
+#: rkward/rkconsole.cpp:851
 #, kde-format
 msgid "Print Console"
 msgstr "Stampa la console"
 
-#: rkward/rkconsole.cpp:858
+#: rkward/rkconsole.cpp:857
 #, kde-format
 msgid "Import command history..."
 msgstr "Importa cronologia dei comandi..."
 
-#: rkward/rkconsole.cpp:860
+#: rkward/rkconsole.cpp:859
 #, kde-format
 msgid "Export command history..."
 msgstr "Esporta cronologia dei comandi..."
 
-#: rkward/rkconsole.cpp:879
+#: rkward/rkconsole.cpp:878
 #, kde-format
 msgid ""
 "You have configured RKWard to pipe script editor commands through the R "
@@ -4421,17 +4421,17 @@ msgstr ""
 "azzerare prima la console? Premi annulla se non vuoi eseguire adesso il "
 "nuovo comando."
 
-#: rkward/rkconsole.cpp:879
+#: rkward/rkconsole.cpp:878
 #, kde-format
 msgid "R Console is busy"
 msgstr "La console di R è occupata"
 
-#: rkward/rkconsole.cpp:879
+#: rkward/rkconsole.cpp:878
 #, kde-format
 msgid "Append"
 msgstr "Aggiungi"
 
-#: rkward/rkconsole.cpp:879
+#: rkward/rkconsole.cpp:878
 #, kde-format
 msgid "Reset, then submit"
 msgstr "Azzera, poi invia"
@@ -4465,7 +4465,7 @@ msgstr "&Visualizza"
 msgid "&Run"
 msgstr "&Esegui"
 
-#: rkward/rkward.cpp:326
+#: rkward/rkward.cpp:325
 #, kde-format
 msgid ""
 "<p>You are about to start an RKWard dialog from outside of RKWard, probably "
@@ -4492,17 +4492,17 @@ msgstr ""
 "chiedere di nuovo» eliminerai questo messaggio solo per il resto di questa "
 "sessione."
 
-#: rkward/rkward.cpp:327
+#: rkward/rkward.cpp:326
 #, kde-format
 msgid "A note on external links"
 msgstr "Una nota sui collegamenti esterni"
 
-#: rkward/rkward.cpp:339
+#: rkward/rkward.cpp:338
 #, kde-format
 msgid "Setting up plugins..."
 msgstr "Impostazione delle estensioni..."
 
-#: rkward/rkward.cpp:373
+#: rkward/rkward.cpp:372
 #, kde-format
 msgid ""
 "New RKWard plugin packs (listed below) have been found, and have been "
@@ -4513,12 +4513,12 @@ msgstr ""
 "sotto), e sono stati automaticamente attivati. Per disattivare quelli "
 "selezionati, usa Impostazioni->Configura RKWard->Estensioni."
 
-#: rkward/rkward.cpp:373
+#: rkward/rkward.cpp:372
 #, kde-format
 msgid "New plugins found"
 msgstr "Nessuna estensione trovata"
 
-#: rkward/rkward.cpp:377
+#: rkward/rkward.cpp:376
 #, kde-format
 msgid ""
 "The following RKWard pluginmap files could not be loaded, and have been "
@@ -4532,12 +4532,12 @@ msgstr ""
 "destinati al caricamento diretto (vedi «Dettagli» per ulteriori "
 "informazioni). Sono stati disabilitati."
 
-#: rkward/rkward.cpp:377 rkward/rkward.cpp:381
+#: rkward/rkward.cpp:376 rkward/rkward.cpp:380
 #, kde-format
 msgid "Failed to load some plugin maps"
 msgstr "Impossibile caricare alcune mappe delle estensioni"
 
-#: rkward/rkward.cpp:381
+#: rkward/rkward.cpp:380
 #, kde-format
 msgid ""
 "Some errors were encountered while loading the following RKWard pluginmap "
@@ -4551,7 +4551,7 @@ msgstr ""
 "«Dettagli» per ulteriori informazioni). Ad ogni modo altre estensioni sono "
 "state caricate con successo."
 
-#: rkward/rkward.cpp:381
+#: rkward/rkward.cpp:380
 #, kde-format
 msgid ""
 "Note: You will not be warned about these pluginmap files again, until you "
@@ -4562,92 +4562,92 @@ msgstr ""
 "non aggiornerai RKWard, oppure finché non li rimuoverai e li aggiungerai "
 "nuovamente da Impostazioni->Configura RKWard->Estensioni."
 
-#: rkward/rkward.cpp:443
+#: rkward/rkward.cpp:442
 #, kde-format
 msgid "Carbon Copy Settings"
 msgstr "Impostazioni copia carbone"
 
-#: rkward/rkward.cpp:461 rkward/settings/rksettingsmoduleobjectbrowser.cpp:36
+#: rkward/rkward.cpp:460 rkward/settings/rksettingsmoduleobjectbrowser.cpp:36
 #, kde-format
 msgid "Workspace"
 msgstr "Spazio di lavoro"
 
-#: rkward/rkward.cpp:470
+#: rkward/rkward.cpp:469
 #, kde-format
 msgid "Files"
 msgstr "File"
 
-#: rkward/rkward.cpp:474
+#: rkward/rkward.cpp:473
 #, kde-format
 msgid "Pending Jobs"
 msgstr "Lavori in attesa"
 
-#: rkward/rkward.cpp:486
+#: rkward/rkward.cpp:485
 #, kde-format
 msgid "Debugger Frames"
 msgstr "Frame del debugger"
 
-#: rkward/rkward.cpp:491
+#: rkward/rkward.cpp:490
 #, kde-format
 msgid "Debugger Console"
 msgstr "Console del debugger"
 
-#: rkward/rkward.cpp:495
+#: rkward/rkward.cpp:494
 #, kde-format
 msgid "RKWard Debug Messages"
 msgstr "Messaggi di debug di RKWard"
 
-#: rkward/rkward.cpp:507
+#: rkward/rkward.cpp:506
 #, kde-format
 msgid "Dataset"
 msgstr "Insieme di dati"
 
-#: rkward/rkward.cpp:509
+#: rkward/rkward.cpp:508
 #, kde-format
 msgid "Creates new empty dataset and opens it for editing"
 msgstr "Crea un nuovo insieme di dati vuoto e lo apre per la modifica"
 
-#: rkward/rkward.cpp:512
+#: rkward/rkward.cpp:511
 #, kde-format
 msgid "Script File"
 msgstr "File di script"
 
-#: rkward/rkward.cpp:516
+#: rkward/rkward.cpp:515
 #, kde-format
 msgid "Output document"
 msgstr "Documenti di uscita"
 
-#: rkward/rkward.cpp:518
+#: rkward/rkward.cpp:517
 #, kde-format
 msgid "Creates and activates a new output document"
 msgstr "Crea e attiva un nuovo documento di uscita"
 
-#: rkward/rkward.cpp:523
+#: rkward/rkward.cpp:522
 #, kde-format
 msgid "Open R Script File..."
 msgstr "Apri file di script R..."
 
-#: rkward/rkward.cpp:527
+#: rkward/rkward.cpp:526
 #, kde-format
 msgid "Open RKWard Output File..."
 msgstr "Apri file di uscita di RKWard..."
 
-#: rkward/rkward.cpp:531
+#: rkward/rkward.cpp:530
 #, kde-format
 msgid "Open any File..."
 msgstr "Apri qualsiasi file..."
 
-#: rkward/rkward.cpp:536
+#: rkward/rkward.cpp:535
 #, kde-format
 msgid "Open Recent R Script File"
 msgstr "Apri file di script R recente"
 
-#: rkward/rkward.cpp:540
+#: rkward/rkward.cpp:539
 #, kde-format
 msgid "Import Assistant"
 msgstr "Assistente di importazione"
 
-#: rkward/rkward.cpp:541
+#: rkward/rkward.cpp:540
 #, kde-format
 msgid ""
 "Assistant to find the best method to import data from a variety of formats"
@@ -4655,118 +4655,118 @@ msgstr ""
 "Assistente per trovare il metodo migliore per importare dati da una varietà "
 "di formati"
 
-#: rkward/rkward.cpp:545
+#: rkward/rkward.cpp:544
 #, kde-format
 msgid "Open Workspace..."
 msgstr "Apri spazio di lavoro..."
 
-#: rkward/rkward.cpp:547
+#: rkward/rkward.cpp:546
 #, kde-format
 msgid "Opens an existing document"
 msgstr "Apre un documento esistente"
 
-#: rkward/rkward.cpp:552
+#: rkward/rkward.cpp:551
 #, kde-format
 msgid "Open Recent Workspace"
 msgstr "Apri spazio di lavoro recente"
 
-#: rkward/rkward.cpp:553
+#: rkward/rkward.cpp:552
 #, kde-format
 msgid "Opens a recently used file"
 msgstr "Apre un file utilizzato recentemente"
 
-#: rkward/rkward.cpp:556
+#: rkward/rkward.cpp:555
 #, kde-format
 msgid "Save Workspace"
 msgstr "Salva spazio di lavoro"
 
-#: rkward/rkward.cpp:558
+#: rkward/rkward.cpp:557
 #, kde-format
 msgid "Saves the actual document"
 msgstr "Salva il documento corrente"
 
-#: rkward/rkward.cpp:562
+#: rkward/rkward.cpp:561
 #, kde-format
 msgid "Save Workspace As"
 msgstr "Salva spazio di lavoro con nome"
 
-#: rkward/rkward.cpp:563
+#: rkward/rkward.cpp:562
 #, kde-format
 msgid "Saves the actual document as..."
 msgstr "Salva l'attuale documento con nome..."
 
-#: rkward/rkward.cpp:566
+#: rkward/rkward.cpp:565
 #, kde-format
 msgid "Quits the application"
 msgstr "Esce dall'applicazione"
 
-#: rkward/rkward.cpp:569
+#: rkward/rkward.cpp:568
 #, kde-format
 msgid "Interrupt all commands"
 msgstr "Interrompi tutti i comandi"
 
-#: rkward/rkward.cpp:575
+#: rkward/rkward.cpp:574
 #, kde-format
 msgid "CC commands to output..."
 msgstr "Copia carbone dei comandi nell'output..."
 
-#: rkward/rkward.cpp:579 rkward/rkward.cpp:583
+#: rkward/rkward.cpp:578 rkward/rkward.cpp:582
 #, kde-format
 msgid "Manage R packages and plugins..."
 msgstr "Gestione dei pacchetti di R e delle estensioni..."
 
-#: rkward/rkward.cpp:590
+#: rkward/rkward.cpp:589
 #, kde-format
 msgid "Close All Data"
 msgstr "Chiudi tutti i dati"
 
-#: rkward/rkward.cpp:591
+#: rkward/rkward.cpp:590
 #, kde-format
 msgid "Closes all open data editors"
 msgstr "Chiude tutti gli editor di dati aperti"
 
-#: rkward/rkward.cpp:596
+#: rkward/rkward.cpp:595
 #, kde-format
 msgid "Close All"
 msgstr "Chiudi tutti"
 
-#: rkward/rkward.cpp:600 rkward/windows/rktoolwindowbar.cpp:304
+#: rkward/rkward.cpp:599 rkward/windows/rktoolwindowbar.cpp:303
 #: rkward/windows/rkworkplaceview.cpp:96
 #, kde-format
 msgid "Detach"
 msgstr "Sgancia"
 
-#: rkward/rkward.cpp:604
+#: rkward/rkward.cpp:603
 #, kde-format
 msgid "Check installation"
 msgstr "Controlla l'installazione"
 
-#: rkward/rkward.cpp:608
+#: rkward/rkward.cpp:607
 #, kde-format
 msgid "[No actions available for current view]"
 msgstr "[Nessuna azione disponibile per la vista attuale]"
 
-#: rkward/rkward.cpp:615
+#: rkward/rkward.cpp:614
 #, kde-format
 msgid "Open..."
 msgstr "Apri..."
 
-#: rkward/rkward.cpp:629
+#: rkward/rkward.cpp:628
 #, kde-format
 msgid "Create..."
 msgstr "Crea..."
 
-#: rkward/rkward.cpp:636
+#: rkward/rkward.cpp:635
 #, kde-format
 msgid "Save..."
 msgstr "Salva..."
 
-#: rkward/rkward.cpp:652
+#: rkward/rkward.cpp:651
 #, kde-format
 msgid "Restart R Backend"
 msgstr "Riavvia il motore di R"
 
-#: rkward/rkward.cpp:660
+#: rkward/rkward.cpp:659
 #, kde-format
 msgid ""
 "<p><b>Restarting the backend will discard all unsaved data in this workspace!"
@@ -4777,12 +4777,12 @@ msgstr ""
 "di lavoro!</b> Tutti gli editor di dati e le finestre grafiche saranno "
 "chiusi.</p><p>Sei sicuro di voler continuare?</p>"
 
-#: rkward/rkward.cpp:661
+#: rkward/rkward.cpp:660
 #, kde-format
 msgid "Restart R backend"
 msgstr "Riavvia il motore di R"
 
-#: rkward/rkward.cpp:668
+#: rkward/rkward.cpp:667
 #, kde-format
 msgid ""
 "<p>One or more operations are pending.</p><p>If you have recently chosen to "
@@ -4794,82 +4794,82 @@ msgstr ""
 "potrebbero non essere ancora stati salvati!</b></p><p>Come vuoi procedere?</"
 "p>"
 
-#: rkward/rkward.cpp:669
+#: rkward/rkward.cpp:668
 #, kde-format
 msgid "R commands still pending"
 msgstr "Comandi di R ancora in corso"
 
-#: rkward/rkward.cpp:669
+#: rkward/rkward.cpp:668
 #, kde-format
 msgid "Force restart now"
 msgstr "Forza subito il riavvio"
 
-#: rkward/rkward.cpp:669
+#: rkward/rkward.cpp:668
 #, kde-format
 msgid "Check again"
 msgstr "Controlla di nuovo"
 
-#: rkward/rkward.cpp:669
+#: rkward/rkward.cpp:668
 #, kde-format
 msgid "Cancel restarting"
 msgstr "Annulla il riavvio"
 
-#: rkward/rkward.cpp:806
+#: rkward/rkward.cpp:805
 #, kde-format
 msgid "Current working directory"
 msgstr "Cartella di lavoro attuale"
 
-#: rkward/rkward.cpp:824 rkward/windows/rcontrolwindow.cpp:41
+#: rkward/rkward.cpp:823 rkward/windows/rcontrolwindow.cpp:41
 #, kde-format
 msgid "Configure R backend"
 msgstr "Configura il motore di R"
 
-#: rkward/rkward.cpp:875
+#: rkward/rkward.cpp:874
 #, kde-format
 msgid "Exiting..."
 msgstr "Chiusura in corso..."
 
-#: rkward/rkward.cpp:893
+#: rkward/rkward.cpp:892
 #, kde-format
 msgid "New dataset"
 msgstr "Nuovo insieme di dati"
 
-#: rkward/rkward.cpp:893
+#: rkward/rkward.cpp:892
 #, kde-format
 msgid "Enter name for the new dataset"
 msgstr "Inserisci il nome per il nuovo insieme di dati"
 
-#: rkward/rkward.cpp:905
+#: rkward/rkward.cpp:904
 #, kde-format
 msgid "Opening workspace..."
 msgstr "Apertura dello spazio di lavoro..."
 
-#: rkward/rkward.cpp:908
+#: rkward/rkward.cpp:907
 #, kde-format
 msgid "Select workspace to open..."
 msgstr "Seleziona uno spazio di lavoro da aprire..."
 
-#: rkward/rkward.cpp:979
+#: rkward/rkward.cpp:978
 #, kde-format
 msgid "The <b>R</b> engine is busy."
 msgstr "Il motore di <b>R</b> è occupato."
 
-#: rkward/rkward.cpp:983
+#: rkward/rkward.cpp:982
 #, kde-format
 msgid "The <b>R</b> engine is idle."
 msgstr "Il motore di <b>R</b> è inattivo."
 
-#: rkward/rkward.cpp:992
+#: rkward/rkward.cpp:991
 #, kde-format
 msgid "The <b>R</b> engine is being initialized."
 msgstr "Il motore di <b>R</b> sta per essere inizializzato."
 
-#: rkward/rkward.cpp:995
+#: rkward/rkward.cpp:994
 #, kde-format
 msgid "The <b>R</b> engine is unavailable."
 msgstr "Il motore di <b>R</b> non è disponibile."
 
-#: rkward/rkward.cpp:1001
+#: rkward/rkward.cpp:1000
 #, kde-format
 msgid ""
 "R engine unavailable. See <a href=\"rkward://page/rkward_trouble_shooting"
@@ -4879,52 +4879,52 @@ msgstr ""
 "rkward_trouble_shooting\">risoluzione dei problemi</a> per possibili "
 "soluzioni."
 
-#: rkward/rkward.cpp:1033
+#: rkward/rkward.cpp:1032
 #, kde-format
 msgid "Open"
 msgstr "Apri"
 
-#: rkward/rkward.cpp:1037
+#: rkward/rkward.cpp:1036
 #, kde-format
 msgid "Opening mode:"
 msgstr "Modalità di apertura:"
 
-#: rkward/rkward.cpp:1039
+#: rkward/rkward.cpp:1038
 #, kde-format
 msgid "Guess file type, automatically"
 msgstr "Individua il tipo di file, automaticamente"
 
-#: rkward/rkward.cpp:1039
+#: rkward/rkward.cpp:1038
 #, kde-format
 msgid "Open as text / script file"
 msgstr "Apri come file di testo / script"
 
-#: rkward/rkward.cpp:1040
+#: rkward/rkward.cpp:1039
 #, kde-format
 msgid "Open as text file and force R highlighting"
 msgstr "Apri come file di testo e forza l'evidenziazione di R"
 
-#: rkward/rkward.cpp:1040
+#: rkward/rkward.cpp:1039
 #, kde-format
 msgid "Open as R workspace"
 msgstr "Apri come spazio di lavoro di R"
 
-#: rkward/rkward.cpp:1077
+#: rkward/rkward.cpp:1076
 #, kde-format
 msgid "Select RKWard Output file to open..."
 msgstr "Seleziona il file di uscita di RKWard da aprire..."
 
-#: rkward/rkward.cpp:1077
+#: rkward/rkward.cpp:1076
 #, kde-format
 msgid "RKWard Output Files [*.rko](*.rko);;All files [*](*)"
 msgstr "File di uscita di RKWard [*.rko](*.rko);;Tutti i file [*](*)"
 
-#: rkward/rkward.cpp:1086
+#: rkward/rkward.cpp:1085
 #, kde-format
 msgid "Open script file(s)"
 msgstr "Apri file di script"
 
-#: rkward/rkward.cpp:1100
+#: rkward/rkward.cpp:1099
 #, kde-format
 msgid "[Unnamed Workspace]"
 msgstr "[spazio di lavoro senza nome]"
@@ -5907,7 +5907,7 @@ msgid "Height:"
 msgstr "Altezza:"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:51
-#: rkward/windows/rktoplevelwindowgui.cpp:155
+#: rkward/windows/rktoplevelwindowgui.cpp:153
 #, kde-format
 msgid "RKWard Plugins"
 msgstr "Estensioni di RKWard"
@@ -5987,7 +5987,7 @@ msgstr ""
 "lavoro.</p>"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:471
-#: rkward/windows/rkhtmlwindow.cpp:923
+#: rkward/windows/rkhtmlwindow.cpp:920
 #, kde-format
 msgid "Dependencies"
 msgstr "Dipendenze"
@@ -6452,13 +6452,13 @@ msgstr "&Cronologia"
 msgid "&Window"
 msgstr "&Finestra"
 
-#: rkward/windows/katepluginintegration.cpp:681
+#: rkward/windows/katepluginintegration.cpp:680
 #, kde-format
 msgctxt "where to search"
 msgid "in Current Script"
 msgstr "in Script attuali"
 
-#: rkward/windows/katepluginintegration.cpp:682
+#: rkward/windows/katepluginintegration.cpp:681
 #, kde-format
 msgctxt "where to search"
 msgid "in Open Scripts"
@@ -6695,69 +6695,69 @@ msgstr "Esegui"
 msgid "Run current statement, and advance"
 msgstr "Esegui l'istruzione attuale e avanza"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:183
+#: rkward/windows/rkcommandeditorwindow.cpp:181
 #, kde-format
 msgctxt "noun: type of preview"
 msgid "<b>Preview Mode</b>"
 msgstr "<b>Modalità anteprima</b>"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:189
+#: rkward/windows/rkcommandeditorwindow.cpp:187
 #, kde-format
 msgid "<b>Options</b>"
 msgstr "<b>Opzioni</b>"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:411
+#: rkward/windows/rkcommandeditorwindow.cpp:409
 #, kde-format
 msgid "Unable to open \"%1\""
 msgstr "Impossibile aprire «%1»"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:411
+#: rkward/windows/rkcommandeditorwindow.cpp:409
 #, kde-format
 msgid "Could not open command file"
 msgstr "Impossibile aprire il file di comandi"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:451
+#: rkward/windows/rkcommandeditorwindow.cpp:449
 #, kde-format
 msgid "Script Editor"
 msgstr "Editor di script"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:594
+#: rkward/windows/rkcommandeditorwindow.cpp:592
 #, kde-format
 msgid "Insert line break and run"
 msgstr "Inserisci interruzione di riga ed esegui"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:601
+#: rkward/windows/rkcommandeditorwindow.cpp:599
 #, kde-format
 msgid "Run block"
 msgstr "Esegui blocco"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:605
+#: rkward/windows/rkcommandeditorwindow.cpp:603
 #, kde-format
 msgid "Mark selection as block"
 msgstr "Segna la selezione come blocco"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:608
+#: rkward/windows/rkcommandeditorwindow.cpp:606
 #, kde-format
 msgid "Unmark block"
 msgstr "Deseleziona blocco"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:613
+#: rkward/windows/rkcommandeditorwindow.cpp:611
 #, kde-format
 msgid "CD to script directory"
 msgstr "Vai alla cartella dello script"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:614
+#: rkward/windows/rkcommandeditorwindow.cpp:612
 #, kde-format
 msgid "Change the working directory to the directory of this script"
 msgstr "Cambia la cartella di lavoro in quella di questo script"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:620
+#: rkward/windows/rkcommandeditorwindow.cpp:618
 #, kde-format
 msgctxt "Checkable action: the preview gets updated while typing"
 msgid "Update as you type"
 msgstr "Aggiorna durante la digitazione"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:623
+#: rkward/windows/rkcommandeditorwindow.cpp:621
 #, kde-format
 msgid ""
 "When this option is enabled, an update of the preview will be triggered "
@@ -6768,90 +6768,90 @@ msgstr ""
 "dell'anteprima ogni volta che modifichi lo script. Se invece è disabilitata, "
 "l'anteprima verrà aggiornata solamente quando salvi lo script."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:633
+#: rkward/windows/rkcommandeditorwindow.cpp:631
 #, kde-format
 msgid "Save Script..."
 msgstr "Salva script..."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:635
+#: rkward/windows/rkcommandeditorwindow.cpp:633
 #, kde-format
 msgid "Save Script As..."
 msgstr "Salva script come..."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:715
-#: rkward/windows/rkcommandeditorwindow.cpp:1134
+#: rkward/windows/rkcommandeditorwindow.cpp:713
+#: rkward/windows/rkcommandeditorwindow.cpp:1132
 #, kde-format
 msgid " [modified]"
 msgstr " [modificato]"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:722
+#: rkward/windows/rkcommandeditorwindow.cpp:720
 #, kde-format
 msgid "The document \"%1\" has been modified. Close it anyway?"
 msgstr "Il documento «%1» è stato modificato. Lo chiudo ugualmente?"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:722
+#: rkward/windows/rkcommandeditorwindow.cpp:720
 #, kde-format
 msgid "File not saved"
 msgstr "File non salvato"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:846
+#: rkward/windows/rkcommandeditorwindow.cpp:844
 #, kde-format
 msgid "No preview"
 msgstr "Nessuna anteprima"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:847
+#: rkward/windows/rkcommandeditorwindow.cpp:845
 #, kde-format
 msgid "Disable preview"
 msgstr "Disabilita anteprima"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:853
+#: rkward/windows/rkcommandeditorwindow.cpp:851
 #, kde-format
 msgid "R Markdown"
 msgstr "Markdown di R"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:855
+#: rkward/windows/rkcommandeditorwindow.cpp:853
 #, kde-format
 msgid "Preview of rendered R Markdown"
 msgstr "Anteprima del Markdown di R reso"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:856
+#: rkward/windows/rkcommandeditorwindow.cpp:854
 #, kde-format
 msgid "Preview the script as rendered from RMarkdown format (.Rmd)"
 msgstr ""
 "Visualizza l'anteprima dello script come se fosse reso dal formato RMarkdown "
 "(.Rmd)"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:858
+#: rkward/windows/rkcommandeditorwindow.cpp:856
 #, kde-format
 msgid "Render format"
 msgstr "Formato di rendering"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:859
+#: rkward/windows/rkcommandeditorwindow.cpp:857
 #, kde-format
 msgid "Render as HTML"
 msgstr "Rendi come HTML"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:860
+#: rkward/windows/rkcommandeditorwindow.cpp:858
 #, kde-format
 msgid "Render as PDF"
 msgstr "Rendi come PDF"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:861
+#: rkward/windows/rkcommandeditorwindow.cpp:859
 #, kde-format
 msgid "Auto Format"
 msgstr "Formattazione automatica"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:871
+#: rkward/windows/rkcommandeditorwindow.cpp:869
 #, kde-format
 msgid "RKWard Output"
 msgstr "Output di RKWard"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:873
+#: rkward/windows/rkcommandeditorwindow.cpp:871
 #, kde-format
 msgid "Preview of generated RKWard output"
 msgstr "Anteprima dell'output generato da RKWard"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:874
+#: rkward/windows/rkcommandeditorwindow.cpp:872
 #, kde-format
 msgid ""
 "Preview any output to the RKWard Output Window. This preview will be empty, "
@@ -6861,39 +6861,39 @@ msgstr ""
 "non ci sono delle chiamate a <i>rk.print()</i> o ad altri comandi di output "
 "di RKWard."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:887
+#: rkward/windows/rkcommandeditorwindow.cpp:885
 #, kde-format
 msgid "Preview of script running in interactive R Console"
 msgstr "Anteprima dello script in esecuzione nella console interattiva di R"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:888
+#: rkward/windows/rkcommandeditorwindow.cpp:886
 #, kde-format
 msgid "Preview the script as if it was run in the interactive R Console"
 msgstr ""
 "Anteprima dello script come se venisse eseguito nella console interattiva di "
 "R"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:889
+#: rkward/windows/rkcommandeditorwindow.cpp:887
 #, kde-format
 msgid "Echo statements"
 msgstr "Istruzioni echo"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:890
+#: rkward/windows/rkcommandeditorwindow.cpp:888
 #, kde-format
 msgid "Continue on error"
 msgstr "Continua in caso di errore"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:892
+#: rkward/windows/rkcommandeditorwindow.cpp:890
 #, kde-format
 msgid "Evaluation environment"
 msgstr "Ambiente di valutazione"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:893
+#: rkward/windows/rkcommandeditorwindow.cpp:891
 #, kde-format
 msgid ".GlobalEnv"
 msgstr ".GlobalEnv"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:895
+#: rkward/windows/rkcommandeditorwindow.cpp:893
 #, kde-format
 msgid ""
 "Evaluate code directly in .GlobalEnv. Assignments can access <b>and modify</"
@@ -6902,12 +6902,12 @@ msgstr ""
 "Valuta il codice direttamente in .GlobalEnv. Le assegnazioni possono "
 "accedere agli oggetti in .GlobalEnv e modificarli."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:896
+#: rkward/windows/rkcommandeditorwindow.cpp:894
 #, kde-format
 msgid "Scoped"
 msgstr "Con ambito"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:898
+#: rkward/windows/rkcommandeditorwindow.cpp:896
 #, kde-format
 msgid ""
 "Evaluate code in a child scope of .GlobalEnv. Objects in .GlobalEnv can be "
@@ -6919,12 +6919,12 @@ msgstr ""
 "<tt>&lt;-</tt> non li modificheranno. (Altre operazioni di assegnazione "
 "potrebbero comunque modificarli!)"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:899
+#: rkward/windows/rkcommandeditorwindow.cpp:897
 #, kde-format
 msgid "Local"
 msgstr "Locale"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:900
+#: rkward/windows/rkcommandeditorwindow.cpp:898
 #, kde-format
 msgid ""
 "Evaluate code in true local environment. Objects in .GlobalEnv are not on "
@@ -6937,17 +6937,17 @@ msgstr ""
 "assegnazioni tramite l'operatore <tt>&lt;-</tt>. (Altre operazioni di "
 "assegnazione potrebbero comunque modificarli!)"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:915
+#: rkward/windows/rkcommandeditorwindow.cpp:913
 #, kde-format
 msgid "Plot"
 msgstr "Grafico"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:917
+#: rkward/windows/rkcommandeditorwindow.cpp:915
 #, kde-format
 msgid "Preview of generated plot"
 msgstr "Anteprima del grafico generato"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:918
+#: rkward/windows/rkcommandeditorwindow.cpp:916
 #, kde-format
 msgid ""
 "Preview any onscreen graphics produced by running this script. This preview "
@@ -6958,7 +6958,7 @@ msgstr ""
 "vuota se non ci sono delle chiamate a <i>plot()</i> o ad altri comandi "
 "grafici."
 
-#: rkward/windows/rkcommandeditorwindow.cpp:941
+#: rkward/windows/rkcommandeditorwindow.cpp:939
 #, kde-format
 msgid ""
 "<p>The preview feature <b>tries</b> to avoid making any lasting changes to "
@@ -6986,12 +6986,12 @@ msgstr ""
 "presente quando usi la funzionalità di anteprima, specialmente se la usi da "
 "script che provengano da sorgenti non affidabili.</p>"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:941
+#: rkward/windows/rkcommandeditorwindow.cpp:939
 #, kde-format
 msgid "Potential side-effects of previews"
 msgstr "Potenziali effetti collaterali dell'anteprima"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1059
+#: rkward/windows/rkcommandeditorwindow.cpp:1057
 #, kde-format
 msgid ""
 "An error occurred while trying to create an autosave of the script file '%1':"
@@ -6999,17 +6999,17 @@ msgstr ""
 "Si è verificato un errore nel tentativo di creare un salvataggio automatico "
 "del file di script «%1»:"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1133
+#: rkward/windows/rkcommandeditorwindow.cpp:1131
 #, kde-format
 msgid "Unnamed"
 msgstr "Senza nome"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1266
+#: rkward/windows/rkcommandeditorwindow.cpp:1264
 #, kde-format
 msgid "%1 (Active)"
 msgstr "%1 (Attivo)"
 
-#: rkward/windows/rkcommandeditorwindow.cpp:1285
+#: rkward/windows/rkcommandeditorwindow.cpp:1283
 #, kde-format
 msgid "%1 (Unused)"
 msgstr "%1 (Inutilizzato)"
@@ -7137,22 +7137,22 @@ msgstr ""
 msgid "About this window"
 msgstr "Informazioni su questa finestra"
 
-#: rkward/windows/rkfilebrowser.cpp:114
+#: rkward/windows/rkfilebrowser.cpp:113
 #, kde-format
 msgid "Working directory"
 msgstr "Cartella di lavoro"
 
-#: rkward/windows/rkfilebrowser.cpp:125 rkward/windows/robjectbrowser.cpp:119
+#: rkward/windows/rkfilebrowser.cpp:124 rkward/windows/robjectbrowser.cpp:119
 #, kde-format
 msgid "Rename"
 msgstr "Rinomina"
 
-#: rkward/windows/rkfilebrowser.cpp:155
+#: rkward/windows/rkfilebrowser.cpp:154
 #, kde-format
 msgid "Rename..."
 msgstr "Rinomina..."
 
-#: rkward/windows/rkfilebrowser.cpp:155
+#: rkward/windows/rkfilebrowser.cpp:154
 #, kde-format
 msgid "New name for '%1':"
 msgstr "Nuovo nome per «%1»:"
@@ -7248,39 +7248,39 @@ msgstr "Argomento"
 msgid "Package"
 msgstr "Pacchetto"
 
-#: rkward/windows/rkhtmlwindow.cpp:389
+#: rkward/windows/rkhtmlwindow.cpp:386
 #, kde-format
 msgid "RKWard output file %1 does not (yet) exist"
 msgstr "Il file di output RKWard %1 non esiste (ancora)"
 
-#: rkward/windows/rkhtmlwindow.cpp:521
-#: rkward/windows/rktoplevelwindowgui.cpp:264
+#: rkward/windows/rkhtmlwindow.cpp:518
+#: rkward/windows/rktoplevelwindowgui.cpp:262
 #, kde-format
 msgid "[Active]"
 msgstr "[Attivo]"
 
-#: rkward/windows/rkhtmlwindow.cpp:532
+#: rkward/windows/rkhtmlwindow.cpp:529
 #, kde-format
 msgctxt "noun, the output"
 msgid "Output %1"
 msgstr "Output %1"
 
-#: rkward/windows/rkhtmlwindow.cpp:577
+#: rkward/windows/rkhtmlwindow.cpp:574
 #, kde-format
 msgid "Output Window"
 msgstr "Finestra di output"
 
-#: rkward/windows/rkhtmlwindow.cpp:579
+#: rkward/windows/rkhtmlwindow.cpp:576
 #, kde-format
 msgid "&Refresh Output"
 msgstr "&Aggiorna l'output"
 
-#: rkward/windows/rkhtmlwindow.cpp:605
+#: rkward/windows/rkhtmlwindow.cpp:602
 #, kde-format
 msgid "Page does not exist or is broken"
 msgstr "La pagina non esiste oppure è danneggiata"
 
-#: rkward/windows/rkhtmlwindow.cpp:618
+#: rkward/windows/rkhtmlwindow.cpp:615
 #, kde-format
 msgid ""
 "Do you really want to clear the output? This will also remove all image "
@@ -7289,82 +7289,82 @@ msgstr ""
 "Vuoi veramente cancellare l'output? Questo rimuoverà anche tutte i file di "
 "immagine usati nell'output, e non sarà possibile ripristinarli."
 
-#: rkward/windows/rkhtmlwindow.cpp:619
+#: rkward/windows/rkhtmlwindow.cpp:616
 #, kde-format
 msgid "Flush output?"
 msgstr "Vuoi cancellare il risultato?"
 
-#: rkward/windows/rkhtmlwindow.cpp:624
+#: rkward/windows/rkhtmlwindow.cpp:621
 #, kde-format
 msgid "Flushing output"
 msgstr "Cancellare il risultato"
 
-#: rkward/windows/rkhtmlwindow.cpp:653
+#: rkward/windows/rkhtmlwindow.cpp:650
 #, kde-format
 msgid "Zoom In"
 msgstr "Ingrandisci"
 
-#: rkward/windows/rkhtmlwindow.cpp:655
+#: rkward/windows/rkhtmlwindow.cpp:652
 #, kde-format
 msgid "Zoom Out"
 msgstr "Rimpicciolisci"
 
-#: rkward/windows/rkhtmlwindow.cpp:663
+#: rkward/windows/rkhtmlwindow.cpp:660
 #, kde-format
 msgid "Export Page as HTML"
 msgstr "Esporta la pagina come HTML"
 
-#: rkward/windows/rkhtmlwindow.cpp:677
+#: rkward/windows/rkhtmlwindow.cpp:674
 #, kde-format
 msgid "Save Output"
 msgstr "Salva l'uscita"
 
-#: rkward/windows/rkhtmlwindow.cpp:679
+#: rkward/windows/rkhtmlwindow.cpp:676
 #, kde-format
 msgid "Save Output As"
 msgstr "S&alva uscita come"
 
-#: rkward/windows/rkhtmlwindow.cpp:682
+#: rkward/windows/rkhtmlwindow.cpp:679
 #, kde-format
 msgid "&Clear Output"
 msgstr "&Cancella l'uscita."
 
-#: rkward/windows/rkhtmlwindow.cpp:686
+#: rkward/windows/rkhtmlwindow.cpp:683
 #, kde-format
 msgid "Reload"
 msgstr "Ricarica"
 
-#: rkward/windows/rkhtmlwindow.cpp:690
+#: rkward/windows/rkhtmlwindow.cpp:687
 #, kde-format
 msgid "&Revert to last saved state"
 msgstr "&Ripristina all'ultimo stato salvato"
 
-#: rkward/windows/rkhtmlwindow.cpp:694
+#: rkward/windows/rkhtmlwindow.cpp:691
 #, kde-format
 msgid "Set Output as &Active"
 msgstr "Imposta l'uscita come &attiva"
 
-#: rkward/windows/rkhtmlwindow.cpp:696
+#: rkward/windows/rkhtmlwindow.cpp:693
 #, kde-format
 msgid "Set this output as the file to append output to."
 msgstr "Imposta questa uscita come file al quale aggiungere l'uscita."
 
-#: rkward/windows/rkhtmlwindow.cpp:718
+#: rkward/windows/rkhtmlwindow.cpp:715
 #, kde-format
 msgid "Print output"
 msgstr "Stampa l'output"
 
-#: rkward/windows/rkhtmlwindow.cpp:726
+#: rkward/windows/rkhtmlwindow.cpp:723
 #, kde-format
 msgid "Print page"
 msgstr "Stampa pagina"
 
-#: rkward/windows/rkhtmlwindow.cpp:783
+#: rkward/windows/rkhtmlwindow.cpp:780
 #, kde-format
 msgid "No Title"
 msgstr "Nessun titolo"
 
-#: rkward/windows/rkhtmlwindow.cpp:799
+#: rkward/windows/rkhtmlwindow.cpp:796
 #, kde-format
 msgid ""
 "<h1>Help page missing</h1>\n"
@@ -7376,72 +7376,72 @@ msgstr ""
 "(oppure è danneggiata). Prendi in considerazione l'idea di contribuire alla "
 "sua scrittura.</p>\n"
 
-#: rkward/windows/rkhtmlwindow.cpp:805
+#: rkward/windows/rkhtmlwindow.cpp:802
 #, kde-format
 msgid "Use %1 now"
 msgstr "Usa %1 adesso"
 
-#: rkward/windows/rkhtmlwindow.cpp:822
+#: rkward/windows/rkhtmlwindow.cpp:819
 #, kde-format
 msgid "Summary"
 msgstr "Riassunto"
 
-#: rkward/windows/rkhtmlwindow.cpp:829
+#: rkward/windows/rkhtmlwindow.cpp:826
 #, kde-format
 msgid "Usage"
 msgstr "Uso"
 
-#: rkward/windows/rkhtmlwindow.cpp:858
+#: rkward/windows/rkhtmlwindow.cpp:855
 #, kde-format
 msgid "Choose another file"
 msgstr "Scegli un altro file"
 
-#: rkward/windows/rkhtmlwindow.cpp:881
+#: rkward/windows/rkhtmlwindow.cpp:878
 #, kde-format
 msgid "GUI settings"
 msgstr "Impostazioni della GUI"
 
-#: rkward/windows/rkhtmlwindow.cpp:906
+#: rkward/windows/rkhtmlwindow.cpp:903
 #, kde-format
 msgid "Related functions and pages"
 msgstr "Funzioni e pagine correlate"
 
-#: rkward/windows/rkhtmlwindow.cpp:914
+#: rkward/windows/rkhtmlwindow.cpp:911
 #, kde-format
 msgid "Technical details"
 msgstr "Dettagli tecnici"
 
-#: rkward/windows/rkhtmlwindow.cpp:937
+#: rkward/windows/rkhtmlwindow.cpp:934
 #, kde-format
 msgid "About"
 msgstr "Informazioni su"
 
-#: rkward/windows/rkhtmlwindow.cpp:944
+#: rkward/windows/rkhtmlwindow.cpp:941
 #, kde-format
 msgid "<h1>On this page:</h1>"
 msgstr "<h1>In questa pagina:</h1>"
 
-#: rkward/windows/rkhtmlwindow.cpp:967
+#: rkward/windows/rkhtmlwindow.cpp:964
 #, kde-format
 msgid "Unnamed GUI element"
 msgstr "Elemento della GUI senza nome"
 
-#: rkward/windows/rkhtmlwindow.cpp:1041
+#: rkward/windows/rkhtmlwindow.cpp:1038
 #, kde-format
 msgid "R Reference on '%1'"
 msgstr "Riferimento di R su «%1»"
 
-#: rkward/windows/rkhtmlwindow.cpp:1053
+#: rkward/windows/rkhtmlwindow.cpp:1050
 #, kde-format
 msgid "BROKEN REFERENCE"
 msgstr "RIFERIMENTO INTERROTTO"
 
-#: rkward/windows/rkmdiwindow.cpp:428
+#: rkward/windows/rkmdiwindow.cpp:427
 #, kde-format
 msgid "Help on %1"
 msgstr "Aiuto su %1"
 
-#: rkward/windows/rkmdiwindow.cpp:432
+#: rkward/windows/rkmdiwindow.cpp:431
 #, kde-format
 msgid "Configure %1"
 msgstr "Configura %1"
@@ -7471,67 +7471,67 @@ msgstr "Copia l'indirizzo del collegamento"
 msgid "The name <i>%1</i> might refer to:<br>"
 msgstr "Il nome <i>%1</i> potrebbe riferirsi a:<br>"
 
-#: rkward/windows/rktoolwindowbar.cpp:304
+#: rkward/windows/rktoolwindowbar.cpp:303
 #, kde-format
 msgid "Attach"
 msgstr "Allega"
 
-#: rkward/windows/rktoolwindowbar.cpp:307
+#: rkward/windows/rktoolwindowbar.cpp:306
 #, kde-format
 msgid "Position"
 msgstr "Posizione"
 
-#: rkward/windows/rktoolwindowbar.cpp:308
+#: rkward/windows/rktoolwindowbar.cpp:307
 #, kde-format
 msgid "Left Sidebar"
 msgstr "Barra laterale sinistra"
 
-#: rkward/windows/rktoolwindowbar.cpp:309
+#: rkward/windows/rktoolwindowbar.cpp:308
 #, kde-format
 msgid "Right Sidebar"
 msgstr "Barra laterale destra"
 
-#: rkward/windows/rktoolwindowbar.cpp:310
+#: rkward/windows/rktoolwindowbar.cpp:309
 #, kde-format
 msgid "Top Sidebar"
 msgstr "Barra superiore"
 
-#: rkward/windows/rktoolwindowbar.cpp:311
+#: rkward/windows/rktoolwindowbar.cpp:310
 #, kde-format
 msgid "Bottom Sidebar"
 msgstr "Barra inferiore"
 
-#: rkward/windows/rktoolwindowbar.cpp:312
+#: rkward/windows/rktoolwindowbar.cpp:311
 #, kde-format
 msgid "Not shown in sidebar"
 msgstr "Non mostrare nella barra laterale"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:57
+#: rkward/windows/rktoplevelwindowgui.cpp:55
 #, kde-format
 msgid "Help on R"
 msgstr "Aiuto su R"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:59
+#: rkward/windows/rktoplevelwindowgui.cpp:57
 #, kde-format
 msgid "Search R Help"
 msgstr "Cerca nell'aiuto di R"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:61
+#: rkward/windows/rktoplevelwindowgui.cpp:59
 #, kde-format
 msgid "RKWard Dashboard and Help"
 msgstr "Cruscotto e guida di RKWard"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:68
+#: rkward/windows/rktoplevelwindowgui.cpp:66
 #, kde-format
 msgid "Shows the R help index"
 msgstr "Mostra l'indice dell'aiuto su R"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:69
+#: rkward/windows/rktoplevelwindowgui.cpp:67
 #, kde-format
 msgid "Shows/raises the R Help Search window"
 msgstr "Mostra/nasconde la finestra di ricerca nell'aiuto su R"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:70
+#: rkward/windows/rktoplevelwindowgui.cpp:68
 #, kde-format
 msgid ""
 "Show the RKWard dashboard with links to important settings and documentation"
@@ -7539,27 +7539,27 @@ msgstr ""
 "Mostra il cruscotto di RKWard con collegamenti a impostazioni e "
 "documentazione importanti"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:75
+#: rkward/windows/rktoplevelwindowgui.cpp:73
 #, kde-format
 msgid "Previous Window"
 msgstr "Finestra precedente"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:79
+#: rkward/windows/rktoplevelwindowgui.cpp:77
 #, kde-format
 msgid "Next Window"
 msgstr "Finestra successiva"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:84
+#: rkward/windows/rktoplevelwindowgui.cpp:82
 #, kde-format
 msgid "Activate Document view"
 msgstr "Attiva la vista del documento"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:135
+#: rkward/windows/rktoplevelwindowgui.cpp:133
 #, kde-format
 msgid "Show/Hide %1"
 msgstr "Mostra/nascondi %1"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:148
+#: rkward/windows/rktoplevelwindowgui.cpp:146
 #, kde-format
 msgid ""
 "For technical reasons, the following dialog allows you to configure the "
@@ -7577,13 +7577,13 @@ msgstr ""
 "esempio all'interno dell'editor di script, devi aprire la finestra "
 "dell'editor di script ed attivarla."
 
-#: rkward/windows/rktoplevelwindowgui.cpp:148
-#: rkward/windows/rktoplevelwindowgui.cpp:162
+#: rkward/windows/rktoplevelwindowgui.cpp:146
+#: rkward/windows/rktoplevelwindowgui.cpp:160
 #, kde-format
 msgid "Note"
 msgstr "Nota"
 
-#: rkward/windows/rktoplevelwindowgui.cpp:162
+#: rkward/windows/rktoplevelwindowgui.cpp:160
 #, kde-format
 msgid ""
 "For technical reasons, the following dialog allows you to configure the "
