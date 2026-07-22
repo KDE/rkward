@@ -5,13 +5,13 @@
 # Serdar Soytetir <tulliana@gmail.com>, 2007.
 # ertugrulerata <ertugrulerata@gmail.com>, 2007.
 # Volkan Gezer <volkangezer@gmail.com>, 2015.
-# SPDX-FileCopyrightText: 2022, 2023, 2024, 2025, 2026 Emir SARI <emir_sari@icloud.com>
+# SPDX-FileCopyrightText: 2022-2026 Emir SARI <emir_sari@icloud.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: RKWard\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-07-12 00:39+0000\n"
-"PO-Revision-Date: 2026-05-02 19:53+0300\n"
+"PO-Revision-Date: 2026-07-21 21:01+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 25.12.3\n"
+"X-Generator: Lokalize 26.04.2\n"
 "X-Launchpad-Export-Date: 2014-09-29 04:56+0000\n"
 
 #, kde-format
@@ -4370,7 +4370,7 @@ msgstr ""
 #: rkward/rkconsole.cpp:878
 #, kde-format
 msgid "R Console is busy"
-msgstr "R Konsolu meşgul"
+msgstr "R Konsolu meşgûl"
 
 #: rkward/rkconsole.cpp:878
 #, kde-format
@@ -4793,7 +4793,7 @@ msgstr "Açılacak çalışma alanını seç…"
 #: rkward/rkward.cpp:978
 #, kde-format
 msgid "The <b>R</b> engine is busy."
-msgstr "<b>R</b> işletkesi meşgul."
+msgstr "<b>R</b> işletkesi meşgûl."
 
 #: rkward/rkward.cpp:982
 #, kde-format
@@ -7579,7 +7579,7 @@ msgid ""
 "last plot may be missing from the plot history, if you do this.</p>"
 msgstr ""
 "<p>Grafik aygıtı kapatılıyor ve son çizim, grafik geçmişine kaydediliyor. R "
-"arka ucu hâlâ meşgulse bu biraz zaman alabilir. Sıkışması durumunda grafik "
+"arka ucu hâlâ meşgûlse bu biraz zaman alabilir. Sıkışması durumunda grafik "
 "aygıtını hemen kapatabilirsiniz. Ancak bunu yaparsanız son grafik çizimi "
 "geçmişinde eksik olabilir.</p>"
 
