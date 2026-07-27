@@ -2,14 +2,14 @@
 # translation of rkward.po to
 # Copyright (C) 2025 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the rkward package.
-# SPDX-FileCopyrightText: 2006 Stefan Rodiger <stefan_roediger@gmx.de>
 # SPDX-FileCopyrightText: 2006 Stefan Joerg Roediger <stefan_roediger@gmx.de>
-# SPDX-FileCopyrightText: 2006, 2007 SJR <stefan_roediger@gmx.de>
-# SPDX-FileCopyrightText: 2006, 2007 Thomas Friedrichsmeier <tfry@users.sourceforge.net>
+# SPDX-FileCopyrightText: 2006 Stefan Rodiger <stefan_roediger@gmx.de>
+# SPDX-FileCopyrightText: 2006-2007 SJR <stefan_roediger@gmx.de>
+# SPDX-FileCopyrightText: 2006-2007 Thomas Friedrichsmeier <tfry@users.sourceforge.net>
 # SPDX-FileCopyrightText: 2007 Stefan Roediger <stefan_roediger@gmx.de>
-# SPDX-FileCopyrightText: 2007, 2009, 2010, 2011 Stefan Rödiger <stefan_roediger@gmx.de>
-# SPDX-FileCopyrightText: 2014, 2015, 2016, 2018, 2019, 2020, 2021 Burkhard Lück <lueck@hube-lueck.de>
-# SPDX-FileCopyrightText: 2015, 2016, 2020, 2022 Frederik Schwarzer <schwarzer@kde.org>
+# SPDX-FileCopyrightText: 2007, 2009-2011 Stefan Rödiger <stefan_roediger@gmx.de>
+# SPDX-FileCopyrightText: 2014-2016, 2018-2021 Burkhard Lück <lueck@hube-lueck.de>
+# SPDX-FileCopyrightText: 2015-2016, 2020, 2022 Frederik Schwarzer <schwarzer@kde.org>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
