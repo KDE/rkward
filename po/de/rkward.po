@@ -321,8 +321,8 @@ msgid ""
 "search path. These are typically 'imported' namespaces."
 msgstr ""
 "Dieses spezielle Objekt existiert eigentlich nicht in R. Es wird hier dazu "
-"benutzt, die Namensräume aufzulisten, dies zwar geladen sind, aber nicht zu "
-"einem Paket im Suchpfad gehören. Typischerweise handelt es sich um "
+"verwendet, die Namensräume aufzulisten, dies zwar geladen sind, aber nicht "
+"zu einem Paket im Suchpfad gehören. Typischerweise handelt es sich um "
 "„importierte“ Namensräume."
 
 #: rkward/core/rkrownames.cpp:101
@@ -419,9 +419,9 @@ msgstr ""
 "Objektbrowser erscheinen und es wird keine Vervollständigung der Objektnamen "
 "oder Hinweise für Funktionsargumente in diesem Paket geben.\n"
 "Pakete werden typischerweise auf die Sperrliste gesetzt, wenn sie große "
-"Datenmengen enthalten, was zu lang zum Laden brauchen würde. Um dieses Paket "
-"nicht mehr zu listen, gehen Sie zu den Einstellungen -> RKWard einrichten -> "
-"Arbeitsbereich."
+"Datenmengen enthalten, was zu lang zum Laden benötigen würde. Um dieses "
+"Paket nicht mehr zu listen, gehen Sie zu den Einstellungen -> RKWard "
+"einrichten -> Arbeitsbereich."
 
 #: rkward/core/robject.cpp:281
 #, kde-format
@@ -1025,7 +1025,7 @@ msgid ""
 msgstr ""
 "Die folgenden Pakete, die Sie zur Entfernung vorgesehen haben, sind für "
 "RKWard erforderlich und werden nicht entfernt. Wenn Sie vollkommen sicher "
-"sind, dass Sie diese Pakete entfernen möchten, benutzen Sie dafür bitte die "
+"sind, dass Sie diese Pakete entfernen möchten, verwenden Sie dafür bitte die "
 "R-Befehlszeile."
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:180
@@ -1056,7 +1056,7 @@ msgid ""
 "administrator privileges (you will be prompted for the password)?"
 msgstr ""
 "Ihre gegenwärtigen Benutzerberechtigungen lassen es nicht zu, die folgenden "
-"Pakete zu entfernen. Wollen Sie diese Pakete überspringen, oder wollen Sie "
+"Pakete zu entfernen. Möchten Sie diese Pakete überspringen, oder möchten Sie "
 "mit Administratorrechten fortfahren (Sie werden nach dem Passwort gefragt "
 "werden)?"
 
@@ -2352,7 +2352,7 @@ msgid ""
 "Use specified R installation, instead of the one configured at compile time "
 "(note: rkward R library must be installed to that installation of R)"
 msgstr ""
-"Benutzt die angegebene Installation von R, statt der bei der Kompilierung "
+"Verwendet die angegebene Installation von R, statt der bei der Kompilierung "
 "festgelegten (Hinweis: Die RKWard R-Bibliothek muss in dieser Installation "
 "von R installiert sein)"
 
@@ -3612,7 +3612,7 @@ msgstr "Hilfe"
 #: rkward/plugin/rkstandardcomponentgui.cpp:203
 #, kde-format
 msgid "Use Wizard"
-msgstr "Assistent benutzen"
+msgstr "Assistent verwenden"
 
 #: rkward/plugin/rkstandardcomponentgui.cpp:323
 #, kde-format
@@ -3660,7 +3660,7 @@ msgstr "< Zurück"
 #: rkward/plugin/rkstandardcomponentgui.cpp:613
 #, kde-format
 msgid "Use Dialog"
-msgstr "Dialog benutzen"
+msgstr "Dialog verwenden"
 
 #: rkward/plugin/rkvarselector.cpp:48
 #, kde-format
@@ -4039,7 +4039,7 @@ msgid ""
 msgstr ""
 "\n"
 "Das R-Backend wird unmittelbar abgeschaltet. Das bedeutet, dass Sie keine "
-"Funktionen mehr nutzen können, die es voraussetzen. D.h. Sie können fast "
+"Funktionen mehr nutzen können, die es voraussetzen. d. h. Sie können fast "
 "nichts tun, auch nicht den Arbeitsbereich speichern (mit etwas Glück hat R "
 "das allerdings bereits getan). Was Sie allerdings tun können, ist geöffnete "
 "Skript-Dateien oder Ausgaben zu speichern, oder Daten aus bereits geöffneten "
@@ -4073,7 +4073,7 @@ msgid ""
 "<h2>Locating point(s)</h2><p>Use left mouse button to select point(s). Any "
 "other mouse button to stop.</p>"
 msgstr ""
-"<h2>Punkte festlegen</h2><p>Benutzen Sie die linke Maustaste, um Punkt(e) "
+"<h2>Punkte festlegen</h2><p>Verwenden Sie die linke Maustaste, um Punkt(e) "
 "auszuwählen. Eine andere Maustaste zum Stoppen.</p>"
 
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:694
@@ -4480,7 +4480,7 @@ msgid ""
 ">Plugins."
 msgstr ""
 "Hinweis: Sie werden zu diesen pluginmap-Dateien erst wieder gewarnt, wenn "
-"Sie eine neue Version von RKWard benutzen, oder diese Module entfernen und "
+"Sie eine neue Version von RKWard verwenden, oder diese Module entfernen und "
 "unter Einstellungen->RKWard einrichten->Module erneut hinzufügen."
 
 #: rkward/rkward.cpp:442
@@ -6938,7 +6938,7 @@ msgid ""
 "the right hand side of this window."
 msgstr ""
 "Dieses Fenster kann nicht geschlossen werden, solange ein Debugger aktiv "
-"ist. Wenn Sie nicht wissen, was das heißt und einfach nur abbrechen wollen, "
+"ist. Wenn Sie nicht wissen, was das heißt und einfach nur abbrechen möchten, "
 "klicken Sie \"Abbrechen\" an der rechten Seite dieses Fensters."
 
 #: rkward/windows/rkdebugmessagewindow.cpp:70
@@ -7886,7 +7886,7 @@ msgstr ""
 #: rkward/windows/robjectbrowser.cpp:203
 #, kde-format
 msgid "Name already in use"
-msgstr "Name wird bereits benutzt"
+msgstr "Name wird bereits verwendet"
 
 #: rkward/windows/robjectbrowser.cpp:233
 #, kde-format
