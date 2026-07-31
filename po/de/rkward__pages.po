@@ -555,7 +555,7 @@ msgstr ""
 #: rkward/pages/rkward_for_new_users.rkh:23
 #, kde-format
 msgid "How can I make use of my results in an external application?"
-msgstr "Wie kann ich meine Daten in einer externen Anwendung benutzen?"
+msgstr "Wie kann ich meine Daten in einer externen Anwendung verwenden?"
 
 #. i18n: ectx: (RKWard for new Users) <section title="How can I make use of my results in an external application?">
 #: rkward/pages/rkward_for_new_users.rkh:23
