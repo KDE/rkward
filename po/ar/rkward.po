@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-04-21 02:38+0000\n"
-"PO-Revision-Date: 2026-04-11 18:14+0400\n"
+"PO-Revision-Date: 2026-08-10 18:38+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
-"X-Generator: Lokalize 23.08.5\n"
+"X-Generator: Lokalize 25.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1031,13 +1031,13 @@ msgstr "لا يزيل حزمًا معينة"
 msgid ""
 "Your current user permissions do not allow removing the following packages. "
 "These will be skipped."
-msgstr "صلاحيات المستخدم الحالية لا تسمح بإزالة الحزم التالية. تجاهلها."
+msgstr "أذون المستخدم الحالية لا تسمح بإزالة الحزم التالية. تجاهلها."
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:186
 #: rkward/dialogs/rkloadlibsdialog.cpp:189
 #, kde-format
 msgid "Insufficient user permissions"
-msgstr "أذونات مستخدم غير كافية"
+msgstr "أذون مستخدم غير كافية"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:189
 #, kde-format
@@ -1046,8 +1046,8 @@ msgid ""
 "Do you want to skip these packages, or do you want to proceed with "
 "administrator privileges (you will be prompted for the password)?"
 msgstr ""
-"صلاحيات المستخدم الحالية لا تسمح بإزالة الحزم التالية. هل تريد تجاهلها، أم "
-"تريد المتابعة بصلاحيات المدير (سيُطلب منك كلمة السر)؟"
+"أذون المستخدم الحالية لا تسمح بإزالة الحزم التالية. هل تريد تجاهلها، أم تريد "
+"المتابعة بأذون المدير (سيُطلب منك كلمة السر)؟"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:189
 #, kde-format
@@ -1096,9 +1096,9 @@ msgid ""
 "instead (you can also press \"Cancel\" and use the \"Configure Repositories"
 "\"-button to set up a different directory)?</p>"
 msgstr ""
-"<p>المجلد الذي اخترته للتثبيت (%1) غير قابل للكتابة بصلاحيات المستخدم "
-"الحالية.</p><p>هل تريد التثبيت في %2، بدلاً من ذلك (يمكنك أيضًا الضغط على "
-"«إلغاء» واستخدام زر «اضبط المستودعات» لإعداد مجلد مختلف)؟</p>"
+"<p>المجلد الذي اخترته للتثبيت (%1) غير قابل للكتابة بأذون المستخدم الحالية.</"
+"p><p>هل تريد التثبيت في %2، بدلاً من ذلك (يمكنك أيضًا الضغط على «إلغاء» "
+"واستخدام زر «اضبط المستودعات» لإعداد مجلد مختلف)؟</p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:249
 #, kde-format
@@ -1109,7 +1109,7 @@ msgid ""
 "supported in RKWard on Windows.</p>"
 msgstr ""
 "<p>بدلاً من ذلك، إذا كان لديك وصول إلى حساب مدير على هذا الحاسوب، يمكنك "
-"استخدامه لتثبيت الحزمة (الحزم)، أو يمكنك تغيير صلاحيات '%1'. عذرًا، التبديل "
+"استخدامه لتثبيت الحزمة (الحزم)، أو يمكنك تغيير أذون '%1'. عذرًا، التبديل "
 "الآلي إلى المدير غير مدعوم بعد في أر كي وارد على ويندوز.</p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:252
@@ -2605,7 +2605,7 @@ msgstr "حدث خطأ أثناء كتابة أرشيف الإخراج المؤق
 #: rkward/misc/rkoutputdirectory.cpp:178
 #, kde-format
 msgid "Failure to remove existing file %1. Missing permissions?"
-msgstr "فشل في إزالة الملف الحالي %1. هل الصلاحيات مفقودة؟"
+msgstr "فشل في إزالة الملف الحالي %1. هل الأذون مفقودة؟"
 
 #: rkward/misc/rkoutputdirectory.cpp:183
 #, kde-format
@@ -4070,7 +4070,7 @@ msgstr "حدث خطأ ما أثناء التنزيل!"
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:120
 #, kde-format
 msgid "Download successful, setting file permissions."
-msgstr "التنزيل ناجح، اضبط أذونات الملف."
+msgstr "التنزيل ناجح، اضبط أذون الملف."
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:127
 #, kde-format
