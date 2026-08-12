@@ -152,8 +152,8 @@ msgid ""
 "to recode vectors that are coded numerically, but this only makes sense for "
 "numeric vectors with only a limited number of unique values."
 msgstr ""
-"اسمح بإعادة ترميز متّجه ببيانات فئوية. تسمح هذه الملحقة أيضاً بإعادة ترميز "
-"المتّجهات المرمّزة عددياً، ولكن هذا منطقي فقط للمتّجهات العددية ذات العدد "
+"اسمح بإعادة ترميز متّجه ببيانات فئوية. تسمح هذه الملحقة أيضًا بإعادة ترميز "
+"المتّجهات المرمّزة عدديًا، ولكن هذا منطقي فقط للمتّجهات العددية ذات العدد "
 "المحدود من القيم الفريدة."
 
 #. i18n: ectx: (Recode categorical data) <usage>
@@ -188,7 +188,7 @@ msgstr ""
 #: rkward/plugins/data/recode_categorical.rkh:27
 #, kde-format
 msgid "Pick a name (and optionally a container) for the recoded data."
-msgstr "اختر اسماً (ويمكنك اختيار حاوية) للبيانات المعاد ترميزها."
+msgstr "اختر اسمًا (ويمكنك اختيار حاوية) للبيانات المعاد ترميزها."
 
 #. i18n: ectx: (Recode categorical data) <settings> <setting> (refers to element labelled "Data type after recoding")
 #: rkward/plugins/data/recode_categorical.rkh:30
@@ -231,8 +231,8 @@ msgid ""
 "several input values are to be replaced with one output value, you can "
 "select them all at once."
 msgstr ""
-"لكل عملية إعادة ترميز يجب إجراؤها، حدّد أولاً القيمة (القيم) القديمة لإعادة "
-"ترميزها. يمكن أن تكون هذه إما NA/مفقودة، أو حدّد قيمة (قيماً) غير NA على "
+"لكل عملية إعادة ترميز يجب إجراؤها، حدّد أولًا القيمة (القيم) القديمة لإعادة "
+"ترميزها. يمكن أن تكون هذه إما NA/مفقودة، أو حدّد قيمة (قيمًا) غير NA على "
 "الجانب الأيسر، وأضفها إلى القيم التي يجب إعادة ترميزها بالنقر على زر السهم. "
 "إذا أردت استبدال عدة قيم إدخال بقيمة إخراج واحدة، يمكنك تحديدها كلها دفعة "
 "واحدة."
@@ -245,7 +245,7 @@ msgid ""
 "values will be quoted, automatically."
 msgstr ""
 "أدخِل القيمة الجديدة (أو اضبطها لتكون NA). بالنسبة للمتّجهات العاملة والمتّجهات "
-"المحرفية، ستكون القيم مُقتبسة، آلياً."
+"المحرفية، ستكون القيم مُقتبسة، آليًا."
 
 #. i18n: ectx: (Recode categorical data) <settings> <setting> (refers to element labelled "Any other values")
 #: rkward/plugins/data/recode_categorical.rkh:49
@@ -419,7 +419,7 @@ msgstr "القيمة:"
 #: rkward/plugins/data/recode_categorical.xml:95
 #, kde-format
 msgid "(Value will be quoted, automatically)"
-msgstr "(القيمة ستكون مُقتبسة، آلياً)"
+msgstr "(القيمة ستكون مُقتبسة، آليًا)"
 
 #. i18n: ectx: (Recode categorical data) <dialog label="Recode categorical data"> <tab label="Values"> <radio label="...">
 #: rkward/plugins/data/recode_categorical.xml:102
@@ -443,7 +443,7 @@ msgstr "قيمة مخصصة:"
 #: rkward/plugins/data/sort.rkh:8
 #, kde-format
 msgid "Sort data. Currently data.frames, or individual vectors can be sorted."
-msgstr "افرُز البيانات. حالياً، يمكن فرز إطارات البيانات، أو المتّجهات الفردية."
+msgstr "افرُز البيانات. حاليًا، يمكن فرز إطارات البيانات، أو المتّجهات الفردية."
 
 #. i18n: ectx: (Loaded from Sort data) <usage>
 #: rkward/plugins/data/sort.rkh:11
@@ -453,9 +453,9 @@ msgid ""
 "sort by. By default the object to be sorted is replaced with the sorted "
 "variant, but you can also specify to save to a separate object."
 msgstr ""
-"حدّد الكائن الذي يجب فرزه. بالنسبة لإطارات البيانات، حدّد أيضاً العمود الذي يجب "
-"الفرز حسبه. مبدئياً، يُستبدَل الكائن المراد فرزه بالنسخة المفروزة، ولكن يمكنك "
-"أيضاً تحديد الحفظ في كائن منفصل."
+"حدّد الكائن الذي يجب فرزه. بالنسبة لإطارات البيانات، حدّد أيضًا العمود الذي يجب "
+"الفرز حسبه. مبدئيًا، يُستبدَل الكائن المراد فرزه بالنسخة المفروزة، ولكن يمكنك "
+"أيضًا تحديد الحفظ في كائن منفصل."
 
 #. i18n: ectx: (Loaded from Sort data) <settings> <setting> (refers to element labelled "Object to be sorted")
 #: rkward/plugins/data/sort.rkh:17
@@ -464,7 +464,7 @@ msgid ""
 "The object to sort. If a data.frame editor window is currently active, the "
 "corresponding object name will be filled in as a default."
 msgstr ""
-"الكائن للفرز. إذا كانت نافذة محرّر إطار بيانات نشطة حالياً، فسيُملأ اسم الكائن "
+"الكائن للفرز. إذا كانت نافذة محرّر إطار بيانات نشطة حاليًا، فسيُملأ اسم الكائن "
 "المطابق كقيمة مبدئية."
 
 #. i18n: ectx: (Loaded from Sort data) <settings> <setting> (refers to element labelled "Sort by")
@@ -482,7 +482,7 @@ msgid ""
 "choose \"Another object\" to save the sorted object, separately."
 msgstr ""
 "اختر \"الكائن نفسه\" (القيمة المبدئية) لاستبدال الكائن المراد فرزه بالنسخة "
-"المفروزة. إذا كنت تريد الاحتفاظ بالكائن غير المفروز بدلاً من ذلك، فاختر "
+"المفروزة. إذا كنت تريد الاحتفاظ بالكائن غير المفروز بدلًا من ذلك، فاختر "
 "\"كائن آخر\" لحفظ الكائن المفروز بشكل منفصل."
 
 #. i18n: ectx: (Loaded from Sort data) <settings> <setting> (refers to element labelled "Object to save to")
@@ -500,7 +500,7 @@ msgid ""
 "Show a preview of the sorted data. The preview is limited to 200 rows and 50 "
 "columns of data, for performance reasons."
 msgstr ""
-"اعرض معاينة للبيانات المفروزة. المعاينة محدودة بـ 200 صف و 50 عموداً من "
+"اعرض معاينة للبيانات المفروزة. المعاينة محدودة بـ 200 صف و 50 عمودًا من "
 "البيانات، لأسباب تتعلق بالأداء."
 
 #. i18n: ectx: (Loaded from Sort data) <settings> <setting> (refers to element labelled "Sort order")
@@ -686,7 +686,7 @@ msgid ""
 "Select a column of the data.frame specifying the condition to filter cases "
 "on. Leave empty, if you do not want to filter on a column."
 msgstr ""
-"حدّد عموداً من إطار البيانات يحدد الشرط لترشيح الحالات. اتركه فارغاً، إذا كنت "
+"حدّد عمودًا من إطار البيانات يحدد الشرط لترشيح الحالات. اتركه فارغًا، إذا كنت "
 "لا تريد الترشيح بناءً على عمود."
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Keep cases matching rule")
@@ -696,7 +696,7 @@ msgid ""
 "Select the type of condition. Note that depending on the type of the filter "
 "variable, different options are available"
 msgstr ""
-"حدّد نوع الشرط. لاحظ أنه اعتماداً على نوع متغير المرشح، تتوفر خيارات مختلفة"
+"حدّد نوع الشرط. لاحظ أنه اعتمادًا على نوع متغير المرشح، تتوفر خيارات مختلفة"
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Value (pasted as-is, use proper quoting!)")
 #: rkward/plugins/data/subset_dataframe.rkh:36
@@ -708,8 +708,8 @@ msgid ""
 "column of the data.frame. However, if you want to compare to fixed strings, "
 "you will have to make sure to quote these. E.g. 'c (\"City A\", \"City B\")'."
 msgstr ""
-"القيمة للمقارنة بها (لأنواع الشروط يساوي/لا يساوي، وواحد من/ليس واحداً من). "
-"لاحظ أن هذا سيلصق كرمز R، حرفياً. هذا يعني، يمكنك تحديد أي تعبير R صالح، بما "
+"القيمة للمقارنة بها (لأنواع الشروط يساوي/لا يساوي، وواحد من/ليس واحدًا من). "
+"لاحظ أن هذا سيلصق كرمز R، حرفيًا. هذا يعني، يمكنك تحديد أي تعبير R صالح، بما "
 "في ذلك اسم عمود آخر من إطار البيانات. ومع ذلك، إذا كنت تريد المقارنة بسلاسل "
 "ثابتة، ستحتاج إلى التأكد من اقتباسها. على سبيل المثال 'c (\"City A\", \"City "
 "B\")'."
@@ -726,7 +726,7 @@ msgid ""
 msgstr ""
 "للمقارنة مع النطاقات (أنواع الشروط بين/ليس بين)، يمكن تحديد قيم دنيا و/أو "
 "قصوى. إذا حُذِف أحدهما، فسيُتحقَّق من الآخر فقط (أي أكبر من/أصغر من). لاحظ أن هذا "
-"سيلصق كرمز R، حرفياً. هذا يعني، يمكنك تحديد أي تعبير R صالح، بما في ذلك اسم "
+"سيلصق كرمز R، حرفيًا. هذا يعني، يمكنك تحديد أي تعبير R صالح، بما في ذلك اسم "
 "عمود آخر من إطار البيانات."
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Included (>=)")
@@ -764,9 +764,9 @@ msgid ""
 "combined by logical 'and' (&amp;). Leave empty, if you do not want to filter "
 "on a custom expression."
 msgstr ""
-"يمكنك أيضاً ترشيح الصفوف/الحالات بتعبير R مخصص. إذا استخدِمتَ هذا بالاقتران مع "
+"يمكنك أيضًا ترشيح الصفوف/الحالات بتعبير R مخصص. إذا استخدِمتَ هذا بالاقتران مع "
 "الترشيح بعمود (انظر أعلاه)، فسيُجمَع كلا الشرطين بـ 'و' المنطقي (&amp;). اتركه "
-"فارغاً، إذا كنت لا تريد الترشيح بتعبير مخصص."
+"فارغًا، إذا كنت لا تريد الترشيح بتعبير مخصص."
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Only use a subset of variables")
 #: rkward/plugins/data/subset_dataframe.rkh:56
@@ -847,7 +847,7 @@ msgstr "واحد من (%in%)"
 #: rkward/plugins/data/subset_dataframe.xml:93
 #, no-c-format, kde-format
 msgid "is not one of (!%in%)"
-msgstr "ليس واحداً من (!%in%)"
+msgstr "ليس واحدًا من (!%in%)"
 
 #. i18n: ectx: (Subset of data) <dialog label="Subset of data"> [...] <dropdown label="Keep cases matching rule"> <option label="...">
 #: rkward/plugins/data/subset_dataframe.xml:86

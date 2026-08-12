@@ -1108,7 +1108,7 @@ msgid ""
 "function'."
 msgstr ""
 "تُستخدم هذه المجموعات العديدة من العينات (nDist) للحصول على فكرة عن توزيع "
-"متوسطات العينة. توفر كل مجموعة متوسطاً. ثم تُستخدم هذه المتوسطات لإنشاء 'مدرج "
+"متوسطات العينة. توفر كل مجموعة متوسطًا. ثم تُستخدم هذه المتوسطات لإنشاء 'مدرج "
 "تكراري' أو 'دالة التوزيع'."
 
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <settings> <setting> (refers to element labelled "Choose type of function plot")
