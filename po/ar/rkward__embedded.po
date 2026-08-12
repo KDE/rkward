@@ -614,7 +614,7 @@ msgstr "أعط عنوان URL الكامل للمستودع (غيت عام وsvn
 msgid ""
 "If you want a certain commit, tag or branch for installation, define that "
 "here."
-msgstr "إذا أردت التزاماً معيناً أو وسم أو فرع للتثبيت، فعرفه هنا."
+msgstr "إذا أردت التزامًا معينًا أو وسم أو فرع للتثبيت، فعرفه هنا."
 
 #. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Subdirectory")
 #: rkward/plugins/distributions/../internal/Installfromgit.rkh:34

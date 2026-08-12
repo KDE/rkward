@@ -176,7 +176,7 @@ msgid ""
 "barplot is a bit picky about attributes, so we need to convert to vector or "
 "matrix explicitly"
 msgstr ""
-"مخطط الأعمدة انتقائي قليلاً بشأن السمات، لذا نحتاج إلى التحويل إلى متجه أو "
+"مخطط الأعمدة انتقائي قليلًا بشأن السمات، لذا نحتاج إلى التحويل إلى متجه أو "
 "مصفوفة صراحةً"
 
 #. i18n: ectx: (Loaded from Barplot) <summary>
@@ -193,7 +193,7 @@ msgid ""
 "Choose a matrix, vector or a factor to be plotted. Further options are "
 "available on the second tab."
 msgstr ""
-"اختر مصفوفة، أو متجهًا، أو عاملاً (factor) لترسمه. تتوفر خيارات إضافية في "
+"اختر مصفوفة، أو متجهًا، أو عاملًا (factor) لترسمه. تتوفر خيارات إضافية في "
 "الألسنة الأخرى."
 
 #. i18n: ectx: (Loaded from Barplot) <settings> <setting> (refers to element labelled "Tabulate data before plotting")
@@ -955,7 +955,7 @@ msgid ""
 "Select a numeric vector to estimate density for. For further options, see "
 "below."
 msgstr ""
-"اختر متجهاً رقمياً لتقدير الكثافة له. للاطلاع على خيارات أخرى، انظر أدناه."
+"اختر متجهًا رقميًا لتقدير الكثافة له. للاطلاع على خيارات أخرى، انظر أدناه."
 
 #. i18n: ectx: (Loaded from Density Plot) <settings> <setting> (refers to element labelled "variable(s):")
 #: rkward/plugins/plots/density_plot.rkh:18
@@ -1367,7 +1367,7 @@ msgid ""
 "Select a variable to plot an ECDF for. The theoretical normal distribution "
 "and a rug can be added to the plot."
 msgstr ""
-"اختر متغيراً لترسم دالة التوزيع التراكمي التجريبية (ECDF) له. يمكن إضافة "
+"اختر متغيرًا لترسم دالة التوزيع التراكمي التجريبية (ECDF) له. يمكن إضافة "
 "التوزيع النظري العادي وسجادة إلى الرسم."
 
 #. i18n: ectx: (Loaded from Empirical Distribution Function) <settings> <setting> (refers to element labelled "variable(s):")
@@ -1531,7 +1531,7 @@ msgstr "ارسم المخطّط الدّرجيّ."
 msgid ""
 "Select a variable to plot a histogram. For available options, see below."
 msgstr ""
-"اختر متغيراً لترسم مخططًا بيانيًا تكراريًا له. للاطلاع على الخيارات المتاحة، "
+"اختر متغيرًا لترسم مخططًا بيانيًا تكراريًا له. للاطلاع على الخيارات المتاحة، "
 "انظر أدناه."
 
 #. i18n: ectx: (Loaded from Histogram) <settings> <setting> (refers to element labelled "variable(s):")
@@ -1643,7 +1643,7 @@ msgstr "مخطط باريتو"
 #: rkward/plugins/plots/pareto.rkh:8
 #, kde-format
 msgid "Creates a pareto chart, and (optionally) prints the values."
-msgstr "أنشئ مخطط باريتو، واطبع القيم (اختيارياً)."
+msgstr "أنشئ مخطط باريتو، واطبع القيم (اختياريًا)."
 
 #. i18n: ectx: (Loaded from Pareto chart) <usage>
 #: rkward/plugins/plots/pareto.rkh:12
