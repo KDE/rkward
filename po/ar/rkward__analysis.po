@@ -398,7 +398,7 @@ msgid ""
 msgstr ""
 "يُجري هذا الاختبار اختبار أنصاري-برادلي الدقيق لعينتين لاختبار فرق في معلمات "
 "المقياس. يختلف هذا الاختبار عن <link href=\"rkward://component/"
-"ansari_bradley_test\"/> في أنه يمكن أيضاً حساب قيم p الدقيقة في وجود "
+"ansari_bradley_test\"/> في أنه يمكن أيضًا حساب قيم p الدقيقة في وجود "
 "التعادلات."
 
 #. i18n: ectx: (Loaded from Ansari-Bradley two-sample test) <usage>
@@ -840,7 +840,7 @@ msgid ""
 "parameter in cor()"
 msgstr ""
 "بما أننا نحتاج إلى إجراء مقارنات زوجية لأسباب تقنية،\n"
-"علينا استبعاد الحالات غير المكتملة أولاً لمطابقة المُعلَّمة use=\"complete.obs\" "
+"علينا استبعاد الحالات غير المكتملة أولًا لمطابقة المُعلَّمة use=\"complete.obs\" "
 "في cor()"
 
 #. i18n: ectx: (Loaded from Correlation matrix)
@@ -2124,7 +2124,7 @@ msgid ""
 msgstr ""
 "يحدد متغير الاختبار الواجب إجراؤه. انظر <link href=\"rkward://rhelp/dixon."
 "test\"/> للحصول على التفاصيل. القيمة المبدئية (0) تعني أن متغير مناسب يُختار "
-"آلياً، وفقاً لحجم العينة."
+"آليًا، وفقًا لحجم العينة."
 
 #. i18n: ectx: (Loaded from Dixon tests for outlier) <settings> <setting> (refers to element labelled "two-sided")
 #: rkward/plugins/analysis/outliers/dixon_test.rkh:21
@@ -2346,7 +2346,7 @@ msgstr "اقتنص الأخطاء بسبب البيانات غير المناس�
 #: rkward/plugins/analysis/power/Poweranalysis.js:205
 #, kde-format
 msgid "Power analysis not possible with the data you provided"
-msgstr "تحليل القوة ليس ممكناً مع البيانات التي قدمتها"
+msgstr "تحليل القوة ليس ممكنًا مع البيانات التي قدمتها"
 
 #. i18n: ectx: (Loaded from Power analysis)
 #: rkward/plugins/analysis/power/Poweranalysis.js:207
@@ -2455,7 +2455,7 @@ msgstr ""
 "test عند حجم عينة، وحجم تأثير، ومستوى دلالة مُعطى. على اليسار، حدّد الأسلوب "
 "الإحصائي، وعلى الجانب الأيمن، أدخل قيم المَعلمات المُعطاة. في عنصر التحكم في "
 "المنتصف، اختر أي المَعلمات تُريد تقديرها.  لاحظ أنه في بعض الحالات لن يكون "
-"ممكناً تقدير مَعلمة (محدودة) عند المواصفات المُعطاة. بشكل عام، يعني هذا أنه يجب "
+"ممكنًا تقدير مَعلمة (محدودة) عند المواصفات المُعطاة. بشكل عام، يعني هذا أنه يجب "
 "عليك زيادة حجم (أحجام) العينة أو حجم التأثير، أو تقليل قوة التأثير أو عدد "
 "المَعلمات."
 
@@ -2558,7 +2558,7 @@ msgid ""
 "observations per sample, per group, or in total. Make sure to read the note "
 "shown below the control."
 msgstr ""
-"حجم العينة. لاحظ أنه اعتماداً على الأسلوب المختار، يمكن أن يعني هذا ملاحظات "
+"حجم العينة. لاحظ أنه اعتمادًا على الأسلوب المختار، يمكن أن يعني هذا ملاحظات "
 "لكل عينة، لكل مجموعة، أو في المجموع. احرص على قراءة الملاحظة المعروضة أسفل "
 "عنصر التحكم."
 
@@ -2645,7 +2645,7 @@ msgstr "الأسلوب الإحصائي"
 #: rkward/plugins/analysis/power/Poweranalysis.xml:107
 #, kde-format
 msgid "Select a method"
-msgstr "اختر أسلوباً"
+msgstr "اختر أسلوبًا"
 
 #. i18n: ectx: (Power analysis) <dialog label="Power analysis"> <frame label="Statistical Method"> <dropdown label="Select a method"> <option label="...">
 #: rkward/plugins/analysis/power/Poweranalysis.xml:108
@@ -2986,7 +2986,7 @@ msgid ""
 "basic functionality. For more options refer to <link href=\"rkward://rhelp/lm"
 "\"/>."
 msgstr ""
-"أجرِ انحداراً خطياً بسيطاً. حالياً، يوفر هذا المكون وظائف أساسية فقط. للمزيد من "
+"أجرِ انحدارًا خطيًا بسيطًا. حاليًا، يوفر هذا المكون وظائف أساسية فقط. للمزيد من "
 "الخيارات ارجع إلى <link href=\"rkward://rhelp/lm\"/>."
 
 #. i18n: ectx: (Loaded from Fitting Linear Models) <usage>
@@ -2995,13 +2995,13 @@ msgstr ""
 msgid ""
 "Select the variable to be predicted (dependent), and one or more independent "
 "variables."
-msgstr "اختر المتغير المراد التنبؤ به (التابع)، ومتغيراً مستقلاً واحداً أو أكثر."
+msgstr "اختر المتغير المراد التنبؤ به (التابع)، ومتغيرًا مستقلًا واحدًا أو أكثر."
 
 #. i18n: ectx: (Loaded from Fitting Linear Models) <settings> <setting> (refers to element labelled "dependent variable")
 #: rkward/plugins/analysis/regression/linear_regression.rkh:18
 #, kde-format
 msgid "The dependent variable. This must be numeric."
-msgstr "المتغير التابع. يجب أن يكون هذا رقمياً."
+msgstr "المتغير التابع. يجب أن يكون هذا رقميًا."
 
 #. i18n: ectx: (Loaded from Fitting Linear Models) <settings> <setting> (refers to element labelled "independent variables")
 #: rkward/plugins/analysis/regression/linear_regression.rkh:19
@@ -3013,7 +3013,7 @@ msgid ""
 msgstr ""
 "متغير مستقل واحد أو أكثر، كل منها له الطول نفسه للمتغير التابع. لاحظ أن "
 "متغيرات العوامل تُعامَل كمؤشرات فئوية، بينما تُعامَل المتغيرات الرقمية كمؤشرات "
-"مستمرة، آلياً."
+"مستمرة، آليًا."
 
 #. i18n: ectx: (Loaded from Fitting Linear Models) <settings> <setting> (refers to element labelled "Include intercept")
 #: rkward/plugins/analysis/regression/linear_regression.rkh:20
@@ -3193,7 +3193,7 @@ msgid ""
 "each other. For two samples, specify whether the variables are paired or "
 "independent samples. For details, see below."
 msgstr ""
-"اختر متجهين رقميين أو متجهاً واحداً وثابتاً للمقارنة بينهما. لعينتين، حدّد ما "
+"اختر متجهين رقميين أو متجهًا واحدًا وثابتًا للمقارنة بينهما. لعينتين، حدّد ما "
 "إذا كانت المتغيرات عينات مزدوجة أو مستقلة. للحصول على التفاصيل، انظر أدناه."
 
 #. i18n: ectx: (Loaded from t-Test) <settings> <setting> (refers to element labelled "Test form")
@@ -3301,7 +3301,7 @@ msgid ""
 msgstr ""
 "اختر \"عينات مستقلة\" عند مقارنة البيانات من مجتمعين مختلفين (مثل مجموعة "
 "المعالجة مقابل المجموعة الضابطة). لمقارنة الأزواج المتطابقة أو القياسات "
-"المتكررة على نفس الموضوع، اختر \"عينات مقترنة\". أخيرًا، يمكنك أيضاً اختبار "
+"المتكررة على نفس الموضوع، اختر \"عينات مقترنة\". أخيرًا، يمكنك أيضًا اختبار "
 "عينة واحدة مقابل قيمة ثابتة."
 
 #. i18n: ectx: (t-Test) <wizard label="Two Variable t-Test"> <page> <text>
@@ -3321,7 +3321,7 @@ msgid ""
 "Sometimes it's helpful to get an estimate of the confidence interval of the "
 "difference in means."
 msgstr ""
-"في بعض الأحيان يكون مفيداً الحصول على تقدير لفاصل الثقة للفرق في المتوسطات."
+"في بعض الأحيان يكون مفيدًا الحصول على تقدير لفاصل الثقة للفرق في المتوسطات."
 
 #. i18n: ectx: (t-Test) <wizard label="Two Variable t-Test"> <page> <text>
 #: rkward/plugins/analysis/t_test.xml:75
@@ -3564,7 +3564,7 @@ msgid ""
 "This plugin extracts and plots the long term trend of a series and "
 "(optionally) its cyclical component."
 msgstr ""
-"هذا المكون الإضافي يستخرج ويرسم الاتجاه طويل الأجل لمتسلسلة و (اختيارياً) "
+"هذا المكون الإضافي يستخرج ويرسم الاتجاه طويل الأجل لمتسلسلة و (اختياريًا) "
 "مكونها الدوري."
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter) <usage>
@@ -3606,7 +3606,7 @@ msgid ""
 "most common values depending on the frequency of the data (<i>Annual</i>, "
 "<i>Quarterly</i> and <i>Monthly</i>). (Default: 1600)"
 msgstr ""
-"هذه هي معلمة التنعيم. لديك قائمة منسدلة تحتوي على القيم الثلاث الأكثر شيوعاً "
+"هذه هي معلمة التنعيم. لديك قائمة منسدلة تحتوي على القيم الثلاث الأكثر شيوعًا "
 "حسب تكرار البيانات (<i>سنوي</i>، <i>ربع سنوي</i> و <i>شهري</i>). (مبدئي: "
 "1600)"
 
@@ -3629,7 +3629,7 @@ msgid ""
 "\"myseries.hptrend\").</i>"
 msgstr ""
 "اختر أي متسلسلة ناتجة يجب إنشاؤها في مساحة العمل. يُنشأ اتجاه المتسلسلة "
-"الأصلية مبدئياً. اكتب أي اسم تريد استخدامه كمعرف للمتسلسلة. مبدئياً، يكون "
+"الأصلية مبدئيًا. اكتب أي اسم تريد استخدامه كمعرف للمتسلسلة. مبدئيًا، يكون "
 "<i>hp</i> متبوعًا بـ <i>trend</i> و/أو <i>cycle</i>. <i>تلميح: يمكنك إضافة "
 "اسم المتسلسلة الأصلية لتجنب الكتابة فوق اتجاه/دورة المتغيرات الأخرى (أي "
 "\"myseries.hptrend\").</i>"
@@ -3659,7 +3659,7 @@ msgid ""
 "Trend</i>."
 msgstr ""
 "هنا يمكنك تحديد النص على لصيقة محور Y لرسم الاتجاه البياني (العلوي). إذا كان "
-"فارغاً، فإن اللصيقة المبدئية هي اسم المتسلسلة الأصلية بالإضافة إلى <i>، "
+"فارغًا، فإن اللصيقة المبدئية هي اسم المتسلسلة الأصلية بالإضافة إلى <i>، "
 "Trend</i>."
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter) <settings> <setting> (refers to element labelled "Cycle Y axis label")
@@ -3670,7 +3670,7 @@ msgid ""
 "if applicable). If empty, the default label is <i>Cycle</i>."
 msgstr ""
 "هنا يمكنك تحديد النص على لصيقة محور Y لرسم الدورة البياني (السفلي - إذا كان "
-"قابلاً للتطبيق). إذا كان فارغاً، فإن اللصيقة المبدئية هي <i>Cycle</i>."
+"قابلًا للتطبيق). إذا كان فارغًا، فإن اللصيقة المبدئية هي <i>Cycle</i>."
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter) <settings> <setting> (refers to element labelled "interpret as string")
 #: rkward/plugins/analysis/time_series/hp_filter.rkh:30
@@ -3686,7 +3686,7 @@ msgstr ""
 #: rkward/plugins/analysis/time_series/hp_filter.xml:30
 #, kde-format
 msgid "Select Variable"
-msgstr "اختر متغيراً"
+msgstr "اختر متغيرًا"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="Select Variable"> <varslot label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:37
@@ -3854,7 +3854,7 @@ msgstr "الدورة"
 #: rkward/plugins/analysis/time_series/hp_filter.xml:108
 #, kde-format
 msgid "Labels (leave empty for default)"
-msgstr "لصائق (اُترك فارغاً للمبدئي)"
+msgstr "لصائق (اُترك فارغًا للمبدئي)"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="Plot options"> <frame label="Labels (leave empty for default)"> <input label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:110
@@ -4170,7 +4170,7 @@ msgid ""
 "Honor of Harold Hotelling, I. Olkin et al. eds., Stanford University Press, "
 "pp. 278-292."
 msgstr ""
-"Levene, H. (1960). في مساهمات في الاحتمالات والإحصاء: مقالات تكريماً لهارولد "
+"Levene, H. (1960). في مساهمات في الاحتمالات والإحصاء: مقالات تكريمًا لهارولد "
 "هوتيلينغ، تحرير I. Olkin وآخرون، مطبعة جامعة ستانفورد، ص. 278-292."
 
 #. i18n: ectx: (Levene's Test) <dialog label="Levene's Test"> <varslot label="...">
@@ -4239,7 +4239,7 @@ msgid ""
 "test on the null that the true distribution of x (or the difference between "
 "the paired vectors) is symmetric about 0 (or the specified location)."
 msgstr ""
-"اختر متجهاً واحداً (أو اختباراً مقترناً) لإجراء اختبار ويلكوكسون للرتب الموقعة "
+"اختر متجهًا واحدًا (أو اختبارًا مقترنًا) لإجراء اختبار ويلكوكسون للرتب الموقعة "
 "على الفرضية الصفرية بأن التوزيع الحقيقي لـ x (أو الفرق بين المتجهات "
 "المقترنة) متماثل حول 0 (أو الموقع المحدد)."
 
@@ -4299,7 +4299,7 @@ msgid ""
 "asymptomatic p-value is calculated if and only if you have less than 50 "
 "cases per group without binding when an exact test should be performed."
 msgstr ""
-"هل يجب حساب قيمة p دقيقة؟ مبدئياً (\"آلي\")، تُحسب قيمة p غير عرضية إذا وفقط "
+"هل يجب حساب قيمة p دقيقة؟ مبدئيًا (\"آلي\")، تُحسب قيمة p غير عرضية إذا وفقط "
 "إذا كان لديك أقل من 50 حالة لكل مجموعة دون ربط عندما يجب إجراء اختبار دقيق."
 
 #. i18n: ectx: (Loaded from Wilcoxon/Mann-Whitney Test) <settings> <setting> (refers to element labelled "Allow ties")
@@ -4405,7 +4405,7 @@ msgctxt "R code comment"
 msgid ""
 "we wrap each single call in a \"try\" statement to always continue on errors."
 msgstr ""
-"نُغلِّف كل استدعاء فردي في عبارة \"محاولة\" للاستمرار دائماً في حالة الأخطاء."
+"نُغلِّف كل استدعاء فردي في عبارة \"محاولة\" للاستمرار دائمًا في حالة الأخطاء."
 
 #. i18n: ectx: (Loaded from Descriptive Statistics)
 #: rkward/plugins/descriptive/descriptive_statistics.js:30
@@ -4508,7 +4508,7 @@ msgstr "إحصائيات وصفية"
 msgid ""
 "Compute the most common descriptive statistics for one or more numeric "
 "vectors"
-msgstr "اِحسب الإحصائيات الوصفية الأكثر شيوعاً لمتجه (متجهات) رقمي واحد أو أكثر"
+msgstr "اِحسب الإحصائيات الوصفية الأكثر شيوعًا لمتجه (متجهات) رقمي واحد أو أكثر"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <usage>
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:14
@@ -4518,7 +4518,7 @@ msgid ""
 "objects need to be numeric vectors. On the subsequent tabs/pages specify, "
 "which statistics you want computed (see below for details)."
 msgstr ""
-"اختر كائناً (كائنات) واحداً أو أكثر لتحليله. لمعظم أنواع التحليل، يجب أن تكون "
+"اختر كائنًا (كائنات) واحدًا أو أكثر لتحليله. لمعظم أنواع التحليل، يجب أن تكون "
 "الكائنات متجهات رقمية. في ألسنة/صفحات لاحقة، حدد الإحصائيات التي تريد حسابها "
 "(اُنظر أدناه للتفاصيل)."
 
@@ -4534,7 +4534,7 @@ msgstr "كل متغير مختار يُحلَّل بشكل مستقل عن ال�
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:21
 #, kde-format
 msgid "Select one or more numeric vectors to analyse"
-msgstr "اختر متجهاً (متجهات) رقمي واحد أو أكثر لتحليله"
+msgstr "اختر متجهًا (متجهات) رقمي واحد أو أكثر لتحليله"
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <settings> <setting> (refers to element labelled "group by:")
 #: rkward/plugins/descriptive/descriptive_statistics.rkh:22
@@ -4546,7 +4546,7 @@ msgid ""
 "any grouping). If specifying more than one grouping factor, separate splits "
 "will be performed for each combination of values of the grouping factors."
 msgstr ""
-"اختيارياً، اختر عاملاً (عوامل) تجميع واحداً أو أكثر لتقسيم كل متجه إدخال "
+"اختياريًا، اختر عاملًا (عوامل) تجميع واحدًا أو أكثر لتقسيم كل متجه إدخال "
 "بواسطته. يجب أن تكون عوامل التجميع من نفس طول متجهات الإدخال (وبالتالي، يجب "
 "أن تكون جميع متجهات الإدخال من نفس الطول، إذا استخدام أي تجميع). إذا حددت "
 "أكثر من عامل تجميع واحد، تُجرى تقسيمات منفصلة لكل تركيبة من قيم عوامل التجميع."
@@ -4596,7 +4596,7 @@ msgid ""
 "asymptotically normal consistency (see <link href=\"rkward://rhelp/mad\"/>)."
 msgstr ""
 "اِحسب الانحراف المطلق للوسيط، أي، الوسيط (الأدنى/الأعلى) للانحرافات المطلقة "
-"عن الوسيط، و (مبدئياً) اضبطه بعامل لثبات طبيعي غير عرضي (اُنظر <link href="
+"عن الوسيط، و (مبدئيًا) اضبطه بعامل لثبات طبيعي غير عرضي (اُنظر <link href="
 "\"rkward://rhelp/mad\"/>)."
 
 #. i18n: ectx: (Loaded from Descriptive Statistics) <settings> <setting> (refers to element labelled "Constant")
@@ -4841,7 +4841,7 @@ msgid ""
 "to treat missing values, what precision you want, and if you want to scale "
 "text."
 msgstr ""
-"اختر كائناً أو أكثر للرسم. اختر الطريقة للاستخدام، وكيفية معالجة القيم "
+"اختر كائنًا أو أكثر للرسم. اختر الطريقة للاستخدام، وكيفية معالجة القيم "
 "المفقودة، وما هي الدقة التي تريدها، وهل تريد قياس النص."
 
 #. i18n: ectx: (Loaded from Correlation Matrix Plot) <settings> <setting> (refers to element labelled "variable(s):")
@@ -4875,16 +4875,16 @@ msgid ""
 "\"pairwise\" only works with the \"pearson\" method for cov and var."
 msgstr ""
 "اختر كيفية معالجة القيم المفقودة. إذا كان الاستخدام \"الحالات الكاملة\"، "
-"تعالج القيم المفقودة عن طريق الحذف على أساس الحالة. إذا كانت القيمة \"زوجياً"
+"تعالج القيم المفقودة عن طريق الحذف على أساس الحالة. إذا كانت القيمة \"زوجيًا"
 "\"، يحسب الارتباط بين كل زوج من المتغيرات باستخدام جميع أزواج الملاحظات "
 "الكاملة على تلك المتغيرات. هذا قد ينتج عنه مصفوفات تغاير أو ارتباط ليست "
-"إيجابية شبه محددة. يعمل \"زوجياً\" فقط مع طريقة \"pearson\" للتغاير والتباين."
+"إيجابية شبه محددة. يعمل \"زوجيًا\" فقط مع طريقة \"pearson\" للتغاير والتباين."
 
 #. i18n: ectx: (Loaded from Correlation Matrix Plot) <settings> <setting> (refers to element labelled "Precision (digits)")
 #: rkward/plugins/plots/cor_graph.rkh:22
 #, kde-format
 msgid "Select how many digits after decimal point should be shown"
-msgstr "اختر كم رقماً بعد النقطة العشرية يجب أن يظهر"
+msgstr "اختر كم رقمًا بعد النقطة العشرية يجب أن يظهر"
 
 #. i18n: ectx: (Loaded from Correlation Matrix Plot) <settings> <setting> (refers to element labelled "Scale text")
 #: rkward/plugins/plots/cor_graph.rkh:23
@@ -5175,7 +5175,7 @@ msgstr "ربيع"
 #: rkward/plugins/uni1.2/description.xml:78
 #, kde-format
 msgid "Other (eg : for deciles, enter 10)"
-msgstr "أخرى (مثلاً: للعشيرات، أدخل 10)"
+msgstr "أخرى (مثلًا: للعشيرات، أدخل 10)"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="...">
 #: rkward/plugins/uni1.2/description.xml:82

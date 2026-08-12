@@ -64,7 +64,7 @@ msgstr "أعط عنوان URL الكامل للمستودع (غيت عام وsvn
 msgid ""
 "If you want a certain commit, tag or branch for installation, define that "
 "here."
-msgstr "إذا أردت التزاماً معيناً أو وسم أو فرع للتثبيت، فعرفه هنا."
+msgstr "إذا أردت التزامًا معينًا أو وسم أو فرع للتثبيت، فعرفه هنا."
 
 #. i18n: ectx: (Loaded from Install from git/svn) <settings> <setting> (refers to element labelled "Subdirectory")
 #: rkward/plugins/00saveload/../internal/Installfromgit.rkh:34
@@ -225,7 +225,7 @@ msgstr "أضف مربع حوار لتثبيت أو تحديث صورة تطبي�
 #: rkward/plugins/00saveload/DownloadAppImage.rkh:30
 #, kde-format
 msgid "Select a target file to save the AppImage to."
-msgstr "اختر ملفاً هدفاً لـ تحفظ صورة التطبيق فيه."
+msgstr "اختر ملفًا هدفًا لـ تحفظ صورة التطبيق فيه."
 
 #. i18n: ectx: (Download AppImage) <settings> <setting> (refers to element labelled "RKWard release branch")
 #: rkward/plugins/00saveload/DownloadAppImage.rkh:36
@@ -267,7 +267,7 @@ msgid ""
 "the site rather than from an intermediate cache."
 msgstr ""
 "هل قيمة مخبأة في جانب الخادم مقبولة؟ تعطيل هذا مفيد لـ عناوين URL «⁠http://⁠» "
-"و «⁠https://⁠». حاول الحصول على نسخة مباشرة من الموقع بدلاً من خبيئة وسيطة."
+"و «⁠https://⁠». حاول الحصول على نسخة مباشرة من الموقع بدلًا من خبيئة وسيطة."
 
 #. i18n: ectx: (Download AppImage) <settings> <setting> (refers to element labelled "Timeout")
 #: rkward/plugins/00saveload/DownloadAppImage.rkh:52
@@ -1096,7 +1096,7 @@ msgid ""
 "This many rows will be skipped at the start of the file. Use, for instance, "
 "if the file contains a text header."
 msgstr ""
-"هذا العدد من الصفوف سيتجاوز في بداية الملف. استعمل هذا، مثلاً، إذا كان الملف "
+"هذا العدد من الصفوف سيتجاوز في بداية الملف. استعمل هذا، مثلًا، إذا كان الملف "
 "يحتوي على ترويسة نصية."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Max number of lines to read (-1 for no limit)")
@@ -1631,7 +1631,7 @@ msgstr ""
 "استورد مجموعة متنوعة من التنسيقات. هذا منهج عام يعتمد على حزمة \"rio\" في R، "
 "والتي بدورها تعتمد على مجموعة متنوعة من الحزم الأخرى. إذا وجد ملحق مخصص "
 "للتنسيق الذي تريد استيراده، فاستخدامه يكون أفضل عادة، لأنه يوفر خيارات أكثر "
-"تحديداً، وتركيب عدد أقل من الحزم."
+"تحديدًا، وتركيب عدد أقل من الحزم."
 
 #. i18n: ectx: (Loaded from Generic data import) <usage>
 #: rkward/plugins/00saveload/import/import_generic_rio.rkh:16
@@ -1640,7 +1640,7 @@ msgid ""
 "Select the data file to import. An R object containing the data will be "
 "created. This will usually be a data.frame, or a list."
 msgstr ""
-"اختر ملف البيانات للاستيراد. ا أنشئ كائناً في R يحتوي على البيانات. هذا يكون "
+"اختر ملف البيانات للاستيراد. ا أنشئ كائنًا في R يحتوي على البيانات. هذا يكون "
 "عادة إطار بيانات data.frame، أو قائمة."
 
 #. i18n: ectx: (Loaded from Import SPSS file) <settings> <setting> (refers to element labelled "Edit Object")
@@ -1653,7 +1653,7 @@ msgid ""
 "Currently, this is only possible, if the object is saved as a data.frame "
 "(see next option)."
 msgstr ""
-"افتح الكائن للتحرير بعد استيراده. حالياً، هذا ممكن فقط، إذا حُفظ الكائن كإطار "
+"افتح الكائن للتحرير بعد استيراده. حاليًا، هذا ممكن فقط، إذا حُفظ الكائن كإطار "
 "بيانات data.frame (ا انظر الخيار التالي)."
 
 #. i18n: ectx: (Loaded from Generic data import) <settings> <setting> (refers to element labelled "Import a list of all datasets")
@@ -1752,7 +1752,7 @@ msgid ""
 "4/1 p30-31</link>."
 msgstr ""
 "ا اختر ملف بيانات SPSS للاستيراد. تكون هذه الملفات عادة ذات نهاية '*.sav'. ا "
-"أنشئ كائناً في R يحتوي على بيانات SPSS. يمكن أن يكون هذا إطار بيانات data."
+"أنشئ كائنًا في R يحتوي على بيانات SPSS. يمكن أن يكون هذا إطار بيانات data."
 "frame، أو قائمة. عدة خيارات تتعامل مع معالجة اللصائق و ترميز المحارف.انظر "
 "<link href=\"rkward://rhelp/read.spss\"/>. ملفات SPSS الأخرى غير ملفات "
 "البيانات (أي: *.por، *.jnl، *.cht، *.spo، *.sps) لا تجد الدعم. للمشكلات "
@@ -1883,7 +1883,7 @@ msgid ""
 "other than data files (i. e.:*.log, *.smcl, *.do, *.ado) are not supported."
 msgstr ""
 "اختر ملف بيانات STATA للاستيراد. تكون هذه الملفات عادة ذات نهاية '*.dta'. ا "
-"أنشئ كائناً في R يحتوي على بيانات STATA. ملفات STATA الأخرى غير ملفات "
+"أنشئ كائنًا في R يحتوي على بيانات STATA. ملفات STATA الأخرى غير ملفات "
 "البيانات (أي: *.log، *.smcl، *.do، *.ado) لا تجد الدعم."
 
 #. i18n: ectx: (Loaded from Import STATA file) <settings> <setting> (refers to element labelled "File name")
@@ -1893,7 +1893,7 @@ msgid ""
 "The filename of the file to import. This may also be a URL (http://, http:// "
 "and ftp:// are supported)."
 msgstr ""
-"اسم الملف المراد استيراده. يمكن أن يكون هذا أيضاً عنوان URL (http://، http:// "
+"اسم الملف المراد استيراده. يمكن أن يكون هذا أيضًا عنوان URL (http://، http:// "
 "و ftp:// مدعومة)."
 
 #. i18n: ectx: (Loaded from Import STATA file) <settings> <setting> (refers to element labelled "Edit Object")
@@ -2034,7 +2034,7 @@ msgid ""
 "you may want to try the Java-based alternative <link href=\"rkward://"
 "component/import_xls_xlconnect\"/>."
 msgstr ""
-"اختر ملف Microsoft Excel لاستيراد ورقة عمل منه. ا أنشئ كائناً في R يحتوي على "
+"اختر ملف Microsoft Excel لاستيراد ورقة عمل منه. ا أنشئ كائنًا في R يحتوي على "
 "البيانات. تعتمد طريقة استيراد أوراق Excel هذه على حزمة R \"gdata\"، و تتطلب "
 "إعداد Perl يعمل. إذا لم يعمل هذا على نظامك، أو لم ينتج النتائج المتوقعة، فقد "
 "ترغب في تجربة البديل المعتمد على Java <link href=\"rkward://component/"
@@ -2053,7 +2053,7 @@ msgid ""
 "Print details as the file is processed. This may be helpful in "
 "troubleshooting."
 msgstr ""
-"اطبع التفاصيل أثناء معالجة الملف. هذا قد يكون مفيداً في استكشاف الأخطاء "
+"اطبع التفاصيل أثناء معالجة الملف. هذا قد يكون مفيدًا في استكشاف الأخطاء "
 "وإصلاحها."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Number of rows to skip")
@@ -2138,7 +2138,7 @@ msgid ""
 "case this does not work on your system, you may want to try the Perl-based "
 "alternative <link href=\"rkward://component/import_xls\"/>."
 msgstr ""
-"ا اختر ملف Microsoft Excel لاستيراد ورقة عمل منه. ا أنشئ كائناً في R يحتوي "
+"ا اختر ملف Microsoft Excel لاستيراد ورقة عمل منه. ا أنشئ كائنًا في R يحتوي "
 "على البيانات. تعتمد طريقة استيراد أوراق Excel هذه على حزمة R \"XLconnect\"، "
 "و تتطلب إعداد Java يعمل. إذا لم يعمل هذا على نظامك، فقد ترغب في تجربة البديل "
 "المعتمد على Perl <link href=\"rkward://component/import_xls\"/>."
@@ -2151,7 +2151,7 @@ msgid ""
 "specify a name, here, make sure to quote it."
 msgstr ""
 "الفهرس الرقمي أو اسم/لصيقة ورقة العمل المراد استيرادها من الملف. إذا حددت "
-"اسماً هنا، ا تأكد من اقتباسه."
+"اسمًا هنا، ا تأكد من اقتباسه."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Use first row as column names")
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:25
@@ -2160,8 +2160,8 @@ msgid ""
 "Whether the first row of data should be used as column headers. "
 "Alternatively, columns are named, automatically (by index)."
 msgstr ""
-"استخدم الصف الأول من البيانات كعناوين للأعمدة. بدلاً من ذلك، تسمى الأعمدة، "
-"آلياً (بالفهرس)."
+"استخدم الصف الأول من البيانات كعناوين للأعمدة. بدلًا من ذلك، تسمى الأعمدة، "
+"آليًا (بالفهرس)."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Index or \"name\" of column with row names (if any)")
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:26
@@ -2172,8 +2172,8 @@ msgid ""
 "row-names will be assigned automatically (row numbers)"
 msgstr ""
 "الفهرس الرقمي أو اسم/لصيقة العمود الذي يحتوي على أسماء الصفوف (إن وجد). إذا "
-"حددت اسماً هنا، ا تأكد من اقتباسه. إذا تركت هذا الحقل فارغاً، ستُسند أسماء "
-"الصفوف آلياً (أرقام الصفوف)"
+"حددت اسمًا هنا، ا تأكد من اقتباسه. إذا تركت هذا الحقل فارغًا، ستُسند أسماء "
+"الصفوف آليًا (أرقام الصفوف)"
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Row")
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:33
@@ -2184,7 +2184,7 @@ msgid ""
 "specify a range in spreadsheet notation, below."
 msgstr ""
 "الصف الأول من البيانات للاستيراد داخل ورقة العمل. إذا تُرِك 0 (المبدئي)، يحدد "
-"صف البدء آلياً. بدلاً من ذلك، يمكنك تحديد نطاق بتدوين جدول البيانات، أدناه."
+"صف البدء آليًا. بدلًا من ذلك، يمكنك تحديد نطاق بتدوين جدول البيانات، أدناه."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Column")
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.rkh:35
@@ -2256,7 +2256,7 @@ msgstr ""
 "اسمح لك بتجاوز الاكتشاف الآلي لنوع البيانات. ا حدد أنواع بيانات R مثل "
 "\"character\" أو \"numeric\"، هنا. أي مواصفات تضعها هنا تطبق على <b>جميع</b> "
 "الأعمدة المستوردة (المواصفات تعاد استخدامها، إذا لزم الأمر). لاستخدام "
-"الاكتشاف الآلي لنوع البيانات،اترك هذا التحكم فارغاً بالكامل. ا لاحظ أيضاً أن "
+"الاكتشاف الآلي لنوع البيانات،اترك هذا التحكم فارغًا بالكامل. ا لاحظ أيضًا أن "
 "معظم تحويلات الأنواع الشائعة يمكن إجراؤها <i>بعد</i> استيراد البيانات."
 
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="General"> <input label="...">
@@ -2359,12 +2359,12 @@ msgid ""
 "with your existing workspace. If in doubt, use Workspace-&gt;Open Workspace, "
 "instead of this plugin."
 msgstr ""
-"اختر ملف R للاستيراد. هذا الملف ينشأ مثلاً بحفظ مساحة العمل من أر كي وارد، "
+"اختر ملف R للاستيراد. هذا الملف ينشأ مثلًا بحفظ مساحة العمل من أر كي وارد، "
 "باستعمال أمر R <link href=\"rkward://rhelp/save\">save()</link>، أو إضافة "
 "<link href=\"rkward://component/save_r\"/>. الفرق الرئيسي عن تحميل مساحة عمل "
-"عبر مساحة العمل->افتح مساحة العمل، هو أن مساحة العمل لا تنظف أولاً، بل تدمج "
+"عبر مساحة العمل->افتح مساحة العمل، هو أن مساحة العمل لا تنظف أولًا، بل تدمج "
 "مع مساحة عملك الحالية. إذا ارتبكت، استعمل مساحة العمل->افتح مساحة العمل، "
-"بدلاً من هذه الإضافة."
+"بدلًا من هذه الإضافة."
 
 #. i18n: ectx: (Loaded from Load an R data file) <usage>
 #: rkward/plugins/00saveload/import/load_data.rkh:12
@@ -2416,7 +2416,7 @@ msgid ""
 "your workspace, first."
 msgstr ""
 "تحذير: هذا قد يستبدل الكائنات الموجودة في .GlobalEnv. ا تأكد من حفظ مساحة "
-"العمل لديك، أولاً."
+"العمل لديك، أولًا."
 
 #. i18n: ectx: (Load an R data file) <dialog label="Load an R data file"> <saveobject label="...">
 #: rkward/plugins/00saveload/import/load_data.xml:17
@@ -2452,7 +2452,7 @@ msgid ""
 "of R statements, which are then evaluated (see <link href=\"rkward://rhelp/"
 "source\"/>)."
 msgstr ""
-"اختر ملفاً للتحميل. هذا الملف يحمّل ويفسّر كـ سكربت لـ عبارات R، والتي تقيّم بعد "
+"اختر ملفًا للتحميل. هذا الملف يحمّل ويفسّر كـ سكربت لـ عبارات R، والتي تقيّم بعد "
 "ذلك (ا انظر <link href=\"rkward://rhelp/source\"/>)."
 
 #. i18n: ectx: (Loaded from Source an R file) <settings> <setting> (refers to element labelled "File name")
@@ -2469,7 +2469,7 @@ msgid ""
 "source file. This may be needed, if the source file refers to further files "
 "using relative paths."
 msgstr ""
-"إذا اختر، ا غيّر دليل العمل إلى دليل ملف المصدر. هذا قد يكون ضرورياً، إذا أشار "
+"إذا اختر، ا غيّر دليل العمل إلى دليل ملف المصدر. هذا قد يكون ضروريًا، إذا أشار "
 "ملف المصدر إلى ملفات أخرى باستخدام مسارات نسبية."
 
 #. i18n: ectx: (Loaded from Source an R file) <settings> <setting> (refers to element labelled "Run in a local environment")
@@ -2482,8 +2482,8 @@ msgid ""
 "create new objects (in contrast to just producing printed output), it will "
 "have to be run in the global environment."
 msgstr ""
-"إذا اختر، ا فسّر ملف المصدر في بيئة محلية، بدلاً من البيئة العامة. هذا أكثر "
-"أماناً بكثير، حيث لا تستبدل أي كائنات موجودة. من ناحية أخرى، إذا كان الغرض من "
+"إذا اختر، ا فسّر ملف المصدر في بيئة محلية، بدلًا من البيئة العامة. هذا أكثر "
+"أمانًا بكثير، حيث لا تستبدل أي كائنات موجودة. من ناحية أخرى، إذا كان الغرض من "
 "ملف المصدر هو إنشاء كائنات جديدة (على عكس مجرد إنتاج مخرجات مطبوعة)، ا شغله "
 "في البيئة العامة."
 
@@ -2501,7 +2501,7 @@ msgid ""
 "What should be printed at the start of each echoed source line (to "
 "differentiate it from the output)? Leave empty for the default."
 msgstr ""
-"ما الذي يجب طباعته في بداية كل سطر مصدر مكرر (لتمييزه عن الناتج)؟ اترك فارغاً "
+"ما الذي يجب طباعته في بداية كل سطر مصدر مكرر (لتمييزه عن الناتج)؟ اترك فارغًا "
 "للمبدئي."
 
 #. i18n: ectx: (Loaded from Source an R file) <settings> <setting> (refers to element labelled "Maximal length of echoed statements")
@@ -2522,7 +2522,7 @@ msgstr "اطبع تشخيصات إضافية."
 msgid ""
 "Print the result of each single evaluation (instead of just the final "
 "result)."
-msgstr "اطبع نتيجة كل تقييم مفرد (بدلاً من النتيجة النهائية فقط)."
+msgstr "اطبع نتيجة كل تقييم مفرد (بدلًا من النتيجة النهائية فقط)."
 
 #. i18n: ectx: <components> <component label="...">
 #. i18n: ectx: (Source an R file) <dialog label="...">
@@ -2631,7 +2631,7 @@ msgid ""
 "Choose the target directory to export to, file names are automatically "
 "generated according to the formats defined in the document."
 msgstr ""
-"اختر الدليل الهدف للتصدير إليه، أسماء الملفات تُولَّد آلياً وفقاً للنسق المحددة "
+"اختر الدليل الهدف للتصدير إليه، أسماء الملفات تُولَّد آليًا وفقًا للنسق المحددة "
 "في الوثيقة."
 
 #. i18n: ectx: (Loaded from Export RMarkdown) <settings> <setting> (refers to element labelled "Markdown version")
@@ -2869,7 +2869,7 @@ msgstr "الموقع المراد الحفظ فيه."
 #: rkward/plugins/00saveload/save/save.rkh:18
 #, kde-format
 msgid "Write an ascii, rather than binary representation of the object(s)."
-msgstr "اكتب تمثيل ascii، بدلاً من تمثيل ثنائي للكائن/الكائنات."
+msgstr "اكتب تمثيل ascii، بدلًا من تمثيل ثنائي للكائن/الكائنات."
 
 #. i18n: ectx: (Loaded from Save R objects) <settings> <setting> (refers to element labelled "Compression")
 #: rkward/plugins/00saveload/save/save.rkh:19
@@ -2972,7 +2972,7 @@ msgstr "أنشئ هيكل الحزمة"
 #: rkward/plugins/00saveload/save/skeleton/description.xml:15
 #, kde-format
 msgid "Select a variable"
-msgstr "اختر متغيراً"
+msgstr "اختر متغيرًا"
 
 #. i18n: ectx: (Create package skeleton) <dialog label="Create package skeleton"> <tab label="Select variables"> <varslot label="...">
 #: rkward/plugins/00saveload/save/skeleton/description.xml:16
@@ -3014,7 +3014,7 @@ msgstr "اكتب متجه/مصفوفة"
 #: rkward/plugins/00saveload/save/write.xml:22
 #, kde-format
 msgid "Select a vector or matrix"
-msgstr "اختر متجهاً أو مصفوفة"
+msgstr "اختر متجهًا أو مصفوفة"
 
 #. i18n: ectx: (Write vector / matrix) <dialog label="Write vector / matrix"> <tab label="Select variables"> <varslot label="...">
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <varslot label="...">
@@ -3070,7 +3070,7 @@ msgid ""
 "to save to. All other options allow you to define the file format, handling "
 "of column and row names as well as special character handling."
 msgstr ""
-"اختر كائن بيانات جدولي (مثل إطار بيانات أو مصفوفة) واختر ملفاً للحفظ فيه. كل "
+"اختر كائن بيانات جدولي (مثل إطار بيانات أو مصفوفة) واختر ملفًا للحفظ فيه. كل "
 "الخيارات الأخرى تسمح لك بتحديد نسق الملف، والتعامل مع أسماء الأعمدة والصفوف "
 "بالإضافة إلى التعامل مع الأحرف الخاصة."
 
@@ -3101,7 +3101,7 @@ msgid ""
 "out, the selected preset sets this for you."
 msgstr ""
 "هل يجب استبدال الملفات الموجودة أم إلحاق البيانات بها؟ إذا كان هذا الخيار "
-"باهتاً، فالضبط المسبق المختار يضبطه لك."
+"باهتًا، فالضبط المسبق المختار يضبطه لك."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "File format")
 #: rkward/plugins/00saveload/save/write_csv.rkh:35
@@ -3122,7 +3122,7 @@ msgid ""
 "Specify the desired decimal point character. If this is greyed out, the "
 "selected preset sets this for you."
 msgstr ""
-"حدد الحرف المطلوب للنقطة العشرية. إذا كان هذا الخيار باهتاً، فالضبط المسبق "
+"حدد الحرف المطلوب للنقطة العشرية. إذا كان هذا الخيار باهتًا، فالضبط المسبق "
 "المختار يضبطه لك."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "")
@@ -3138,7 +3138,7 @@ msgid ""
 "Specify the desired field separator character. If this is greyed out, the "
 "selected preset sets this for you."
 msgstr ""
-"حدد الحرف المطلوب لفاصل الحقول. إذا كان هذا الخيار باهتاً، فالضبط المسبق "
+"حدد الحرف المطلوب لفاصل الحقول. إذا كان هذا الخيار باهتًا، فالضبط المسبق "
 "المختار يضبطه لك."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "")
@@ -3157,7 +3157,7 @@ msgstr "قرّر كيف تتعامل مع أسماء الصفوف."
 #: rkward/plugins/00saveload/save/write_csv.rkh:56
 #, kde-format
 msgid "Select a character vector to use for custom row names."
-msgstr "اختر متجهاً حرفياً لاستخدامه لأسماء الصفوف المخصصة."
+msgstr "اختر متجهًا حرفيًا لاستخدامه لأسماء الصفوف المخصصة."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Column names")
 #: rkward/plugins/00saveload/save/write_csv.rkh:60
@@ -3166,14 +3166,14 @@ msgid ""
 "Decide how to deal with column names. If this is greyed out, the selected "
 "preset sets this for you."
 msgstr ""
-"قرّر كيف تتعامل مع أسماء الأعمدة. إذا كان هذا الخيار باهتاً، فالضبط المسبق "
+"قرّر كيف تتعامل مع أسماء الأعمدة. إذا كان هذا الخيار باهتًا، فالضبط المسبق "
 "المختار يضبطه لك."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Column names (character vector)")
 #: rkward/plugins/00saveload/save/write_csv.rkh:63
 #, kde-format
 msgid "Select a character vector to use for custom column names."
-msgstr "اختر متجهاً حرفياً لاستخدامه لأسماء الأعمدة المخصصة."
+msgstr "اختر متجهًا حرفيًا لاستخدامه لأسماء الأعمدة المخصصة."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "File encoding")
 #: rkward/plugins/00saveload/save/write_csv.rkh:68
@@ -3208,7 +3208,7 @@ msgid ""
 "this for you."
 msgstr ""
 "يتحكم في كيفية التعامل مع الاقتباسات الموجودة في القيم -- يمكن إما أن يُهرَب "
-"منها أو توضَع بين علامتي اقتباس مزدوجتين. إذا كان هذا الخيار باهتاً، فالضبط "
+"منها أو توضَع بين علامتي اقتباس مزدوجتين. إذا كان هذا الخيار باهتًا، فالضبط "
 "المسبق المختار يضبطه لك."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Character for missing values")
@@ -3249,7 +3249,7 @@ msgstr "البيانات وتنسيق الملف"
 #: rkward/plugins/00saveload/save/write_csv.xml:54
 #, kde-format
 msgid "Select a variable or table"
-msgstr "اختر متغيراً أو جدولاً"
+msgstr "اختر متغيرًا أو جدولًا"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Data and File Format"> <frame label="Save to"> <checkbox label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:62
@@ -3416,7 +3416,7 @@ msgid ""
 "Choose a directory to set/change the working directory for R. The R function "
 "<b>setwd</b> is used to do the job."
 msgstr ""
-"اختر دليلاً لضبط/تغيير دليل العمل لـ R. تُستعمَل دالة R <b>setwd</b> للقيام "
+"اختر دليلًا لضبط/تغيير دليل العمل لـ R. تُستعمَل دالة R <b>setwd</b> للقيام "
 "بهذه المهمة."
 
 #. i18n: ectx: (Set the working directory) <dialog label="...">
