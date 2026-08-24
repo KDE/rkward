@@ -405,7 +405,9 @@ void RKConsole::setCurrentEditingLine(const QString &command) {
 	RK_TRACE(APP);
 
 	int lastline = doc->lines() - 1;
-	doc->replaceText(KTextEditor::Range(lastline, prefix.length(), lastline, doc->lineLength(lastline)), command);
+	const auto line = u'\n' + doc->line(lastline).left(prefix.length()) + command;
+	doc->removeLine(lastline);
+	doc->insertText(doc->documentEnd(), line);
 	cursorAtTheEnd();
 }
 
