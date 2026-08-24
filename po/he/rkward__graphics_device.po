@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 11:48+0000\n"
-"PO-Revision-Date: 2026-08-06 09:22+0300\n"
+"PO-Revision-Date: 2026-08-23 11:41+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -161,12 +161,13 @@ msgstr ""
 msgid ""
 "Check this box to let the export function determine the width automatically."
 msgstr ""
+"יש לסמן את התיבה הזאת כדי לאפשר לפונקציית הייצוא לקבוע את הרוחב אוטומטית."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Automatic Height")
 #: rkward/plugins/x11device/export.rkh:26
 #, kde-format
 msgid "This is similar to 'Automatic Width', but for height."
-msgstr ""
+msgstr "דומה ל‚רוחב אוטומטי’, אבל לגובה."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Width in inches")
 #: rkward/plugins/x11device/export.rkh:27
@@ -201,12 +202,13 @@ msgid ""
 "This is the <i>height</i> parameter to the exporting function. Similar to "
 "'Width'."
 msgstr ""
+"זה משתנה ה־<i>height</i> (גובה) לפונקציית הייצוא. בדומה ל־‚Width’ (רוחב)."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Point size")
 #: rkward/plugins/x11device/export.rkh:33
 #, kde-format
 msgid "This is the <i>pointsize</i> parameter to dev.print."
-msgstr ""
+msgstr "זה משתנה <i>pointsize</i> (גודל נקודה) ל־dev.print."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Resolution (dpi)")
 #: rkward/plugins/x11device/export.rkh:34
