@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RKWard\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-12 00:39+0000\n"
+"POT-Creation-Date: 2026-08-25 00:41+0000\n"
 "PO-Revision-Date: 2026-07-21 21:01+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -4298,62 +4298,62 @@ msgstr "Sarma Çubuğu Mini Haritası"
 msgid "Dynamic word wrap"
 msgstr "Devingen Sözcük Kaydırma"
 
-#: rkward/rkconsole.cpp:463
+#: rkward/rkconsole.cpp:465
 #, kde-format
 msgid "Syntax error\n"
 msgstr "Sözdizim hatası\n"
 
-#: rkward/rkconsole.cpp:664
+#: rkward/rkconsole.cpp:666
 #, kde-format
 msgid "Select command history file to load"
 msgstr "Yüklenecek komut geçmişi dosyasını seç"
 
-#: rkward/rkconsole.cpp:666
+#: rkward/rkconsole.cpp:668
 #, kde-format
 msgid "R history files [*.Rhistory](*.Rhistory);;All files [*](*)"
 msgstr "R geçmiş dosyaları [*.Rhistory](*.Rhistory);;Tüm dosyalar [*](*)"
 
-#: rkward/rkconsole.cpp:699
+#: rkward/rkconsole.cpp:701
 #, kde-format
 msgid "Select filename to save command history"
 msgstr "Komut geçmişini kaydetmek için dosya adını seç"
 
-#: rkward/rkconsole.cpp:700
+#: rkward/rkconsole.cpp:702
 #, kde-format
 msgid "R history files [*.Rhistory] (*.Rhistory);;All files [*] (*)"
 msgstr "R geçmiş dosyaları [*.Rhistory](*.Rhistory);;Tüm dosyalar [*](*)"
 
-#: rkward/rkconsole.cpp:834
+#: rkward/rkconsole.cpp:836
 #, kde-format
 msgid "Interrupt running command"
 msgstr "Çalışan Komutu Yarıda Kes"
 
-#: rkward/rkconsole.cpp:841
+#: rkward/rkconsole.cpp:843
 #, kde-format
 msgid "Copy selection literally"
 msgstr "Seçimi Olduğu Gibi Kopyala"
 
-#: rkward/rkconsole.cpp:844
+#: rkward/rkconsole.cpp:846
 #, kde-format
 msgid "Copy commands, only"
 msgstr "Yalnızca Komutları Kopyala"
 
-#: rkward/rkconsole.cpp:851
+#: rkward/rkconsole.cpp:853
 #, kde-format
 msgid "Print Console"
 msgstr "Konsolu Yazdır"
 
-#: rkward/rkconsole.cpp:857
+#: rkward/rkconsole.cpp:859
 #, kde-format
 msgid "Import command history..."
 msgstr "Komut Geçmişi İçe Aktar…"
 
-#: rkward/rkconsole.cpp:859
+#: rkward/rkconsole.cpp:861
 #, kde-format
 msgid "Export command history..."
 msgstr "Komut Geçmişini Dışa Aktar…"
 
-#: rkward/rkconsole.cpp:878
+#: rkward/rkconsole.cpp:880
 #, kde-format
 msgid ""
 "You have configured RKWard to pipe script editor commands through the R "
@@ -4367,17 +4367,17 @@ msgstr ""
 "sıfırlamak mı istiyorsunuz? Yeni komutu şimdi çalıştırmak istemiyorsanız "
 "“İptal”e basın."
 
-#: rkward/rkconsole.cpp:878
+#: rkward/rkconsole.cpp:880
 #, kde-format
 msgid "R Console is busy"
 msgstr "R Konsolu meşgûl"
 
-#: rkward/rkconsole.cpp:878
+#: rkward/rkconsole.cpp:880
 #, kde-format
 msgid "Append"
 msgstr "İliştir"
 
-#: rkward/rkconsole.cpp:878
+#: rkward/rkconsole.cpp:880
 #, kde-format
 msgid "Reset, then submit"
 msgstr "Sıfırla ve Gönder"

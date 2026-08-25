@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-12 00:39+0000\n"
+"POT-Creation-Date: 2026-08-25 00:41+0000\n"
 "PO-Revision-Date: 2024-08-15 05:21+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -3939,62 +3939,62 @@ msgstr "捲動軸小地圖"
 msgid "Dynamic word wrap"
 msgstr "動態折行"
 
-#: rkward/rkconsole.cpp:463
+#: rkward/rkconsole.cpp:465
 #, kde-format
 msgid "Syntax error\n"
 msgstr "語法錯誤\n"
 
-#: rkward/rkconsole.cpp:664
+#: rkward/rkconsole.cpp:666
 #, kde-format
 msgid "Select command history file to load"
 msgstr ""
 
-#: rkward/rkconsole.cpp:666
+#: rkward/rkconsole.cpp:668
 #, kde-format
 msgid "R history files [*.Rhistory](*.Rhistory);;All files [*](*)"
 msgstr ""
 
-#: rkward/rkconsole.cpp:699
+#: rkward/rkconsole.cpp:701
 #, kde-format
 msgid "Select filename to save command history"
 msgstr "選擇儲存命令歷史用的檔案名稱"
 
-#: rkward/rkconsole.cpp:700
+#: rkward/rkconsole.cpp:702
 #, kde-format
 msgid "R history files [*.Rhistory] (*.Rhistory);;All files [*] (*)"
 msgstr "R 歷史檔案 [*.Rhistory] (*.Rhistory);;所有檔案 [*] (*)"
 
-#: rkward/rkconsole.cpp:834
+#: rkward/rkconsole.cpp:836
 #, kde-format
 msgid "Interrupt running command"
 msgstr "中斷執行中的指令"
 
-#: rkward/rkconsole.cpp:841
+#: rkward/rkconsole.cpp:843
 #, kde-format
 msgid "Copy selection literally"
 msgstr ""
 
-#: rkward/rkconsole.cpp:844
+#: rkward/rkconsole.cpp:846
 #, kde-format
 msgid "Copy commands, only"
 msgstr "只複製命令"
 
-#: rkward/rkconsole.cpp:851
+#: rkward/rkconsole.cpp:853
 #, kde-format
 msgid "Print Console"
 msgstr "列印主控台"
 
-#: rkward/rkconsole.cpp:857
+#: rkward/rkconsole.cpp:859
 #, kde-format
 msgid "Import command history..."
 msgstr "匯入命令歷史…"
 
-#: rkward/rkconsole.cpp:859
+#: rkward/rkconsole.cpp:861
 #, kde-format
 msgid "Export command history..."
 msgstr "匯出指令歷史…"
 
-#: rkward/rkconsole.cpp:878
+#: rkward/rkconsole.cpp:880
 #, kde-format
 msgid ""
 "You have configured RKWard to pipe script editor commands through the R "
@@ -4003,17 +4003,17 @@ msgid ""
 "console, first? Press cancel if you do not wish to run the new command, now."
 msgstr ""
 
-#: rkward/rkconsole.cpp:878
+#: rkward/rkconsole.cpp:880
 #, kde-format
 msgid "R Console is busy"
 msgstr "R 主控台忙碌中"
 
-#: rkward/rkconsole.cpp:878
+#: rkward/rkconsole.cpp:880
 #, kde-format
 msgid "Append"
 msgstr ""
 
-#: rkward/rkconsole.cpp:878
+#: rkward/rkconsole.cpp:880
 #, kde-format
 msgid "Reset, then submit"
 msgstr "重設，然後提交"

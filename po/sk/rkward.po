@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-12 00:39+0000\n"
+"POT-Creation-Date: 2026-08-25 00:41+0000\n"
 "PO-Revision-Date: 2026-04-12 12:00+0200\n"
 "Last-Translator: Roman Paholik <wizzardsk@gmail.com>\n"
 "Language-Team: Slovak <kde-sk@linux.sk>\n"
@@ -4284,62 +4284,62 @@ msgstr "Minimapa posuvníka"
 msgid "Dynamic word wrap"
 msgstr "Dynamické zalamovanie slov"
 
-#: rkward/rkconsole.cpp:463
+#: rkward/rkconsole.cpp:465
 #, kde-format
 msgid "Syntax error\n"
 msgstr "Syntaktická chyba\n"
 
-#: rkward/rkconsole.cpp:664
+#: rkward/rkconsole.cpp:666
 #, kde-format
 msgid "Select command history file to load"
 msgstr "Vyberte súbor histórie príkazov na načítanie"
 
-#: rkward/rkconsole.cpp:666
+#: rkward/rkconsole.cpp:668
 #, kde-format
 msgid "R history files [*.Rhistory](*.Rhistory);;All files [*](*)"
 msgstr "Súbory histórie R [*.Rhistory](*.Rhistory);;Všetky súbory [*](*)"
 
-#: rkward/rkconsole.cpp:699
+#: rkward/rkconsole.cpp:701
 #, kde-format
 msgid "Select filename to save command history"
 msgstr "Vyberte názov súboru na uloženie histórie príkazov"
 
-#: rkward/rkconsole.cpp:700
+#: rkward/rkconsole.cpp:702
 #, kde-format
 msgid "R history files [*.Rhistory] (*.Rhistory);;All files [*] (*)"
 msgstr "Súbory histórie R [*.Rhistory] (*.Rhistory);;Všetky súbory [*] (*)"
 
-#: rkward/rkconsole.cpp:834
+#: rkward/rkconsole.cpp:836
 #, kde-format
 msgid "Interrupt running command"
 msgstr "Prerušiť bežiaci príkaz"
 
-#: rkward/rkconsole.cpp:841
+#: rkward/rkconsole.cpp:843
 #, kde-format
 msgid "Copy selection literally"
 msgstr "Kopírovať výber doslovne"
 
-#: rkward/rkconsole.cpp:844
+#: rkward/rkconsole.cpp:846
 #, kde-format
 msgid "Copy commands, only"
 msgstr "Kopírovať iba príkazy"
 
-#: rkward/rkconsole.cpp:851
+#: rkward/rkconsole.cpp:853
 #, kde-format
 msgid "Print Console"
 msgstr "Tlačiť konzolu"
 
-#: rkward/rkconsole.cpp:857
+#: rkward/rkconsole.cpp:859
 #, kde-format
 msgid "Import command history..."
 msgstr "Importovať históriu príkazov…"
 
-#: rkward/rkconsole.cpp:859
+#: rkward/rkconsole.cpp:861
 #, kde-format
 msgid "Export command history..."
 msgstr "Exportovať históriu príkazov…"
 
-#: rkward/rkconsole.cpp:878
+#: rkward/rkconsole.cpp:880
 #, kde-format
 msgid ""
 "You have configured RKWard to pipe script editor commands through the R "
@@ -4352,17 +4352,17 @@ msgstr ""
 "v konzole, alebo chcete najskôr resetovať konzolu? Stlačte Zrušiť, ak "
 "nechcete nový príkaz spustiť teraz."
 
-#: rkward/rkconsole.cpp:878
+#: rkward/rkconsole.cpp:880
 #, kde-format
 msgid "R Console is busy"
 msgstr "Konzola R je zaneprázdnená"
 
-#: rkward/rkconsole.cpp:878
+#: rkward/rkconsole.cpp:880
 #, kde-format
 msgid "Append"
 msgstr "Pripojiť"
 
-#: rkward/rkconsole.cpp:878
+#: rkward/rkconsole.cpp:880
 #, kde-format
 msgid "Reset, then submit"
 msgstr "Obnoviť a potom odoslať"

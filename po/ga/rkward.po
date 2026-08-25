@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-12 00:39+0000\n"
+"POT-Creation-Date: 2026-08-25 00:41+0000\n"
 "PO-Revision-Date: 2026-03-28 16:40+0000\n"
 "Last-Translator: Aindriú Mac Giolla Eoin <aindriu80@yahoo.com>\n"
 "Language-Team: Irish <http://weblate.amgelocalnet.duckdns.org/projects/"
@@ -4380,62 +4380,62 @@ msgstr "Mionléarscáil scrollbharra"
 msgid "Dynamic word wrap"
 msgstr "Timfhilleadh focal dinimiciúil"
 
-#: rkward/rkconsole.cpp:463
+#: rkward/rkconsole.cpp:465
 #, kde-format
 msgid "Syntax error\n"
 msgstr "Earráid chomhréire\n"
 
-#: rkward/rkconsole.cpp:664
+#: rkward/rkconsole.cpp:666
 #, kde-format
 msgid "Select command history file to load"
 msgstr "Roghnaigh comhad stair orduithe le luchtú"
 
-#: rkward/rkconsole.cpp:666
+#: rkward/rkconsole.cpp:668
 #, kde-format
 msgid "R history files [*.Rhistory](*.Rhistory);;All files [*](*)"
 msgstr "Comhaid staire R [*.Rhistory](*.Rhistory);;Gach comhad [*](*)"
 
-#: rkward/rkconsole.cpp:699
+#: rkward/rkconsole.cpp:701
 #, kde-format
 msgid "Select filename to save command history"
 msgstr "Roghnaigh ainm comhaid chun stair orduithe a shábháil"
 
-#: rkward/rkconsole.cpp:700
+#: rkward/rkconsole.cpp:702
 #, kde-format
 msgid "R history files [*.Rhistory] (*.Rhistory);;All files [*] (*)"
 msgstr "Comhaid staire R [*.Rhistory] (*.Rhistory);;Gach comhad [*] (*)"
 
-#: rkward/rkconsole.cpp:834
+#: rkward/rkconsole.cpp:836
 #, kde-format
 msgid "Interrupt running command"
 msgstr "Cuir isteach ar an ordú reatha"
 
-#: rkward/rkconsole.cpp:841
+#: rkward/rkconsole.cpp:843
 #, kde-format
 msgid "Copy selection literally"
 msgstr "Cóipeáil an rogha go litriúil"
 
-#: rkward/rkconsole.cpp:844
+#: rkward/rkconsole.cpp:846
 #, kde-format
 msgid "Copy commands, only"
 msgstr "Cóipeáil orduithe, amháin"
 
-#: rkward/rkconsole.cpp:851
+#: rkward/rkconsole.cpp:853
 #, kde-format
 msgid "Print Console"
 msgstr "Consól Priontála"
 
-#: rkward/rkconsole.cpp:857
+#: rkward/rkconsole.cpp:859
 #, kde-format
 msgid "Import command history..."
 msgstr "Iompórtáil stair orduithe..."
 
-#: rkward/rkconsole.cpp:859
+#: rkward/rkconsole.cpp:861
 #, kde-format
 msgid "Export command history..."
 msgstr "Easpórtáil stair orduithe..."
 
-#: rkward/rkconsole.cpp:878
+#: rkward/rkconsole.cpp:880
 #, kde-format
 msgid ""
 "You have configured RKWard to pipe script editor commands through the R "
@@ -4448,17 +4448,17 @@ msgstr ""
 "mhaith leat é a chur leis an ordú sa chonsól, nó ar mhaith leat an consól a "
 "athshocrú ar dtús? Brúigh Cealaigh mura mian leat an t-ordú nua a rith anois."
 
-#: rkward/rkconsole.cpp:878
+#: rkward/rkconsole.cpp:880
 #, kde-format
 msgid "R Console is busy"
 msgstr "Tá Consól R gnóthach"
 
-#: rkward/rkconsole.cpp:878
+#: rkward/rkconsole.cpp:880
 #, kde-format
 msgid "Append"
 msgstr "Iarcheangail"
 
-#: rkward/rkconsole.cpp:878
+#: rkward/rkconsole.cpp:880
 #, kde-format
 msgid "Reset, then submit"
 msgstr "Athshocraigh, ansin cuir isteach"
