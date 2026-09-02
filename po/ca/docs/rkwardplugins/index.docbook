@@ -2989,7 +2989,7 @@ x        &lt;/components ...&gt;
 &lt;/dialog&gt;
         </programlisting>
 	<para
->En aquest exemple, l'opció de compressió "xz" simplement es desactivarà quan la versió &R; en temps d'execució sigui anterior a 2.10.0 (que no admet la compressió «xz»). L'element <command
+>En aquest exemple, l'opció de compressió "xz" simplement es desactivarà quan la versió &R; de l'entorn d'execució sigui anterior a 2.10.0 (que no admet la compressió «xz»). L'element <command
 >&lt;dependency_check&gt;</command
 > admet els mateixos atributs que l'element <command
 >&lt;dependencies&gt;</command
