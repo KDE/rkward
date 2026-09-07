@@ -5654,7 +5654,7 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Power", id.name="power", i18n=FALSE)
 ></term>
 	<listitem
 ><para
->Força l'element de la &IGU; a romandre a la seva alçada inicial. No l'utilitzeu en combinació amb matrius, on el nombre de files pot canviar de qualsevol manera. Especialment útil quan es crea un element d'entrada vectorial (columns="1"). Amb aquesta opció establerta a «true» (cert), no es mostrarà cap barra de desplaçament horitzontal, fins i tot si la matriu excedeix l'amplada disponible (ja que això afectaria l'alçada). (Opcional, el valor predeterminat és "false").</para
+>Força l'element de la &IGU; a romandre a la seva altura inicial. No l'utilitzeu en combinació amb matrius, on el nombre de files pot canviar de qualsevol manera. Especialment útil quan es crea un element d'entrada vectorial (columns="1"). Amb aquesta opció establerta a «true» (cert), no es mostrarà cap barra de desplaçament horitzontal, fins i tot si la matriu excedeix l'amplada disponible (ja que això afectaria l'altura). (Opcional, el valor predeterminat és "false").</para
 ></listitem>
 	</varlistentry>
 	<varlistentry>

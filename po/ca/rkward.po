@@ -1,5 +1,5 @@
 # Translation of rkward.po to Catalan
-# Copyright (C) 2006-2024 This_file_is_part_of_KDE
+# Copyright (C) 2006-2026 This_file_is_part_of_KDE
 # This file is put in the public domain.
 # 28-11-2006: v 1.00
 #
@@ -7,13 +7,13 @@
 # SPDX-FileCopyrightText: 2006 Núria Asensio <nasensio.germanstrias@gencat.net>
 # SPDX-FileCopyrightText: 2007, 2010, 2012 Josep Roca <pep.roca@gmail.com>
 # SPDX-FileCopyrightText: 2014, 2016, 2018-2020, 2022 Antoni Bella Pérez <antonibella5@yahoo.com>
-# SPDX-FileCopyrightText: 2014-2024 Josep M. Ferrer <txemaq@gmail.com>
+# SPDX-FileCopyrightText: 2014-2024, 2026 Josep M. Ferrer <txemaq@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 08:59+0000\n"
-"PO-Revision-Date: 2024-11-17 20:43+0100\n"
+"PO-Revision-Date: 2026-09-06 20:54+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 25.04.0\n"
 "X-Launchpad-Export-Date: 2014-09-29 04:55+0000\n"
 
 #, kde-format
@@ -5480,7 +5480,7 @@ msgstr "Ample per omissió (polzades):"
 #: rkward/settings/rksettingsmodulegraphics.cpp:110
 #, kde-format
 msgid "Default height (inches)"
-msgstr "Alçada per omissió (polzades)"
+msgstr "Altura per omissió (polzades)"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:114
 #, kde-format
@@ -5661,7 +5661,7 @@ msgstr "Amplada:"
 #: rkward/settings/rksettingsmoduleoutput.cpp:161
 #, kde-format
 msgid "Height:"
-msgstr "Alçada:"
+msgstr "Altura:"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:52
 #, kde-format
@@ -7218,7 +7218,7 @@ msgstr "Amplada"
 #: rkward/windows/rkwindowcatcher.cpp:527
 #, kde-format
 msgid "Height"
-msgstr "Alçada"
+msgstr "Altura"
 
 #: rkward/windows/rkwindowcatcher.cpp:561
 #, kde-format

@@ -1,16 +1,16 @@
 # Translation of rkward__graphics_device.po to Catalan
-# Copyright (C) 2015-2022 This_file_is_part_of_KDE
+# Copyright (C) 2015-2026 This_file_is_part_of_KDE
 # This file is distributed under the license LGPL version 2.1 or
 # version 3 or later versions approved by the membership of KDE e.V.
 #
-# SPDX-FileCopyrightText: 2015, 2018-2019, 2022 Josep M. Ferrer <txemaq@gmail.com>
+# SPDX-FileCopyrightText: 2015, 2018-2019, 2022, 2026 Josep M. Ferrer <txemaq@gmail.com>
 # SPDX-FileCopyrightText: 2018, 2020-2021 Antoni Bella Pérez <antonibella5@yahoo.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 08:59+0000\n"
-"PO-Revision-Date: 2022-05-08 11:09+0200\n"
+"PO-Revision-Date: 2026-09-06 21:05+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
-"X-Generator: Lokalize 20.12.0\n"
+"X-Generator: Lokalize 25.04.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -210,7 +210,7 @@ msgstr ""
 #: rkward/plugins/x11device/export.rkh:26
 #, kde-format
 msgid "This is similar to 'Automatic Width', but for height."
-msgstr "Això és semblant a «Amplada automàtica», però per l'alçada."
+msgstr "Això és semblant a «Amplada automàtica», però per l'altura."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Width in inches")
 #: rkward/plugins/x11device/export.rkh:27
@@ -248,7 +248,7 @@ msgid ""
 "for exporting to Postscript/PDF."
 msgstr ""
 "Les funcions <b>jpeg</b> o <b>png</b> necessiten com a mínim proporcionar "
-"l'alçada o l'amplada. Aquesta restricció se superposa llegint l'amplada (en "
+"l'altura o l'amplada. Aquesta restricció se superposa llegint l'amplada (en "
 "polzades) des de <b>par(\"din\")[1]</b> i després establint «par(\"din\")[1] "
 "* resolution» com a valor del paràmetre amplada (en píxels). Una altra "
 "vegada, res d'això es requereix per a exportar a Postscript/PDF."
@@ -260,7 +260,7 @@ msgid ""
 "This is the <i>height</i> parameter to the exporting function. Similar to "
 "'Width'."
 msgstr ""
-"Aquest és el paràmetre <i>height</i> (alçada) de la funció d'exportació. "
+"Aquest és el paràmetre <i>height</i> (altura) de la funció d'exportació. "
 "Semblant a «Amplada»."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Point size")
@@ -281,7 +281,7 @@ msgid ""
 msgstr ""
 "Només disponible per a PNG/JPEG/Ghostscript, aquest és el paràmetre <i>res</"
 "i> del «dev.print» o del «dev2bitmap». Aquest valor s'usa per a convertir "
-"des de l'amplada/alçada en píxels a polzades com es descriu més amunt (a "
+"des de l'amplada/altura en píxels a polzades com es descriu més amunt (a "
 "«Amplada»). La resolució predeterminada (quan s'ha activat «Resolució "
 "predeterminada») és 96 per a les exportacions PNG/JPEG i és 72 per a les "
 "exportacions Ghostscript."
@@ -447,13 +447,13 @@ msgstr "Amplada en polzades"
 #: rkward/plugins/x11device/export.xml:77
 #, kde-format
 msgid "Automatic Height"
-msgstr "Alçada automàtica"
+msgstr "Altura automàtica"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Filename and Generic options"> <frame label="Dimensions"> <spinbox label="...">
 #: rkward/plugins/x11device/export.xml:78
 #, kde-format
 msgid "Height in inches"
-msgstr "Alçada en polzades"
+msgstr "Altura en polzades"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Filename and Generic options"> <radio label="...">
 #: rkward/plugins/x11device/export.xml:84

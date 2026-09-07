@@ -1,16 +1,16 @@
 # Translation of rkward__embedded.po to Catalan
-# Copyright (C) 2015-2024 This_file_is_part_of_KDE
+# Copyright (C) 2015-2026 This_file_is_part_of_KDE
 # This file is distributed under the license LGPL version 2.1 or
 # version 3 or later versions approved by the membership of KDE e.V.
 #
 # SPDX-FileCopyrightText: 2018, 2020, 2022-2023 Antoni Bella Pérez <antonibella5@yahoo.com>
-# SPDX-FileCopyrightText: 2015, 2018-2024 Josep M. Ferrer <txemaq@gmail.com>
+# SPDX-FileCopyrightText: 2015, 2018-2024, 2026 Josep M. Ferrer <txemaq@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 08:59+0000\n"
-"PO-Revision-Date: 2024-01-30 11:55+0100\n"
+"PO-Revision-Date: 2026-09-06 20:53+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 25.04.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2166,7 +2166,7 @@ msgstr "Habiliteu aquesta opció, si voleu personalitzar els marges."
 #, kde-format
 msgid "Size of top margin. Size is specified in (approximate) line heights."
 msgstr ""
-"Mida del marge superior. La mida està especificada en alçades de línia "
+"Mida del marge superior. La mida està especificada en altures de línia "
 "(aproximades)."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Bottom")
@@ -2174,7 +2174,7 @@ msgstr ""
 #, kde-format
 msgid "Size of bottom margin. Size is specified in (approximate) line heights."
 msgstr ""
-"Mida del marge inferior. La mida està especificada en alçades de línia "
+"Mida del marge inferior. La mida està especificada en altures de línia "
 "(aproximades)."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Left")
@@ -2182,7 +2182,7 @@ msgstr ""
 #, kde-format
 msgid "Size of left margin. Size is specified in (approximate) line heights."
 msgstr ""
-"Mida del marge esquerre. La mida està especificada en alçades de línia "
+"Mida del marge esquerre. La mida està especificada en altures de línia "
 "(aproximades)."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Right")
@@ -2190,7 +2190,7 @@ msgstr ""
 #, kde-format
 msgid "Size of right margin. Size is specified in (approximate) line heights."
 msgstr ""
-"Mida del marge dret. La mida està especificada en alçades de línia "
+"Mida del marge dret. La mida està especificada en altures de línia "
 "(aproximades)."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Draw X axis")
