@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-25 00:41+0000\n"
-"PO-Revision-Date: 2026-04-11 10:50+0200\n"
+"PO-Revision-Date: 2026-09-06 16:47+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -5758,7 +5758,7 @@ msgstr "Ample per omissió (polzades):"
 #: rkward/settings/rksettingsmodulegraphics.cpp:97
 #, kde-format
 msgid "Default height (inches)"
-msgstr "Alçada per omissió (polzades)"
+msgstr "Altura per omissió (polzades)"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:101
 #, kde-format
@@ -5934,7 +5934,7 @@ msgstr "Amplada:"
 #: rkward/settings/rksettingsmoduleoutput.cpp:156
 #, kde-format
 msgid "Height:"
-msgstr "Alçada:"
+msgstr "Altura:"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:51
 #: rkward/windows/rktoplevelwindowgui.cpp:153
@@ -7740,7 +7740,7 @@ msgstr "Amplada"
 #: rkward/windows/rkwindowcatcher.cpp:550
 #, kde-format
 msgid "Height"
-msgstr "Alçada"
+msgstr "Altura"
 
 #: rkward/windows/rkwindowcatcher.cpp:584
 #, kde-format
