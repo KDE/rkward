@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-25 00:41+0000\n"
-"PO-Revision-Date: 2026-04-11 10:50+0200\n"
+"PO-Revision-Date: 2026-09-06 16:47+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -2919,12 +2919,12 @@ msgstr "Trieu l'objecte pare"
 #: rkward/misc/rkspecialactions.cpp:20
 #, kde-format
 msgid "Paste special..."
-msgstr "Apegades especial…"
+msgstr "Apegades especials…"
 
 #: rkward/misc/rkspecialactions.cpp:67
 #, kde-format
 msgid "Paste Special..."
-msgstr "Apegades especial…"
+msgstr "Apegades especials…"
 
 #: rkward/misc/rkspecialactions.cpp:79
 #, kde-format
@@ -3047,8 +3047,8 @@ msgid ""
 "Command failed to parse. Try using <i>Edit->Paste special...</i> in the R "
 "Console window for better diagnostics."
 msgstr ""
-"No s'ha pogut analitzar l'ordre. Proveu d'utilitzar <i>Edita->Apegades "
-"especial…</i> en la finestra de la consola d'R per a un diagnòstic millor."
+"No s'ha pogut analitzar l'ordre. Proveu d'utilitzar <i>Edita → Apegades "
+"especials…</i> en la finestra de la consola d'R per a un diagnòstic millor."
 
 #: rkward/misc/rkspecialactions.cpp:273
 #, kde-format
