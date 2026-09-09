@@ -5650,7 +5650,7 @@ msgid ""
 "Persistent workplace layout (i.e. which script-, data-, help-windows are "
 "open)"
 msgstr ""
-"Disposition persistante de l’espace de travail (C’est-à-dire quelles "
+"Disposition persistante de l'espace de travail (C'est-à-dire quelles "
 "fenêtres de scripts, données ou d'aide sont ouvertes)"
 
 #: rkward/settings/rksettingsmodulegeneral.cpp:127
@@ -7385,7 +7385,7 @@ msgstr "Fenêtre de sortie"
 #: rkward/windows/rkhtmlwindow.cpp:579
 #, kde-format
 msgid "&Refresh Output"
-msgstr "&Rafraîchir la sortie"
+msgstr "&Rafraichir la sortie"
 
 #: rkward/windows/rkhtmlwindow.cpp:605
 #, kde-format
