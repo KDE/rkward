@@ -1586,7 +1586,7 @@ msgstr "Ne pas convertir"
 #: rkward/plugins/00saveload/import/import_csv.xml:197
 #, kde-format
 msgid "Missing value string"
-msgstr "Chaîne de valeurs manquantes"
+msgstr "Chaine de valeurs manquantes"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="Further Options"> <frame label="String handling"> <radio label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:200
