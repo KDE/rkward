@@ -2968,7 +2968,7 @@ msgstr "Mode « Coller »"
 #: rkward/misc/rkspecialactions.cpp:81
 #, kde-format
 msgid "Single string"
-msgstr "Chaîne simple"
+msgstr "Chaine simple"
 
 #: rkward/misc/rkspecialactions.cpp:82
 #, kde-format
@@ -3837,7 +3837,7 @@ msgstr "Annuler"
 #: rkward/rbackend/rcommandstack.cpp:280
 #, kde-format
 msgid "Command Chain"
-msgstr "Chaîne de commandes"
+msgstr "Chaine de commandes"
 
 #: rkward/rbackend/rcommandstack.cpp:282
 #, kde-format
