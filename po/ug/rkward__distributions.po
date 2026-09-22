@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 11:48+0000\n"
-"PO-Revision-Date: 2026-06-01 18:38-0400\n"
+"PO-Revision-Date: 2026-09-22 18:03+0900\n"
 "Last-Translator: Abduqadir Abliz <sahranbay@gmail.com>\n"
 "Language-Team: Uyghur <kde-i18n-doc@kde.org>\n"
 "Language: ug\n"
@@ -525,7 +525,7 @@ msgstr ""
 #: rkward/plugins/distributions.pluginmap:146
 #, kde-format
 msgid "F"
-msgstr ""
+msgstr "بىرىنچى ھەرپ"
 
 #. i18n: ectx: <hierarchy> <menu label="Distributions"> <menu label="Univariate continuous distributions"> <menu label="...">
 #: rkward/plugins/distributions.pluginmap:151
@@ -2130,7 +2130,7 @@ msgstr ""
 #, kde-format
 msgctxt "Distribution name"
 msgid "F"
-msgstr ""
+msgstr "بىرىنچى ھەرپ"
 
 #. i18n: ectx: (Central Limit Theorem: F to Normal) <dialog label="...">
 #: rkward/plugins/distributions/clt/plot_f_clt.xml:25
@@ -4595,7 +4595,7 @@ msgstr ""
 #, kde-format
 msgctxt "F distribution"
 msgid "F"
-msgstr ""
+msgstr "بىرىنچى ھەرپ"
 
 #. i18n: ectx: (Loaded from Plot F probabilities) <summary>
 #: rkward/plugins/distributions/plot_f_distribution.rkh:12

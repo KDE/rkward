@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-25 00:41+0000\n"
-"PO-Revision-Date: 2026-06-01 18:38-0400\n"
+"PO-Revision-Date: 2026-09-22 18:03+0900\n"
 "Last-Translator: Abduqadir Abliz <sahranbay@gmail.com>\n"
 "Language-Team: Uyghur <kde-i18n-doc@kde.org>\n"
 "Language: ug\n"
@@ -87,7 +87,7 @@ msgstr ""
 #, kde-format
 msgid ""
 "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
-msgstr "«%1» ئاتلىق ھۆججەت مەۋجۇت. ئۇنى راستتىنلا قاپلىۋېتەمسىز؟"
+msgstr ""
 
 #: rkward/agents/rksaveagent.cpp:51
 #, kde-format
@@ -1773,7 +1773,7 @@ msgstr ""
 #: rkward/main.cpp:189
 #, kde-format
 msgid "RKWard"
-msgstr "RKWard"
+msgstr ""
 
 #: rkward/main.cpp:189
 #, kde-format
@@ -1843,7 +1843,7 @@ msgstr ""
 #: rkward/main.cpp:196
 #, kde-format
 msgid "Björn Balazs"
-msgstr "Björn Balazs"
+msgstr ""
 
 #: rkward/main.cpp:196 rkward/main.cpp:198
 #, kde-format
@@ -1908,7 +1908,7 @@ msgstr ""
 #: rkward/main.cpp:203
 #, kde-format
 msgid "Marco Martin"
-msgstr "Marco Martin"
+msgstr ""
 
 #: rkward/main.cpp:203
 #, kde-format
@@ -2609,7 +2609,7 @@ msgstr ""
 #: rkward/misc/rkspecialactions.cpp:94
 #, kde-format
 msgid "Tab"
-msgstr "Tab"
+msgstr ""
 
 #: rkward/misc/rkspecialactions.cpp:95
 #, kde-format
@@ -4212,7 +4212,7 @@ msgstr "لەيلەت"
 #: rkward/rkward.cpp:603
 #, kde-format
 msgid "Check installation"
-msgstr ""
+msgstr "ئورنىتىشنى تەكشۈر"
 
 #: rkward/rkward.cpp:607
 #, kde-format
@@ -5241,12 +5241,12 @@ msgstr ""
 #: rkward/settings/rksettingsmoduleoutput.cpp:139
 #, kde-format
 msgid "PNG"
-msgstr "PNG"
+msgstr ""
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:140
 #, kde-format
 msgid "SVG"
-msgstr "SVG"
+msgstr ""
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:141
 #, kde-format
