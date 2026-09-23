@@ -39,7 +39,6 @@ SPDX-License-Identifier: GPL-2.0-or-later
   <name xml:lang="sl">RKWard</name>
   <name xml:lang="sv">RKward</name>
   <name xml:lang="tr">RKWard</name>
-  <name xml:lang="ug">RKWard</name>
   <name xml:lang="uk">RKWard</name>
   <name xml:lang="zh-TW">RKWard</name>
   <summary>KDE frontend to the R statistics language</summary>
