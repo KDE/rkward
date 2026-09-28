@@ -2822,8 +2822,7 @@ msgid ""
 "spaces quantiles to show. Alternatively, use the setting above."
 msgstr ""
 "При расчёте плотностей или вероятностей укажите количество равноотстоящих "
-"квантилей для отображения. Альтернативный вариант — использовать параметр "
-"выше."
+"квантилей для показа. Альтернативный вариант — использовать параметр выше."
 
 #. i18n: ectx: (Loaded from Loaded from Beta distribution calculator) <snippet> <setting> (refers to element labelled "Specify Quantiles (optional)")
 #. i18n: ectx: (Loaded from Loaded from Binomial probabilities, quantiles, densities) <snippet> <setting> (refers to element labelled "Specify Quantiles (optional)")
@@ -2883,7 +2882,7 @@ msgid ""
 "setting below."
 msgstr ""
 "При расчёте квантилей укажите количество равноотстоящих вероятностей "
-"(необязательно логарифмических) для отображения. Альтернативный вариант — "
+"(необязательно логарифмических) для показа. Альтернативный вариант — "
 "использовать параметр ниже."
 
 #. i18n: ectx: (Loaded from Loaded from Beta distribution calculator) <snippet> <setting> (refers to element labelled "Specify Probabilities (optional)")
@@ -3130,7 +3129,7 @@ msgstr "Режим"
 #: rkward/plugins/distributions/dist_snippets.xml:25
 #, kde-format
 msgid "Calculate probabilities for given quantiles"
-msgstr "Рассчитать вероятности для указанных квантилей "
+msgstr "Рассчитать вероятности для указанных квантилей"
 
 #. i18n: ectx: (Loaded from Beta distribution calculator) <snippet> <dropdown label="Mode"> <option label="...">
 #. i18n: ectx: (Loaded from Binomial probabilities, quantiles, densities) <snippet> <dropdown label="Mode"> <option label="...">

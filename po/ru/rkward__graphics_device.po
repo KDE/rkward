@@ -366,7 +366,7 @@ msgid ""
 "graphics file. This is the <i>title</i> parameter to <b>postscript</b>."
 msgstr ""
 "Снимите этот флажок, чтобы указать пользовательский заголовок графического "
-"файла. Обратите внимание, что он не отображается на графике, а встраивается "
+"файла. Обратите внимание, что он не показывается на графике, а встраивается "
 "в графический файл. Это параметр <i>title</i> для <b>postscript</b>."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "GS Output device")

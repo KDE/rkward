@@ -1925,7 +1925,7 @@ msgstr ""
 "следует выбрать только матрицу явных переменных (ответы для элементов). "
 "Описание других параметров приводится в последующих разделах. Подробные "
 "сведения об ожидаемой компоновке матриц и векторов доступны в разделе "
-"справки по функции  <link href=\"rkward://rhelp/RSM\">RSM()</link>."
+"справки по функции <link href=\"rkward://rhelp/RSM\">RSM()</link>."
 
 #. i18n: ectx: (Loaded from IRT parameter estimation: Rating scale model) <settings> <setting> (refers to element labelled "Design matrix")
 #: rkward/plugins/analysis/irt/polytomous/par_est_rsm.rkh:25

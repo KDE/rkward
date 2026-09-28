@@ -1,13 +1,13 @@
 # Copyright (C) 2024 This file is copyright:
 # This file is distributed under the same license as the rkward package.
 #
-# SPDX-FileCopyrightText: 2024, 2025, 2026 Emir SARI <emir_sari@icloud.com>
+# SPDX-FileCopyrightText: 2024-2026 Emir SARI <emir_sari@icloud.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 11:48+0000\n"
-"PO-Revision-Date: 2026-05-02 19:18+0300\n"
+"PO-Revision-Date: 2026-09-27 19:08+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 25.12.3\n"
+"X-Generator: Lokalize 26.08.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2919,7 +2919,7 @@ msgstr "Nereye:"
 #: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:67
 #, kde-format
 msgid "Annotation"
-msgstr "Bilgi Notu"
+msgstr "Ek Açıklama"
 
 #. i18n: ectx: (Plotting fitted Rasch model) <dialog label="Plotting fitted Rasch model"> <tab label="Options"> <radio label="Annotation"> <option label="...">
 #. i18n: ectx: (Plotting fitted 2PL model) <dialog label="Plotting fitted 2PL model"> <tab label="Options"> <radio label="Annotation"> <option label="...">
@@ -2963,7 +2963,7 @@ msgstr "Lejantı göster"
 #: rkward/plugins/plots/irt/polytomous/plot_rsm.xml:45
 #, kde-format
 msgid "Plain lines, no annotation"
-msgstr "Düz çizgiler, bilgi notu yok"
+msgstr "Düz çizgiler, ek açıklamasız"
 
 #. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="Plot options"> <embed label="...">
 #. i18n: ectx: (Plotting fitted Rasch model) <dialog label="Plotting fitted Rasch model"> <tab label="Options"> <embed label="...">
@@ -3180,19 +3180,19 @@ msgstr "Güven bantları"
 #: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:68
 #, kde-format
 msgid "Annotate items (item names)"
-msgstr "Ögelere bilgi notu ekle (öge adları)"
+msgstr "Ögelere ek açıklama ekle (öge adları)"
 
 #. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="Plot options"> <radio label="Annotation"> <option label="...">
 #: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:69
 #, kde-format
 msgid "Annotate items (rank number of betas)"
-msgstr "Ögelere bilgi notu ekle (betaların sayısını sırala)"
+msgstr "Ögelere ek açıklama ekle (betaların sayısını sırala)"
 
 #. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="Plot options"> <radio label="Annotation"> <option label="...">
 #: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:70
 #, kde-format
 msgid "Plain dots, no annotation"
-msgstr "Düz noktalar, bilgi notu yok"
+msgstr "Düz noktalar, ek açıklamasız"
 
 #. i18n: ectx: (Andersen LR-Test) <dialog label="Andersen LR-Test"> <tab label="Plot options"> <radio label="Annotation"> <option label="...">
 #: rkward/plugins/plots/irt/tests/eRm_plotLR.xml:71

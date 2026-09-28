@@ -2556,7 +2556,7 @@ msgid ""
 "Only shown where applicable. Allows you to select, whether to specify the "
 "effect size as Cohen's f, or as Eta squared."
 msgstr ""
-"Отображается только в случае применимости. Позволяет выбрать способ указания "
+"Показывается только в случае применимости. Позволяет выбрать способ указания "
 "размера эффекта: как f Коэна или как эта-квадрат."
 
 #. i18n: ectx: (Power analysis) <settings> <setting> (refers to element labelled "Parameter to determine")
@@ -2579,7 +2579,7 @@ msgid ""
 "reminder, this is (rows &minus; 1)&times;(columns &minus; 1) for a test of "
 "independence, and (cells &minus; 1) for a test of goodness of fit."
 msgstr ""
-"Отображается только для статистики хи-квадрат: целевые степени свободы. "
+"Показывается только для статистики хи-квадрат: целевые степени свободы. "
 "Напоминание: это (строки &minus; 1)&times;(столбцы &minus; 1) для теста на "
 "независимость и (ячейки &minus; 1) для теста на пригодность."
 
@@ -2591,7 +2591,7 @@ msgid ""
 "As a reminder, this is the number of parameters to estimate, or number of "
 "groups/samples minus 1."
 msgstr ""
-"Отображается только для обобщённой линейной модели: целевые степени свободы "
+"Показывается только для обобщённой линейной модели: целевые степени свободы "
 "числителя. Напоминание: это количество параметров для оценки или количество "
 "групп/выборок минус 1."
 
@@ -2604,7 +2604,7 @@ msgid ""
 "total number of observations minus numerator degrees of freedom minus 1, or "
 "total number of observations minus number of groups/samples."
 msgstr ""
-"Отображается только для обобщённой линейной модели: доступные степени "
+"Показывается только для обобщённой линейной модели: доступные степени "
 "свободы знаменателя / степени свободы остаточного члена. Напоминание: это "
 "общее количество наблюдений минус степени свободы числителя минус 1 или "
 "общее количество наблюдений минус количество групп/выборок."
@@ -5274,13 +5274,13 @@ msgstr "экстремумы"
 #: rkward/plugins/uni1.2/description.xml:66
 #, kde-format
 msgid "Number of minimum values displayed"
-msgstr "Количество отображаемых минимальных значений"
+msgstr "Количество показываемых минимальных значений"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="extrema"> <spinbox label="...">
 #: rkward/plugins/uni1.2/description.xml:67
 #, kde-format
 msgid "Number of maximum values displayed"
-msgstr "Количество отображаемых максимальных значений"
+msgstr "Количество показываемых максимальных значений"
 
 #. i18n: ectx: (Basic statistics) <dialog label="Basic statistics"> <tab label="Statistics"> <frame label="...">
 #: rkward/plugins/uni1.2/description.xml:71

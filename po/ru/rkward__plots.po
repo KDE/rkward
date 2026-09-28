@@ -2133,6 +2133,7 @@ msgstr "Вектор спецификаторов типа"
 msgid "Same color for all variables"
 msgstr "Один и тот же цвет для всех переменных"
 
+# BUGME: broken sentence: lowercase after the full stop and a trailing dash; should read "Enter a value; for <option>, enter a vector" --ayavorsky 2026-09-27
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Options"> <text>
 #: rkward/plugins/plots/scatterplot.xml:65
 #, kde-format
@@ -2173,6 +2174,7 @@ msgstr ""
 "Числовое значение, которое указывает коэффициент масштабирования текста и "
 "символов на графике относительно их стандартных размеров."
 
+# BUGME: broken sentence: lowercase after the full stop and a trailing dash; should read "Enter a value; for <option>, enter a vector" --ayavorsky 2026-09-27
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Further options"> <input label="...">
 #: rkward/plugins/plots/scatterplot.xml:86
 #, kde-format
@@ -2195,6 +2197,7 @@ msgstr ""
 "Либо целое число, указывающее символ, либо единственный символ для "
 "использования в качестве значения по умолчанию при построении точек."
 
+# BUGME: broken sentence: lowercase after the full stop and a trailing dash; should read "Enter a value; for <option>, enter a vector" --ayavorsky 2026-09-27
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Further options"> <input label="...">
 #: rkward/plugins/plots/scatterplot.xml:100
 #, kde-format
@@ -2209,7 +2212,7 @@ msgid ""
 "displays down the diagonal."
 msgstr ""
 "При построении графика матрицы рассеяния создаётся точечный график с "
-"одномерным отображением по диагонали."
+"одномерным показом по диагонали."
 
 #. i18n: ectx: (Loaded from Scatterplot Matrix) <usage>
 #: rkward/plugins/plots/scatterplot_matrix.rkh:12

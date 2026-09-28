@@ -534,7 +534,7 @@ msgid ""
 "frames, this option is available for each column to sort by)."
 msgstr ""
 "Позволяет применять преобразования, которые могут повлиять на порядок "
-"сортировки (при сортировке data.frame эта опция доступна для каждого "
+"сортировки (при сортировке data.frame этот параметр доступен для каждого "
 "столбца, по которому будет выполняться сортировка)."
 
 #. i18n: ectx: (Loaded from Sort data) <settings> <setting> (refers to element labelled "Order")
@@ -752,7 +752,7 @@ msgstr ""
 "одно из них, то будет проверено только условие для указанного значения (то "
 "есть «больше» или «меньше»). Обратите внимание, что значение будет вставлено "
 "как код R, дословно. Это означает, что можно указать любое корректное "
-"выражение R, включая название другого столбца data.frame. "
+"выражение R, включая название другого столбца data.frame."
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Included (>=)")
 #: rkward/plugins/data/subset_dataframe.rkh:42

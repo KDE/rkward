@@ -1751,7 +1751,7 @@ i quines seccions de codi contenen quin codi R.
 >.js</literal
 >, <literal role="extension"
 >.xml</literal
->, i <literal role="extension"
+> i <literal role="extension"
 >.rkh</literal
 >, després canviar les poques porcions que són diferents. No obstant això, i si algun temps després trobeu un error ortogràfic que s'ha copiat i enganxat a tots els connectors? I si voleu afegir suport per a una característica nova? Hauríeu de tornar a visitar tots els connectors i canviar-ho a cadascun. Un procés pesat i tediós. </para>
 	<para

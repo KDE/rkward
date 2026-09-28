@@ -70,8 +70,8 @@ msgid ""
 "Maximum number of regular groups to display. One additional group \"others\" "
 "will be displayed, if appropriate."
 msgstr ""
-"Максимальное количество регулярных групп для отображения. При необходимости "
-"будет показана одна дополнительная группа «прочие»."
+"Максимальное количество регулярных групп для показа. При необходимости будет "
+"показана одна дополнительная группа «прочие»."
 
 #. i18n: ectx: (Loaded from Limit Vector Length) <settings> <setting> (refers to element labelled "Sorting")
 #: rkward/plugins/distributions/../data/limit_vector_length.rkh:18
@@ -704,8 +704,8 @@ msgid ""
 "If you have selected to display bar values (labels) you can select where "
 "should they be displayed:"
 msgstr ""
-"Если отображение значений столбцов (подписей) включено, можно выбрать, где "
-"они будут показаны:"
+"Если показ значений столбцов (подписей) включён, можно выбрать, где они "
+"будут показаны:"
 
 #. i18n: ectx: (Loaded from Barplot Options) <settings> <setting> (refers to element labelled "Placement")
 #: rkward/plugins/distributions/../plots/barplot_embed.rkh:21
@@ -872,7 +872,7 @@ msgid ""
 "this help page."
 msgstr ""
 "Этот модуль предназначен для использования во встроенном виде, поэтому эта "
-"страница справки не должна отображаться."
+"страница справки не должна показываться."
 
 #. i18n: ectx: (Loaded from Choose color) <settings> <setting> (refers to element labelled "Color")
 #: rkward/plugins/distributions/../plots/color_chooser.rkh:19
@@ -1623,7 +1623,7 @@ msgid ""
 "(disables) the display of the '<label id=\"addtoplot\"/>' check box."
 msgstr ""
 "<i>allow_addtoplot</i>: установка в значение «true» («false») включает "
-"(отключает) отображение флажка «<label id=\"addtoplot\"/>»."
+"(отключает) показ флажка «<label id=\"addtoplot\"/>»."
 
 #. i18n: i18n: "true", "false, and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default histogram options) <technical>
@@ -1645,7 +1645,7 @@ msgid ""
 "the display of the '<label id=\"freq\"/>' check box."
 msgstr ""
 "<i>allow_freq</i>: установка в значение «true» («false») включает "
-"(отключает) отображение флажка «<label id=\"freq\"/>»."
+"(отключает) показ флажка «<label id=\"freq\"/>»."
 
 #. i18n: i18n: "true", "false, and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default histogram options) <technical>
@@ -1656,7 +1656,7 @@ msgid ""
 "(disables) the display of the '<label id=\"barlabels\"/>' check box."
 msgstr ""
 "<i>allow_barlabels</i>: установка в значение «true» («false») включает "
-"(отключает) отображение флажка «<label id=\"barlabels\"/>»."
+"(отключает) показ флажка «<label id=\"barlabels\"/>»."
 
 #. i18n: i18n: "true", "false, and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default histogram options) <technical>
@@ -2208,7 +2208,7 @@ msgid ""
 "the display of '<label id=\"xlog\"/>' and '<label id=\"ylog\"/>' check boxes."
 msgstr ""
 "<i>allow_log</i>: установка в значение «true» («false») включает (отключает) "
-"отображение флажков «<label id=\"xlog\"/>» и «<label id=\"ylog\"/>»."
+"показ флажков «<label id=\"xlog\"/>» и «<label id=\"ylog\"/>»."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
@@ -2220,7 +2220,7 @@ msgid ""
 "input boxes."
 msgstr ""
 "<i>allow_xlim</i>: установка в значение «true» («false») включает "
-"(отключает) отображение полей ввода «<label id=\"xminvalue\"/>» и «<label id="
+"(отключает) показ полей ввода «<label id=\"xminvalue\"/>» и «<label id="
 "\"xmaxvalue\"/>»."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
@@ -2233,7 +2233,7 @@ msgid ""
 "input boxes."
 msgstr ""
 "<i>allow_ylim</i>: установка в значение «true» («false») включает "
-"(отключает) отображение полей ввода «<label id=\"yminvalue\"/>» и «<label id="
+"(отключает) показ полей ввода «<label id=\"yminvalue\"/>» и «<label id="
 "\"ymaxvalue\"/>»."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
@@ -2245,7 +2245,7 @@ msgid ""
 "the display of the '<label id=\"pointtypepage\"/>' tab."
 msgstr ""
 "<i>allow_type</i>: установка в значение «true» («false») включает "
-"(отключает) отображение вкладки «<label id=\"pointtypepage\"/>»."
+"(отключает) показ вкладки «<label id=\"pointtypepage\"/>»."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
@@ -2256,7 +2256,7 @@ msgid ""
 "the display of the '<label id=\"aspectratio\"/>' tab."
 msgstr ""
 "<i>allow_aspect</i>: установка в значение «true» («false») включает "
-"(отключает) отображение вкладки «<label id=\"aspectratio\"/>»."
+"(отключает) показ вкладки «<label id=\"aspectratio\"/>»."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
@@ -2272,7 +2272,7 @@ msgid ""
 "calculate\"));</br><br> after the plotting function should do the job.</br>"
 msgstr ""
 "<i>allow_grid</i>: установка в значение «true» («false») включает "
-"(отключает) отображение вкладки «<label id=\"tab_grid\"/>». Если установлено "
+"(отключает) показ вкладки «<label id=\"tab_grid\"/>». Если установлено "
 "значение «true», из функции code.calculate (смотрите ниже) можно извлечь код "
 "параметров сетки (эта функция, в свою очередь, извлекает его из grid_options."
 "code.printout). В частности, если модуль параметров графика встроен с "
@@ -2730,7 +2730,7 @@ msgid ""
 "provided) both the colors are provided as a character vector of length two."
 msgstr ""
 "Два параметра выше предназначены не для <b>plot.stepfun</b>, а для <b>ecdf</"
-"b>. Они отображаются только в контексте «ecdf». Эти параметры используются, "
+"b>. Они показываются только в контексте «ecdf». Эти параметры используются, "
 "соответственно, для установки цвета горизонтальных линий при y = 0 и y = 1. "
 "В частности, это аргумент <i>col.01line</i> для <b>ecdf</b>. Если "
 "предоставлено значение только одного параметра (то есть другой параметр "
@@ -2770,9 +2770,8 @@ msgid ""
 "'<label id=\"frame_col_y0\"/>') for <i>col.01line</i> option to <b>ecdf</b>."
 msgstr ""
 "<i>allow_col01line</i>: установка в значение «true» («false») включает "
-"(отключает) отображение двух фреймов («<label id=\"frame_col_y0\"/>» и "
-"«<label id=\"frame_col_y0\"/>») для параметра <i>col.01line</i> функции "
-"<b>ecdf</b>."
+"(отключает) показ двух фреймов («<label id=\"frame_col_y0\"/>» и «<label id="
+"\"frame_col_y0\"/>») для параметра <i>col.01line</i> функции <b>ecdf</b>."
 
 #. i18n: ectx: (Step function plot options) <dialog label="...">
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:33

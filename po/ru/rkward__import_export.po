@@ -790,7 +790,7 @@ msgid ""
 "probably uses a different locale than your R session. In this case, check "
 "this option, and specify the correct character encoding below."
 msgstr ""
-"Если специальный символ (например, перегласовка) отображается неправильно, "
+"Если специальный символ (например, перегласовка) показывается неправильно, "
 "возможно, в файле данных используется локаль, отличная от локали в "
 "запущенном сеансе R. В этом случае следует установить этот флажок и указать "
 "верную кодировку символов ниже."
@@ -1724,7 +1724,7 @@ msgid ""
 "the file)."
 msgstr ""
 "Предварительный просмотр импортируемых данных. Для повышения "
-"производительности отображаются только первые 50 строк (и только первый "
+"производительности показываются только первые 50 строк (и только первый "
 "набор данных, если их несколько в файле)."
 
 #. i18n: ectx: (Import SPSS file) <dialog label="Import SPSS file"> <tab label="General"> <checkbox label="...">
@@ -1822,7 +1822,7 @@ msgid ""
 "as an attribute \"variable.labels\" (see <link href=\"rkward://rhelp/read."
 "spss\"/>)"
 msgstr ""
-"RKWard позволяет отображать SPSS как подписи переменных. Установите этот "
+"RKWard позволяет показывать SPSS как подписи переменных. Установите этот "
 "флажок, чтобы преобразовать подписи переменных SPSS в формат RKWard. Если "
 "флажок не установлен, подписи переменных SPSS всё равно будет доступны как "
 "атрибут «variable.labels» (подробнее здесь: <link href=\"rkward://rhelp/read."
@@ -1863,7 +1863,7 @@ msgid ""
 "<label id=\"data_frame\"/> is not checked."
 msgstr ""
 "Предварительный просмотр импортируемых данных. Для повышения "
-"производительности отображаются только первые 50 строк и столбцов. На уровне "
+"производительности показываются только первые 50 строк и столбцов. На уровне "
 "программы при предварительном просмотре используется data.frame, даже если "
 "флажок <label id=\"data_frame\"/> не установлен."
 
@@ -2003,7 +2003,7 @@ msgid ""
 "performance reasons."
 msgstr ""
 "Предварительный просмотр импортируемых данных. Для повышения "
-"производительности отображаются только первые 50 строк и столбцов."
+"производительности показываются только первые 50 строк и столбцов."
 
 #. i18n: ectx: (Import STATA file) <dialog label="...">
 #: rkward/plugins/00saveload/import/import_stata.xml:18
@@ -2108,14 +2108,14 @@ msgid ""
 "Print details as the file is processed. This may be helpful in "
 "troubleshooting."
 msgstr ""
-"Выводить подробности по мере обработки файла. Эта опция может оказаться "
-"полезна при устранении неисправностей."
+"Выводить подробности по мере обработки файла. Этот параметр может оказаться "
+"полезен при устранении неисправностей."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Number of rows to skip")
 #: rkward/plugins/00saveload/import/import_xls.rkh:24
 #, kde-format
 msgid "Number of rows to skip at the top"
-msgstr "Количество строк сверху для пропуска "
+msgstr "Количество строк сверху для пропуска"
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Max number of rows to read (-1 for no limit)")
 #: rkward/plugins/00saveload/import/import_xls.rkh:25
