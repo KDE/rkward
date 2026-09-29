@@ -1,0 +1,328 @@
+<?xml version="1.0" ?>
+<!DOCTYPE refentry PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+<!ENTITY % Russian "INCLUDE">
+<!ENTITY rkward '<application
+>RKWard</application
+>'>
+<!ENTITY R '<application
+>R</application
+>'>
+]>
+<!--- This file is part of the RKWard project (https://rkward.kde.org).
+SPDX-FileCopyrightText: by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GFDL-1.2-no-invariants-or-later OR GPL-2.0-or-later
+-->
+
+<refentry lang="&language;">
+<refentryinfo>
+<title
+>Руководство пользователя RKWard</title>
+<author
+><firstname
+>Thomas</firstname
+> <surname
+>Friedrichsmeier</surname
+> <contrib
+>Страница руководства RKWard.</contrib>
+<affiliation>
+<address
+><email
+>rkward-devel@kde.org</email
+></address>
+</affiliation>
+</author>
+<date
+>2023-11-30</date>
+<releaseinfo
+>RKWard 0.7.5</releaseinfo>
+<productname
+>Приложения KDE</productname>
+</refentryinfo>
+
+<refmeta>
+<refentrytitle
+><command
+>rkward</command
+></refentrytitle>
+<manvolnum
+>1</manvolnum>
+</refmeta>
+
+<refnamediv>
+<refname
+><command
+>rkward</command
+></refname>
+<refpurpose
+>Графический интерфейс &kde; для R</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv>
+<cmdsynopsis
+><command
+>rkward</command
+> <group choice="opt"
+><option
+>--evaluate</option
+> <replaceable
+> код R</replaceable
+></group
+> <group choice="opt"
+><option
+>--debug-level</option
+> <replaceable
+> уровень</replaceable
+></group
+> <group choice="opt"
+><option
+>--debug-flags</option
+> <replaceable
+> флаги</replaceable
+></group
+> <group choice="opt"
+><option
+>--debug-output</option
+> <replaceable
+> куда</replaceable
+></group
+> <group choice="opt"
+><option
+>--backend-debugger</option
+> <replaceable
+> команда_отладчика</replaceable
+></group
+> <group choice="opt"
+><option
+>--r-executable</option
+> <replaceable
+> путь_к_исполняемому_файлу</replaceable
+></group
+> <group choice="opt"
+><option
+>--reuse</option
+></group
+> <group choice="opt"
+><option
+>--autoreuse</option
+></group
+> <group choice="opt"
+><option
+>--nowarn-external</option
+></group
+> <arg choice="opt"
+>Общие параметры KDE</arg
+> <arg choice="opt"
+>Общие параметры Qt</arg
+> <arg choice="opt"
+><replaceable
+>файлы_для_открытия</replaceable
+></arg
+> </cmdsynopsis>
+</refsynopsisdiv>
+
+<refsect1>
+<title
+>Описание</title>
+<para
+>&rkward; — это основанная на &kde; &GUI; и <acronym
+>IDE</acronym
+> для языка сценариев &R;, предназначенного для статистических вычислений.</para>
+<para
+>Дополнительные сведения можно найти на <ulink url="https://rkward.kde.org/"
+>веб-сайте &rkward;</ulink
+> и в документации, входящей в состав &rkward;.</para>
+</refsect1>
+
+<refsect1>
+<title
+>Параметры</title>
+
+<variablelist>
+<varlistentry>
+<term
+><option
+>--evaluate</option
+> <replaceable
+>код R</replaceable
+></term>
+<listitem
+><para
+>Указанный код &R; вычисляется после запуска &rkward; и после загрузки заданного рабочего пространства. В основном применяется для автоматизированного тестирования.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--debug-level</option
+> <replaceable
+>уровень</replaceable
+></term>
+<listitem
+><para
+>Уровень подробности отладочного вывода. 0–5, где 0 — вывод отсутствует, 5 — весь вывод, включая информацию о трассировке функций. По умолчанию — 2.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--debug-output</option
+> <replaceable
+>где</replaceable
+></term>
+<listitem
+><para
+>Куда направлять отладочный вывод. По умолчанию он сохраняется в файл во временном каталоге. Если указать «terminal», отладочный вывод будет записываться в stderr (полезно при отладке проблем с запуском). Обратите внимание, что отладочный вывод процесса модуля всегда сохраняется в файл.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--debug-flags</option
+> <replaceable
+>флаги</replaceable
+></term>
+<listitem
+><para
+>Настройка разделов кода, подлежащих отладке. Флаги задаются в виде двоичного числа. Описание приведено в исходных файлах, так как это действительно внутренний параметр.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--backend-debugger</option
+> <replaceable
+>команда</replaceable
+></term>
+<listitem
+><para
+>Запуск модуля &rkward; с помощью указанной команды отладчика. Чтобы добавить параметры командной строки к команде отладчика, заключите их в одинарные кавычки ('') вместе с командой. <emphasis
+>ПРИМЕЧАНИЕ:</emphasis
+> Аргументы отладчика разделяются пробелами. Если это не подходит, придётся написать собственный сценарий-обёртку для вызова отладчика. Кроме того, следует надлежащим образом перенаправить весь вывод и (или) ввод отладчика. См. примеры.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--r-executable</option
+> <replaceable
+>команда</replaceable
+></term>
+<listitem
+><para
+>Если установлено несколько версий R, укажите используемую установку, например <filename
+>/usr/bin/R</filename
+>. Также можно указать строку <replaceable
+>«auto»</replaceable
+> — в этом случае RKWard попытается найти R по одному из известных стандартных путей установки. <emphasis
+>Обратите внимание</emphasis
+>, что хотя RKWard <emphasis
+>часто</emphasis
+> работает с более новыми версиями R, <emphasis
+>иногда</emphasis
+> его требуется перекомпилировать для этой версии, либо он может оказаться полностью несовместимым.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--reuse</option
+></term>
+<listitem
+><para
+>Если экземпляр &rkward; уже запущен, он выводится на передний план и открывает <replaceable
+>файлы_для_открытия</replaceable
+>. При повторном использовании экземпляра все остальные параметры командной строки игнорируются.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--autoreuse</option
+></term>
+<listitem
+><para
+>Работает как <option
+>--reuse</option
+>, если также заданы аргументы-файлы, иначе запускает новый экземпляр. Предназначен для использования в файле .desktop.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--nowarn-external</option
+></term>
+<listitem
+><para
+>Обычно при вызове модулей &rkward; из командной строки (то есть когда <replaceable
+>файлы_для_открытия</replaceable
+> содержит &URL; вида <replaceable
+>rkward://runplugin/...</replaceable
+>), &rkward; выводит предупреждение о том, что такие &URL; <emphasis
+>могут</emphasis
+> использоваться для запуска вредоносных действий в системе. Это предупреждение относится прежде всего к ссылкам на недоверенных веб-сайтах и в других недоверенных внешних источниках. Если требуется запускать сценарии &rkward; локально, можно избежать этого предупреждения, добавив в командную строку параметр --nowarn-external.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--quirkmode</option
+></term>
+<listitem
+><para
+>Отключает часть кода проверки при запуске. Экспериментальный параметр, не предназначенный для обычного использования.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><replaceable
+>файлы_для_открытия</replaceable
+></term>
+<listitem
+><para
+>Для открытия в &rkward; можно указать любое число имён файлов или адресов &URL;. Обычно это файлы рабочих областей, файлы рабочих мест, файлы сценариев R или адреса &URL; вида rkward:// (например, для запуска с диалогом модуля). Если указать несколько файлов рабочих областей, рабочие области будут объединены, что не рекомендуется.</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+</refsect1>
+
+<refsect1>
+<title
+>Смотрите также</title>
+<para
+><citerefentry
+><refentrytitle
+>R</refentrytitle>
+<manvolnum
+>1</manvolnum
+></citerefentry
+></para>
+</refsect1>
+
+<refsect1>
+<title
+>Примеры</title>
+<para
+><programlisting
+># Начать с диалогового окна t-критерия
+rkward --nowarn-external rkward://runplugin/rkward::t_test/
+# Открыть два файла сценариев в запущенном экземпляре RKWard (или в новом экземпляре, если RKWard не запущен)
+rkward --reuse file_a.R file_b.R
+
+# Запустить модуль rkward через valgrind
+rkward --backend-debugger 'valgrind --log-file=valgrind.log'
+</programlisting
+></para>
+</refsect1>
+
+<refsect1>
+<title
+>Авторы</title>
+<para
+>Авторы &rkward; — Thomas Friedrichsmeier и команда &rkward;. См. <ulink url="https://rkward.kde.org/"
+>веб-сайт &rkward;</ulink
+>.</para>
+</refsect1>
+
+</refentry>
