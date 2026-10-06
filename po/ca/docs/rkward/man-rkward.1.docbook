@@ -254,7 +254,7 @@ SPDX-License-Identifier: GFDL-1.2-no-invariants-or-later OR GPL-2.0-or-later
 >fitxers_a_obrir</replaceable
 > conté els &URL; del formulari <replaceable
 >rkward://connector_a_executar/...</replaceable
->), el &rkward; mostrarà un avís que aquests &URL; es podrien utilitzar per a desencadenar accions malicioses al vostre sistema. Aquest avís s'aplica específicament als enllaços que es troben en llocs web no confiables o d'altres fonts externes que no siguin de confiança. Si voleu executar localment un script del &rkward;, podeu fer cas omís a aquest avís afegint --nowarn-extern a la línia d'ordres.</para>
+>), el &rkward; mostrarà un avís que aquests &URL; es podrien utilitzar per a desencadenar accions malicioses al vostre sistema. Aquest avís s'aplica específicament als enllaços que es troben en llocs web no confiables o d'altres fonts externes que no siguin de confiança. Si voleu executar localment un script del &rkward;, podeu fer cas omís d'aquest avís afegint --nowarn-extern a la línia d'ordres.</para>
 <para
 >(Si s'usa en combinació amb --reuse, llavors les *dues* ordres en qüestió cal que s'invoquin amb --nowarn-external, per tal d'evitar l'avís.)</para
 ></listitem>
