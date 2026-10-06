@@ -1758,11 +1758,11 @@ i quines seccions de codi contenen quin codi R.
 >Un segon enfocament seria utilitzar <link linkend="embedding"
 >incrustacions</link
 >. Tanmateix, en alguns casos això no es presta bé al problema que tenim entre mans, principalment perquè els «fragments» que podeu incrustar són de vegades massa grans per a ser útils, i posa algunes restriccions en la disposició. Per a aquests casos, els conceptes <link linkend="include_js"
->incloent fitxers <literal role="extension"
+>incloent-hi fitxers <literal role="extension"
 >.js</literal
 ></link
 >, <link linkend="include_xml"
->incloent fitxers <literal role="extension"
+>incloent-hi fitxers <literal role="extension"
 >.xml</literal
 ></link
 > i <link linkend="snippets"
@@ -2516,7 +2516,7 @@ function getSpecifics () {
 <title
 >Consultar l'&R; per a obtenir informació</title>
 	<para
->En alguns casos, és possible que vulgueu obtenir més informació de l'&R;, que es presentarà a la interfície d'usuari del vostre connector. Per exemple, podeu oferir una selecció dels nivells d'un factor que l'usuari ha seleccionat per a l'anàlisi. Des de la versió 0.6.2 del &rkward; és possible fer-ho. Abans de començar, és important que tingueu present algunes advertències:</para>
+>En alguns casos, és possible que vulgueu obtenir més informació de l'&R;, que es presentarà a la interfície d'usuari del vostre connector. Per exemple, podeu oferir una selecció dels nivells d'un factor que l'usuari ha seleccionat per a l'anàlisi. Des de la versió 0.6.2 del &rkward; és possible fer-ho. Abans de començar, és important que tingueu presents algunes advertències:</para>
 	<para
 >El codi R que s'executa des de dins de la lògica de la interfície d'usuari del connector s'avalua en el bucle d'esdeveniments de l'R, el que significa que es poden executar <emphasis
 >mentre</emphasis
@@ -2788,7 +2788,7 @@ function getSpecifics () {
 >&lt;varslot&gt;</command
 > dins de l'àrea <command
 >&lt;content&gt;</command
->, permetent a l'usuari seleccionar un element alhora. Tanmateix, significarà menys clics per a l'usuari, si en el seu lloc utilitzeu un <command
+>, això permet a l'usuari seleccionar un element alhora. Tanmateix, significarà menys clics per a l'usuari, si en el seu lloc utilitzeu un <command
 >&lt;varslot multi="true"&gt;</command
 > <emphasis
 >fora</emphasis
@@ -3326,7 +3326,7 @@ user (selection from a list of values shown next to this element) --&gt;
 >rkward__<replaceable
 >POID</replaceable
 >.pot</command
-> als vostres traductors. Per a connectors externs, es recomana col·locar-lo en una subcarpeta "po" a inst/rkward.</para
+> als vostres traductors. Per a connectors externs, es recomana col·locar-lo en una subcarpeta «po» a inst/rkward.</para
 ></listitem>
 			<listitem
 ><para
@@ -4642,7 +4642,7 @@ cboxNoi18n &lt;- rk.XML.cbox(label="Power", id.name="power", i18n=FALSE)
 	<title
 >Elements de propòsit general que s'utilitzaran en qualsevol fitxer &XML; (<literal role="extension"
 >.xml</literal
->,<literal role="extension"
+>, <literal role="extension"
 >.rkh</literal
 >, &pluginmap;)</title>
 	<variablelist>
