@@ -494,7 +494,7 @@ void RKObjectListViewSettings::updateSelf() {
 void RKObjectListViewSettings::updateSelfNow() {
 	RK_TRACE(APP);
 
-	invalidateFilter();
+	invalidate();
 
 	Q_EMIT settingsChanged();
 }
