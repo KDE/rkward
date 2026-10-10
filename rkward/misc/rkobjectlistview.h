@@ -103,7 +103,7 @@ class RKObjectListViewSettings : public QSortFilterProxyModel {
 
   protected:
 	bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override;
-	bool acceptRow(int source_row, const QModelIndex &source_parent) const;
+	bool filterAcceptsObject(const RObject *object) const;
 	bool filterAcceptsColumn(int source_column, const QModelIndex &source_parent) const override;
 	bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
 

@@ -365,48 +365,30 @@ bool RKObjectListViewSettings::filterAcceptsColumn(int source_column, const QMod
 bool RKObjectListViewSettings::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const {
 	//	RK_TRACE (APP);
 
-	// So I tried to use a KRecursiveFilterProxyModel, but
-	// a) we don't really want recursion to the full depth. Thus limiting it, here.
-	// b) While we don't handle insertions / removals of source indices in the presence of a filter, correctly, with KRecursiveFilterProxyModel
-	//    I got crashes on this (arguably with the depth-limit in place)
-	if (acceptRow(source_row, source_parent)) return true;
-
-	RObject *parent = static_cast<RObject *>(source_parent.internalPointer());
-	if (!parent) {
-		RK_ASSERT(parent); // should have been accepted, above
-		return true;
-	}
-	RObject *object = parent->findChildByObjectModelIndex(source_row);
+	// always show the root item
+	if (!source_parent.isValid()) return true;
+	const RObject *parent = static_cast<RObject *>(source_parent.internalPointer());
+	RK_ASSERT(parent);
+	const RObject *object = parent->findChildByObjectModelIndex(source_row);
 	if (!object) {
-		RK_ASSERT(object); // should have been accepted, above
-		RK_DEBUG(APP, DL_ERROR, "row %d of %d in %s", source_row, sourceModel()->rowCount(source_parent), qPrintable(parent->getShortName()));
+		RK_DEBUG(APP, DL_ERROR, "proxy model wants row %d of %d in %s", source_row, sourceModel()->rowCount(source_parent) - 1, qPrintable(parent->getShortName()));
 		return false;
 	}
+	if (filterAcceptsObject(object)) return true;
 
+	/* This is similar to but not quite the same as QSortFilterProxyModel::recursiveFilteringEnabled(), as
+	 * we only want limited recursion (at most direct children of top level objects) */
 	if (object->isType(RObject::ToplevelEnv | RObject::Workspace) || ((depth_limit > 0) && parent->isType(RObject::ToplevelEnv | RObject::Workspace))) {
-		QModelIndex source_index = sourceModel()->index(source_row, 0, source_parent);
-		for (int row = 0, rows = sourceModel()->rowCount(source_index); row < rows; ++row) {
-			if (filterAcceptsRow(row, source_index)) return true;
+		for (int row = 0, rows = object->numChildrenForObjectModel(); row < rows; ++row) {
+			if (filterAcceptsObject(object->findChildByObjectModelIndex(row))) return true;
 		}
 	}
 
 	return false;
 }
 
-bool RKObjectListViewSettings::acceptRow(int source_row, const QModelIndex &source_parent) const {
+bool RKObjectListViewSettings::filterAcceptsObject(const RObject *object) const {
 	//	RK_TRACE (APP);
-
-	// always show the root item
-	if (!source_parent.isValid()) return true;
-
-	RObject *object = static_cast<RObject *>(source_parent.internalPointer());
-	// always show global env and search path
-	if (!object) return true;
-	if (!object->findChildByObjectModelIndex(source_row)) {
-		return true;
-	}
-	object = object->findChildByObjectModelIndex(source_row);
-	RK_ASSERT(object);
 
 	if (!persistent_settings[ShowObjectsHidden]) {
 		if (object->getShortName().startsWith(u'.')) return false;
