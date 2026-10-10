@@ -371,7 +371,16 @@ bool RKObjectListViewSettings::filterAcceptsRow(int source_row, const QModelInde
 	RK_ASSERT(parent);
 	const RObject *object = parent->findChildByObjectModelIndex(source_row);
 	if (!object) {
-		RK_DEBUG(APP, DL_ERROR, "proxy model wants row %d of %d in %s", source_row, sourceModel()->rowCount(source_parent) - 1, qPrintable(parent->getShortName()));
+		// FIXME: Properly debug when this condition is hit, rather than working around it.
+		// Somehow this happens with Qt version 6.11.2: The parent object's row count is not always updated in the proxy.
+		// (Triggered on the next run of the filter; not 100% deterministic).
+		// This is despite the source model properly emitting begin/EndRemoveRows().
+		RK_DEBUG(APP, DL_ERROR, "Proxy model wants invalid row %d of %d in %s. Triggering reset", source_row, sourceModel()->rowCount(source_parent) - 1, qPrintable(parent->getShortName()));
+		QTimer::singleShot(0, this, [this]() {
+			auto model = sourceModel();
+			const_cast<RKObjectListViewSettings *>(this)->setSourceModel(nullptr);
+			const_cast<RKObjectListViewSettings *>(this)->setSourceModel(model);
+		});
 		return false;
 	}
 	if (filterAcceptsObject(object)) return true;

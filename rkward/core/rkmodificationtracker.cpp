@@ -171,7 +171,7 @@ void RKModificationTracker::objectMetaChanged(RObject *object) {
 		sendListenerNotification(RObjectListener::MetaChanged, object, 0, 0, nullptr);
 
 		QModelIndex object_index = indexFor(object);
-		Q_EMIT dataChanged(object_index, object_index.sibling(object_index.row(), ColumnCount - 1));
+		Q_EMIT dataChanged(object_index, object_index.siblingAtColumn(ColumnCount - 1));
 	}
 }
 
@@ -183,7 +183,7 @@ void RKModificationTracker::objectDataChanged(RObject *object, RObject::ChangeSe
 		delete changes;
 
 		QModelIndex object_index = indexFor(object);
-		Q_EMIT dataChanged(object_index, object_index.sibling(object_index.row(), ColumnCount - 1)); // might have changed dimensions, for instance
+		Q_EMIT dataChanged(object_index, object_index.siblingAtColumn(ColumnCount - 1)); // might have changed dimensions, for instance
 	}
 }
 
