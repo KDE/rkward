@@ -347,23 +347,6 @@ void RKObjectListViewSettings::filterSettingsChanged() {
 
 	if (in_reset_filters) return; // Avoid updating for each setting, individually, when many are changed at once.
 
-	if (filter_widget) {
-		filter_on_name = filter_on_name_box->isChecked();
-		filter_on_label = filter_on_label_box->isChecked();
-		filter_on_class = filter_on_class_box->isChecked();
-		depth_limit = depth_box->currentIndex();
-		hide_functions = type_box->currentIndex() == 2;
-		hide_non_functions = type_box->currentIndex() == 1;
-
-		reset_filters_button->setVisible(!filter_on_name || !filter_on_class || !filter_on_label || (depth_limit != 1) || hide_functions || hide_non_functions || !sline->text().isEmpty());
-	}
-
-	for (int i = 0; i < SettingsCount; ++i) {
-		persistent_settings[i] = persistent_settings_actions[i]->isChecked();
-		if (is_tool_window) RKSettingsModuleObjectBrowser::setDefaultForWorkspace((PersistentSettings)i, persistent_settings[i]);
-		else RKSettingsModuleObjectBrowser::setDefaultForVarselector((PersistentSettings)i, persistent_settings[i]);
-	}
-
 	updateSelf();
 }
 
@@ -494,7 +477,30 @@ void RKObjectListViewSettings::updateSelf() {
 void RKObjectListViewSettings::updateSelfNow() {
 	RK_TRACE(APP);
 
-	invalidate();
+#if QT_VERSION >= QT_VERSION_CHECK(6, 9, 0)
+	beginFilterChange();
+#endif
+	if (filter_widget) {
+		filter_on_name = filter_on_name_box->isChecked();
+		filter_on_label = filter_on_label_box->isChecked();
+		filter_on_class = filter_on_class_box->isChecked();
+		depth_limit = depth_box->currentIndex();
+		hide_functions = type_box->currentIndex() == 2;
+		hide_non_functions = type_box->currentIndex() == 1;
+
+		reset_filters_button->setVisible(!filter_on_name || !filter_on_class || !filter_on_label || (depth_limit != 1) || hide_functions || hide_non_functions || !sline->text().isEmpty());
+	}
+
+	for (int i = 0; i < SettingsCount; ++i) {
+		persistent_settings[i] = persistent_settings_actions[i]->isChecked();
+		if (is_tool_window) RKSettingsModuleObjectBrowser::setDefaultForWorkspace((PersistentSettings)i, persistent_settings[i]);
+		else RKSettingsModuleObjectBrowser::setDefaultForVarselector((PersistentSettings)i, persistent_settings[i]);
+	}
+#if QT_VERSION >= QT_VERSION_CHECK(6, 9, 0)
+	endFilterChange();
+#else
+	invalidateFilter();
+#endif
 
 	Q_EMIT settingsChanged();
 }
