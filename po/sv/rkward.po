@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-25 00:41+0000\n"
+"POT-Creation-Date: 2026-10-11 00:42+0000\n"
 "PO-Revision-Date: 2026-07-07 10:13+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
@@ -2598,7 +2598,7 @@ msgstr "Nollställ filter"
 msgid "Discards the current object search filters"
 msgstr "Kastar de nuvarande objektsökfiltren"
 
-#: rkward/misc/rkobjectlistview.cpp:479
+#: rkward/misc/rkobjectlistview.cpp:448
 #, kde-format
 msgid "Show Fields"
 msgstr "Visa fält"

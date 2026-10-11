@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-25 00:41+0000\n"
+"POT-Creation-Date: 2026-10-11 00:42+0000\n"
 "PO-Revision-Date: 2024-12-23 19:57+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -2551,7 +2551,7 @@ msgstr "Tyhjennä suodattimet"
 msgid "Discards the current object search filters"
 msgstr "Hylkää nykyisen olion hakusuodattimet"
 
-#: rkward/misc/rkobjectlistview.cpp:479
+#: rkward/misc/rkobjectlistview.cpp:448
 #, kde-format
 msgid "Show Fields"
 msgstr "Näytä kentät"

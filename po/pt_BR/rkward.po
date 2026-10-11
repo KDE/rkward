@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-25 00:41+0000\n"
+"POT-Creation-Date: 2026-10-11 00:42+0000\n"
 "PO-Revision-Date: 2026-04-11 08:05-0300\n"
 "Last-Translator: Marcus Gama <marcus.gama@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
@@ -2617,7 +2617,7 @@ msgstr "Limpar filtros"
 msgid "Discards the current object search filters"
 msgstr "Descarta os filtros atuais de pesquisa de objetos"
 
-#: rkward/misc/rkobjectlistview.cpp:479
+#: rkward/misc/rkobjectlistview.cpp:448
 #, kde-format
 msgid "Show Fields"
 msgstr "Mostrar campos"

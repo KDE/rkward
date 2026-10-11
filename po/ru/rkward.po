@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-25 00:41+0000\n"
+"POT-Creation-Date: 2026-10-11 00:42+0000\n"
 "PO-Revision-Date: 2026-06-18 19:55+0200\n"
 "Last-Translator: Alexander Yavorskiy <kekcuha@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
@@ -175,7 +175,7 @@ msgid ""
 "A command running in the R-engine wants you to see the following file(s):"
 "<ul><li>"
 msgstr ""
-"Команда, отданная движку R, требует от вас просмотра следующих файлов:"
+"Команда, отданная механизму R, требует от вас просмотра следующих файлов:"
 "<ul><li>"
 
 #: rkward/agents/showedittextfileagent.cpp:81
@@ -190,10 +190,10 @@ msgid ""
 "Please look at these files, edit them as appropriate, and save them. When "
 "done, press the \"Done\"-button, or close this dialog to resume.<ul><li>"
 msgstr ""
-"Команда, отданная движку R, требует от вас редактирования следующих файлов. "
-"Посмотрите на них, внесете необходимые изменения и выполните сохранение. По "
-"завершении нажмите кнопку «Готово» или закройте этот диалог для продолжения "
-"работы.<ul><li>"
+"Команда, отданная механизму R, требует от вас редактирования следующих "
+"файлов. Посмотрите на них, внесете необходимые изменения и выполните "
+"сохранение. По завершении нажмите кнопку «Готово» или закройте этот диалог "
+"для продолжения работы.<ul><li>"
 
 #: rkward/agents/showedittextfileagent.cpp:85
 #, kde-format
@@ -2633,7 +2633,7 @@ msgstr "Сбросить"
 msgid "Discards the current object search filters"
 msgstr "Сбрасывает текущие фильтры поиска объектов"
 
-#: rkward/misc/rkobjectlistview.cpp:479
+#: rkward/misc/rkobjectlistview.cpp:448
 #, kde-format
 msgid "Show Fields"
 msgstr "Показать поля"
@@ -3879,7 +3879,8 @@ msgstr ""
 #: rkward/rbackend/rkrbackend.cpp:504
 #, kde-format
 msgid "The R engine has shut down with status: %1"
-msgstr "Работа движка R была завершена со следующим сообщением о состоянии: %1"
+msgstr ""
+"Работа механизма R была завершена со следующим сообщением о состоянии: %1"
 
 #: rkward/rbackend/rkrbackend.cpp:525
 #, kde-format
@@ -3887,7 +3888,7 @@ msgid ""
 "The R engine has encountered a fatal error:\n"
 "%1"
 msgstr ""
-"Произошла критическая ошибка движка R:\n"
+"Произошла критическая ошибка механизма R:\n"
 "%1"
 
 #: rkward/rbackend/rkrbackend.cpp:736
@@ -3949,9 +3950,9 @@ msgid ""
 "requires a recompilation.<br><a href=\"rkward://page/"
 "rkward_incompatible_version\">Additional information</a>"
 msgstr ""
-"Версия графического движка R изменена (с %1 на %2).<br>Это изменение требует "
-"пересборки программы.<br><a href=\"rkward://page/rkward_incompatible_version"
-"\">Дополнительные сведения</a>"
+"Версия графического механизма R изменена (с %1 на %2).<br>Это изменение "
+"требует пересборки программы.<br><a href=\"rkward://page/"
+"rkward_incompatible_version\">Дополнительные сведения</a>"
 
 #: rkward/rbackend/rkrbackend.cpp:1642
 #, kde-format
@@ -4085,7 +4086,7 @@ msgstr ""
 #: rkward/rbackend/rkrinterface.cpp:914
 #, kde-format
 msgid "R engine has died"
-msgstr "Движок R прекратил работу"
+msgstr "Механизм R прекратил работу"
 
 #: rkward/rbackend/rkwarddevice/rkgraphicsdevice.cpp:220
 #, kde-format
@@ -4829,22 +4830,22 @@ msgstr "Рабочая область для открытия…"
 #: rkward/rkward.cpp:978
 #, kde-format
 msgid "The <b>R</b> engine is busy."
-msgstr "Движок <b>R</b> занят."
+msgstr "Механизм <b>R</b> занят."
 
 #: rkward/rkward.cpp:982
 #, kde-format
 msgid "The <b>R</b> engine is idle."
-msgstr "Движок <b>R</b> бездействует."
+msgstr "Механизм <b>R</b> бездействует."
 
 #: rkward/rkward.cpp:991
 #, kde-format
 msgid "The <b>R</b> engine is being initialized."
-msgstr "Движок <b>R</b> инициализируется."
+msgstr "Механизм <b>R</b> инициализируется."
 
 #: rkward/rkward.cpp:994
 #, kde-format
 msgid "The <b>R</b> engine is unavailable."
-msgstr "Движок <b>R</b> недоступен."
+msgstr "Механизм <b>R</b> недоступен."
 
 #: rkward/rkward.cpp:1000
 #, kde-format
@@ -4852,8 +4853,8 @@ msgid ""
 "R engine unavailable. See <a href=\"rkward://page/rkward_trouble_shooting"
 "\">troubleshooting</a> for possible solutions."
 msgstr ""
-"Движок R недоступен. Возможные решения доступны в разделе <a href=\"rkward://"
-"page/rkward_trouble_shooting\">устранение неисправностей</a>."
+"Механизм R недоступен. Возможные решения доступны в разделе <a href="
+"\"rkward://page/rkward_trouble_shooting\">устранение неисправностей</a>."
 
 #: rkward/rkward.cpp:1032
 #, kde-format
