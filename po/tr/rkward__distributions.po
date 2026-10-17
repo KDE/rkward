@@ -1,13 +1,13 @@
 # Copyright (C) 2024 This file is copyright:
 # This file is distributed under the same license as the rkward package.
 #
-# SPDX-FileCopyrightText: 2024 Emir SARI <emir_sari@icloud.com>
+# SPDX-FileCopyrightText: 2024, 2026 Emir SARI <emir_sari@icloud.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 08:59+0000\n"
-"PO-Revision-Date: 2024-02-16 11:19+0300\n"
+"PO-Revision-Date: 2026-10-16 19:41+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 23.08.4\n"
+"X-Generator: Lokalize 26.08.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -3688,7 +3688,7 @@ msgstr ""
 #: rkward/plugins/distributions/negative_binomial.rkh:19
 #, kde-format
 msgid "Target number of successes. This need not be an integer."
-msgstr "Hedef başarı sayısı. Bunun bir tamsayı olması gerekmez."
+msgstr "Hedef başarı sayısı. Bunun bir tam sayı olması gerekmez."
 
 #. i18n: ectx: (Loaded from Negative Binomial distribution calculator) <settings> <setting> (refers to element labelled "Probability of success in each trial")
 #: rkward/plugins/distributions/negative_binomial.rkh:20
@@ -4689,7 +4689,7 @@ msgid ""
 "points)."
 msgstr ""
 "İşlevin çizileceği en büyük değer. Bu ayrık bir dağılım olduğundan, işlev "
-"alt yüzdelik dilim ile üst yüzdelik dilim arasındaki tüm tamsayılarda (uç "
+"alt yüzdelik dilim ile üst yüzdelik dilim arasındaki tüm tam sayılarda (uç "
 "noktalar dahil) değerlendirilecektir."
 
 #. i18n: ectx: (Loaded from Loaded from Plot Beta probabilities) <snippet> <spinbox label="...">
@@ -4962,7 +4962,7 @@ msgid ""
 "reference on Negative Binomial distribution."
 msgstr ""
 "Bu, parametrelendirmenin ‘olasılık’ formu kullanıldığındaki <i>boyut</i> "
-"parametresidir. Bu her zaman negatif olmayan bir tamsayıdır. Negatif Binom "
+"parametresidir. Bu her zaman negatif olmayan bir tam sayıdır. Negatif Binom "
 "dağılımı hakkındaki R başvurusuna bakın."
 
 #. i18n: ectx: (Loaded from Plot negative binomial probabilities) <settings> <setting> (refers to element labelled "Dispersion (Size)")

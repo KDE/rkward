@@ -1,13 +1,13 @@
 # Copyright (C) 2024 This file is copyright:
 # This file is distributed under the same license as the rkward package.
 #
-# SPDX-FileCopyrightText: 2024 Emir SARI <emir_sari@icloud.com>
+# SPDX-FileCopyrightText: 2024, 2026 Emir SARI <emir_sari@icloud.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 08:59+0000\n"
-"PO-Revision-Date: 2024-02-19 11:34+0300\n"
+"PO-Revision-Date: 2026-10-16 19:58+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 23.08.4\n"
+"X-Generator: Lokalize 26.08.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1554,7 +1554,7 @@ msgstr "Yaklaşık olarak %1 hücre"
 #: rkward/plugins/distributions/../plots/histogram_options.js:24
 #, kde-format
 msgid "Integers"
-msgstr "Tamsayılar"
+msgstr "Tam sayılar"
 
 #. i18n: ectx: (Loaded from Default histogram options)
 #: rkward/plugins/distributions/../plots/histogram_options.js:27
@@ -1646,11 +1646,11 @@ msgid ""
 "points in the range of the variable. The number of break points in this case "
 "is provided by 'Vector length' (see below)."
 msgstr ""
-"‘Tamsayı sayılar’ veya ‘Kesme noktalarının vektörü’ seçilmediği sürece bu, "
-"<b>hist</b>’in <i>breaks</i> parametresidir. ‘Tamsayı sayılar’ seçeneği, "
-"kesme noktalarını değişkenin en düşüğü ve en yükseği arasındaki tam sayılar "
-"olarak ayarlar. ‘Kırılma noktaları vektörü’ seçeneği, değişken aralığında "
-"eşit aralıklarla kırılma noktaları ayarlar. Bu durumda kırılma noktalarının "
+"‘Tam sayılar veya ‘Kesme noktalarının vektörü’ seçilmediği sürece bu, "
+"<b>hist</b>’in <i>breaks</i> parametresidir. ‘Tam sayılar’ seçeneği, kesme "
+"noktalarını değişkenin en düşüğü ve en yükseği arasındaki tam sayılar olarak "
+"ayarlar. ‘Kırılma noktaları vektörü’ seçeneği, değişken aralığında eşit "
+"aralıklarla kırılma noktaları ayarlar. Bu durumda kırılma noktalarının "
 "sayısı ‘Vektör uzunluğu’ ile sağlanır (aşağıya bakın)."
 
 #. i18n: ectx: (Loaded from Default histogram options) <settings> <setting> (refers to element labelled "Suggested cells")
@@ -1804,7 +1804,7 @@ msgid ""
 "being plotted. This is used in the 'Integer numbers' option for breaks."
 msgstr ""
 "<i>varname</i>: Histogramın çizildiği değişken adına bağlantı vermek için. "
-"Bu, kesmeler için ‘Tamsayı sayılar’ seçeneğinde kullanılır."
+"Bu, kesmeler için ‘Tam sayılar’ seçeneğinde kullanılır."
 
 #. i18n: i18n: "true", "false, and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default histogram options) <technical>
@@ -1917,7 +1917,7 @@ msgstr "Tek bir sayı"
 #: rkward/plugins/distributions/../plots/histogram_options.xml:66
 #, kde-format
 msgid "Integer numbers"
-msgstr "Tamsayı sayılar"
+msgstr "Tam sayılar"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <frame label="Histogram Breakpoints"> <radio label="Method"> <option label="...">
 #: rkward/plugins/distributions/../plots/histogram_options.xml:67
