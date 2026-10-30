@@ -1,8 +1,10 @@
 --- Version 0.8.4 - UNRELEASED
+- Fixed: Potential misdetection of binary paths when running in AppImage
+- Fixed: Potential crash when filtering workspace objects by name
 - Fixed: Setting options(warn=...) resulted in an error with R 4.6.0
 
 --- Version 0.8.3 - Apr-24-2026
-- Fixed: Remove obsolete dep# on dbus
+- Fixed: Remove obsolete dependency on dbus
 - Added: Allow to define custom script preview modes (rk.register.script.preview()))
 - Added: Various small updates to the R highlighting in the R console
 - Added: Allow translation of strings in the rkward R package
