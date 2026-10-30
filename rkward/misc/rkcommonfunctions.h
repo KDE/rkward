@@ -32,6 +32,9 @@ void moveContainer(KXMLGUIClient *client, const QString &tagname, const QString 
 /** Get the base directory where RKWard data files are stored */
 QString getRKWardDataDir();
 
+/** Get the directory of the RKWard binary (usually the same as QCoreApplication::applicationDirPath(), but may differ in AppImage) */
+QString getRKWardAppDir();
+
 /** given a context line, find the end of a quote started by quote_char. @returns -1 if not end of quote was found. */
 int quoteEndPosition(const QChar &quote_char, const QString &haystack, int from = 0);
 

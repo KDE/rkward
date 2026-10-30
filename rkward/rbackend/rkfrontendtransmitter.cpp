@@ -8,6 +8,7 @@ SPDX-License-Identifier: GPL-2.0-or-later
 #include "rkfrontendtransmitter.h"
 
 #include "../misc/rkcommandlineargs.h"
+#include "../misc/rkcommonfunctions.h"
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../settings/rksettingsmoduler.h"
 #include "rkrbackendprotocol_frontend.h"
@@ -142,7 +143,7 @@ void RKFrontendTransmitter::detectAndCheckRBinary() {
 		RK_DEBUG(APP, DL_DEBUG, "Using R as previously user-configured");
 		r_exe = RKSettingsModuleR::userConfiguredRBinary();
 	} else {
-		QDir frontend_path = qApp->applicationDirPath();
+		QDir frontend_path = RKCommonFunctions::getRKWardAppDir();
 		QFileInfo rkward_ini_file(frontend_path.absoluteFilePath(QStringLiteral("rkward.ini")));
 		if (rkward_ini_file.isReadable()) {
 			QSettings rkward_ini(rkward_ini_file.absoluteFilePath(), QSettings::IniFormat);
@@ -204,24 +205,24 @@ void RKFrontendTransmitter::run() {
 		args += debugger.split(u' ');
 	}
 
-	QString backend_executable = findBackendAtPath(QCoreApplication::applicationDirPath());
+	QString backend_executable = findBackendAtPath(RKCommonFunctions::getRKWardAppDir());
 #ifdef Q_OS_MACOS
 	if (backend_executable.isEmpty())
 		backend_executable =
-		    findBackendAtPath(QCoreApplication::applicationDirPath() + u"/../Resources"_s); // an appropriate location in a standalone app-bundle
+		    findBackendAtPath(RKCommonFunctions::getRKWardAppDir() + u"/../Resources"_s); // an appropriate location in a standalone app-bundle
 #endif
 	if (backend_executable.isEmpty())
-		backend_executable = findBackendAtPath(QCoreApplication::applicationDirPath() + u"/rbackend"_s); // for running directly from the build-dir
+		backend_executable = findBackendAtPath(RKCommonFunctions::getRKWardAppDir() + u"/rbackend"_s); // for running directly from the build-dir
 	if (backend_executable.isEmpty())
-		backend_executable = findBackendAtPath(QCoreApplication::applicationDirPath() + u"/../rbackend"_s); // for running directly from the build-test-dir
+		backend_executable = findBackendAtPath(RKCommonFunctions::getRKWardAppDir() + u"/../rbackend"_s); // for running directly from the build-test-dir
 	if (backend_executable.isEmpty())
 		backend_executable =
-		    findBackendAtPath(QCoreApplication::applicationDirPath() + u"/"_s + QStringLiteral(REL_PATH_TO_LIBEXEC)); // as calculated from cmake
+		    findBackendAtPath(RKCommonFunctions::getRKWardAppDir() + u"/"_s + QStringLiteral(REL_PATH_TO_LIBEXEC)); // as calculated from cmake
 #ifdef Q_OS_MACOS
-	if (backend_executable.isEmpty()) backend_executable = findBackendAtPath(QCoreApplication::applicationDirPath() + u"/../../../rbackend"_s);
+	if (backend_executable.isEmpty()) backend_executable = findBackendAtPath(RKCommonFunctions::getRKWardAppDir() + u"/../../../rbackend"_s);
 	if (backend_executable.isEmpty())
 		backend_executable =
-		    findBackendAtPath(QCoreApplication::applicationDirPath() + u"/../Frameworks/libexec"_s); // For running from .dmg created by craft --package rkward
+		    findBackendAtPath(RKCommonFunctions::getRKWardAppDir() + u"/../Frameworks/libexec"_s); // For running from .dmg created by craft --package rkward
 #endif
 	if (backend_executable.isEmpty()) backend_executable = findBackendAtPath(QStringLiteral(RKWARD_BACKEND_PATH));
 	if (backend_executable.isEmpty()) {
@@ -232,14 +233,14 @@ void RKFrontendTransmitter::run() {
 
 #if defined(RK_DLOPEN_LIBRSO)
 	/** NOTE: For a description of the rationale for this involved loading procedure rkapi.h ! */
-	QString backend_lib = findBackendLibAtPath(QCoreApplication::applicationDirPath()); // for running directly from the build tree, but also covers windows
+	QString backend_lib = findBackendLibAtPath(RKCommonFunctions::getRKWardAppDir()); // for running directly from the build tree, but also covers windows
 	if (backend_lib.isEmpty())
-		backend_lib = findBackendLibAtPath(QCoreApplication::applicationDirPath() + u"/"_s + QStringLiteral(REL_PATH_TO_LIB)); // regular installation; rel path between bin and lib dir is calculated in cmake
+		backend_lib = findBackendLibAtPath(RKCommonFunctions::getRKWardAppDir() + u"/"_s + QStringLiteral(REL_PATH_TO_LIB)); // regular installation; rel path between bin and lib dir is calculated in cmake
 	if (backend_lib.isEmpty())
 		backend_lib = findBackendLibAtPath(QFileInfo(backend_executable).absolutePath()); // backend and lib both installed in libexec or similar
 #	if defined(Q_OS_MACOS)
 	if (backend_lib.isEmpty())
-		backend_lib = findBackendLibAtPath(QCoreApplication::applicationDirPath() + u"/../Frameworks"_s); // MacOS bundle: rkward in /MacOS, lib in /Framweorks
+		backend_lib = findBackendLibAtPath(RKCommonFunctions::getRKWardAppDir() + u"/../Frameworks"_s); // MacOS bundle: rkward in /MacOS, lib in /Framweorks
 #	endif
 #	if defined(Q_OS_WIN) || defined(Q_OS_MACOS)
 	env.append(QStringLiteral("RK_BACKEND_LIB=") + backend_lib);

@@ -162,7 +162,7 @@ void getCurrentSymbolOffset(const QString &context_line, int cursor_pos, bool st
 
 static QString findPathFromAppDir(const QStringList &candidates) {
 	for (int i = 0; i < candidates.size(); ++i) {
-		QString candidate = QCoreApplication::applicationDirPath() + u'/' + candidates[i] + u'/';
+		QString candidate = getRKWardAppDir() + u'/' + candidates[i] + u'/';
 		if (QFile::exists(candidate)) return candidate;
 	}
 	return QString();
@@ -190,6 +190,19 @@ QString getRKWardDataDir() {
 		RK_DEBUG(APP, DL_ERROR, "resource.ver not found. Data path(s): %s", qPrintable(QStandardPaths::standardLocations(QStandardPaths::AppDataLocation).join(u':')));
 	}
 	return rkward_data_dir;
+}
+
+QString getRKWardAppDir() {
+	static QString rkward_app_dir;
+	if (rkward_app_dir.isNull()) {
+		rkward_app_dir = QCoreApplication::applicationDirPath();
+		const auto appdir = QString::fromLocal8Bit(qgetenv("APPDIR"));
+		if (rkward_app_dir.startsWith(appdir) && !appdir.isEmpty() && !QFile::exists(rkward_app_dir + u"/rkward"_s)) {
+			RK_DEBUG(APP, DL_INFO, "Running in Appimage with bad applicationDirPath() - workaround applied");
+			rkward_app_dir = appdir + u"/usr/bin"_s;
+		}
+	}
+	return rkward_app_dir;
 }
 
 QString escape(const QString &in) {

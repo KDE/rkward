@@ -242,7 +242,7 @@ int main(int argc, char *argv[]) {
 	}
 #elif defined(Q_OS_UNIX)
 	QStringList data_dirs = QString::fromLocal8Bit(qgetenv("XDG_DATA_DIRS")).split(PATH_VAR_SEP);
-	QString reldatadir = QDir::cleanPath(QDir(app.applicationDirPath()).absoluteFilePath(QStringLiteral(REL_PATH_TO_DATA)));
+	QString reldatadir = QDir::cleanPath(QDir(RKCommonFunctions::getRKWardAppDir()).absoluteFilePath(QStringLiteral(REL_PATH_TO_DATA)));
 	if (!data_dirs.contains(reldatadir)) {
 		RK_DEBUG(APP, DL_WARNING, "Running from non-standard path? Adding %s to XDG_DATA_DIRS", qPrintable(reldatadir));
 		data_dirs.prepend(reldatadir);
@@ -251,8 +251,8 @@ int main(int argc, char *argv[]) {
 #endif
 	// This is _not_ the same path adjustment as above: Make sure to add the current dir to the path, before launching R and backend.
 	QStringList syspaths = QString::fromLocal8Bit(qgetenv("PATH")).split(PATH_VAR_SEP);
-	if (!syspaths.contains(app.applicationDirPath())) {
-		syspaths.prepend(app.applicationDirPath());
+	if (!syspaths.contains(RKCommonFunctions::getRKWardAppDir())) {
+		syspaths.prepend(RKCommonFunctions::getRKWardAppDir());
 		qputenv("PATH", syspaths.join(PATH_VAR_SEP).toLocal8Bit());
 	}
 
