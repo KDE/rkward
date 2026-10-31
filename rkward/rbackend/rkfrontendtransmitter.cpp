@@ -67,16 +67,15 @@ bool pathIsChildOf(const QString &parent, const QString &child) {
 	return QFileInfo(child).canonicalFilePath().startsWith(QFileInfo(parent).canonicalFilePath());
 }
 
-void removeFromPathList(const char *varname, bool (*shouldRemove)(const QString &path)) {
+void filterEnvPath(QProcessEnvironment *env, const QString &varname, bool (*shouldRemove)(const QString &path)) {
 #ifdef Q_OS_WIN
 #	define PATH_VAR_SEP u';'
 #else
 #	define PATH_VAR_SEP u':'
 #endif
-	auto var = qgetenv(varname);
-	if (var.isEmpty()) return;
+	if (!env->contains(varname)) return;
 
-	const auto list = QString::fromLocal8Bit(var).split(PATH_VAR_SEP);
+	const auto list = env->value(varname).split(PATH_VAR_SEP);
 	QStringList newlist;
 	for (const auto &str : list) {
 		if (shouldRemove(str)) {
@@ -85,7 +84,7 @@ void removeFromPathList(const char *varname, bool (*shouldRemove)(const QString 
 			newlist.append(str);
 		}
 	}
-	qputenv(varname, newlist.join(PATH_VAR_SEP).toLocal8Bit());
+	env->insert(varname, newlist.join(PATH_VAR_SEP));
 }
 
 RKFrontendTransmitter::RKFrontendTransmitter(RKRBackendProtocolFrontend *frontend) : RKAbstractTransmitter(), frontend(frontend) {
@@ -186,16 +185,36 @@ void RKFrontendTransmitter::run() {
 	backend = new QProcess(this);
 	connect(backend, static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished), this, &RKFrontendTransmitter::backendExit);
 
-	QStringList env = QProcess::systemEnvironment();
+	auto env = QProcessEnvironment::systemEnvironment();
 	// Try to synchronize language selection in frontend and backend
-	int index = env.indexOf(QRegularExpression(QStringLiteral("^LANGUAGE=.*"), QRegularExpression::CaseInsensitiveOption)); // clazy:exclude=use-static-qregularexpression ; it'll only be craeted once
-	if (index >= 0) env.removeAt(index);
-	env.append(u"LANGUAGE="_s + QLocale().name().section(u'_', 0, 0));
+	env.insert(u"LANGUAGE"_s, QLocale().name().section(u'_', 0, 0));
 
-	if (RKSessionVars::runningInAppImage() && RKSessionVars::isPathInAppImage(RKSessionVars::RBinary())) {
-		RK_DEBUG(RBACKEND, DL_DEBUG, "Detected running from AppImage with external R.");
-		removeFromPathList("LD_LIBRARY_PATH", RKSessionVars::isPathInAppImage);
-		removeFromPathList("PATH", RKSessionVars::isPathInAppImage);
+	if (RKSessionVars::runningInAppImage() && !RKSessionVars::isPathInAppImage(RKSessionVars::RBinary())) {
+		RK_DEBUG(RBACKEND, DL_INFO, "Detected running from AppImage with external R.");
+		filterEnvPath(&env, u"LD_LIBRARY_PATH"_s, RKSessionVars::isPathInAppImage);
+		filterEnvPath(&env, u"PATH"_s, RKSessionVars::isPathInAppImage);
+	} else if (RKSessionVars::runningInAppImage()) {
+		RK_DEBUG(RBACKEND, DL_INFO, "Detected running from AppImage with embedded R.");
+		if (!env.contains(u"CURL_CA_BUNDLE"_s)) {
+			// R inside AppImage uses embedded libcurl, which does not know where to look for system ca certs.
+			// Do our best to help it. Note that we *did* warn users about limited features in embedded R, though.
+			// See also: https://curl.se/mail/lib-2022-05/0038.html
+			const auto ca_curl_bundle_locations = QStringList({u"/etc/ssl/ca-bundle.pem"_s,
+			                                                   u"/etc/ssl/certs/ca-certificates.crt"_s,
+			                                                   u"/etc/ssl/cert.pem"_s,
+			                                                   u"/etc/pki/tls/certs/ca-bundle.crt"_s,
+			                                                   u"/etc/pki/tls/cert.pem"_s,
+			                                                   u"/etc/pki/tls/cacert.pem"_s,
+			                                                   u"/usr/local/share/certs/ca-root-nss.crt "_s,
+			                                                   u"/usr/share/ssl/certs/ca-bundle.crt"_s,
+			                                                   u"/usr/share/curl/curl-ca-bundle.crt"_s});
+			for (const auto &candidate : ca_curl_bundle_locations) {
+				if (QFile::exists(candidate)) {
+					env.insert(u"CURL_CA_BUNDLE"_s, candidate);
+					break;
+				}
+			}
+		}
 	}
 
 	QStringList args;
@@ -243,16 +262,16 @@ void RKFrontendTransmitter::run() {
 		backend_lib = findBackendLibAtPath(RKCommonFunctions::getRKWardAppDir() + u"/../Frameworks"_s); // MacOS bundle: rkward in /MacOS, lib in /Framweorks
 #	endif
 #	if defined(Q_OS_WIN) || defined(Q_OS_MACOS)
-	env.append(QStringLiteral("RK_BACKEND_LIB=") + backend_lib);
+	env.insert(QStringLiteral("RK_BACKEND_LIB"), backend_lib);
 #	else
-	env.append(QStringLiteral("RK_BACKEND_LIB=") + QFileInfo(backend_lib).fileName());
+	env.insert(QStringLiteral("RK_BACKEND_LIB"), QFileInfo(backend_lib).fileName());
 	QTemporaryDir rkward_only_dir(QDir::tempPath() + u"/rkward_only"_s);
 	QFile(QFileInfo(backend_lib).absolutePath()).link(rkward_only_dir.filePath(QStringLiteral("_rkward_only_dlpath")));
-	env.append(QStringLiteral("RK_ADD_LDPATH=./_rkward_only_dlpath"));
-	env.append(QStringLiteral("RK_LD_CWD=") + rkward_only_dir.path());
+	env.insert(QStringLiteral("RK_ADD_LDPATH"), u"./_rkward_only_dlpath"_s);
+	env.insert(QStringLiteral("RK_LD_CWD"), rkward_only_dir.path());
 #	endif
 #endif
-	backend->setEnvironment(env);
+	backend->setProcessEnvironment(env);
 
 #ifndef Q_OS_MACOS
 	// Needed on for paths with spaces. R CMD is too simple to deal with those, even if we provide proper quoting.
