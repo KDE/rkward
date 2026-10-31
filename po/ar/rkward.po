@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-11 00:42+0000\n"
+"POT-Creation-Date: 2026-10-31 00:47+0000\n"
 "PO-Revision-Date: 2026-08-10 18:38+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
@@ -2408,7 +2408,7 @@ msgstr ""
 "ملف أو ملفات لفتحها، عادةً مساحة عمل، أو ملف نصي لـ R. عند تحميل عدة أشياء، "
 "يجب عليك تحديد مساحة العمل، أولًا."
 
-#: rkward/misc/rkcommonfunctions.cpp:242
+#: rkward/misc/rkcommonfunctions.cpp:255
 #, kde-format
 msgid ""
 "<p><em>Note:</em> This setting does not take effect until you restart RKWard."
@@ -3694,7 +3694,7 @@ msgstr "الأمر"
 msgid "Description"
 msgstr "الوصف"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:119
+#: rkward/rbackend/rkfrontendtransmitter.cpp:120
 #, kde-format
 msgid ""
 "RKWard failed to detect an R installation on this system. Either R is not "
@@ -3703,14 +3703,14 @@ msgstr ""
 "فشل أر كي وارد في اكتشاف تثبيت R على هذا النظام. إما أن R غير مثبت، أو ليس "
 "في أحد مواقع التثبيت القياسية."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:126
+#: rkward/rbackend/rkfrontendtransmitter.cpp:127
 #, kde-format
 msgid ""
 "The configured R installation at <b>%1</b> does not exist or is not an "
 "executable."
 msgstr "تثبيت R المُضبَط في <b>%1</b> غير موجود أو ليس ملفًا تنفيذيًا."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:228
+#: rkward/rbackend/rkfrontendtransmitter.cpp:229
 #, kde-format
 msgid ""
 "The backend executable could not be found. This is likely to be a problem "
@@ -3719,12 +3719,12 @@ msgstr ""
 "تعذَّر العثور على الملف التنفيذي للواجهة الخلفية. من المحتمل أن تكون هذه مشكلة "
 "في تثبيتك."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:322
+#: rkward/rbackend/rkfrontendtransmitter.cpp:323
 #, kde-format
 msgid "The backend executable could not be started. Error message was: %1"
 msgstr "تعذَّر بدء الملف التنفيذي للواجهة الخلفية. كانت رسالة الخطأ هي: %1"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:376
+#: rkward/rbackend/rkfrontendtransmitter.cpp:377
 #, kde-format
 msgid ""
 "Error during handshake with backend process. Expected token '%1', received "
@@ -3733,7 +3733,7 @@ msgstr ""
 "حدث خطأ أثناء المصافحة مع عملية الواجهة الخلفية. الرمز المتوقع '%1'، والرمز "
 "المستلَم '%2'"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:381
+#: rkward/rbackend/rkfrontendtransmitter.cpp:382
 #, kde-format
 msgid ""
 "Version mismatch during handshake with backend process. Frontend is version "
@@ -3744,18 +3744,18 @@ msgstr ""
 "الأمامية هي الإصدار '%1' بينما الواجهة الخلفية هي '%2'.\n"
 "يرجى إصلاح تثبيتك."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:414
+#: rkward/rbackend/rkfrontendtransmitter.cpp:415
 #, kde-format
 msgid ""
 "The backend process could not be started. Please check your installation."
 msgstr "تعذَّر بدء عملية الواجهة الخلفية. يرجى التحقق من تثبيتك."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:415
+#: rkward/rbackend/rkfrontendtransmitter.cpp:416
 #, kde-format
 msgid "The backend process failed to start with exit code %1, message: '%2'."
 msgstr "فشلت عملية الواجهة الخلفية في البدء برمز خروج %1، الرسالة: '%2'."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:416
+#: rkward/rbackend/rkfrontendtransmitter.cpp:417
 #, kde-format
 msgid "Backend process has exited with code %1, message: '%2'."
 msgstr "خرجت عملية الواجهة الخلفية بالرمز %1، الرسالة: '%2'."

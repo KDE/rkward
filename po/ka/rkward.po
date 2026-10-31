@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-11 00:42+0000\n"
+"POT-Creation-Date: 2026-10-31 00:47+0000\n"
 "PO-Revision-Date: 2026-04-11 04:36+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -2429,7 +2429,7 @@ msgstr ""
 "გასახსნელი ფაილი, ან ფაილები. ჩვეულებრივ სამუშაო სივრცე, ან R-ის სკრიპტის "
 "ფაილი. როცა ტვირთავთ რამდენიმე რამეს, ჯერ სამუშაო სივრცე ჩატვირთეთ."
 
-#: rkward/misc/rkcommonfunctions.cpp:242
+#: rkward/misc/rkcommonfunctions.cpp:255
 #, kde-format
 msgid ""
 "<p><em>Note:</em> This setting does not take effect until you restart RKWard."
@@ -3726,7 +3726,7 @@ msgstr "ბრძანება"
 msgid "Description"
 msgstr "აღწერა"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:119
+#: rkward/rbackend/rkfrontendtransmitter.cpp:120
 #, kde-format
 msgid ""
 "RKWard failed to detect an R installation on this system. Either R is not "
@@ -3735,7 +3735,7 @@ msgstr ""
 "RKWard-მა ამ სისტემაზე R-ის ფაილები ვერ იპოვა. ან R დაყენებული არაა, ან ის "
 "სტანდარტული დაყენების ადგილას არაა."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:126
+#: rkward/rbackend/rkfrontendtransmitter.cpp:127
 #, kde-format
 msgid ""
 "The configured R installation at <b>%1</b> does not exist or is not an "
@@ -3743,7 +3743,7 @@ msgid ""
 msgstr ""
 "მორგებული R-ის ფაილები მისამართზე <b>%1</b> არ არსებობს, ან გაშვებადი არაა."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:228
+#: rkward/rbackend/rkfrontendtransmitter.cpp:229
 #, kde-format
 msgid ""
 "The backend executable could not be found. This is likely to be a problem "
@@ -3752,13 +3752,13 @@ msgstr ""
 "უკანაბოლოს გამშვები ფაილი აღმოჩენილი არაა. როგორც ჩანს, პროგრამის ფაილებში "
 "პრობლემაა."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:322
+#: rkward/rbackend/rkfrontendtransmitter.cpp:323
 #, kde-format
 msgid "The backend executable could not be started. Error message was: %1"
 msgstr ""
 "უკანაბოლოს გამშვები ფაილის შესრულება შეუძლებელია. შეცდომის შეტყობინება: %1"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:376
+#: rkward/rbackend/rkfrontendtransmitter.cpp:377
 #, kde-format
 msgid ""
 "Error during handshake with backend process. Expected token '%1', received "
@@ -3767,7 +3767,7 @@ msgstr ""
 "შეცდომა უკანაბოლოს პროცესთან კომუნიკაციის დაწყებისას. მოველოდი კოდს '%1'. "
 "მივიღე კოდი '%2'"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:381
+#: rkward/rbackend/rkfrontendtransmitter.cpp:382
 #, kde-format
 msgid ""
 "Version mismatch during handshake with backend process. Frontend is version "
@@ -3778,19 +3778,19 @@ msgstr ""
 "'%1', უკანაბოლოსი კი '%2'.\n"
 "გაასწორეთ პროგრამის ფაილები."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:414
+#: rkward/rbackend/rkfrontendtransmitter.cpp:415
 #, kde-format
 msgid ""
 "The backend process could not be started. Please check your installation."
 msgstr ""
 "უკანაბოლოს პროცესის გაშვება შეუძლებელია. შეამოწმეთ თქვენი პროგრამის ფაილები."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:415
+#: rkward/rbackend/rkfrontendtransmitter.cpp:416
 #, kde-format
 msgid "The backend process failed to start with exit code %1, message: '%2'."
 msgstr "უკანაბოლოს პროცესის გაშვება ჩავარდა კოდით %1, შეტყობინება '%2'."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:416
+#: rkward/rbackend/rkfrontendtransmitter.cpp:417
 #, kde-format
 msgid "Backend process has exited with code %1, message: '%2'."
 msgstr "უკანაბოლოს პროცესი დასრულდა კოდით %1, შეტყობინებით: '%2'."

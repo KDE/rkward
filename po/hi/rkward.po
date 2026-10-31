@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-11 00:42+0000\n"
+"POT-Creation-Date: 2026-10-31 00:47+0000\n"
 "PO-Revision-Date: 2024-12-15 19:29+0530\n"
 "Last-Translator: kali <skkalwar999@gmail.com>\n"
 "Language-Team: Hindi <kde-i18n-doc@kde.org>\n"
@@ -2429,7 +2429,7 @@ msgstr ""
 "खोलने के लिए फ़ाइल या फ़ाइलें, आम तौर पर एक वर्कस्पेस, या एक आर स्क्रिप्ट फ़ाइल। कई चीजें "
 "लोड करते समय, आपको पहले वर्कस्पेस निर्दिष्ट करना चाहिए।"
 
-#: rkward/misc/rkcommonfunctions.cpp:242
+#: rkward/misc/rkcommonfunctions.cpp:255
 #, kde-format
 msgid ""
 "<p><em>Note:</em> This setting does not take effect until you restart RKWard."
@@ -3719,7 +3719,7 @@ msgstr "आज्ञा"
 msgid "Description"
 msgstr "विवरण"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:119
+#: rkward/rbackend/rkfrontendtransmitter.cpp:120
 #, kde-format
 msgid ""
 "RKWard failed to detect an R installation on this system. Either R is not "
@@ -3728,7 +3728,7 @@ msgstr ""
 "RKWard इस सिस्टम पर R इंस्टॉलेशन का पता लगाने में विफल रहा। या तो R इंस्टॉल नहीं है, या "
 "मानक इंस्टॉलेशन स्थानों में से किसी एक पर नहीं है।"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:126
+#: rkward/rbackend/rkfrontendtransmitter.cpp:127
 #, kde-format
 msgid ""
 "The configured R installation at <b>%1</b> does not exist or is not an "
@@ -3736,19 +3736,19 @@ msgid ""
 msgstr ""
 "<b>%1</b> पर कॉन्फ़िगर किया गया R इंस्टॉलेशन मौजूद नहीं है या निष्पादन योग्य नहीं है।"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:228
+#: rkward/rbackend/rkfrontendtransmitter.cpp:229
 #, kde-format
 msgid ""
 "The backend executable could not be found. This is likely to be a problem "
 "with your installation."
 msgstr "बैकएंड एक्जीक्यूटेबल नहीं मिल सका। यह संभवतः आपके इंस्टॉलेशन में कोई समस्या है।"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:322
+#: rkward/rbackend/rkfrontendtransmitter.cpp:323
 #, kde-format
 msgid "The backend executable could not be started. Error message was: %1"
 msgstr "बैकएंड एक्जीक्यूटेबल शुरू नहीं किया जा सका। त्रुटि संदेश था: %1"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:376
+#: rkward/rbackend/rkfrontendtransmitter.cpp:377
 #, kde-format
 msgid ""
 "Error during handshake with backend process. Expected token '%1', received "
@@ -3756,7 +3756,7 @@ msgid ""
 msgstr ""
 "बैकएंड प्रक्रिया के साथ हैंडशेक के दौरान त्रुटि। अपेक्षित टोकन '%1', प्राप्त टोकन '%2'"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:381
+#: rkward/rbackend/rkfrontendtransmitter.cpp:382
 #, kde-format
 msgid ""
 "Version mismatch during handshake with backend process. Frontend is version "
@@ -3766,18 +3766,18 @@ msgstr ""
 "बैकएंड प्रक्रिया के साथ हैंडशेक के दौरान संस्करण बेमेल। फ्रंटएंड संस्करण '%1' है जबकि बैकएंड '%2' "
 "है। कृपया अपनी स्थापना ठीक करें।"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:414
+#: rkward/rbackend/rkfrontendtransmitter.cpp:415
 #, kde-format
 msgid ""
 "The backend process could not be started. Please check your installation."
 msgstr "बैकएंड प्रक्रिया शुरू नहीं की जा सकी। कृपया अपनी स्थापना की जाँच करें।"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:415
+#: rkward/rbackend/rkfrontendtransmitter.cpp:416
 #, kde-format
 msgid "The backend process failed to start with exit code %1, message: '%2'."
 msgstr "बैकएंड प्रक्रिया निकास कोड %1, संदेश: '%2' के साथ प्रारंभ करने में विफल रही।"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:416
+#: rkward/rbackend/rkfrontendtransmitter.cpp:417
 #, kde-format
 msgid "Backend process has exited with code %1, message: '%2'."
 msgstr "बैकएंड प्रक्रिया कोड %1, संदेश: '%2' के साथ बाहर निकल गई है।"
