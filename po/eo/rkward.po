@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-04-21 02:38+0000\n"
+"POT-Creation-Date: 2026-10-31 02:50+0000\n"
 "PO-Revision-Date: 2024-08-22 17:49+0200\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: Esperanto <kde-i18n-doc@kde.org>\n"
@@ -2456,7 +2456,7 @@ msgstr ""
 "Dosiero aŭ dosieroj por malfermi, tipe laborspaco, aŭ R-skriptodosiero. Kiam "
 "vi ŝargas plurajn aferojn, vi unue specifu la laborspacon."
 
-#: rkward/misc/rkcommonfunctions.cpp:242
+#: rkward/misc/rkcommonfunctions.cpp:255
 #, kde-format
 msgid ""
 "<p><em>Note:</em> This setting does not take effect until you restart RKWard."
@@ -3771,7 +3771,7 @@ msgstr "Komando"
 msgid "Description"
 msgstr "Priskribo"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:119
+#: rkward/rbackend/rkfrontendtransmitter.cpp:120
 #, kde-format
 msgid ""
 "RKWard failed to detect an R installation on this system. Either R is not "
@@ -3780,7 +3780,7 @@ msgstr ""
 "RKWard malsukcesis detekti R-instalaĵon sur ĉi tiu sistemo. Aŭ R ne estas "
 "instalita, aŭ ne ĉe unu el la normaj installokoj."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:126
+#: rkward/rbackend/rkfrontendtransmitter.cpp:127
 #, kde-format
 msgid ""
 "The configured R installation at <b>%1</b> does not exist or is not an "
@@ -3788,7 +3788,7 @@ msgid ""
 msgstr ""
 "La agordita instalo de R ĉe <b>%1</b> ne ekzistas aŭ ne estas plenumebla."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:228
+#: rkward/rbackend/rkfrontendtransmitter.cpp:229
 #, kde-format
 msgid ""
 "The backend executable could not be found. This is likely to be a problem "
@@ -3797,12 +3797,12 @@ msgstr ""
 "La backend rulebla ne estis trovita. Ĉi tio verŝajne estos problemo kun via "
 "instalado."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:322
+#: rkward/rbackend/rkfrontendtransmitter.cpp:323
 #, kde-format
 msgid "The backend executable could not be started. Error message was: %1"
 msgstr "La backend rulebla ne povis esti komencita. Erarmesaĝo estis: %1"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:376
+#: rkward/rbackend/rkfrontendtransmitter.cpp:377
 #, kde-format
 msgid ""
 "Error during handshake with backend process. Expected token '%1', received "
@@ -3811,7 +3811,7 @@ msgstr ""
 "Eraro dum manpremo kun malantaŭa procezo. Atendita ĵetono '%1', ricevita "
 "ĵetono '%2'"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:381
+#: rkward/rbackend/rkfrontendtransmitter.cpp:382
 #, kde-format
 msgid ""
 "Version mismatch during handshake with backend process. Frontend is version "
@@ -3822,7 +3822,7 @@ msgstr ""
 "'%1' dum backend estas '%2'.\n"
 "Bonvolu ripari vian instaladon."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:414
+#: rkward/rbackend/rkfrontendtransmitter.cpp:415
 #, kde-format
 msgid ""
 "The backend process could not be started. Please check your installation."
@@ -3830,12 +3830,12 @@ msgstr ""
 "La malantaŭa procezo ne povus esti komencita. Bonvolu kontroli vian "
 "instaladon."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:415
+#: rkward/rbackend/rkfrontendtransmitter.cpp:416
 #, kde-format
 msgid "The backend process failed to start with exit code %1, message: '%2'."
 msgstr "La malantaŭa procezo malsukcesis komenci kun elirkodo %1, mesaĝo: '%2'"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:416
+#: rkward/rbackend/rkfrontendtransmitter.cpp:417
 #, kde-format
 msgid "Backend process has exited with code %1, message: '%2'."
 msgstr "Funkcia procezo eliris kun kodo %1, mesaĝo: '%2'."

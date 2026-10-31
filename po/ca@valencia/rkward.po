@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-04-21 02:38+0000\n"
+"POT-Creation-Date: 2026-10-31 02:50+0000\n"
 "PO-Revision-Date: 2026-09-06 16:47+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -2494,7 +2494,7 @@ msgstr ""
 "de script d'R. En carregar diverses coses, primer hauríeu d'especificar "
 "l'espai de treball."
 
-#: rkward/misc/rkcommonfunctions.cpp:242
+#: rkward/misc/rkcommonfunctions.cpp:255
 #, kde-format
 msgid ""
 "<p><em>Note:</em> This setting does not take effect until you restart RKWard."
@@ -3834,7 +3834,7 @@ msgstr "Ordre"
 msgid "Description"
 msgstr "Descripció"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:119
+#: rkward/rbackend/rkfrontendtransmitter.cpp:120
 #, kde-format
 msgid ""
 "RKWard failed to detect an R installation on this system. Either R is not "
@@ -3844,7 +3844,7 @@ msgstr ""
 "està instal·lat, o no ho està en una de les ubicacions estàndard "
 "d'instal·lació."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:126
+#: rkward/rbackend/rkfrontendtransmitter.cpp:127
 #, kde-format
 msgid ""
 "The configured R installation at <b>%1</b> does not exist or is not an "
@@ -3852,7 +3852,7 @@ msgid ""
 msgstr ""
 "La instal·lació d'R configurada a <b>%1</b> no existix o no és un executable."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:228
+#: rkward/rbackend/rkfrontendtransmitter.cpp:229
 #, kde-format
 msgid ""
 "The backend executable could not be found. This is likely to be a problem "
@@ -3861,13 +3861,13 @@ msgstr ""
 "No s'ha pogut trobar l'executable del dorsal. Probablement es tracta d'un "
 "problema amb la instal·lació."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:322
+#: rkward/rbackend/rkfrontendtransmitter.cpp:323
 #, kde-format
 msgid "The backend executable could not be started. Error message was: %1"
 msgstr ""
 "No s'ha pogut iniciar l'executable del dorsal. El missatge d'error és: %1"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:376
+#: rkward/rbackend/rkfrontendtransmitter.cpp:377
 #, kde-format
 msgid ""
 "Error during handshake with backend process. Expected token '%1', received "
@@ -3876,7 +3876,7 @@ msgstr ""
 "S'ha produït un error durant la conformitat de connexió amb el procés del "
 "dorsal. S'esperava el testimoni «%1», i s'ha rebut el testimoni «%2»"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:381
+#: rkward/rbackend/rkfrontendtransmitter.cpp:382
 #, kde-format
 msgid ""
 "Version mismatch during handshake with backend process. Frontend is version "
@@ -3887,20 +3887,20 @@ msgstr ""
 "dorsal. El frontal té la versió «%1» mentre que el dorsal té la «%2».\n"
 "Esmeneu la instal·lació."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:414
+#: rkward/rbackend/rkfrontendtransmitter.cpp:415
 #, kde-format
 msgid ""
 "The backend process could not be started. Please check your installation."
 msgstr "No s'ha pogut iniciar el dorsal. Comproveu la instal·lació."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:415
+#: rkward/rbackend/rkfrontendtransmitter.cpp:416
 #, kde-format
 msgid "The backend process failed to start with exit code %1, message: '%2'."
 msgstr ""
 "El procés del dorsal ha fallat mentre s'iniciava amb el codi d'eixida %1, "
 "missatge: «%2»."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:416
+#: rkward/rbackend/rkfrontendtransmitter.cpp:417
 #, kde-format
 msgid "Backend process has exited with code %1, message: '%2'."
 msgstr "El procés del dorsal ha eixit amb el codi %1, missatge: «%2»."

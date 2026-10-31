@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-04-21 02:38+0000\n"
+"POT-Creation-Date: 2026-10-31 02:50+0000\n"
 "PO-Revision-Date: 2026-04-21 08:07+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
@@ -2500,7 +2500,7 @@ msgstr ""
 "скриптів R. Якщо завантажується декілька файлів, першим слід вказати файл "
 "робочого простору."
 
-#: rkward/misc/rkcommonfunctions.cpp:242
+#: rkward/misc/rkcommonfunctions.cpp:255
 #, kde-format
 msgid ""
 "<p><em>Note:</em> This setting does not take effect until you restart RKWard."
@@ -3823,7 +3823,7 @@ msgstr "Команда"
 msgid "Description"
 msgstr "Опис"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:119
+#: rkward/rbackend/rkfrontendtransmitter.cpp:120
 #, kde-format
 msgid ""
 "RKWard failed to detect an R installation on this system. Either R is not "
@@ -3833,7 +3833,7 @@ msgstr ""
 "взагалі не встановлено, або його встановлено не до одного зі стандартних "
 "каталогів для встановлення."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:126
+#: rkward/rbackend/rkfrontendtransmitter.cpp:127
 #, kde-format
 msgid ""
 "The configured R installation at <b>%1</b> does not exist or is not an "
@@ -3842,7 +3842,7 @@ msgstr ""
 "Налаштованого місця встановлення R у <b>%1</b> не існує або там не "
 "зберігається виконуваного файла."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:228
+#: rkward/rbackend/rkfrontendtransmitter.cpp:229
 #, kde-format
 msgid ""
 "The backend executable could not be found. This is likely to be a problem "
@@ -3851,13 +3851,13 @@ msgstr ""
 "Не вдалося знайти виконуваний файл модуля. Ймовірно, це пов’язано із "
 "проблемами зі встановленими компонентами."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:322
+#: rkward/rbackend/rkfrontendtransmitter.cpp:323
 #, kde-format
 msgid "The backend executable could not be started. Error message was: %1"
 msgstr ""
 "Не вдалося запустити виконуваний файл модуля. Повідомлення щодо помилки: %1"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:376
+#: rkward/rbackend/rkfrontendtransmitter.cpp:377
 #, kde-format
 msgid ""
 "Error during handshake with backend process. Expected token '%1', received "
@@ -3866,7 +3866,7 @@ msgstr ""
 "Під час спроби встановлення зв’язку з процесом основного модуля сталася "
 "помилка. Мало бути отримано жетон «%1», отримано — «%2»."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:381
+#: rkward/rbackend/rkfrontendtransmitter.cpp:382
 #, kde-format
 msgid ""
 "Version mismatch during handshake with backend process. Frontend is version "
@@ -3877,7 +3877,7 @@ msgstr ""
 "основного модуля. Оболонка має версію «%1», основний модуль — «%2».\n"
 "Будь ласка, виправте проблему зі встановленими компонентами."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:414
+#: rkward/rbackend/rkfrontendtransmitter.cpp:415
 #, kde-format
 msgid ""
 "The backend process could not be started. Please check your installation."
@@ -3885,12 +3885,12 @@ msgstr ""
 "Не вдалося запустити процес модуля. Будь ласка, перевірте, чи встановлено "
 "усе належним чином."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:415
+#: rkward/rbackend/rkfrontendtransmitter.cpp:416
 #, kde-format
 msgid "The backend process failed to start with exit code %1, message: '%2'."
 msgstr "Не вдалося запустити процес модуля. Код виходу %1, повідомлення: «%2»."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:416
+#: rkward/rbackend/rkfrontendtransmitter.cpp:417
 #, kde-format
 msgid "Backend process has exited with code %1, message: '%2'."
 msgstr "Процес модуля завершив роботу з кодом %1, повідомлення: «%2»."

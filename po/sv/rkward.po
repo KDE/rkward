@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-04-21 02:38+0000\n"
+"POT-Creation-Date: 2026-10-31 02:50+0000\n"
 "PO-Revision-Date: 2026-07-05 10:12+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
@@ -2451,7 +2451,7 @@ msgstr ""
 "En eller flera filer är öppna, typiskt en arbetsyta, eller en R-skriptfil. "
 "När flera saker läses in, ska arbetsytan anges först."
 
-#: rkward/misc/rkcommonfunctions.cpp:242
+#: rkward/misc/rkcommonfunctions.cpp:255
 #, kde-format
 msgid ""
 "<p><em>Note:</em> This setting does not take effect until you restart RKWard."
@@ -3760,7 +3760,7 @@ msgstr "Kommando"
 msgid "Description"
 msgstr "Beskrivning"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:119
+#: rkward/rbackend/rkfrontendtransmitter.cpp:120
 #, kde-format
 msgid ""
 "RKWard failed to detect an R installation on this system. Either R is not "
@@ -3769,7 +3769,7 @@ msgstr ""
 "RKWard misslyckades detektera en R-installation på systemet. Antingen är R "
 "inte installerat, eller så finns det inte på en av standardplatserna."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:126
+#: rkward/rbackend/rkfrontendtransmitter.cpp:127
 #, kde-format
 msgid ""
 "The configured R installation at <b>%1</b> does not exist or is not an "
@@ -3777,7 +3777,7 @@ msgid ""
 msgstr ""
 "Den inställda R-installationen i <b>%1</b> finns inte eller är inte körbar."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:228
+#: rkward/rbackend/rkfrontendtransmitter.cpp:229
 #, kde-format
 msgid ""
 "The backend executable could not be found. This is likely to be a problem "
@@ -3786,13 +3786,13 @@ msgstr ""
 "Det körbara bakgrundsprogrammet kunde inte hittas. Det är troligtvis ett "
 "problem med installationen."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:322
+#: rkward/rbackend/rkfrontendtransmitter.cpp:323
 #, kde-format
 msgid "The backend executable could not be started. Error message was: %1"
 msgstr ""
 "Det körbara bakgrundsprogrammet kunde inte startas. Felmeddelandet är: %1"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:376
+#: rkward/rbackend/rkfrontendtransmitter.cpp:377
 #, kde-format
 msgid ""
 "Error during handshake with backend process. Expected token '%1', received "
@@ -3801,7 +3801,7 @@ msgstr ""
 "Fel vid handskakning med bakgrundsprocessen. Förväntade symbolen '%1', tog "
 "emot symbolen '%2'."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:381
+#: rkward/rbackend/rkfrontendtransmitter.cpp:382
 #, kde-format
 msgid ""
 "Version mismatch during handshake with backend process. Frontend is version "
@@ -3812,19 +3812,19 @@ msgstr ""
 "har version '%1' med bakgrundsprogrammet har '%2'.\n"
 "Rätta installationen."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:414
+#: rkward/rbackend/rkfrontendtransmitter.cpp:415
 #, kde-format
 msgid ""
 "The backend process could not be started. Please check your installation."
 msgstr "Bakgrundsprocessen kunde inte startas. Kontrollera installationen."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:415
+#: rkward/rbackend/rkfrontendtransmitter.cpp:416
 #, kde-format
 msgid "The backend process failed to start with exit code %1, message: '%2'."
 msgstr ""
 "Bakgrundsprocessen misslyckades starta med slutkod %1, meddelande: '%2'."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:416
+#: rkward/rbackend/rkfrontendtransmitter.cpp:417
 #, kde-format
 msgid "Backend process has exited with code %1, message: '%2'."
 msgstr "Bakgrundsprocessen har avslutats med kod %1, meddelande: '%2'."
