@@ -79,7 +79,7 @@ void filterEnvPath(QProcessEnvironment *env, const QString &varname, bool (*shou
 	QStringList newlist;
 	for (const auto &str : list) {
 		if (shouldRemove(str)) {
-			RK_DEBUG(RBACKEND, DL_DEBUG, "Removing path %s from $%s", qPrintable(str), varname);
+			RK_DEBUG(RBACKEND, DL_DEBUG, "Removing path %s from $%s", qPrintable(str), qPrintable(varname));
 		} else {
 			newlist.append(str);
 		}
