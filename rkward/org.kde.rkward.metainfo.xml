@@ -269,9 +269,9 @@ SPDX-License-Identifier: GPL-2.0-or-later
     <release version="0.8.3" date="2026-04-24">
       <artifacts>
         <artifact type="binary" platform="x86_64-linux-any">
-          <location>https://download.kde.org/stable/rkward/0.8.3/rkward-0.8.3-x86_64.AppImage</location>
-          <checksum type="sha256">f381c33478c2540cbe843e318ef2c4688aff44357113237d3b9c2ed0a6b3072c</checksum>
-          <size type="download">407042552</size>
+          <location>https://download.kde.org/stable/rkward/0.8.3/rkward-0.8.3-x86_64-1.AppImage</location>
+          <checksum type="sha256">4f32f0863277612c11c6b95aba6df2b06cc0daa6f2a2c5b37ebfba318ae586ad</checksum>
+          <size type="download">413690360</size>
         </artifact>
         <artifact type="binary" platform="x86_64-windows-msvc">
           <location>https://download.kde.org/stable/rkward/0.8.3/rkward-0.8.3-x86_64.exe</location>
