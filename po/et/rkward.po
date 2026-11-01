@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-31 00:47+0000\n"
+"POT-Creation-Date: 2026-11-01 00:50+0000\n"
 "PO-Revision-Date: 2022-11-14 20:26+0100\n"
 "Last-Translator: Mihkel Tõnnov <mihhkel@gmail.com>\n"
 "Language-Team: Estonian <>\n"
@@ -3688,14 +3688,14 @@ msgstr "Käsk"
 msgid "Description"
 msgstr "Kirjeldus"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:120
+#: rkward/rbackend/rkfrontendtransmitter.cpp:119
 #, kde-format
 msgid ""
 "RKWard failed to detect an R installation on this system. Either R is not "
 "installed, or not at one of the standard installation locations."
 msgstr ""
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:127
+#: rkward/rbackend/rkfrontendtransmitter.cpp:126
 #, fuzzy, kde-format
 #| msgid ""
 #| "The R executable specified on the command line (%1) does not exist or is "
@@ -3707,7 +3707,7 @@ msgstr ""
 "Käsureal määratud R-i täitmisfaili (%1) ei ole olemas või see ei ole "
 "käivitatav."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:229
+#: rkward/rbackend/rkfrontendtransmitter.cpp:248
 #, kde-format
 msgid ""
 "The backend executable could not be found. This is likely to be a problem "
@@ -3716,12 +3716,12 @@ msgstr ""
 "Taustaprogrammi täitmisfaili ei leitud. Põhjus peitub tõenäoliselt sinu "
 "paigalduses."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:323
+#: rkward/rbackend/rkfrontendtransmitter.cpp:342
 #, kde-format
 msgid "The backend executable could not be started. Error message was: %1"
 msgstr "Taustaprogrammi täitmisfaili käivitamine nurjus. Veateade oli: %1"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:377
+#: rkward/rbackend/rkfrontendtransmitter.cpp:396
 #, kde-format
 msgid ""
 "Error during handshake with backend process. Expected token '%1', received "
@@ -3730,7 +3730,7 @@ msgstr ""
 "Tõrge läbirääkimistel taustaprotsessiga. Oodati pääsmikku \"%1\", saadi "
 "pääsmik \"%2\""
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:382
+#: rkward/rbackend/rkfrontendtransmitter.cpp:401
 #, kde-format
 msgid ""
 "Version mismatch during handshake with backend process. Frontend is version "
@@ -3741,19 +3741,19 @@ msgstr ""
 "versioon on \"%1\", taustaprogrammil \"%2\".\n"
 "Palun paranda oma paigaldus."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:415
+#: rkward/rbackend/rkfrontendtransmitter.cpp:434
 #, kde-format
 msgid ""
 "The backend process could not be started. Please check your installation."
 msgstr "Taustaprotsessi käivitamine nurjus. Palun kontrolli oma paigaldust."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:416
+#: rkward/rbackend/rkfrontendtransmitter.cpp:435
 #, fuzzy, kde-format
 #| msgid "The backend process failed to start with exit code %1."
 msgid "The backend process failed to start with exit code %1, message: '%2'."
 msgstr "Taustaprotsessi käivitamine nurjus väljumiskoodiga %1."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:417
+#: rkward/rbackend/rkfrontendtransmitter.cpp:436
 #, fuzzy, kde-format
 #| msgid "Backend process has exited with code %1."
 msgid "Backend process has exited with code %1, message: '%2'."

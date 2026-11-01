@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-31 00:47+0000\n"
+"POT-Creation-Date: 2026-11-01 00:50+0000\n"
 "PO-Revision-Date: 2024-08-15 05:21+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -3488,40 +3488,40 @@ msgstr "指令"
 msgid "Description"
 msgstr "描述"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:120
+#: rkward/rbackend/rkfrontendtransmitter.cpp:119
 #, kde-format
 msgid ""
 "RKWard failed to detect an R installation on this system. Either R is not "
 "installed, or not at one of the standard installation locations."
 msgstr ""
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:127
+#: rkward/rbackend/rkfrontendtransmitter.cpp:126
 #, kde-format
 msgid ""
 "The configured R installation at <b>%1</b> does not exist or is not an "
 "executable."
 msgstr "已設定位於 <b>%1</b> 的 R 安裝不存在或者不是可執行檔。"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:229
+#: rkward/rbackend/rkfrontendtransmitter.cpp:248
 #, kde-format
 msgid ""
 "The backend executable could not be found. This is likely to be a problem "
 "with your installation."
 msgstr "找不到後端執行檔。這很可能是您的安裝的問題。"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:323
+#: rkward/rbackend/rkfrontendtransmitter.cpp:342
 #, kde-format
 msgid "The backend executable could not be started. Error message was: %1"
 msgstr "無法啟動後端執行檔。錯誤訊息是：%1"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:377
+#: rkward/rbackend/rkfrontendtransmitter.cpp:396
 #, kde-format
 msgid ""
 "Error during handshake with backend process. Expected token '%1', received "
 "token '%2'"
 msgstr ""
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:382
+#: rkward/rbackend/rkfrontendtransmitter.cpp:401
 #, kde-format
 msgid ""
 "Version mismatch during handshake with backend process. Frontend is version "
@@ -3529,18 +3529,18 @@ msgid ""
 "Please fix your installation."
 msgstr ""
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:415
+#: rkward/rbackend/rkfrontendtransmitter.cpp:434
 #, kde-format
 msgid ""
 "The backend process could not be started. Please check your installation."
 msgstr "無法啟動後端行程。請檢查您的安裝。"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:416
+#: rkward/rbackend/rkfrontendtransmitter.cpp:435
 #, kde-format
 msgid "The backend process failed to start with exit code %1, message: '%2'."
 msgstr "後端行程啟動時失敗，結束碼為 %1，訊息：'%2'。"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:417
+#: rkward/rbackend/rkfrontendtransmitter.cpp:436
 #, kde-format
 msgid "Backend process has exited with code %1, message: '%2'."
 msgstr ""

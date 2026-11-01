@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-31 00:47+0000\n"
+"POT-Creation-Date: 2026-11-01 00:50+0000\n"
 "PO-Revision-Date: 2026-04-11 07:01+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -3775,7 +3775,7 @@ msgstr "Ukaz"
 msgid "Description"
 msgstr "Opis"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:120
+#: rkward/rbackend/rkfrontendtransmitter.cpp:119
 #, kde-format
 msgid ""
 "RKWard failed to detect an R installation on this system. Either R is not "
@@ -3784,7 +3784,7 @@ msgstr ""
 "RKWard ni zaznal namestitve R-a v tem sistemu. Ali R ni nameščen ali pa ni "
 "na enem od standardnih namestitvenih mest."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:127
+#: rkward/rbackend/rkfrontendtransmitter.cpp:126
 #, kde-format
 msgid ""
 "The configured R installation at <b>%1</b> does not exist or is not an "
@@ -3792,7 +3792,7 @@ msgid ""
 msgstr ""
 "Konfigurirana namestitev R na <b>%1</b> ne obstaja ali pa ni izvršljiva."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:229
+#: rkward/rbackend/rkfrontendtransmitter.cpp:248
 #, kde-format
 msgid ""
 "The backend executable could not be found. This is likely to be a problem "
@@ -3801,14 +3801,14 @@ msgstr ""
 "Zaledne izvajalne datoteke ni bilo mogoče najti. To je lahko težava "
 "namestitve."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:323
+#: rkward/rbackend/rkfrontendtransmitter.cpp:342
 #, kde-format
 msgid "The backend executable could not be started. Error message was: %1"
 msgstr ""
 "Zaledne izvajalne datoteke ni bilo mogoče zagnati. Sporočilo o napaki je "
 "bilo: %1"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:377
+#: rkward/rbackend/rkfrontendtransmitter.cpp:396
 #, kde-format
 msgid ""
 "Error during handshake with backend process. Expected token '%1', received "
@@ -3817,7 +3817,7 @@ msgstr ""
 "Napaka med rokovanjem z zalednim postopkom. Pričakovani žeton '%1', prejeti "
 "žeton '%2'"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:382
+#: rkward/rbackend/rkfrontendtransmitter.cpp:401
 #, kde-format
 msgid ""
 "Version mismatch during handshake with backend process. Frontend is version "
@@ -3828,18 +3828,18 @@ msgstr ""
 "'%1' medtem ko je zaledna '%2'.\n"
 "Popravite namestitev."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:415
+#: rkward/rbackend/rkfrontendtransmitter.cpp:434
 #, kde-format
 msgid ""
 "The backend process could not be started. Please check your installation."
 msgstr "Zalednega procesa ni bilo mogoče zagnati. Preverite namestitev."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:416
+#: rkward/rbackend/rkfrontendtransmitter.cpp:435
 #, kde-format
 msgid "The backend process failed to start with exit code %1, message: '%2'."
 msgstr "Zaledni proces se ni uspel zagnati z izhodno kodo %1, sporočilo: %2."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:417
+#: rkward/rbackend/rkfrontendtransmitter.cpp:436
 #, kde-format
 msgid "Backend process has exited with code %1, message: '%2'."
 msgstr "Zaledni proces se je končal s kodo %1, sporočilo: '%2'."

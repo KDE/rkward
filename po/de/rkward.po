@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-31 00:47+0000\n"
+"POT-Creation-Date: 2026-11-01 00:50+0000\n"
 "PO-Revision-Date: 2022-07-24 15:13+0200\n"
 "Last-Translator: Frederik Schwarzer <schwarzer@kde.org>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -3750,14 +3750,14 @@ msgstr "Befehl"
 msgid "Description"
 msgstr "Beschreibung"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:120
+#: rkward/rbackend/rkfrontendtransmitter.cpp:119
 #, kde-format
 msgid ""
 "RKWard failed to detect an R installation on this system. Either R is not "
 "installed, or not at one of the standard installation locations."
 msgstr ""
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:127
+#: rkward/rbackend/rkfrontendtransmitter.cpp:126
 #, fuzzy, kde-format
 #| msgid ""
 #| "The R executable specified on the command line (%1) does not exist or is "
@@ -3769,7 +3769,7 @@ msgstr ""
 "Die auf der Befehlszeile angegebene R-Programmdatei (%1) existiert nicht "
 "oder ist nicht ausführbar."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:229
+#: rkward/rbackend/rkfrontendtransmitter.cpp:248
 #, kde-format
 msgid ""
 "The backend executable could not be found. This is likely to be a problem "
@@ -3778,14 +3778,14 @@ msgstr ""
 "Die Backend-Anwendungsdatei kann nicht gefunden werden. Das liegt "
 "wahrscheinlich an einem Fehler in Ihrer Installation."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:323
+#: rkward/rbackend/rkfrontendtransmitter.cpp:342
 #, kde-format
 msgid "The backend executable could not be started. Error message was: %1"
 msgstr ""
 "Das Backend-Programm kann nicht gestartet werden. Die Fehlermeldung lautet: "
 "%1"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:377
+#: rkward/rbackend/rkfrontendtransmitter.cpp:396
 #, kde-format
 msgid ""
 "Error during handshake with backend process. Expected token '%1', received "
@@ -3794,7 +3794,7 @@ msgstr ""
 "Fehler bei der Kontaktaufnahme mit dem Backend-Prozess. Erwartet wurde das "
 "Zeichen „%1“, übermittelt wurde '%2'."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:382
+#: rkward/rbackend/rkfrontendtransmitter.cpp:401
 #, kde-format
 msgid ""
 "Version mismatch during handshake with backend process. Frontend is version "
@@ -3805,7 +3805,7 @@ msgstr ""
 "Version des Frontends ist „%1“, die des Backends ist '%2'.\n"
 "Bitte reparieren Sie Ihre Installation."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:415
+#: rkward/rbackend/rkfrontendtransmitter.cpp:434
 #, kde-format
 msgid ""
 "The backend process could not be started. Please check your installation."
@@ -3813,13 +3813,13 @@ msgstr ""
 "Der Backend-Prozess kann nicht gestartet werden. Bitte überprüfen Sie Ihre "
 "Installation."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:416
+#: rkward/rbackend/rkfrontendtransmitter.cpp:435
 #, fuzzy, kde-format
 #| msgid "The backend process failed to start with exit code %1."
 msgid "The backend process failed to start with exit code %1, message: '%2'."
 msgstr "Der Backend-Prozess kann nicht gestartet werden (Rückgabewert: %1)."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:417
+#: rkward/rbackend/rkfrontendtransmitter.cpp:436
 #, fuzzy, kde-format
 #| msgid "Backend process has exited with code %1."
 msgid "Backend process has exited with code %1, message: '%2'."

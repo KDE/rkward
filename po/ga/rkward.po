@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-31 00:47+0000\n"
+"POT-Creation-Date: 2026-11-01 00:50+0000\n"
 "PO-Revision-Date: 2026-03-28 16:40+0000\n"
 "Last-Translator: Aindriú Mac Giolla Eoin <aindriu80@yahoo.com>\n"
 "Language-Team: Irish <http://weblate.amgelocalnet.duckdns.org/projects/"
@@ -3839,7 +3839,7 @@ msgstr "Ordú"
 msgid "Description"
 msgstr "Cur síos"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:120
+#: rkward/rbackend/rkfrontendtransmitter.cpp:119
 #, kde-format
 msgid ""
 "RKWard failed to detect an R installation on this system. Either R is not "
@@ -3848,14 +3848,14 @@ msgstr ""
 "Theip ar RKWard suiteáil R a bhrath ar an gcóras seo. Níl R suiteáilte, nó "
 "níl sé suite i gceann de na suíomhanna suiteála caighdeánacha."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:127
+#: rkward/rbackend/rkfrontendtransmitter.cpp:126
 #, kde-format
 msgid ""
 "The configured R installation at <b>%1</b> does not exist or is not an "
 "executable."
 msgstr "Níl an suiteáil R cumraithe ag <b>%1</b> ann nó ní comhad inrite é."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:229
+#: rkward/rbackend/rkfrontendtransmitter.cpp:248
 #, kde-format
 msgid ""
 "The backend executable could not be found. This is likely to be a problem "
@@ -3864,14 +3864,14 @@ msgstr ""
 "Níorbh fhéidir an comhad inrite cúil a aimsiú. Is dócha gur fadhb le do "
 "shuiteáil atá ann."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:323
+#: rkward/rbackend/rkfrontendtransmitter.cpp:342
 #, kde-format
 msgid "The backend executable could not be started. Error message was: %1"
 msgstr ""
 "Níorbh fhéidir an clár inrite cúil a thosú. Seo an teachtaireacht earráide: "
 "%1"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:377
+#: rkward/rbackend/rkfrontendtransmitter.cpp:396
 #, kde-format
 msgid ""
 "Error during handshake with backend process. Expected token '%1', received "
@@ -3880,7 +3880,7 @@ msgstr ""
 "Earráid le linn croitheadh láimhe leis an bpróiseas cúil. Bhíothas ag súil "
 "le comhartha '%1', fuarthas comhartha '%2'"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:382
+#: rkward/rbackend/rkfrontendtransmitter.cpp:401
 #, kde-format
 msgid ""
 "Version mismatch during handshake with backend process. Frontend is version "
@@ -3891,21 +3891,21 @@ msgstr ""
 "é an leagan tosaigh '%1' agus is é an leagan cúil '%2'.\n"
 "Deisigh do shuiteáil le do thoil."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:415
+#: rkward/rbackend/rkfrontendtransmitter.cpp:434
 #, kde-format
 msgid ""
 "The backend process could not be started. Please check your installation."
 msgstr ""
 "Níorbh fhéidir an próiseas cúil a thosú. Seiceáil do shuiteáil le do thoil."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:416
+#: rkward/rbackend/rkfrontendtransmitter.cpp:435
 #, kde-format
 msgid "The backend process failed to start with exit code %1, message: '%2'."
 msgstr ""
 "Theip ar an bpróiseas cúil a thosú leis an gcód scoir %1, teachtaireacht: "
 "'%2'."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:417
+#: rkward/rbackend/rkfrontendtransmitter.cpp:436
 #, kde-format
 msgid "Backend process has exited with code %1, message: '%2'."
 msgstr ""

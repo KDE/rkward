@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RKWard\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-31 00:47+0000\n"
+"POT-Creation-Date: 2026-11-01 00:50+0000\n"
 "PO-Revision-Date: 2026-10-16 20:02+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -3771,7 +3771,7 @@ msgstr "Komut"
 msgid "Description"
 msgstr "Açıklama"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:120
+#: rkward/rbackend/rkfrontendtransmitter.cpp:119
 #, kde-format
 msgid ""
 "RKWard failed to detect an R installation on this system. Either R is not "
@@ -3780,7 +3780,7 @@ msgstr ""
 "RKWard bu sistemde bir R kurulumunu algılayamadı. Ya R kurulu değil ya da "
 "standart kurulum konumlarından birinde değil."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:127
+#: rkward/rbackend/rkfrontendtransmitter.cpp:126
 #, kde-format
 msgid ""
 "The configured R installation at <b>%1</b> does not exist or is not an "
@@ -3789,7 +3789,7 @@ msgstr ""
 "<b>%1</b> konumunda yapılandırılmış R kurulumu ya yok ya da bir "
 "yürütülebilir değil."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:229
+#: rkward/rbackend/rkfrontendtransmitter.cpp:248
 #, kde-format
 msgid ""
 "The backend executable could not be found. This is likely to be a problem "
@@ -3798,12 +3798,12 @@ msgstr ""
 "Arka uç yürütülebilir dosyası bulunamadı. Bu, büyük olasılıkla kurulumunuzla "
 "ilgili bir sorundur."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:323
+#: rkward/rbackend/rkfrontendtransmitter.cpp:342
 #, kde-format
 msgid "The backend executable could not be started. Error message was: %1"
 msgstr "Arka uç yürütülebilir dosyası başlatılamadı. Hata iletisi şuydu: %1"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:377
+#: rkward/rbackend/rkfrontendtransmitter.cpp:396
 #, kde-format
 msgid ""
 "Error during handshake with backend process. Expected token '%1', received "
@@ -3812,7 +3812,7 @@ msgstr ""
 "Arka uç süreciyle el sıkışma sırasında hata oluştu. “%1” jetonu "
 "bekleniyordu, “%2” jetonu alındı"
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:382
+#: rkward/rbackend/rkfrontendtransmitter.cpp:401
 #, kde-format
 msgid ""
 "Version mismatch during handshake with backend process. Frontend is version "
@@ -3823,18 +3823,18 @@ msgstr ""
 "sürümünde, arka uç ise “%2”.\n"
 "Lütfen kurulumunuzu onarın."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:415
+#: rkward/rbackend/rkfrontendtransmitter.cpp:434
 #, kde-format
 msgid ""
 "The backend process could not be started. Please check your installation."
 msgstr "Arka uç süreci başlatılamadı. Lütfen kurulumunuzu denetleyin."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:416
+#: rkward/rbackend/rkfrontendtransmitter.cpp:435
 #, kde-format
 msgid "The backend process failed to start with exit code %1, message: '%2'."
 msgstr "Arka uç süreci, %1 çıkış kodu ve “%2” iletisi ile başlatılamadı."
 
-#: rkward/rbackend/rkfrontendtransmitter.cpp:417
+#: rkward/rbackend/rkfrontendtransmitter.cpp:436
 #, kde-format
 msgid "Backend process has exited with code %1, message: '%2'."
 msgstr "Arka uç süreci, %1 kodu ve “%2” iletisi ile çıktı."
