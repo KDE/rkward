@@ -319,7 +319,8 @@ void RKQWebEngineWidget::zoomOut() {
 
 bool RKQWebEngineWidget::supportsContentType(const QString &mimename) {
 	RK_TRACE(APP);
-	return page->supportsContentType(mimename);
+	// QWebEnginge 6.12 will not report application/xhtml+xml as supported, but does open it...
+	return page->supportsContentType(mimename) || mimename.contains(u"html"_s);
 }
 
 void RKQWebEngineWidget::print() {

@@ -343,6 +343,7 @@ bool RKHTMLWindow::openURL(const QUrl &url) {
 	if (url == current_url) restore_position = page->scrollPosition();
 
 	QMimeType mtype = QMimeDatabase().mimeTypeForUrl(url);
+	RK_DEBUG(APP, DL_DEBUG, "openURL %s, mime type %s", qPrintable(url.toString()), qPrintable(mtype.name()));
 	if (window_mode == HTMLOutputWindow) {
 		if (url != current_url) {
 			// output window should not change url after initialization open any links in new windows
@@ -366,19 +367,12 @@ bool RKHTMLWindow::openURL(const QUrl &url) {
 		QFileInfo out_file(url.toLocalFile());
 		bool ok = out_file.exists();
 		if (ok) {
-			if (!mtype.inherits(QStringLiteral("text/html"))) {
-				RK_DEBUG(APP, DL_WARNING, "Applying workaround for https://bugs.kde.org/show_bug.cgi?id=405386");
-				QFile f(url.toLocalFile());
-				RK_ASSERT(f.open(QIODevice::ReadOnly));
-				page->setHTML(QString::fromUtf8(f.readAll()), url.adjusted(QUrl::RemoveFilename));
-				f.close();
-			} else {
-				// NOTE: Quirk in Qt 6.7: When first loading a page, the window is somehow brought to the front, again. In preview windows
-				//       (initially hidden), this leads to a strange pulsing effect. Delay the actual page load until the window is
-				//       actually shown (showEvent(), below).
-				//       With this, the flicker is still there, but feels more "natural"
-				if (isVisible()) page->load(url);
-			}
+			// NOTE: Quirk in Qt 6.7: When first loading a page, the window is somehow brought to the front, again. In preview windows
+			//       (initially hidden), this leads to a strange pulsing effect. Delay the actual page load until the window is
+			//       actually shown (showEvent(), below).
+			//       With this, the flicker is still there, but feels more "natural"
+			if (isVisible()) page->load(url);
+
 			if (!restore_position.isNull()) page->setScrollPosition(restore_position, true);
 		} else {
 			RK_DEBUG(APP, DL_WARNING, "Attempt to open non-existant local file %s", qPrintable(url.toLocalFile()));
