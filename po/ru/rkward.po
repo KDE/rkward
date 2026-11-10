@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-11-08 02:53+0000\n"
+"POT-Creation-Date: 2026-11-10 00:53+0000\n"
 "PO-Revision-Date: 2026-06-18 19:55+0200\n"
 "Last-Translator: Alexander Yavorskiy <kekcuha@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
@@ -2529,7 +2529,7 @@ msgstr "Поиск «вперёд» (следующее соответствие
 msgid "Match case"
 msgstr "С учётом регистра"
 
-#: rkward/misc/rkfindbar.cpp:92 rkward/windows/rkhtmlwindow.cpp:696
+#: rkward/misc/rkfindbar.cpp:92 rkward/windows/rkhtmlwindow.cpp:690
 #, kde-format
 msgid "Find as you type"
 msgstr "Поиск по мере набора"
@@ -5954,7 +5954,7 @@ msgstr ""
 "загрузку только тех модулей, которые нужны в личном рабочем процессе.</p>"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:471
-#: rkward/windows/rkhtmlwindow.cpp:920
+#: rkward/windows/rkhtmlwindow.cpp:914
 #, kde-format
 msgid "Dependencies"
 msgstr "Зависимости"
@@ -7207,39 +7207,39 @@ msgstr "Тема"
 msgid "Package"
 msgstr "Пакет"
 
-#: rkward/windows/rkhtmlwindow.cpp:386
+#: rkward/windows/rkhtmlwindow.cpp:380
 #, kde-format
 msgid "RKWard output file %1 does not (yet) exist"
 msgstr "Файл вывода RKWard %1 (ещё) не существует"
 
-#: rkward/windows/rkhtmlwindow.cpp:518
+#: rkward/windows/rkhtmlwindow.cpp:512
 #: rkward/windows/rktoplevelwindowgui.cpp:262
 #, kde-format
 msgid "[Active]"
 msgstr "[Активно]"
 
-#: rkward/windows/rkhtmlwindow.cpp:529
+#: rkward/windows/rkhtmlwindow.cpp:523
 #, kde-format
 msgctxt "noun, the output"
 msgid "Output %1"
 msgstr "Вывод %1"
 
-#: rkward/windows/rkhtmlwindow.cpp:574
+#: rkward/windows/rkhtmlwindow.cpp:568
 #, kde-format
 msgid "Output Window"
 msgstr "Окно вывода"
 
-#: rkward/windows/rkhtmlwindow.cpp:576
+#: rkward/windows/rkhtmlwindow.cpp:570
 #, kde-format
 msgid "&Refresh Output"
 msgstr "&Обновить вывод"
 
-#: rkward/windows/rkhtmlwindow.cpp:602
+#: rkward/windows/rkhtmlwindow.cpp:596
 #, kde-format
 msgid "Page does not exist or is broken"
 msgstr "Страница не существует или повреждена"
 
-#: rkward/windows/rkhtmlwindow.cpp:615
+#: rkward/windows/rkhtmlwindow.cpp:609
 #, kde-format
 msgid ""
 "Do you really want to clear the output? This will also remove all image "
@@ -7248,82 +7248,82 @@ msgstr ""
 "Очистить вывод? Это действие также приведёт к удалению всех файлов "
 "изображений, содержащихся в выводе. Восстановление будет невозможно."
 
-#: rkward/windows/rkhtmlwindow.cpp:616
+#: rkward/windows/rkhtmlwindow.cpp:610
 #, kde-format
 msgid "Flush output?"
 msgstr "Сбросить буфер вывода?"
 
-#: rkward/windows/rkhtmlwindow.cpp:621
+#: rkward/windows/rkhtmlwindow.cpp:615
 #, kde-format
 msgid "Flushing output"
 msgstr "Сброс буфера вывода"
 
-#: rkward/windows/rkhtmlwindow.cpp:650
+#: rkward/windows/rkhtmlwindow.cpp:644
 #, kde-format
 msgid "Zoom In"
 msgstr "Увеличить масштаб"
 
-#: rkward/windows/rkhtmlwindow.cpp:652
+#: rkward/windows/rkhtmlwindow.cpp:646
 #, kde-format
 msgid "Zoom Out"
 msgstr "Уменьшить масштаб"
 
-#: rkward/windows/rkhtmlwindow.cpp:660
+#: rkward/windows/rkhtmlwindow.cpp:654
 #, kde-format
 msgid "Export Page as HTML"
 msgstr "Экспорт страницы в HTML"
 
-#: rkward/windows/rkhtmlwindow.cpp:674
+#: rkward/windows/rkhtmlwindow.cpp:668
 #, kde-format
 msgid "Save Output"
 msgstr "Сохранить вывод"
 
-#: rkward/windows/rkhtmlwindow.cpp:676
+#: rkward/windows/rkhtmlwindow.cpp:670
 #, kde-format
 msgid "Save Output As"
 msgstr "Сохранить вывод как"
 
-#: rkward/windows/rkhtmlwindow.cpp:679
+#: rkward/windows/rkhtmlwindow.cpp:673
 #, kde-format
 msgid "&Clear Output"
 msgstr "&Очистить вывод"
 
-#: rkward/windows/rkhtmlwindow.cpp:683
+#: rkward/windows/rkhtmlwindow.cpp:677
 #, kde-format
 msgid "Reload"
 msgstr "Обновить"
 
-#: rkward/windows/rkhtmlwindow.cpp:687
+#: rkward/windows/rkhtmlwindow.cpp:681
 #, kde-format
 msgid "&Revert to last saved state"
 msgstr "&Вернуться к последнему сохранённому состоянию"
 
-#: rkward/windows/rkhtmlwindow.cpp:691
+#: rkward/windows/rkhtmlwindow.cpp:685
 #, kde-format
 msgid "Set Output as &Active"
 msgstr "Установить вывод как &активный"
 
-#: rkward/windows/rkhtmlwindow.cpp:693
+#: rkward/windows/rkhtmlwindow.cpp:687
 #, kde-format
 msgid "Set this output as the file to append output to."
 msgstr "Сделать этот вывод файлом, в который будет добавляться вывод."
 
-#: rkward/windows/rkhtmlwindow.cpp:715
+#: rkward/windows/rkhtmlwindow.cpp:709
 #, kde-format
 msgid "Print output"
 msgstr "Распечатать вывод"
 
-#: rkward/windows/rkhtmlwindow.cpp:723
+#: rkward/windows/rkhtmlwindow.cpp:717
 #, kde-format
 msgid "Print page"
 msgstr "Распечатать страницу"
 
-#: rkward/windows/rkhtmlwindow.cpp:780
+#: rkward/windows/rkhtmlwindow.cpp:774
 #, kde-format
 msgid "No Title"
 msgstr "Без названия"
 
-#: rkward/windows/rkhtmlwindow.cpp:796
+#: rkward/windows/rkhtmlwindow.cpp:790
 #, kde-format
 msgid ""
 "<h1>Help page missing</h1>\n"
@@ -7334,62 +7334,62 @@ msgstr ""
 "<p>Страница справки для этого компонента ещё не написана (или повреждена). "
 "Можно поучаствовать в развитии проекта, создав её.</p>\n"
 
-#: rkward/windows/rkhtmlwindow.cpp:802
+#: rkward/windows/rkhtmlwindow.cpp:796
 #, kde-format
 msgid "Use %1 now"
 msgstr "Использовать %1 сейчас"
 
-#: rkward/windows/rkhtmlwindow.cpp:819
+#: rkward/windows/rkhtmlwindow.cpp:813
 #, kde-format
 msgid "Summary"
 msgstr "Сводка"
 
-#: rkward/windows/rkhtmlwindow.cpp:826
+#: rkward/windows/rkhtmlwindow.cpp:820
 #, kde-format
 msgid "Usage"
 msgstr "Использование"
 
-#: rkward/windows/rkhtmlwindow.cpp:855
+#: rkward/windows/rkhtmlwindow.cpp:849
 #, kde-format
 msgid "Choose another file"
 msgstr "Выбрать другой файл"
 
-#: rkward/windows/rkhtmlwindow.cpp:878
+#: rkward/windows/rkhtmlwindow.cpp:872
 #, kde-format
 msgid "GUI settings"
 msgstr "Параметры графического интерфейса пользователя"
 
-#: rkward/windows/rkhtmlwindow.cpp:903
+#: rkward/windows/rkhtmlwindow.cpp:897
 #, kde-format
 msgid "Related functions and pages"
 msgstr "Связанные функции и страницы"
 
-#: rkward/windows/rkhtmlwindow.cpp:911
+#: rkward/windows/rkhtmlwindow.cpp:905
 #, kde-format
 msgid "Technical details"
 msgstr "Технические подробности"
 
-#: rkward/windows/rkhtmlwindow.cpp:934
+#: rkward/windows/rkhtmlwindow.cpp:928
 #, kde-format
 msgid "About"
 msgstr "Описание"
 
-#: rkward/windows/rkhtmlwindow.cpp:941
+#: rkward/windows/rkhtmlwindow.cpp:935
 #, kde-format
 msgid "<h1>On this page:</h1>"
 msgstr "<h1>На этой странице:</h1>"
 
-#: rkward/windows/rkhtmlwindow.cpp:964
+#: rkward/windows/rkhtmlwindow.cpp:958
 #, kde-format
 msgid "Unnamed GUI element"
 msgstr "Безымянный элемент графического интерфейса пользователя"
 
-#: rkward/windows/rkhtmlwindow.cpp:1038
+#: rkward/windows/rkhtmlwindow.cpp:1032
 #, kde-format
 msgid "R Reference on '%1'"
 msgstr "Ссылка R на «%1»"
 
-#: rkward/windows/rkhtmlwindow.cpp:1050
+#: rkward/windows/rkhtmlwindow.cpp:1044
 #, kde-format
 msgid "BROKEN REFERENCE"
 msgstr "НЕРАБОЧАЯ ССЫЛКА"

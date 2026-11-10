@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-11-08 02:53+0000\n"
+"POT-Creation-Date: 2026-11-10 00:53+0000\n"
 "PO-Revision-Date: 2026-04-12 12:00+0200\n"
 "Last-Translator: Roman Paholik <wizzardsk@gmail.com>\n"
 "Language-Team: Slovak <kde-sk@linux.sk>\n"
@@ -2492,7 +2492,7 @@ msgstr "Hľadať dopredu (nasledujúci výskyt hľadaného výrazu)"
 msgid "Match case"
 msgstr "Rozlišovať veľkosť"
 
-#: rkward/misc/rkfindbar.cpp:92 rkward/windows/rkhtmlwindow.cpp:696
+#: rkward/misc/rkfindbar.cpp:92 rkward/windows/rkhtmlwindow.cpp:690
 #, kde-format
 msgid "Find as you type"
 msgstr "Nájsť pri písaní"
@@ -5885,7 +5885,7 @@ msgstr ""
 "that are useful to your own workflow.</p>"
 
 #: rkward/settings/rksettingsmoduleplugins.cpp:471
-#: rkward/windows/rkhtmlwindow.cpp:920
+#: rkward/windows/rkhtmlwindow.cpp:914
 #, kde-format
 msgid "Dependencies"
 msgstr "Závislosti"
@@ -7123,39 +7123,39 @@ msgstr "Téma"
 msgid "Package"
 msgstr "Balík"
 
-#: rkward/windows/rkhtmlwindow.cpp:386
+#: rkward/windows/rkhtmlwindow.cpp:380
 #, kde-format
 msgid "RKWard output file %1 does not (yet) exist"
 msgstr "Výstupný súbor RKWard %1 (zatiaľ) neexistuje"
 
-#: rkward/windows/rkhtmlwindow.cpp:518
+#: rkward/windows/rkhtmlwindow.cpp:512
 #: rkward/windows/rktoplevelwindowgui.cpp:262
 #, kde-format
 msgid "[Active]"
 msgstr "[Aktívne]"
 
-#: rkward/windows/rkhtmlwindow.cpp:529
+#: rkward/windows/rkhtmlwindow.cpp:523
 #, kde-format
 msgctxt "noun, the output"
 msgid "Output %1"
 msgstr "Výstup %1"
 
-#: rkward/windows/rkhtmlwindow.cpp:574
+#: rkward/windows/rkhtmlwindow.cpp:568
 #, kde-format
 msgid "Output Window"
 msgstr "Okno výstupu"
 
-#: rkward/windows/rkhtmlwindow.cpp:576
+#: rkward/windows/rkhtmlwindow.cpp:570
 #, kde-format
 msgid "&Refresh Output"
 msgstr "&Obnoviť výstup"
 
-#: rkward/windows/rkhtmlwindow.cpp:602
+#: rkward/windows/rkhtmlwindow.cpp:596
 #, kde-format
 msgid "Page does not exist or is broken"
 msgstr "Strana neexistuje alebo je poškodená"
 
-#: rkward/windows/rkhtmlwindow.cpp:615
+#: rkward/windows/rkhtmlwindow.cpp:609
 #, kde-format
 msgid ""
 "Do you really want to clear the output? This will also remove all image "
@@ -7164,82 +7164,82 @@ msgstr ""
 "Naozaj chcete vymazať výstup? Tým sa odstránia aj všetky obrázkové súbory "
 "použité vo výstupe. Nebude možné ho obnoviť."
 
-#: rkward/windows/rkhtmlwindow.cpp:616
+#: rkward/windows/rkhtmlwindow.cpp:610
 #, kde-format
 msgid "Flush output?"
 msgstr "Vyprázdniť výstup?"
 
-#: rkward/windows/rkhtmlwindow.cpp:621
+#: rkward/windows/rkhtmlwindow.cpp:615
 #, kde-format
 msgid "Flushing output"
 msgstr "Vyprázdňovanie výstupu"
 
-#: rkward/windows/rkhtmlwindow.cpp:650
+#: rkward/windows/rkhtmlwindow.cpp:644
 #, kde-format
 msgid "Zoom In"
 msgstr "Priblížiť"
 
-#: rkward/windows/rkhtmlwindow.cpp:652
+#: rkward/windows/rkhtmlwindow.cpp:646
 #, kde-format
 msgid "Zoom Out"
 msgstr "Oddialiť"
 
-#: rkward/windows/rkhtmlwindow.cpp:660
+#: rkward/windows/rkhtmlwindow.cpp:654
 #, kde-format
 msgid "Export Page as HTML"
 msgstr "Exportovať stranu ako HTML"
 
-#: rkward/windows/rkhtmlwindow.cpp:674
+#: rkward/windows/rkhtmlwindow.cpp:668
 #, kde-format
 msgid "Save Output"
 msgstr "Uložiť výstup"
 
-#: rkward/windows/rkhtmlwindow.cpp:676
+#: rkward/windows/rkhtmlwindow.cpp:670
 #, kde-format
 msgid "Save Output As"
 msgstr "Uložiť výstup ako"
 
-#: rkward/windows/rkhtmlwindow.cpp:679
+#: rkward/windows/rkhtmlwindow.cpp:673
 #, kde-format
 msgid "&Clear Output"
 msgstr "&Vyčistiť výstup"
 
-#: rkward/windows/rkhtmlwindow.cpp:683
+#: rkward/windows/rkhtmlwindow.cpp:677
 #, kde-format
 msgid "Reload"
 msgstr "Obnoviť"
 
-#: rkward/windows/rkhtmlwindow.cpp:687
+#: rkward/windows/rkhtmlwindow.cpp:681
 #, kde-format
 msgid "&Revert to last saved state"
 msgstr "&Vrátiť na posledný uložený stav"
 
-#: rkward/windows/rkhtmlwindow.cpp:691
+#: rkward/windows/rkhtmlwindow.cpp:685
 #, kde-format
 msgid "Set Output as &Active"
 msgstr "Nastaviť výstup ako &aktívny"
 
-#: rkward/windows/rkhtmlwindow.cpp:693
+#: rkward/windows/rkhtmlwindow.cpp:687
 #, kde-format
 msgid "Set this output as the file to append output to."
 msgstr "Nastaviť tento výstup ako súbor, do ktorého sa bude pripájať výstup."
 
-#: rkward/windows/rkhtmlwindow.cpp:715
+#: rkward/windows/rkhtmlwindow.cpp:709
 #, kde-format
 msgid "Print output"
 msgstr "Tlačiť výstup"
 
-#: rkward/windows/rkhtmlwindow.cpp:723
+#: rkward/windows/rkhtmlwindow.cpp:717
 #, kde-format
 msgid "Print page"
 msgstr "Tlačiť stranu"
 
-#: rkward/windows/rkhtmlwindow.cpp:780
+#: rkward/windows/rkhtmlwindow.cpp:774
 #, kde-format
 msgid "No Title"
 msgstr "Žiadny názov"
 
-#: rkward/windows/rkhtmlwindow.cpp:796
+#: rkward/windows/rkhtmlwindow.cpp:790
 #, kde-format
 msgid ""
 "<h1>Help page missing</h1>\n"
@@ -7250,62 +7250,62 @@ msgstr ""
 "<p>Strana pomocníka pre tento komponent ešte nebola napísaná (alebo je "
 "poškodená). Zvážte, prosím, jej vytvorenie.</p>\n"
 
-#: rkward/windows/rkhtmlwindow.cpp:802
+#: rkward/windows/rkhtmlwindow.cpp:796
 #, kde-format
 msgid "Use %1 now"
 msgstr "Použiť %1 teraz"
 
-#: rkward/windows/rkhtmlwindow.cpp:819
+#: rkward/windows/rkhtmlwindow.cpp:813
 #, kde-format
 msgid "Summary"
 msgstr "Súhrn"
 
-#: rkward/windows/rkhtmlwindow.cpp:826
+#: rkward/windows/rkhtmlwindow.cpp:820
 #, kde-format
 msgid "Usage"
 msgstr "Použitie"
 
-#: rkward/windows/rkhtmlwindow.cpp:855
+#: rkward/windows/rkhtmlwindow.cpp:849
 #, kde-format
 msgid "Choose another file"
 msgstr "Vybrať iný súbor"
 
-#: rkward/windows/rkhtmlwindow.cpp:878
+#: rkward/windows/rkhtmlwindow.cpp:872
 #, kde-format
 msgid "GUI settings"
 msgstr "Nastavenie grafického rozhrania"
 
-#: rkward/windows/rkhtmlwindow.cpp:903
+#: rkward/windows/rkhtmlwindow.cpp:897
 #, kde-format
 msgid "Related functions and pages"
 msgstr "Súvisiace funkcie a strany"
 
-#: rkward/windows/rkhtmlwindow.cpp:911
+#: rkward/windows/rkhtmlwindow.cpp:905
 #, kde-format
 msgid "Technical details"
 msgstr "Technické detaily"
 
-#: rkward/windows/rkhtmlwindow.cpp:934
+#: rkward/windows/rkhtmlwindow.cpp:928
 #, kde-format
 msgid "About"
 msgstr "O aplikácii"
 
-#: rkward/windows/rkhtmlwindow.cpp:941
+#: rkward/windows/rkhtmlwindow.cpp:935
 #, kde-format
 msgid "<h1>On this page:</h1>"
 msgstr "<h1>Na tejto strane:</h1>"
 
-#: rkward/windows/rkhtmlwindow.cpp:964
+#: rkward/windows/rkhtmlwindow.cpp:958
 #, kde-format
 msgid "Unnamed GUI element"
 msgstr "Nepomenovaný prvok rozhrania"
 
-#: rkward/windows/rkhtmlwindow.cpp:1038
+#: rkward/windows/rkhtmlwindow.cpp:1032
 #, kde-format
 msgid "R Reference on '%1'"
 msgstr "R Reference on '%1'"
 
-#: rkward/windows/rkhtmlwindow.cpp:1050
+#: rkward/windows/rkhtmlwindow.cpp:1044
 #, kde-format
 msgid "BROKEN REFERENCE"
 msgstr "POŠKODENÁ REFERENCIA"
