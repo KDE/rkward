@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-08 02:53+0000\n"
-"PO-Revision-Date: 2025-02-27 17:18+0300\n"
-"Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
+"PO-Revision-Date: 2026-11-11 20:48+0200\n"
+"Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
 "Language-Team: Basealt Translation Team\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -469,7 +469,7 @@ msgstr "Установите этот флажок, если следует вы
 msgid ""
 "Here you can define the confidence level of the interval (95% is typical)."
 msgstr ""
-"Здесь можно указать доверительный уровень интервала (типовое значение: 95%)."
+"Здесь можно указать доверительный уровень интервала (типовое значение: 95 %)."
 
 #. i18n: ectx: (Ansari-Bradley two-sample exact test) <dialog label="...">
 #: rkward/plugins/analysis/ansari_bradley/ansari_bradley_exact_test.xml:15
@@ -3404,7 +3404,7 @@ msgid ""
 "level should be applied (95% corresponds to a 5% level of significance)."
 msgstr ""
 "Ниже можно указать, следует ли показать такую оценку и какой доверительный "
-"уровень необходимо применить (95% соответствует уровню значимости в 5%)."
+"уровень необходимо применить (95 % соответствует уровню значимости в 5 %)."
 
 #. i18n: ectx: (Loaded from Mood Two-Sample Test of Scale) <summary>
 #: rkward/plugins/analysis/TESTS/mood_test.rkh:8
@@ -4171,7 +4171,7 @@ msgstr "Указывает гипотетическое отношение ди�
 #: rkward/plugins/analysis/variances/F_test.rkh:23
 #, no-c-format, kde-format
 msgid "Defines the confidence level of the interval (95% is typical)."
-msgstr "Указывает доверительный уровень интервала (типовое значение: 95%)."
+msgstr "Указывает доверительный уровень интервала (типовое значение: 95 %)."
 
 #. i18n: ectx: (F test) <dialog label="...">
 #: rkward/plugins/analysis/variances/F_test.xml:11

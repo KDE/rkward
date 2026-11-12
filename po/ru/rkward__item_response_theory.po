@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-08 02:53+0000\n"
-"PO-Revision-Date: 2025-02-03 10:41+0300\n"
-"Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
+"PO-Revision-Date: 2026-11-11 23:01+0200\n"
+"Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
 "Language-Team: Basealt Translation Team\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -2090,7 +2090,7 @@ msgstr "Влияние на альфа, если удалять элементы
 #: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.js:78
 #, no-c-format, kde-format
 msgid "%1% Confidence interval:"
-msgstr "Доверительный интервал %1%:"
+msgstr "Доверительный интервал %1 %:"
 
 #. i18n: ectx: (Cronbach's alpha) <dialog label="Cronbach's alpha"> <tab label="Data"> <varslot label="...">
 #: rkward/plugins/analysis/irt/tests/ltm_cronbach_alpha.xml:22
