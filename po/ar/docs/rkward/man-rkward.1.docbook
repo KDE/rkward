@@ -1,0 +1,328 @@
+<?xml version="1.0" ?>
+<!DOCTYPE refentry PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+<!ENTITY % Arabic "INCLUDE">
+<!ENTITY rkward '<application
+>RKWard</application
+>'>
+<!ENTITY R '<application
+>R</application
+>'>
+]>
+<!--- This file is part of the RKWard project (https://rkward.kde.org).
+SPDX-FileCopyrightText: by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward-devel@kde.org>
+SPDX-License-Identifier: GFDL-1.2-no-invariants-or-later OR GPL-2.0-or-later
+-->
+
+<refentry lang="&language;">
+<refentryinfo>
+<title
+>دليل مستخدم أر كي وارد</title>
+<author
+><firstname
+>Thomas</firstname
+> <surname
+>Friedrichsmeier</surname
+> <contrib
+>صفحة دليل أر كي وارد</contrib>
+<affiliation>
+<address
+><email
+>rkward-devel@kde.org</email
+></address>
+</affiliation>
+</author>
+<date
+>2023-11-30</date>
+<releaseinfo
+>أر كي وارد 0.7.5</releaseinfo>
+<productname
+>تطبيقات كِيدِي</productname>
+</refentryinfo>
+
+<refmeta>
+<refentrytitle
+><command
+>rkward</command
+></refentrytitle>
+<manvolnum
+>1</manvolnum>
+</refmeta>
+
+<refnamediv>
+<refname
+><command
+>rkward</command
+></refname>
+<refpurpose
+>واجهة أمامية لـ &R; مبنية على &kde;</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv>
+<cmdsynopsis
+><command
+>rkward</command
+> <group choice="opt"
+><option
+>--evaluate</option
+> <replaceable
+> Rcode</replaceable
+></group
+> <group choice="opt"
+><option
+>--debug-level</option
+> <replaceable
+> level</replaceable
+></group
+> <group choice="opt"
+><option
+>--debug-flags</option
+> <replaceable
+> flags</replaceable
+></group
+> <group choice="opt"
+><option
+>--debug-output</option
+> <replaceable
+> where</replaceable
+></group
+> <group choice="opt"
+><option
+>--backend-debugger</option
+> <replaceable
+> debugger_command</replaceable
+></group
+> <group choice="opt"
+><option
+>--r-executable</option
+> <replaceable
+> path_to_executable</replaceable
+></group
+> <group choice="opt"
+><option
+>--reuse</option
+></group
+> <group choice="opt"
+><option
+>--autoreuse</option
+></group
+> <group choice="opt"
+><option
+>--nowarn-external</option
+></group
+> <arg choice="opt"
+>KDE Generic Options</arg
+> <arg choice="opt"
+>Qt Generic Options</arg
+> <arg choice="opt"
+><replaceable
+>files_to_open</replaceable
+></arg
+> </cmdsynopsis>
+</refsynopsisdiv>
+
+<refsect1>
+<title
+>الوصف</title>
+<para
+>أر كي وارد هي &GUI; و<acronym
+>IDE</acronym
+> مبنية على &kde; للغة &R; النصية للحوسبة الإحصائية.</para>
+<para
+>لمزيد من المعلومات، يُرجى الرجوع إلى <ulink url="https://rkward.kde.org/"
+>موقع أر كي وارد</ulink
+> والوثائق المقدمة داخل أر كي وارد.</para>
+</refsect1>
+
+<refsect1>
+<title
+>خيارات</title>
+
+<variablelist>
+<varlistentry>
+<term
+><option
+>--evaluate</option
+> <replaceable
+>Rcode</replaceable
+></term>
+<listitem
+><para
+>يُقيَّم كود &R; المُعطى بعد بدء أر كي وارد، وبعد تحميل أي مساحة عمل محددة. مفيد غالبًا للاختبار الآلي.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--debug-level</option
+> <replaceable
+>level</replaceable
+></term>
+<listitem
+><para
+>مستوى تفصيل مخرجات التنقيح. 0-5، حيث 0 يعني لا مخرجات، و5 يعني كل المخرجات بما في ذلك معلومات تتبع الدوال. المبدئي هو 2.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--debug-output</option
+> <replaceable
+>where</replaceable
+></term>
+<listitem
+><para
+>أين تُرسل مخرجات التنقيح. المبدئي هو تخزينها في ملف في الدليل المؤقت. تحديد "terminal" سيكتب مخرجات التنقيح إلى stderr بدلًا من ذلك (مفيد لتنقيح مشاكل بدء التشغيل). لاحظ أن مخرجات التنقيح من عملية الواجهة الخلفية تُخزَّن دائمًا في ملف.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--debug-flags</option
+> <replaceable
+>flags</replaceable
+></term>
+<listitem
+><para
+>اضبط أي أقسام من الكود لتنقيحها. تُعطى الأعلام كرقم ثنائي. راجع ملفات المصدر للتوثيق، لأن هذا خيار داخلي حقًا.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--backend-debugger</option
+> <replaceable
+>command</replaceable
+></term>
+<listitem
+><para
+>شغّل الواجهة الخلفية لـ أر كي وارد عبر أمر المصحح المحدد. لإضافة خيارات سطر الأوامر إلى أمر المصحح، ضعها بين علامتي اقتباس مفردة ('') مع الأمر. <emphasis
+>ملاحظة:</emphasis
+> ستُقسَم وسائط المصحح بمسافات. إذا لم يكن هذا مناسبًا، ستحتاج إلى كتابة سكريبت غلاف خاص بك لاستدعاء المصحح. أيضًا، تأكد من إعادة توجيه كل مخرجات و/أو مدخلات المصحح حسب الاقتضاء. انظر الأمثلة.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--r-executable</option
+> <replaceable
+>command</replaceable
+></term>
+<listitem
+><para
+>في حالة وجود عدة تثبيتات لـ R، حدد التثبيت المراد استخدامه، مثل <filename
+>/usr/bin/R</filename
+>. يمكنك أيضًا استخدام السلسلة <replaceable
+>"auto"</replaceable
+>، وفي هذه الحالة سيحاول أر كي وارد العثور على R في أحد مسارات التثبيت القياسية المعروفة. <emphasis
+>ملاحظة</emphasis
+> أنه بينما سيعمل أر كي وارد <emphasis
+>غالبًا</emphasis
+> مع الإصدارات الأحدث من R، فإنه قد <emphasis
+>أحيانًا</emphasis
+> يحتاج إلى إعادة ترجمة لهذا الإصدار، أو قد يكون غير متوافق تمامًا.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--reuse</option
+></term>
+<listitem
+><para
+>إذا كانت نسخة من أر كي وارد قيد التشغيل بالفعل، فأحضرها إلى المقدمة، وافتح <replaceable
+>files_to_open</replaceable
+>. لاحظ أن جميع خيارات سطر الأوامر الأخرى ستُتجاهل في حالة إعادة استخدام نسخة.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--autoreuse</option
+></term>
+<listitem
+><para
+>يتصرف مثل <option
+>--reuse</option
+>، إذا أُعطيت أي وسائط ملف أيضًا، يبدأ نسخة جديدة، وإلا. مخصص للاستخدام في ملف .desktop.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--nowarn-external</option
+></term>
+<listitem
+><para
+>عادةً، عند استدعاء ملحقات أر كي وارد من سطر الأوامر (أي عندما يحتوي <replaceable
+>files_to_open</replaceable
+> على &URL; من النموذج <replaceable
+>rkward://runplugin/...</replaceable
+>)، سيظهر أر كي وارد تحذيرًا بأن مثل هذه &URL; <emphasis
+>قد</emphasis
+> تُستخدم لتشغيل إجراءات ضارة على نظامك. ينطبق هذا التحذير تحديدًا على الروابط الموجودة في مواقع ويب غير موثوقة، أو مصادر خارجية غير موثوقة أخرى. إذا أردت برمجة أر كي وارد محليًا، يمكنك تجنب هذا التحذير بإضافة --nowarn-external إلى سطر الأوامر.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><option
+>--quirkmode</option
+></term>
+<listitem
+><para
+>عطّل بعض كود التحقق من بدء التشغيل. خيار تجريبي، غير مخصص للاستخدام المنتظم.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><replaceable
+>files_to_open</replaceable
+></term>
+<listitem
+><para
+>يمكنك تحديد أي عدد من أسماء الملفات أو &URL; ليفتحها أر كي وارد. عادةً ستكون هذه إما ملفات مساحة عمل، أو ملفات مكان عمل، أو ملفات سكريبت R، أو &URL; من نوع rkward:// (مثل البدء بحوار ملحق). تحديد أكثر من ملف مساحة عمل سيؤدي إلى دمج مساحات العمل معًا، وهذا غير موصى به.</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+</refsect1>
+
+<refsect1>
+<title
+>انظر أيضًا</title>
+<para
+><citerefentry
+><refentrytitle
+>R</refentrytitle>
+<manvolnum
+>1</manvolnum
+></citerefentry
+></para>
+</refsect1>
+
+<refsect1>
+<title
+>أمثلة</title>
+<para
+><programlisting
+># Start with the t-test dialog
+rkward --nowarn-external rkward://runplugin/rkward::t_test/
+# Open two script files in a running instance of RKWard (or in a fresh instance, if RKWard is not running)
+rkward --reuse file_a.R file_b.R
+
+# Run the rkward backend through valgrind
+rkward --backend-debugger 'valgrind --log-file=valgrind.log'
+</programlisting
+></para>
+</refsect1>
+
+<refsect1>
+<title
+>المؤلفون</title>
+<para
+>أر كي وارد كُتب بواسطة Thomas Friedrichsmeier وفريق أر كي وارد. انظر <ulink url="https://rkward.kde.org/"
+>موقع أر كي وارد</ulink
+>.</para>
+</refsect1>
+
+</refentry>
