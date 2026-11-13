@@ -1,0 +1,192 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY rkward '<application
+>RKWard</application
+>'>
+  <!ENTITY R '<application
+>R</application
+>'>
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Arabic "INCLUDE">
+]>
+<!--- This file is part of the RKWard project (https://rkward.kde.org).
+SPDX-FileCopyrightText: by Thomas Friedrichsmeier <thomas.friedrichsmeier@kdemail.net>
+SPDX-FileContributor: The RKWard Team <rkward@kde.org>
+SPDX-License-Identifier: GFDL-1.2-no-invariants-or-later OR GPL-2.0-or-later
+-->
+
+<book lang="&language;">
+
+<bookinfo>
+<title
+>دليل أر كي وارد</title>
+
+<authorgroup>
+<!-- New authors, add yourselves here! -->
+<author
+><firstname
+>Thomas</firstname
+> <surname
+>Friedrichsmeier</surname
+> <affiliation
+> <address
+><email
+>rkward@kde.org</email
+></address>
+</affiliation>
+</author>
+</authorgroup>
+
+<othercredit role="translator"
+><firstname
+>زايد</firstname
+><surname
+>السعيدي</surname
+><affiliation
+><address
+><email
+>zayed.alsaidi@gmail.com</email
+></address
+></affiliation
+><contrib
+>التّرجمة العربيّة</contrib
+></othercredit
+> 
+
+<copyright>
+<year
+>2006</year>
+<year
+>2007</year>
+<holder
+>Thomas Friedrichsmeier &amp; the RKWard Team</holder>
+</copyright>
+<!-- Translators: put here the copyright notice of the translation -->
+<!-- Put here the FDL notice.  Read the explanation in fdl-notice.docbook 
+     and in the FDL itself on how to use it. -->
+<legalnotice
+>&FDLNotice;</legalnotice>
+
+<!-- Date of the documentation
+Change date/releaseinfo only if
+   docbook is updated and verified to be valid for the current app version
+   or
+   docbook is proofread and verified to be valid for the current app version
+Don't forget to include this last date.
+Please respect the format of the date (YYYY-MM-DD),it is used by scripts.
+-->
+<date
+>2007-02-04</date>
+
+<!--version information of Frameworks/Plasma/Applications this documentation is valid for.
+Example:
+Frameworks xx.yy for docbooks in frameworks
+Plasma xx.yy for docbooks in plasma workspace
+Applications xx.yy for docbooks released as Applications
+xx.yy (Applications xx.yy) for docbooks with own version released as Applications
+$applicationname xx.yy for applications with independent release schedule (extragear/playground)
+-->
+<releaseinfo
+>0.4.6</releaseinfo>
+
+<!-- Abstract about this handbook -->
+
+<abstract>
+<para
+>أر كي وارد هي واجهة رسومية أمامية للغة &R; القوية للحوسبة الإحصائية. </para>
+</abstract>
+
+<!-- This is a set of Keywords for indexing by search engines.
+Please at least include KDE, the KDE package it is in, the name
+ of your application, and a few relevant keywords. -->
+
+<keywordset>
+<keyword
+>كيدي</keyword>
+<keyword
+>R</keyword>
+<keyword
+>أر كي وارد</keyword>
+<keyword
+>علوم</keyword>
+</keywordset>
+
+</bookinfo>
+
+<chapter id="introduction">
+<title
+>مقدمة</title>
+<para
+>أر كي وارد تهدف إلى أن تكون (أو تصبح) واجهة رسومية أمامية سهلة الاستخدام للغة &R; القوية للحوسبة الإحصائية. نظرًا لأن &R; هي لغة برمجة كاملة الميزات، فلن تتمكن أر كي وارد أبدًا من تقديم واجهة رسومية كاملة لكل شيء في &R;. ومع ذلك، تسعى أر كي وارد إلى جعل المهام الشائعة بسيطة، وتوفير نقطة دخول سهلة للمبتدئين، وفي الوقت نفسه، توفير وصول شفاف إلى القوة الكاملة للغة &R; الأساسية للمستخدمين المتقدمين. </para>
+</chapter>
+
+<chapter id="using-kapp">
+<title
+>استخدام أر كي وارد</title>
+
+<para
+>معظم الوثائق متاحة من داخل أر كي وارد نفسها عن طريق اختيار <menuchoice
+><guimenu
+>مساعدة</guimenu
+><guimenuitem
+>مساعدة</guimenuitem
+></menuchoice
+> في أر كي وارد من القائمة، <emphasis
+>وليس</emphasis
+> في هذا المستند. </para>
+<para
+>دليل مفيد للبدء مع أر كي وارد هو <ulink url="https://rkward.kde.org/User_Documentation"
+>قسم وثائق المستخدم في ويكي أر كي وارد</ulink
+>. </para>
+<para
+>يرجى الذهاب إلى هناك للحصول على مقدمة عن أر كي وارد، واتصل بنا إذا كان بإمكانك المساعدة في إنشاء وثائق المستخدم. </para>
+
+</chapter>
+
+<chapter id="developers">
+<title
+>دليل المطور لـ أر كي وارد</title>
+
+<para
+>يمكن توسيع أر كي وارد دون الحاجة إلى إعادة الترجمة باستخدام الملحقات. يجب تضمين وثائق شاملة حول هذا مع أر كي وارد بتنسيق DocBook، وهي متاحة بتنسيق &HTML; <ulink url="https://api.kde.org/doc/rkwardplugins"
+>هنا</ulink
+>. (TODO: تحديد كيفية تضمين هذا في الوثائق). </para>
+
+<!-- Use refentries to describe APIs.  Refentries are fairly complicated and you
+should consult the docbook reference for further details. The example below was
+taken from that reference and shortened a bit for readability. -->
+
+</chapter>
+
+
+<chapter id="credits">
+
+<!-- Include credits for the programmers, documentation writers, and
+contributors here. The license for your software should then be included below
+the credits with a reference to the appropriate license file included in the KDE
+distribution. -->
+
+<title
+>الرخصة</title>
+
+<para
+>التّوثيق: </para>
+
+<para
+>الترجمة: زايد السعيدي <email
+>zayed.alsaidi@gmail.com</email
+></para
+> &underFDL; &underGPL; </chapter>
+
+
+&documentation.index;
+</book>
+<!--
+Local Variables:
+mode: sgml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+-->
