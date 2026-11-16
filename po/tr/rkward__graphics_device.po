@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 11:48+0000\n"
-"PO-Revision-Date: 2026-10-12 11:38+0300\n"
+"PO-Revision-Date: 2026-11-15 20:20+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 26.08.0\n"
+"X-Generator: Lokalize 26.08.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -336,10 +336,10 @@ msgid ""
 "details."
 msgstr ""
 "Bu, <b>postscript</b>’in <i>family</i> parametresidir. Makinede "
-"kullanılabilir olan bir aileyi seçtiğinizden emin olun. Yazıtipi ailelerinin "
-"“URW” sınıfı ghostscript gerektirir. Kuşkuya düştüğünüzde bunu “Öntanımlı” "
-"olarak bırakın, öntanımlı aile (Helvetica) kullanılacaktır. Daha fazla "
-"ayrıntı için postscript’teki R başvurusuna bakın."
+"kullanılabilir olan bir aileyi seçtiğinizden emin olun. Yazı tipi "
+"ailelerinin “URW” sınıfı ghostscript gerektirir. Kuşkuya düştüğünüzde bunu "
+"“Öntanımlı” olarak bırakın, öntanımlı aile (Helvetica) kullanılacaktır. Daha "
+"fazla ayrıntı için postscript’teki R başvurusuna bakın."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Font Encoding")
 #: rkward/plugins/x11device/export.rkh:42
@@ -350,7 +350,7 @@ msgid ""
 "leave this as 'Default', the default encoding (ISOLatin1) will be used. See "
 "the R reference on postscript for more details."
 msgstr ""
-"Bu, <b>postscript</b>’in <i>encoding</i> parametresidir. Seçili yazıtipi "
+"Bu, <b>postscript</b>’in <i>encoding</i> parametresidir. Seçili yazı tipi "
 "ailesiyle uyumlu bir kodlama seçtiğinizden emin olun. Kuşkuya düştüğünüzde "
 "bunu “Öntanımlı” olarak bırakın, öntanımlı kodlama (ISOLatin1) "
 "kullanılacaktır. Daha fazla ayrıntı için postscript’teki R başvurusuna bakın."
@@ -621,13 +621,13 @@ msgstr "Yatay (ps/gs)"
 #: rkward/plugins/x11device/export.xml:133
 #, kde-format
 msgid "Font properties"
-msgstr "Yazıtipi özellikleri"
+msgstr "Yazı tipi özellikleri"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Postscript/PDF/Ghostscript Options"> <frame label="Font properties"> <dropdown label="...">
 #: rkward/plugins/x11device/export.xml:135
 #, kde-format
 msgid "Font family"
-msgstr "Yazıtipi ailesi"
+msgstr "Yazı tipi ailesi"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font family"> <option label="...">
 #: rkward/plugins/x11device/export.xml:137
@@ -753,7 +753,7 @@ msgstr "URWTimes"
 #: rkward/plugins/x11device/export.xml:158
 #, kde-format
 msgid "Font Encoding"
-msgstr "Yazıtipi Kodlaması"
+msgstr "Yazı Tipi Kodlaması"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Font Encoding"> <option label="...">
 #: rkward/plugins/x11device/export.xml:160
