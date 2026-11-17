@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-08 00:10+0000\n"
-"PO-Revision-Date: 2026-05-02 19:20+0300\n"
+"PO-Revision-Date: 2026-11-16 19:32+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 25.12.3\n"
+"X-Generator: Lokalize 26.08.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1295,7 +1295,7 @@ msgstr "Birçok grafik seçenekleri."
 #: rkward/plugins/distributions/clt/plot_clt_help_snippets.xml:26
 #, kde-format
 msgid "Preview button."
-msgstr "Önizleme düğmesi."
+msgstr "Ön izleme düğmesi"
 
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <settings> <setting> (refers to element labelled "Histogram Options")
 #. i18n: ectx: (Loaded from Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <settings> <setting> (refers to element labelled "Histogram Options")
@@ -2036,7 +2036,7 @@ msgstr "Grafik Seçenekleri"
 #: rkward/plugins/distributions/plot_dist_common_snippets.xml:23
 #, kde-format
 msgid "Preview"
-msgstr "Önizleme"
+msgstr "Ön İzleme"
 
 #. i18n: ectx: (Loaded from Central Limit Theorem: Binomial to Normal) <snippet> <tab label="...">
 #. i18n: ectx: (Loaded from Central Limit Theorem: Geometric to Normal) <snippet> <tab label="...">
@@ -4417,8 +4417,8 @@ msgid ""
 "\" box."
 msgstr ""
 "Dağıtımın çeşitli parametreleri için uygun değerleri ve işlev türünü seçin. "
-"‘Gönder’ düğmesi grafiği ‘Çıktı’ penceresine aktaracaktır. Grafiği devingen "
-"olarak görselleştirmek için ‘Önizleme’ kutusunu işaretleyin."
+"“Gönder” düğmesi grafiği “Çıktı” penceresine aktaracaktır. Grafiği devingen "
+"olarak görselleştirmek için “Ön izleme” kutusunu işaretleyin."
 
 #. i18n: ectx: (Loaded from Loaded from Plot Beta probabilities) <snippet> <setting> (refers to element labelled "Choose type of function plot")
 #. i18n: ectx: (Loaded from Plot Beta probabilities) <snippet> <setting> (refers to element labelled "Choose type of function plot")

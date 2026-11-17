@@ -5,13 +5,13 @@
 # Serdar Soytetir <tulliana@gmail.com>, 2007.
 # ertugrulerata <ertugrulerata@gmail.com>, 2007.
 # Volkan Gezer <volkangezer@gmail.com>, 2015.
-# SPDX-FileCopyrightText: 2022, 2023, 2024, 2025, 2026 Emir SARI <emir_sari@icloud.com>
+# SPDX-FileCopyrightText: 2022-2026 Emir SARI <emir_sari@icloud.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: RKWard\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-08 00:10+0000\n"
-"PO-Revision-Date: 2026-03-09 21:57+0300\n"
+"PO-Revision-Date: 2026-11-16 19:05+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 25.12.2\n"
+"X-Generator: Lokalize 26.08.2\n"
 "X-Launchpad-Export-Date: 2014-09-29 04:56+0000\n"
 
 #, kde-format
@@ -3112,27 +3112,28 @@ msgstr "kapalı"
 msgid ""
 "The preview is current unavailable (you will need to make further "
 "selections)."
-msgstr "Önizleme şu anda kullanılamıyor (biraz daha seçim yapmanız gerekiyor)."
+msgstr ""
+"Ön izleme şu anda kullanılamıyor (biraz daha seçim yapmanız gerekiyor)."
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:217
 #, kde-format
 msgid "Preview is turned off."
-msgstr "Önizleme kapatıldı."
+msgstr "Ön izleme kapatıldı."
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:221
 #, kde-format
 msgid "Preview is currently being updated."
-msgstr "Önizleme şu anda güncelleniyor."
+msgstr "Ön izleme şu anda güncelleniyor."
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:225
 #, kde-format
 msgid "The command to generate the preview has failed."
-msgstr "Önizleme üretme komutu başarısız oldu."
+msgstr "Ön izleme üretme komutu başarısız oldu."
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:229
 #, kde-format
 msgid "Preview is up to date."
-msgstr "Önizleme güncel."
+msgstr "Ön izleme güncel."
 
 #: rkward/misc/rkxmlguipreviewarea.cpp:286
 #, kde-format
@@ -3596,7 +3597,7 @@ msgstr "Değer gir:"
 #: rkward/windows/rkcommandeditorwindow.cpp:618
 #, kde-format
 msgid "Preview"
-msgstr "Önizleme"
+msgstr "Ön İzle"
 
 #: rkward/plugin/rkstandardcomponent.cpp:86
 #, kde-format
@@ -4236,7 +4237,7 @@ msgstr ""
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:40
 #, kde-format
 msgid "Rendering the preview failed"
-msgstr "Önizleme sunulamadı"
+msgstr "Ön izleme görüntüsü alınamadı"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.preview-functions.R:47
 #, kde-format
@@ -6723,12 +6724,12 @@ msgstr "Dosya Kaydedilmedi"
 #: rkward/windows/rkcommandeditorwindow.cpp:846
 #, kde-format
 msgid "No preview"
-msgstr "Önizleme yok"
+msgstr "Ön izleme yok"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:847
 #, kde-format
 msgid "Disable preview"
-msgstr "Önizlemeyi Devre Dışı Bırak"
+msgstr "Ön İzlemeyi Devre Dışı Bırak"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:853
 #, kde-format
@@ -6912,7 +6913,7 @@ msgstr ""
 #: rkward/windows/rkcommandeditorwindow.cpp:941
 #, kde-format
 msgid "Potential side-effects of previews"
-msgstr "Önizlemelerin olası yan etkileri"
+msgstr "Ön izlemelerin olası yan etkileri"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:1059
 #, kde-format
