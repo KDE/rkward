@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-08 02:53+0000\n"
-"PO-Revision-Date: 2026-10-16 20:02+0300\n"
+"PO-Revision-Date: 2026-11-16 19:33+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 26.08.0\n"
+"X-Generator: Lokalize 26.08.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -953,7 +953,7 @@ msgid ""
 "Show a preview of the imported data. At most the first 50 rows and columns "
 "will be shown."
 msgstr ""
-"İçe aktarılan verinin bir önizlemesini gösterin. En çok ilk 50 satır ve "
+"İçe aktarılan verinin bir ön izlemesini gösterin. En çok ilk 50 satır ve "
 "sütun gösterilir."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Row names")
@@ -1365,7 +1365,7 @@ msgstr "İçe aktarılan veriyi düzenlemek için aç"
 #: rkward/plugins/00saveload/import/import_xls_xlconnect.xml:32
 #, kde-format
 msgid "Preview"
-msgstr "Önizleme"
+msgstr "Ön İzleme"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="...">
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="...">
@@ -1712,9 +1712,9 @@ msgid ""
 "performance reasons (and only the first dataset in case of multiple sets in "
 "the file)."
 msgstr ""
-"İçe aktarılan verileri önizleyin. Başarım nedeniyle yalnızca ilk 50 satır ve "
-"sütun gösterilir (ve dosyada birden fazla küme olması durumunda yalnızca ilk "
-"veri kümesi gösterilir)."
+"İçe aktarılan verileri ön izleyin. Başarım nedeniyle yalnızca ilk 50 satır "
+"ve sütun gösterilir (ve dosyada birden fazla küme olması durumunda yalnızca "
+"ilk veri kümesi gösterilir)."
 
 #. i18n: ectx: (Import SPSS file) <dialog label="Import SPSS file"> <tab label="General"> <checkbox label="...">
 #. i18n: ectx: (Import STATA file) <dialog label="Import STATA file"> <tab label="General"> <checkbox label="...">
@@ -1850,9 +1850,9 @@ msgid ""
 "performance reasons. Internally, the preview uses a data.frame, even if "
 "<label id=\"data_frame\"/> is not checked."
 msgstr ""
-"İçe aktarılan veriyi önizleyin. Başarım ile ilgili olarak yalnızca ilk 50 "
-"satır ve sütun gösterilir. <labelid=\"data_frame\"> işaretli olmasa bile "
-"önizleme, içsel olarak bir data.frame kullanır."
+"İçe aktarılan veriyi ön izleyin. Başarım ile ilgili olarak yalnızca ilk 50 "
+"satır ve sütun gösterilir. <labelid=\"data_frame\"> işaretli olmasa bile ön "
+"izleme, içsel olarak bir data.frame kullanır."
 
 #. i18n: ectx: (Import SPSS file) <dialog label="...">
 #: rkward/plugins/00saveload/import/import_spss.xml:24
@@ -1990,7 +1990,7 @@ msgid ""
 "Preview imported data. Only the first 50 rows and columns are shown, for "
 "performance reasons."
 msgstr ""
-"İçe aktarılan veriyi önizleyin. Başarım ile ilgili nedenlerden dolayı "
+"İçe aktarılan veriyi ön izleyin. Başarım ile ilgili nedenlerden dolayı "
 "yalnızca ilk 50 satır ve sütun görüntülenir."
 
 #. i18n: ectx: (Import STATA file) <dialog label="...">
@@ -2046,7 +2046,7 @@ msgid ""
 "Preview not available, because package gdata is not installed or cannot be "
 "loaded."
 msgstr ""
-"Önizleme kullanılamıyor; çünkü gdata paketi kurulu değil veya yüklenemiyor."
+"Ön izleme kullanılamıyor; çünkü gdata paketi kurulu değil veya yüklenemiyor."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet)
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="...">
@@ -2169,7 +2169,7 @@ msgid ""
 "Preview not available, because package XLConnect is not installed or cannot "
 "be loaded."
 msgstr ""
-"Önizleme kullanılamıyor; çünkü XLConnect paketi kurulu değil veya "
+"Ön izleme kullanılamıyor; çünkü XLConnect paketi kurulu değil veya "
 "yüklenemiyor."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <usage>
