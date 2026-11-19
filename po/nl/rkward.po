@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-08 04:36+0000\n"
-"PO-Revision-Date: 2026-09-30 15:58+0200\n"
-"Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
+"PO-Revision-Date: 2026-11-18 13:38+0100\n"
+"Last-Translator: freek <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 26.08.1\n"
+"X-Generator: Lokalize 26.04.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -725,7 +725,7 @@ msgstr ""
 #: rkward/dialogs/rkerrordialog.cpp:80
 #, kde-format
 msgid "Proceed"
-msgstr "Verdergaan"
+msgstr "Doorgaan"
 
 #: rkward/dialogs/rkerrordialog.cpp:103
 #, kde-format
@@ -1638,7 +1638,7 @@ msgstr ""
 #: rkward/dialogs/rksetupwizard.cpp:101
 #, kde-format
 msgid "Proceed without %1. You will be missing some functionality."
-msgstr "Ga verder zonder %1. U mist dan wel wat functionaliteit."
+msgstr "Ga door zonder %1. U mist dan wel wat functionaliteit."
 
 #: rkward/dialogs/rksetupwizard.cpp:109
 #, kde-format
@@ -1749,7 +1749,7 @@ msgstr "Standaard plugins aanzetten"
 #: rkward/dialogs/rksetupwizard.cpp:157
 #, kde-format
 msgid "Proceed without plugins"
-msgstr "Zonder plugins verdergaan"
+msgstr "Zonder plugins doorgaan"
 
 #: rkward/dialogs/rksetupwizard.cpp:165
 #, kde-format

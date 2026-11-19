@@ -1,13 +1,13 @@
 # Copyright (C) 2024 This file is copyright:
 # This file is distributed under the same license as the rkward package.
 #
-# SPDX-FileCopyrightText: 2024, 2025 Emir SARI <emir_sari@icloud.com>
+# SPDX-FileCopyrightText: 2024-2026 Emir SARI <emir_sari@icloud.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-08 04:36+0000\n"
-"PO-Revision-Date: 2025-03-13 15:51+0300\n"
+"PO-Revision-Date: 2026-11-18 18:15+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 25.07.70\n"
+"X-Generator: Lokalize 26.08.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -209,8 +209,8 @@ msgid ""
 "performance reasons."
 msgstr ""
 "Eski ve yeni değerler için iki sütunlu bir tablo olarak yeniden kodlamanın "
-"önizlemesini gösterin. Önizleme, başarım nedenleriyle ilk 500 veri satırıyla "
-"sınırlıdır."
+"ön izlemesini gösterin. Önizleme, başarım nedenleriyle ilk 500 veri "
+"satırıyla sınırlıdır."
 
 #. i18n: ectx: (Recode categorical data) <settings> <setting> (refers to element labelled "Recodings")
 #: rkward/plugins/data/recode_categorical.rkh:37
@@ -513,7 +513,7 @@ msgid ""
 "Show a preview of the sorted data. The preview is limited to 200 rows and 50 "
 "columns of data, for performance reasons."
 msgstr ""
-"Sıralanan verilerin önizlemesini gösterin. Önizleme, başarım nedenleriyle "
+"Sıralanan verilerin ön izlemesini gösterin. Önizleme, başarım nedenleriyle "
 "200 satır ve 50 veri sütunuyla sınırlıdır."
 
 #. i18n: ectx: (Loaded from Sort data) <settings> <setting> (refers to element labelled "Sort order")
@@ -691,7 +691,7 @@ msgid ""
 "Preview the resulting subset. Note that the preview is limited to the first "
 "500 rows and 100 columns, for performance reasons."
 msgstr ""
-"Ortaya çıkan alt kümeyi önizleyin. Başarım nedeniyle önizlemenin ilk 500 "
+"Ortaya çıkan alt kümeyi ön izleyin. Başarım nedeniyle ön izlemenin ilk 500 "
 "satır ve 100 sütunla sınırlı olduğunu unutmayın."
 
 #. i18n: ectx: (subset_dataframe) <settings> <setting> (refers to element labelled "Filter by variable")

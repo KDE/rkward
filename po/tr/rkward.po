@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: RKWard\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-08 04:36+0000\n"
-"PO-Revision-Date: 2026-10-16 19:41+0300\n"
+"PO-Revision-Date: 2026-11-18 18:15+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 26.08.0\n"
+"X-Generator: Lokalize 26.08.2\n"
 "X-Launchpad-Export-Date: 2014-09-29 04:56+0000\n"
 
 #, kde-format
@@ -1846,7 +1846,7 @@ msgid ""
 "The rmarkdown package is required for rendering .Rmd files (including "
 "preview rendering), which is an optional but recommended feature."
 msgstr ""
-"İsteğe bağlı; ancak önerilen bir özellik olan .Rmd dosyalarının (önizleme "
+"İsteğe bağlı; ancak önerilen bir özellik olan .Rmd dosyalarının (ön izleme "
 "oluşturma dahil) sunulabilmesi için rmarkdown paketi gereklidir."
 
 #: rkward/dialogs/rksetupwizard.cpp:224
@@ -1860,7 +1860,7 @@ msgid ""
 "The pandoc software is needed for rendering (or previewing) R markdown (."
 "Rmd) files. This is optional but recommended."
 msgstr ""
-"R markdown (.Rmd) dosyalarını oluşturmak (veya önizlemek) için pandoc "
+"R markdown (.Rmd) dosyalarını oluşturmak (veya ön izlemek) için pandoc "
 "yazılımı gereklidir. Bu isteğe bağlıdır; ancak önerilir."
 
 #: rkward/dialogs/rksetupwizard.cpp:230
@@ -3566,7 +3566,7 @@ msgid ""
 "Below you can preview the R commands corresponding to the settings you made. "
 "Click 'Submit' to run the commands."
 msgstr ""
-"Aşağıda, yaptığınız ayarlara karşılık gelen R komutlarının önizlemesini "
+"Aşağıda, yaptığınız ayarlara karşılık gelen R komutlarının ön izlemesini "
 "görebilirsiniz. Komutları çalıştırmak için ‘Gönder’e tıklayın."
 
 #: rkward/plugin/rkstandardcomponentgui.cpp:528
@@ -3575,8 +3575,8 @@ msgid ""
 "Below you can preview the result of your settings, and the R commands to be "
 "run. Click 'Submit' to run the commands."
 msgstr ""
-"Aşağıda ayarlarınızın sonucunu ve çalıştırılacak R komutlarını "
-"önizleyebilirsiniz. Komutları çalıştırmak için ‘Gönder’e tıklayın."
+"Aşağıda ayarlarınızın sonucunu ve çalıştırılacak R komutlarını ön "
+"izleyebilirsiniz. Komutları çalıştırmak için ‘Gönder’e tıklayın."
 
 #: rkward/plugin/rkstandardcomponentgui.cpp:582
 #: rkward/plugin/rkstandardcomponentgui.cpp:600
@@ -6228,13 +6228,13 @@ msgid ""
 "Preview the script as rendered from RMarkdown format (appropriate for .Rmd "
 "files)."
 msgstr ""
-"Betiği, RMarkdown biçiminden (.Rmd dosyaları için uygun) sunulduğu gibi "
-"önizle"
+"Betiği, RMarkdown biçiminden (.Rmd dosyaları için uygun) sunulduğu gibi ön "
+"izle"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:412
 #, kde-format
 msgid "Preview the script as if it was run in the interactive R Console"
-msgstr "Komut dosyasını etkileşimli R Konsolunda çalıştırılmış gibi önizle"
+msgstr "Komut dosyasını etkileşimli R Konsolunda çalıştırılmış gibi ön izle"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:413
 #, kde-format
@@ -6243,9 +6243,9 @@ msgid ""
 "will be empty, if there is no call to <i>plot()</i> or other graphics "
 "commands."
 msgstr ""
-"Bu betiği çalıştırarak üretilen tüm ekran grafiklerini önizleyin. <i>plot()</"
-"i> veya diğer grafik komutlarına çağrı yapılmadığı takdirde bu önizleme boş "
-"olacaktır."
+"Bu betiği çalıştırarak üretilen tüm ekran grafiklerini ön izleyin. "
+"<i>plot()</i> veya diğer grafik komutlarına çağrı yapılmadığı takdirde bu ön "
+"izleme boş olacaktır."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:414
 #, kde-format
@@ -6253,9 +6253,9 @@ msgid ""
 "Preview any output to the RKWard Output Window. This preview will be empty, "
 "if there is no call to <i>rk.print()</i> or other RKWard output commands."
 msgstr ""
-"Herhangi bir çıktıyı RKWard Çıkış Penceresinde önizleyin. <i>rk.print()</"
-"i>’e veya diğer RKWard çıktı komutlarına çağrı yapılmadığı takdirde bu "
-"önizleme boş olacaktır."
+"Herhangi bir çıktıyı RKWard Çıkış Penceresinde ön izleyin. <i>rk.print()</"
+"i>’e veya diğer RKWard çıktı komutlarına çağrı yapılmadığı takdirde bu ön "
+"izleme boş olacaktır."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:424
 #, kde-format
@@ -6271,8 +6271,9 @@ msgid ""
 "will be updated whenever you save the script, only."
 msgstr ""
 "Bu seçenek etkinleştirildiğinde, komut dosyasını her değiştirdiğinizde bir "
-"önizleme güncellemesi tetiklenecektir. Bu seçenek devre dışı bırakıldığında, "
-"önizleme yalnızca betiği her kaydettiğinizde güncellenecektir."
+"ön izleme güncellemesi tetiklenecektir. Bu seçenek devre dışı "
+"bırakıldığında, ön izleme yalnızca betiği her kaydettiğinizde "
+"güncellenecektir."
 
 #: rkward/windows/rkcommandeditorwindow.cpp:432
 #, kde-format
@@ -6315,7 +6316,7 @@ msgid ""
 msgstr ""
 "<p>Önizleme özelliği, çalışma alanınızda kalıcı değişiklikler yapmaktan "
 "kaçınmayı <b>dener</b> (teknik olarak, <i>local()</i> değerlendirme ortamını "
-"kullanarak). <b>Ancak önizleme özelliğini kullanmanın beklenmeyen yan "
+"kullanarak). <b>Ancak ön izleme özelliğini kullanmanın beklenmeyen yan "
 "etkilere neden olabileceği durumlar da vardır</b>.</p><p>Bu durum özellikle "
 "<i>globalenv()</i>’ye açık atamalar içeren betikler veya dosya "
 "sisteminizdeki dosyaları değiştiren betikler için geçerlidir. Ayrıca "
@@ -6345,7 +6346,7 @@ msgstr "Adsız"
 #: rkward/windows/rkcommandeditorwindow.cpp:909
 #, kde-format
 msgid "Preview of rendered R Markdown"
-msgstr "Sunulan R Markdown’un önizlemesi"
+msgstr "Sunulan R Markdown’un ön izlemesi"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:913
 #, kde-format
@@ -6372,17 +6373,17 @@ msgstr ""
 #: rkward/windows/rkcommandeditorwindow.cpp:926
 #, kde-format
 msgid "Preview of generated RKWard output"
-msgstr "Üretilen R çıktısının önizlemesi"
+msgstr "Üretilen R çıktısının ön izlemesi"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:934
 #, kde-format
 msgid "Preview of generated plot"
-msgstr "Üretilen grafiğin önizlemesi"
+msgstr "Üretilen grafiğin ön izlemesi"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:941
 #, kde-format
 msgid "Preview of script running in interactive R Console"
-msgstr "Etkileşimli R konsolunda çalışan betiğin önizlemesi"
+msgstr "Etkileşimli R konsolunda çalışan betiğin ön izlemesi"
 
 #: rkward/windows/rkcommandeditorwindow.cpp:1057
 #, kde-format
