@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-08 04:36+0000\n"
-"PO-Revision-Date: 2026-10-16 19:57+0300\n"
+"PO-Revision-Date: 2026-11-22 19:51+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 26.08.0\n"
+"X-Generator: Lokalize 26.08.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -257,7 +257,7 @@ msgid ""
 "string, or as an R statement (e.g. if the names are stored in a different "
 "variable in the workspace)."
 msgstr ""
-"Grafiğe etiket atama yöntemi. ‘Öntanımlı’, etiketlerin kendiliğinden "
+"Grafiğe etiket atama yöntemi. ‘Varsayılan’, etiketlerin kendiliğinden "
 "seçildiği anlamına gelir. Hiçbir etiket yoksa bu genellikle değerleri "
 "yazdıracaktır. Diğer seçenekler, etiketleri düz dizi olarak veya bir R "
 "ifadesi olarak belirtmenize olanak tanır (örneğin, adlar çalışma alanında "
@@ -370,7 +370,7 @@ msgstr "Çubuk etiketleri"
 #: rkward/plugins/plots/dotchart.xml:65 rkward/plugins/plots/piechart.xml:68
 #, kde-format
 msgid "Default labels"
-msgstr "Öntanımlı etiketler"
+msgstr "Varsayılan etiketler"
 
 #. i18n: ectx: (Barplot) <dialog label="Barplot"> <tab label="Bar labels"> <radio label="Bar labels"> <option label="...">
 #. i18n: ectx: (Boxplot) <dialog label="Boxplot"> [...] <radio label="Labeling"> <option label="...">
@@ -645,7 +645,7 @@ msgid ""
 "defines the fraction of observations to be trimmed from each end of a "
 "variable before the arithmetic mean is computed."
 msgstr ""
-"Kırpma yalnızca aritmetik ortalamaya uygulanır. Öntanımlı olarak kırpma "
+"Kırpma yalnızca aritmetik ortalamaya uygulanır. Varsayılan olarak kırpma "
 "sıfıra ayarlıdır. Aritmetik ortalama hesaplanmadan önce bir değişkenin her "
 "bir ucundan kesilecek gözlemlerin oranını tanımlar."
 
@@ -664,7 +664,7 @@ msgid ""
 "interquartile mean (IQM)."
 msgstr ""
 "Belirli bir ortalama türünü seçmek için bu seçeneği kullanın. Aritmetik "
-"ortalama öntanımlı değerdir. Diğerleri geometrik ortalamayı, harmonik "
+"ortalama varsayılan değerdir. Diğerleri geometrik ortalamayı, harmonik "
 "ortalamayı ve çeyrekler arası ortalamayı (IQM) içerir."
 
 #. i18n: ectx: (Loaded from Boxplot) <settings> <setting> (refers to element labelled "show standard deviation")
@@ -1130,7 +1130,7 @@ msgstr "Çekirdek Pürüzsüzleştiricisi"
 #: rkward/plugins/plots/density_plot.xml:56
 #, kde-format
 msgid "gaussian (default)"
-msgstr "Gaus (Öntanımlı)"
+msgstr "Gaus (Varsayılan)"
 
 #. i18n: ectx: (Density Plot) <dialog label="Density Plot"> [...] <dropdown label="Smoothing Kernel"> <option label="...">
 #: rkward/plugins/plots/density_plot.xml:57
@@ -1788,8 +1788,8 @@ msgid ""
 "Radius of the pie. For long labels it may be necessary to make the pie "
 "smaller than the default."
 msgstr ""
-"Pastanın yarıçapı. Uzun etiketler için pastayı öntanımlı değerden daha küçük "
-"yapmak gerekebilir."
+"Pastanın yarıçapı. Uzun etiketler için pastayı varsayılan değerden daha "
+"küçük yapmak gerekebilir."
 
 #. i18n: ectx: (Loaded from Pie chart) <settings> <setting> (refers to element labelled "density")
 #: rkward/plugins/plots/piechart.rkh:32
@@ -1798,8 +1798,8 @@ msgid ""
 "Density of shading lines (lines per inch). The default value of -1 means no "
 "shading lines are drawn."
 msgstr ""
-"Gölgeleme çizgilerinin yoğunluğu (inç başına çizgiler). Öntanımlı değer olan "
-"-1, hiçbir gölgeleme çizgisinin çizilmediği anlamına gelir."
+"Gölgeleme çizgilerinin yoğunluğu (inç başına çizgiler). Varsayılan değer "
+"olan -1, hiçbir gölgeleme çizgisinin çizilmediği anlamına gelir."
 
 #. i18n: ectx: (Loaded from Pie chart) <settings> <setting> (refers to element labelled "increment in density")
 #: rkward/plugins/plots/piechart.rkh:33
@@ -1849,7 +1849,7 @@ msgstr "Renkler"
 #: rkward/plugins/plots/piechart.xml:79
 #, kde-format
 msgid "Default (pastel)"
-msgstr "Öntanımlı (Pastel)"
+msgstr "Varsayılan (Pastel)"
 
 #. i18n: ectx: (Pie chart) <dialog label="Pie chart"> <tab label="Options"> <radio label="Colors"> <option label="...">
 #: rkward/plugins/plots/piechart.xml:80
@@ -2155,7 +2155,7 @@ msgid ""
 "A numerical value giving the amount by which plotting text and symbols "
 "should be scaled relative to the default."
 msgstr ""
-"Çizdirilecek metnin ve sembollerinin öntanımlılara göre ölçeklendirilmesi "
+"Çizdirilecek metnin ve sembollerinin varsayılanlara göre ölçeklendirilmesi "
 "gereken miktarı veren sayısal değer."
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Further options"> <input label="...">
@@ -2177,7 +2177,7 @@ msgid ""
 "Either an integer specifying a symbol or a single character to be used as "
 "the default in plotting points."
 msgstr ""
-"Noktaların çizilmesinde öntanımlı olarak kullanılacak bir sembolü belirten "
+"Noktaların çizilmesinde varsayılan olarak kullanılacak bir sembolü belirten "
 "bir tam sayı veya tek bir karakter."
 
 #. i18n: ectx: (Scatterplot) <dialog label="Scatterplot"> <tab label="Further options"> <input label="...">
@@ -2352,8 +2352,8 @@ msgid ""
 "This controls the length of the plot. A scale of 2 will make the plot "
 "roughly twice as long as the default."
 msgstr ""
-"Bu, grafiğin uzunluğunu denetler. 2 ölçeği, grafiğin kabaca öntanımlının iki "
-"katı uzunlukta olmasını sağlar."
+"Bu, grafiğin uzunluğunu denetler. 2 ölçeği, grafiğin kabaca varsayılannın "
+"iki katı uzunlukta olmasını sağlar."
 
 #. i18n: ectx: (Loaded from Stem-and-Leaf Plots) <settings> <setting> (refers to element labelled "Plot width")
 #: rkward/plugins/plots/stem.rkh:21

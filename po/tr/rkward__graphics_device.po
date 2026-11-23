@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 08:59+0000\n"
-"PO-Revision-Date: 2026-11-18 18:13+0300\n"
+"PO-Revision-Date: 2026-11-22 19:51+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -76,7 +76,7 @@ msgid ""
 "The \"cairo\" library, providing SVG-support, is not compiled in by default "
 "on some systems."
 msgstr ""
-"SVG desteği sağlayan “cairo” kitaplığı, bazı sistemlerde öntanımlı olarak "
+"SVG desteği sağlayan “cairo” kitaplığı, bazı sistemlerde varsayılan olarak "
 "derlenmemiştir."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <summary>
@@ -136,11 +136,11 @@ msgid ""
 "<i>file</i> parameter to dev.print. For exporting via ghostscript provide a "
 "suitable extension."
 msgstr ""
-"Kaydedilecek dosya adı. Öntanımlı olarak dosya, K menüsünden başlatıldığında "
-"kullanıcının ana dizini olan RkWard’ın başlatıldığı dizine kaydedilecektir. "
-"Uygun bir dosya uzantısını denetledikten sonra bu, dev.print’in <i>file</i> "
-"parametresidir. Ghostscript aracılığıyla dışa aktarmak için uygun bir uzantı "
-"sağlayın."
+"Kaydedilecek dosya adı. Varsayılan olarak dosya, K menüsünden "
+"başlatıldığında kullanıcının ana dizini olan RkWard’ın başlatıldığı dizine "
+"kaydedilecektir. Uygun bir dosya uzantısını denetledikten sonra bu, dev."
+"print’in <i>file</i> parametresidir. Ghostscript aracılığıyla dışa aktarmak "
+"için uygun bir uzantı sağlayın."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Automatic File extension")
 #: rkward/plugins/x11device/export.rkh:20
@@ -224,8 +224,8 @@ msgstr ""
 "gerektirir), gerçek genişlik, inç türünden sağlanan genişlik değerinin "
 "çözünürlükle (dpi cinsinden, ‘inç başına nokta sayısı’) çarpılmasıyla "
 "değerlendirilir. Yani; width_pixels = width_inches * resolution_dpi. "
-"Çözünürlük, ‘Öntanımlı Çözünürlük’ olarak ayarlanırsa JPEG veya PNG olarak "
-"dışa aktarma için öntanımlı çözünürlük olarak 96 değeri kullanılır ve "
+"Çözünürlük, ‘Varsayılan Çözünürlük’ olarak ayarlanırsa JPEG veya PNG olarak "
+"dışa aktarma için varsayılan çözünürlük olarak 96 değeri kullanılır ve "
 "ghostscript yoluyla dışa aktarma için 72 değeri kullanılır. Aksi takdirde "
 "sağlanan çözünürlük değeri kullanılır. Genişlik parametresinin inç olarak "
 "sağlandığı Postscript/PDF’ye dışa aktarım için bunların hiçbiri önemli "
@@ -275,7 +275,7 @@ msgstr ""
 "Yalnızca PNG/JPEG/Ghostscript için kullanılabilir; bu, dev.print veya "
 "dev2bitmap’in <i>res</i> parametresidir. Bu değer, yukarıda açıklandığı gibi "
 "(‘width’ altında) piksel türünden genişlik/yükseklik değerini inç değerine "
-"dönüştürmek için kullanılır. Öntanımlı çözünürlük (‘Öntanımlı çözünürlük’ "
+"dönüştürmek için kullanılır. Varsayılan çözünürlük (‘Varsayılan çözünürlük’ "
 "işaretlendiğinde) PNG/JPEG dışa aktarmaları için 96’dır ve Ghostscript dışa "
 "aktarmaları için 72’dir."
 
@@ -287,7 +287,7 @@ msgid ""
 "b>. Sets the quality for JPEG exporting. The default quality is 75."
 msgstr ""
 "Yalnızca JPEG için kullanılabilir; bu, <b>jpeg</b>’in <i>kalite</i> "
-"parametresidir. JPEG dışa aktarımının kalitesini ayarlar. Öntanımlı kalite "
+"parametresidir. JPEG dışa aktarımının kalitesini ayarlar. Varsayılan kalite "
 "75’tir."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Paper Size")
@@ -300,7 +300,7 @@ msgid ""
 "is the <i>paper</i> option to the exporting function."
 msgstr ""
 "Dışa aktarılacak kağıt boyutunu ayarlamak için bunu kullanın. Herhangi bir "
-"kağıt seçeneği belirtmemek için ‘Öntanımlı’yı seçin. Diğer seçenekler "
+"kağıt seçeneği belirtmemek için ‘Varsayılan’yı seçin. Diğer seçenekler "
 "<b>postscript</b> için R başvurusunda açıklanmıştır. Bu yalnızca Postscript/"
 "PDF dışa aktarmaları için kullanılabilir. Bu, dışa aktarma işlevinin "
 "<i>paper</i> seçeneğidir."
@@ -337,8 +337,8 @@ msgid ""
 msgstr ""
 "Bu, <b>postscript</b>’in <i>family</i> parametresidir. Makinede "
 "kullanılabilir olan bir aileyi seçtiğinizden emin olun. Yazıtipi ailelerinin "
-"‘URW’ sınıfı ghostscript gerektirir. Kuşkuya düştüğünüzde bunu ‘Öntanımlı’ "
-"olarak bırakın, öntanımlı aile (Helvetica) kullanılacaktır. Daha fazla "
+"‘URW’ sınıfı ghostscript gerektirir. Kuşkuya düştüğünüzde bunu ‘Varsayılan’ "
+"olarak bırakın, varsayılan aile (Helvetica) kullanılacaktır. Daha fazla "
 "ayrıntı için postscript’teki R başvurusuna bakın."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Font Encoding")
@@ -352,7 +352,7 @@ msgid ""
 msgstr ""
 "Bu, <b>postscript</b>’in <i>encoding</i> parametresidir. Seçili yazı tipi "
 "ailesiyle uyumlu bir kodlama seçtiğinizden emin olun. Kuşkuya düştüğünüzde "
-"bunu ‘Öntanımlı’ olarak bırakın, öntanımlı kodlama (ISOLatin1) "
+"bunu ‘Varsayılan’ olarak bırakın, varsayılan kodlama (ISOLatin1) "
 "kullanılacaktır. Daha fazla ayrıntı için postscript’teki R başvurusuna bakın."
 
 #. i18n: ectx: (Loaded from Export contents of graphics device to various formats) <settings> <setting> (refers to element labelled "Default Title")
@@ -515,7 +515,7 @@ msgstr "Genel Dışa Aktarma Seçenekleri"
 #: rkward/plugins/x11device/export.xml:100
 #, kde-format
 msgid "Default pointsize"
-msgstr "Öntanımlı nokta boyutu"
+msgstr "Varsayılan nokta boyutu"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Filename and Generic options"> <frame label="Generic Export Options"> <spinbox label="...">
 #: rkward/plugins/x11device/export.xml:101
@@ -527,7 +527,7 @@ msgstr "Nokta boyutu"
 #: rkward/plugins/x11device/export.xml:104
 #, kde-format
 msgid "Default Resolution"
-msgstr "Öntanımlı Çözünürlük"
+msgstr "Varsayılan Çözünürlük"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Filename and Generic options"> <frame label="Generic Export Options"> <spinbox label="...">
 #: rkward/plugins/x11device/export.xml:105
@@ -539,7 +539,7 @@ msgstr "Çözünürlük (DPI)"
 #: rkward/plugins/x11device/export.xml:108
 #, kde-format
 msgid "Default Quality"
-msgstr "Öntanımlı Kalite"
+msgstr "Varsayılan Kalite"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Filename and Generic options"> <frame label="Generic Export Options"> <spinbox label="...">
 #: rkward/plugins/x11device/export.xml:109
@@ -573,7 +573,7 @@ msgstr "Kağıt Boyutu"
 #: rkward/plugins/x11device/export.xml:159
 #, kde-format
 msgid "Default"
-msgstr "Öntanımlı"
+msgstr "Varsayılan"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> [...] <dropdown label="Paper Size"> <option label="...">
 #: rkward/plugins/x11device/export.xml:121
@@ -807,7 +807,7 @@ msgstr "Dosyada gömülü başlık"
 #: rkward/plugins/x11device/export.xml:173
 #, kde-format
 msgid "Default Title"
-msgstr "Öntanımlı Başlık"
+msgstr "Varsayılan Başlık"
 
 #. i18n: ectx: (Export contents of graphics device to various formats) <dialog label="Export contents of graphics device to various formats"> <tab label="Postscript/PDF/Ghostscript Options"> <frame label="...">
 #: rkward/plugins/x11device/export.xml:180

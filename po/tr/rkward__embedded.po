@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-08 04:36+0000\n"
-"PO-Revision-Date: 2026-10-16 19:58+0300\n"
+"PO-Revision-Date: 2026-11-22 19:51+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 26.08.0\n"
+"X-Generator: Lokalize 26.08.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -167,7 +167,7 @@ msgid ""
 "<i>invar</i>: Symbol name of the input variable to be limited. Defaults to "
 "'x'."
 msgstr ""
-"<i>invar</i>: Sınırlanacak girdi değişkeninin sembol adı. Öntanımlı olarak "
+"<i>invar</i>: Sınırlanacak girdi değişkeninin sembol adı. Varsayılan olarak "
 "‘x’tir."
 
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
@@ -179,7 +179,7 @@ msgid ""
 "vector). May be identical to <i>invar</i>. Defaults to 'x'."
 msgstr ""
 "<i>outvar</i>: Çıktı değişkeni (sınırlı vektör) için kullanılacak sembol "
-"adı. <i>invar</i> ile aynı olabilir. Öntanımlı olarak ‘x’tir."
+"adı. <i>invar</i> ile aynı olabilir. Varsayılan olarak ‘x’tir."
 
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Limit Vector Length) <technical>
@@ -386,9 +386,10 @@ msgid ""
 "default. Connect your own to this one (<i>client=\"embedded_id.varsource."
 "selected\" governor=\"myvarselector_id.selected\"</i>)."
 msgstr ""
-"<i>varsource</i>: Tablolama eklentisi öntanımlı olarak kendi varselector’ını "
-"göstermez. Kendinizinkini buna bağlayın (<i>client=\"embedded_id.varsource."
-"selected\" governor=\"myvarselector_id.selected\"</i>)."
+"<i>varsource</i>: Tablolama eklentisi varsayılan olarak kendi "
+"varselector’ını göstermez. Kendinizinkini buna bağlayın (<i>client="
+"\"embedded_id.varsource.selected\" governor=\"myvarselector_id.selected\"</"
+"i>)."
 
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Tabulate) <technical>
@@ -398,7 +399,7 @@ msgid ""
 "<i>outvar</i>: By default, the plugin produces a table in a variable called "
 "\"x\". You can set it to use a different name, here."
 msgstr ""
-"<i>outvar</i>: Öntanımlı olarak eklenti, ‘x’ adlı bir değişkende bir tablo "
+"<i>outvar</i>: Varsayılan olarak eklenti, ‘x’ adlı bir değişkende bir tablo "
 "üretir. Burada farklı bir ad kullanacak biçimde ayarlayabilirsiniz."
 
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
@@ -413,7 +414,7 @@ msgstr ""
 "<i>titlevar</i>: Eklentinin gruplandırma değişkenlerinin açıklamasını bir R "
 "değişkenine kaydetmesini istiyorsanız bunu kullanılacak bir nesne adı olarak "
 "ayarlayın. Aksi takdirde devre dışı bırakmak için bunu \"\" olarak "
-"ayarlayın. Öntanımlı olarak \"title\" kullanılır"
+"ayarlayın. Varsayılan olarak \"title\" kullanılır"
 
 #. i18n: i18n: Terms inside quotes, <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Tabulate) <technical>
@@ -970,7 +971,7 @@ msgstr "Renkler"
 #: rkward/plugins/distributions/../plots/barplot_embed.xml:24
 #, kde-format
 msgid "Default (grayscale)"
-msgstr "Öntanımlı (Gri tonlu)"
+msgstr "Varsayılan (Gri tonlu)"
 
 #. i18n: ectx: (Barplot Options) <dialog label="Barplot Options"> <radio label="Colors"> <option label="...">
 #: rkward/plugins/distributions/../plots/barplot_embed.xml:25
@@ -1092,7 +1093,7 @@ msgstr "Renk"
 #: rkward/plugins/distributions/../plots/plot_options.xml:151
 #, kde-format
 msgid "default"
-msgstr "Öntanımlı"
+msgstr "Varsayılan"
 
 #. i18n: ectx: (Choose color) <dialog label="Choose color"> <dropdown label="Color"> <option label="...">
 #: rkward/plugins/distributions/../plots/color_chooser.xml:25
@@ -1747,7 +1748,7 @@ msgid ""
 "color. If it is empty, then <i>col</i> is not used in the code, otherwise "
 "the chosen color is used to fill the bars."
 msgstr ""
-"Bu, <i>col</i> parametresidir. Gömme eklentisi bir öntanımlı renk "
+"Bu, <i>col</i> parametresidir. Gömme eklentisi bir varsayılan renk "
 "ayarlayabilir. Boşsa kodda <i>col</i> kullanılmaz, aksi halde çubukları "
 "doldurmak için seçili renk kullanılır."
 
@@ -1863,7 +1864,7 @@ msgstr "<i>code.calculate</i>: Bu, yalnızca <i>breaks</i> seçeneğini içerir.
 #: rkward/plugins/distributions/../plots/histogram_options.xml:53
 #, kde-format
 msgid "Default histogram options"
-msgstr "Öntanımlı histogram seçenekleri"
+msgstr "Varsayılan histogram seçenekleri"
 
 #. i18n: ectx: (Default histogram options) <dialog label="Default histogram options"> <checkbox label="...">
 #: rkward/plugins/distributions/../plots/histogram_options.xml:56
@@ -2250,8 +2251,8 @@ msgid ""
 "the <i>type</i> argument to <b>plot.default</b>."
 msgstr ""
 "Grafik için listelenen nokta/çizgi türlerinden birini seçin. Çağıran işlevin "
-"öntanımlı çizim türünü kullanmasına izin vermek için ‘öntanımlı’ seçeneğini "
-"seçin. Bu, <b>plot.default</b>’un <i>type</i> argümanıdır."
+"varsayılan çizim türünü kullanmasına izin vermek için ‘varsayılan’ "
+"seçeneğini seçin. Bu, <b>plot.default</b>’un <i>type</i> argümanıdır."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Color")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:40
@@ -2262,8 +2263,8 @@ msgid ""
 "is the <i>col</i> argument to <b>plot.default</b>."
 msgstr ""
 "Çizim için listelenen nokta/çizgi renklerinden birini seçin. Çağıran işlevin "
-"öntanımlı çizim rengini kullanmasına izin vermek için ‘öntanımlı’ seçeneğini "
-"seçin. Bu, <b>plot.default</b>’un <i>col</i> argümanıdır."
+"varsayılan çizim rengini kullanmasına izin vermek için ‘varsayılan’ "
+"seçeneğini seçin. Bu, <b>plot.default</b>’un <i>col</i> argümanıdır."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Aspect ratio")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:43
@@ -2311,7 +2312,7 @@ msgid ""
 "argument."
 msgstr ""
 "<i>default_pointtype</i>: Kullanıcı ‘<label id=\"pointtype\"/>’ için "
-"‘Öntanımlı’yı seçtiğinde öntanımlı nokta türünü sağlayan bir dizi. "
+"‘Varsayılan’yı seçtiğinde varsayılan nokta türünü sağlayan bir dizi. "
 "Olasılıklar p,l,b,o,h,s ve S’dir; bu, <i>type</i> argümanına ilişkin "
 "seçeneklerdir."
 
@@ -2326,9 +2327,9 @@ msgid ""
 "<i>col</i> argument."
 msgstr ""
 "<i>default_pointcolor</i>: Kullanıcı ‘<label id=\"pointcolor\"/>’ için "
-"‘Öntanımlı’yı seçtiğinde öntanımlı nokta rengini sağlayan bir dizi. Çeşitli "
-"olasılıklar için color_chooser.xml koduna bakın; bu, <i>col</i> argümanının "
-"seçenekleridir."
+"‘Varsayılan’yı seçtiğinde varsayılan nokta rengini sağlayan bir dizi. "
+"Çeşitli olasılıklar için color_chooser.xml koduna bakın; bu, <i>col</i> "
+"argümanının seçenekleridir."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Default plot options) <technical>
@@ -2342,9 +2343,9 @@ msgid ""
 "\"&<i>quote;</i>\"."
 msgstr ""
 "<i>default_main</i>: <b>plot.default</b> için <i>main</i> argümanını "
-"belirten bir dizi. Öntanımlı olarak bu \"\" şeklindedir; bu, çizim işlevi "
+"belirten bir dizi. Varsayılan olarak bu \"\" şeklindedir; bu, çizim işlevi "
 "tarafından oluşturulan ana başlığın kullanıldığı anlamına gelir. Not: "
-"Öntanımlı her zaman tırnak içine alınmadan kullanılır. Bir düz dizi "
+"Varsayılan her zaman tırnak içine alınmadan kullanılır. Bir düz dizi "
 "belirtmek istiyorsanız açıkça \"&<i>quote;</i>\" şeklinde tırnak işaretleri "
 "ekleyin."
 
@@ -2500,7 +2501,7 @@ msgstr ""
 #: rkward/plugins/distributions/../plots/plot_options.xml:78
 #, kde-format
 msgid "Default plot options"
-msgstr "Öntanımlı çizim seçenekleri"
+msgstr "Varsayılan çizim seçenekleri"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:80
@@ -2518,7 +2519,7 @@ msgstr "Ana başlık"
 #: rkward/plugins/distributions/../plots/plot_options.xml:83
 #, kde-format
 msgid "Main title (on top). Leave empty for default title"
-msgstr "Ana başlık (en üstte). Öntanımlı başlık için boş bırakın"
+msgstr "Ana başlık (en üstte). Varsayılan başlık için boş bırakın"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="Main title"> <checkbox label="...">
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="Subtitle"> <checkbox label="...">
@@ -2538,7 +2539,7 @@ msgstr "Alt başlık"
 #: rkward/plugins/distributions/../plots/plot_options.xml:87
 #, kde-format
 msgid "Sub-title (at bottom). Leave empty for default title"
-msgstr "Alt başlık (en altta). Öntanımlı başlık için boş bırakın"
+msgstr "Alt başlık (en altta). Varsayılan başlık için boş bırakın"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:90
@@ -2610,7 +2611,7 @@ msgstr "Y ekseni logaritmiği"
 #: rkward/plugins/distributions/../plots/plot_options.xml:111
 #, kde-format
 msgid "Labels (leave empty for default)"
-msgstr "Etiketler (öntanımlı değer için boş bırakın)"
+msgstr "Etiketler (varsayılan değer için boş bırakın)"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Labels (leave empty for default)"> <input label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:113
@@ -2871,7 +2872,7 @@ msgid ""
 "the standard color settings from par()."
 msgstr ""
 "Bu, <i>col.points</i> argümanıdır. par()’daki standart renk ayarlarını "
-"kullanmak için bunu ‘öntanımlı’ olarak bırakın."
+"kullanmak için bunu ‘varsayılan’ olarak bırakın."
 
 #. i18n: ectx: (Loaded from Step function plot options) <settings> <setting> (refers to element labelled "Horizontal Lines")
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.rkh:19
@@ -2911,7 +2912,7 @@ msgstr ""
 "Bunlar yalnızca ‘ecdf’ bağlamında görülebilir. Sırasıyla y = 0 ve y = 1’deki "
 "yatay çizgilerin rengini ayarlamak için kullanılırlar. Özellikle bu, "
 "<b>ecdf</b>’nin <i>col.01line</i> argümanıdır. Yalnızca biri sağlanırsa "
-"(yani diğeri ‘öntanımlı’ olarak ayarlanırsa), her iki çizgi de aynı "
+"(yani diğeri ‘varsayılan’ olarak ayarlanırsa), her iki çizgi de aynı "
 "(belirtilen) renkte olur. Aksi takdirde (yani her iki renk de "
 "sağlandığında), her iki renk de iki uzunlukta bir karakter vektörü olarak "
 "sağlanır."
@@ -2982,7 +2983,7 @@ msgstr "Tüm çizgiler için çizgi türleri"
 #: rkward/plugins/distributions/../x11device/grid.xml:50
 #, kde-format
 msgid "Default"
-msgstr "Öntanımlı"
+msgstr "Varsayılan"
 
 #. i18n: ectx: (Step function plot options) <dialog label="Step function plot options"> <frame label="...">
 #: rkward/plugins/distributions/../plots/plot_stepfun_options.xml:47
@@ -3076,7 +3077,7 @@ msgid ""
 "vertical lines. Select 'Specify below' to provide a specified (to be "
 "specified below) number of vertical lines in the grid."
 msgstr ""
-"Bu <i>nx</i> argümanıdır. Öntanımlı değer NULL’dur; bu durumda dikey "
+"Bu <i>nx</i> argümanıdır. Varsayılan değer NULL’dur; bu durumda dikey "
 "çizgiler x ekseni işaretlerinde çizilir. Dikey çizgileri çizmemek için Yok’u "
 "seçin. Izgarada belirli sayıda (aşağıda belirtilecek) dikey çizgi sağlamak "
 "için ‘Aşağıda belirt’i seçin."
@@ -3136,8 +3137,8 @@ msgid ""
 "This is the <i>lty</i> argument. Choosing Default will not add any arguments "
 "to the grid function call, hence the default line type will be used."
 msgstr ""
-"Bu, <i>lty</i> argümanıdır. Öntanımlı’nın seçilmesi ızgara işlevi çağrısına "
-"herhangi bir argüman eklemeyeceğinden, öntanımlı satır türü kullanılacaktır."
+"Bu, <i>lty</i> argümanıdır. Varsayılan’nın seçilmesi ızgara işlevi çağrısına "
+"herhangi bir argüman eklemeyeceğinden, varsayılan satır türü kullanılacaktır."
 
 #. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "Color")
 #: rkward/plugins/distributions/../x11device/grid.rkh:22
@@ -3146,7 +3147,7 @@ msgid ""
 "This is the <i>col</i> argument. The Default option is similar to that of "
 "Line type (see above)."
 msgstr ""
-"Bu <i>col</i> argümanıdır. Öntanımlı seçeneği çizgi türününkine benzer "
+"Bu <i>col</i> argümanıdır. Varsayılan seçeneği çizgi türününkine benzer "
 "(yukarıya bakın)."
 
 #. i18n: ectx: (Loaded from Grid options) <settings> <setting> (refers to element labelled "Equilogs")

@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-08 04:36+0000\n"
-"PO-Revision-Date: 2026-11-18 18:15+0300\n"
+"PO-Revision-Date: 2026-11-22 19:51+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -2954,8 +2954,8 @@ msgid ""
 "If checked (the default) probabilities are P[X ≤ x]. Otherwise (upper tail) "
 "probabilities are P[X > x]"
 msgstr ""
-"İşaretlenirse (öntanımlı) olasılıklar P[X ≤ x] olur. Aksi halde (üst kuyruk) "
-"olasılıklar P[X > x] olur"
+"İşaretlenirse (varsayılan) olasılıklar P[X ≤ x] olur. Aksi halde (üst "
+"kuyruk) olasılıklar P[X > x] olur"
 
 #. i18n: ectx: (Loaded from Loaded from Beta distribution calculator) <snippet> <setting>
 #. i18n: ectx: (Loaded from Loaded from Binomial probabilities, quantiles, densities) <snippet> <setting>
@@ -5447,7 +5447,7 @@ msgid ""
 "output. (Default: YES)"
 msgstr ""
 "Çıktıya gözlemlerin ve NA’ların sayısını içermek istiyorsanız seçin. "
-"(Öntanımlı: EVET)"
+"(Varsayılan: EVET)"
 
 #. i18n: ectx: (Loaded from Jarque-Bera Normality Test) <settings> <setting> (refers to element labelled "Exclude NAs")
 #: rkward/plugins/distributions/tests/jb_test.rkh:23
@@ -5457,7 +5457,7 @@ msgid ""
 "performing the test. (Default: YES)"
 msgstr ""
 "Verilerinizde eksik değerler olup olmadığını seçin. Daha sonra test "
-"gerçekleştirilirken NA’lar atlanır. (Öntanımlı: EVET)"
+"gerçekleştirilirken NA’lar atlanır. (Varsayılan: EVET)"
 
 #. i18n: ectx: (Jarque-Bera Normality Test) <dialog label="Jarque-Bera Normality Test"> <tab label="Options"> <checkbox label="...">
 #: rkward/plugins/distributions/tests/jb_test.xml:25

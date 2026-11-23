@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: RKWard\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-08 04:36+0000\n"
-"PO-Revision-Date: 2026-11-18 18:15+0300\n"
+"PO-Revision-Date: 2026-11-22 19:51+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -1740,12 +1740,12 @@ msgstr "Seçili yok"
 #: rkward/dialogs/rksetupwizard.cpp:156
 #, kde-format
 msgid "Restore defaults"
-msgstr "Öntanımlıları geri yükle"
+msgstr "Varsayılanları geri yükle"
 
 #: rkward/dialogs/rksetupwizard.cpp:156
 #, kde-format
 msgid "Enable the default plugins"
-msgstr "Öntanımlı eklentileri etkinleştirin"
+msgstr "Varsayılan eklentileri etkinleştirin"
 
 #: rkward/dialogs/rksetupwizard.cpp:157
 #, kde-format
@@ -2330,7 +2330,7 @@ msgstr "Hizalama"
 #: rkward/misc/editformatdialog.cpp:37
 #, kde-format
 msgid "Default"
-msgstr "Öntanımlı"
+msgstr "Varsayılan"
 
 #: rkward/misc/editformatdialog.cpp:39
 #, kde-format
@@ -2350,7 +2350,7 @@ msgstr "Ondalık Basamaklar"
 #: rkward/misc/editformatdialog.cpp:49
 #, kde-format
 msgid "Default setting"
-msgstr "Öntanımlı ayar"
+msgstr "Varsayılan ayar"
 
 #: rkward/misc/editformatdialog.cpp:51
 #, kde-format
@@ -4884,7 +4884,7 @@ msgid ""
 "completions are shown, performs partial completion (if possible), "
 "independent of this setting."
 msgstr ""
-"Not: Daha fazla kısayol atanabilir ve öntanımlı olarak Kontrol+Boşluk buna "
+"Not: Daha fazla kısayol atanabilir ve varsayılan olarak Kontrol+Boşluk buna "
 "ek olarak tamamlamaları da çağırır. Ayrıca, tamamlamalar gösterilirken Sekme "
 "düğmesine basıldığında bu ayardan bağımsız olarak kısımsal tamamlama "
 "(olanaklıysa) gerçekleştirilir."
@@ -5081,7 +5081,7 @@ msgstr "Tüm komutları ekle"
 #: rkward/settings/rksettingsmoduleconsole.cpp:70
 #, kde-format
 msgid "Command history is context sensitive by default"
-msgstr "Komut geçmişi öntanımlı olarak bağlama duyarlıdır"
+msgstr "Komut geçmişi varsayılan olarak bağlama duyarlıdır"
 
 #: rkward/settings/rksettingsmoduleconsole.cpp:134
 #, kde-format
@@ -5274,7 +5274,7 @@ msgstr "Genel"
 #: rkward/settings/rksettingsmodulegraphics.cpp:50
 #, kde-format
 msgid "Default graphics device"
-msgstr "Öntanımlı grafik aygıtı"
+msgstr "Varsayılan grafik aygıtı"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:53
 #, kde-format
@@ -5284,7 +5284,7 @@ msgstr "RKWard yerel aygıtı"
 #: rkward/settings/rksettingsmodulegraphics.cpp:56
 #, kde-format
 msgid "Platform default device"
-msgstr "Platform öntanımlı aygıtı"
+msgstr "Platform varsayılan aygıtı"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:59
 #, kde-format
@@ -5302,10 +5302,10 @@ msgid ""
 "<i>quartz()</i>, depending on the platform.</p><p>You can also specify the "
 "name of a function such as <i>cairoDevice</i>.</p>"
 msgstr ""
-"<p>Grafik için kullanılacak öntanımlı aygıt, yani hiçbir grafik aygıtı etkin "
-"değilken yeni grafik oluşturulduğunda (bkz. <i>options(\"aygıt\")</i>).</"
-"p><p>RKWard yerel aygıtı, çoğu kullanıcı için önerilen seçimdir. Bu, "
-"<i>RK()</i> R komutuna karşılık gelir.</p><p>‘Platform öntanımlı aygıtı’, "
+"<p>Grafik için kullanılacak varsayılan aygıt, yani hiçbir grafik aygıtı "
+"etkin değilken yeni grafik oluşturulduğunda (bkz. <i>options(\"aygıt\")</i>)."
+"</p><p>RKWard yerel aygıtı, çoğu kullanıcı için önerilen seçimdir. Bu, "
+"<i>RK()</i> R komutuna karşılık gelir.</p><p>‘Platform varsayılan aygıtı’, "
 "platforma bağlı olarak <i>X11()</i>, <i>windows()</i> veya <i>quartz()</"
 "i>’dan birine karşılık gelir.</p><p>Ayrıca <i>cairoDevice</i> gibi bir "
 "işlevin adını da belirtebilirsiniz.</p>"
@@ -5366,17 +5366,17 @@ msgstr ""
 #: rkward/settings/rksettingsmodulegraphics.cpp:105
 #, kde-format
 msgid "Default window size (for RK(), or embedded device windows)"
-msgstr "Öntanımlı pencere boyutu (RK() veya gömülü aygıt penceresi için)"
+msgstr "Varsayılan pencere boyutu (RK() veya gömülü aygıt penceresi için)"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:107
 #, kde-format
 msgid "Default width (inches):"
-msgstr "Öntanımlı genişlik (inç):"
+msgstr "Varsayılan genişlik (inç):"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:110
 #, kde-format
 msgid "Default height (inches)"
-msgstr "Öntanımlı yükseklik (inç)"
+msgstr "Varsayılan yükseklik (inç)"
 
 #: rkward/settings/rksettingsmodulegraphics.cpp:114
 #, kde-format
@@ -5487,13 +5487,13 @@ msgid ""
 "Default output (used, while no other output has been set, explicitly) is "
 "shared across workspaces(*)."
 msgstr ""
-"Öntanımlı çıktı (açıkça başka bir çıktı ayarlanmamışken kullanılır) çalışma "
+"Varsayılan çıktı (açıkça başka bir çıktı ayarlanmamışken kullanılır) çalışma "
 "alanları arasında paylaşılır(*)."
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:132
 #, kde-format
 msgid "CSS file to use for output (leave empty for default)"
-msgstr "Çıktı için kullanılacak olan CSS dosyası (öntanımlı için boş bırakın)"
+msgstr "Çıktı için kullanılacak olan CSS dosyası (varsayılan için boş bırakın)"
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:132
 #, kde-format
@@ -5509,7 +5509,7 @@ msgid ""
 "only."
 msgstr ""
 "Çıktı penceresinin özel biçimlendirilmesi için bir CSS dosyası seçin. RKWard "
-"ile birlikte gönderilen öntanımlı CSS dosyasını kullanmak için boş bırakın. "
+"ile birlikte gönderilen varsayılan CSS dosyasını kullanmak için boş bırakın. "
 "Bu ayarın yalnızca bir çıktı dosyası başlatılırken (örneğin çıktı "
 "temizlendikten sonra) etkili olacağını unutmayın."
 
@@ -5526,7 +5526,7 @@ msgstr "Dosya biçimi"
 #: rkward/settings/rksettingsmoduleoutput.cpp:143
 #, kde-format
 msgid "<Default>"
-msgstr "<Öntanımlı>"
+msgstr "<Varsayılan>"
 
 #: rkward/settings/rksettingsmoduleoutput.cpp:144
 #, kde-format
@@ -5653,7 +5653,7 @@ msgstr "Uyarıları sustur"
 #: rkward/settings/rksettingsmoduler.cpp:77
 #, kde-format
 msgid "Print warnings later (default)"
-msgstr "Uyarıları sonra yazdır (öntanımlı)"
+msgstr "Uyarıları sonra yazdır (varsayılan)"
 
 #: rkward/settings/rksettingsmoduler.cpp:77
 #, kde-format
@@ -5693,7 +5693,7 @@ msgstr "Fonksiyonlardaki yorumları koru"
 #: rkward/settings/rksettingsmoduler.cpp:102
 #, kde-format
 msgid "TRUE (default)"
-msgstr "DOĞRU (öntanımlı)"
+msgstr "DOĞRU (varsayılan)"
 
 #: rkward/settings/rksettingsmoduler.cpp:102
 #, kde-format
@@ -5715,7 +5715,7 @@ msgstr "DOĞRU"
 #: rkward/settings/rksettingsmoduler.cpp:120
 #, kde-format
 msgid "FALSE (default)"
-msgstr "YANLIŞ(Öntanımlı)"
+msgstr "YANLIŞ (Varsayılan)"
 
 #: rkward/settings/rksettingsmoduler.cpp:111
 #, kde-format
@@ -5725,7 +5725,7 @@ msgstr "İç içe ifadelerin maksimum düzeyi"
 #: rkward/settings/rksettingsmoduler.cpp:115
 #, kde-format
 msgid "Default decimal precision in print ()"
-msgstr "Baskıda öntanımlı ondalık hassasiyeti"
+msgstr "Baskıda varsayılan ondalık hassasiyeti"
 
 #: rkward/settings/rksettingsmoduler.cpp:119
 #, kde-format
@@ -5847,7 +5847,7 @@ msgid ""
 "you specify in this list"
 msgstr ""
 "Not: Bu listede belirttiğiniz konumlara ek olarak her zaman başlangıç "
-"öntanımlıları kullanılacaktır."
+"varsayılanları kullanılacaktır."
 
 #: rkward/settings/rksettingsmoduler.cpp:415
 #, kde-format
@@ -5912,7 +5912,7 @@ msgid ""
 "for an incompatible version of R."
 msgstr ""
 "Yapılandırılmış kitaplık konumları (bu sistemde R paketlerinin kurulacağı "
-"yer), RKWard’ın önceki sürümlerinde öntanımlı kitaplık konumu olarak "
+"yer), RKWard’ın önceki sürümlerinde varsayılan kitaplık konumu olarak "
 "önerilen ‘%1’ dizinini içerir. RKWard dışındaki R oturumları tarafından "
 "erişilemediğinden (açıkça yapılandırılmadıkça) bu dizinin kullanılması artık "
 "önerilmemektedir. Ayrıca dizin adında R sürüm numarasının bulunmaması "
@@ -6701,7 +6701,7 @@ msgstr "Uzaklaştır"
 #: rkward/windows/rkhtmlwindow.cpp:996
 #, kde-format
 msgid "Default &Encoding"
-msgstr "Öntanımlı &Kodlama"
+msgstr "Varsayılan &Kodlama"
 
 #: rkward/windows/rkhtmlwindow.cpp:997
 #, kde-format
@@ -6710,7 +6710,7 @@ msgid ""
 "page or in the HTTP headers."
 msgstr ""
 "Sayfada veya HTTP başlıklarında açık bir kodlamanın ayarlanmaması durumunda "
-"kodlamayı öntanımlı şekilde ayarlayın."
+"kodlamayı varsayılan şekilde ayarlayın."
 
 #: rkward/windows/rkhtmlwindow.cpp:1006
 #, kde-format
@@ -7038,7 +7038,7 @@ msgid ""
 msgstr ""
 "Geçerli pencere ekrana sığmayacak kadar büyük görünüyor. Bu durum düzenli "
 "olarak oluyorsa Ayarlar → RKWard Uygulamasını Yapılandır → Ekran Grafikleri "
-"bölümünden öntanımlı grafik penceresi boyutunu ayarlamak isteyebilirsiniz."
+"bölümünden varsayılan grafik penceresi boyutunu ayarlamak isteyebilirsiniz."
 
 #: rkward/windows/rkwindowcatcher.cpp:351
 #, kde-format
@@ -7303,12 +7303,13 @@ msgid ""
 "application?"
 msgstr ""
 "Açmaya çalıştığınız URL (‘%1’) yerel bir dosya değil veya dosya türü RKWard "
-"tarafından desteklenmiyor. URL’yi öntanımlı uygulamada açmak istiyor musunuz?"
+"tarafından desteklenmiyor. URL’yi varsayılan uygulamada açmak istiyor "
+"musunuz?"
 
 #: rkward/windows/rkworkplace.cpp:452
 #, kde-format
 msgid "Open in default application?"
-msgstr "Öntanımlı Uygulama İle Aç?"
+msgstr "Varsayılan Uygulama ile Aç?"
 
 #: rkward/windows/rkworkplace.cpp:539
 #, kde-format
