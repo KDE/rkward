@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-08 02:53+0000\n"
-"PO-Revision-Date: 2026-11-19 19:02+0300\n"
+"PO-Revision-Date: 2026-11-23 18:16+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -1232,7 +1232,7 @@ msgstr "Sekmeyle ayrılmış değerler, virgül ondalık ayırıcısı (TAB2)"
 #: rkward/plugins/00saveload/import/import_csv.xml:111
 #, kde-format
 msgid "read.table() default (whitespace separated values)"
-msgstr "read.table() öntanımlı (boşlukla ayrılmış değerler)"
+msgstr "read.table() varsayılan (boşlukla ayrılmış değerler)"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="General"> <checkbox label="...">
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="General"> <checkbox label="...">
@@ -1539,7 +1539,7 @@ msgstr "Çarpana dönüştür"
 #: rkward/plugins/00saveload/import/import_xls.xml:39
 #, kde-format
 msgid "Default"
-msgstr "Öntanımlı"
+msgstr "Varsayılan"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> [...] <radio label="Convert character columns to factors"> <option label="...">
 #. i18n: ectx: (Import Microsoft EXCEL sheet) <dialog label="Import Microsoft EXCEL sheet"> <tab label="Further Options"> <radio label="Convert character columns to factors"> <option label="...">
@@ -2230,7 +2230,7 @@ msgid ""
 "specify a range in spreadsheet notation, below."
 msgstr ""
 "Sayfanın içine aktarılacak ilk veri satırı. 0 olarak bırakılırsa "
-"(öntanımlı), başlangıç satırı kendiliğinden belirlenecektir. Alternatif "
+"(varsayılan), başlangıç satırı kendiliğinden belirlenecektir. Alternatif "
 "olarak, aşağıda elektronik tablo gösteriminde bir erim belirtebilirsiniz."
 
 #. i18n: ectx: (Loaded from Import Microsoft EXCEL sheet) <settings> <setting> (refers to element labelled "Column")
@@ -2562,7 +2562,7 @@ msgid ""
 "differentiate it from the output)? Leave empty for the default."
 msgstr ""
 "Yansıtılan her kaynak satırının başlangıcında ne yazdırılmalıdır (çıktıdan "
-"ayırt etmek için)? Öntanımlı ayar için boş bırakın."
+"ayırt etmek için)? Varsayılan ayar için boş bırakın."
 
 #. i18n: ectx: (Loaded from Source an R file) <settings> <setting> (refers to element labelled "Maximal length of echoed statements")
 #: rkward/plugins/00saveload/import/source.rkh:24
@@ -2634,7 +2634,7 @@ msgstr "Kaynak ifadelerini yankıla"
 #: rkward/plugins/00saveload/import/source.xml:29
 #, kde-format
 msgid "Prompt for echoed lines (empty for default)"
-msgstr "Yankılanan satırlar için sor (öntanımlı olarak boş)"
+msgstr "Yankılanan satırlar için sor (varsayılan olarak boş)"
 
 #. i18n: ectx: (Source an R file) <dialog label="Source an R file"> <tab label="Output options"> <spinbox label="...">
 #: rkward/plugins/00saveload/import/source.xml:30
@@ -3186,8 +3186,8 @@ msgid ""
 "options (like field separator and decimal point) with reasonable defaults. "
 "Use the custom format if you need more control."
 msgstr ""
-"Burada öntanımlı dosya biçimlerinden birini seçin. Bazı seçenekleri (alan "
-"ayırıcısı ve ondalık nokta gibi) makul öntanımlılarla ayarlayacaklardır. "
+"Burada varsayılan dosya biçimlerinden birini seçin. Bazı seçenekleri (alan "
+"ayırıcısı ve ondalık nokta gibi) makul varsayılanlarla ayarlayacaklardır. "
 "Daha fazla denetime gereksiniminiz varsa özel biçimi kullanın."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Decimal point character")
@@ -3257,7 +3257,7 @@ msgid ""
 "If the default character encoding doesn't work for you, you can set a "
 "specific one here."
 msgstr ""
-"Öntanımlı karakter kodlaması işinize yaramazsa buradan belirli bir tane "
+"Varsayılan karakter kodlaması işinize yaramazsa buradan belirli bir tane "
 "ayarlayabilirsiniz."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Custom encoding")
@@ -3419,7 +3419,7 @@ msgstr "Dosya kodlaması"
 #: rkward/plugins/00saveload/save/write_csv.xml:134
 #, kde-format
 msgid "(default)"
-msgstr "(öntanımlı)"
+msgstr "(varsayılan)"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Encoding and Character Options"> <frame label="Encoding"> <input label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:155

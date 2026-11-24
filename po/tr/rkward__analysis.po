@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-08 02:53+0000\n"
-"PO-Revision-Date: 2026-11-16 18:35+0300\n"
+"PO-Revision-Date: 2026-11-23 18:16+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -1530,7 +1530,7 @@ msgid ""
 "Should NA (and NaN) values be excluded (default)? If this option is not "
 "checked, missing values are listed in the table just like regular values."
 msgstr ""
-"NA (ve NaN) değerleri dışlanmalı mı (öntanımlı)? Bu seçenek kullanılmazsa "
+"NA (ve NaN) değerleri dışlanmalı mı (varsayılan)? Bu seçenek kullanılmazsa "
 "denetlendiğinde, eksik değerler tıpkı normal değerler gibi tabloda "
 "listelenir."
 
@@ -1807,7 +1807,7 @@ msgid ""
 "If checked, missing values will be excluded from calculation (default "
 "setting in RKWard)."
 msgstr ""
-"İşaretlenirse eksik değerler hesaplamanın dışlanır (RKWard’daki öntanımlı "
+"İşaretlenirse eksik değerler hesaplamanın dışlanır (RKWard’daki varsayılan "
 "ayar)."
 
 #. i18n: ectx: (sample moment) <dialog label="...">
@@ -2158,7 +2158,7 @@ msgid ""
 "sample."
 msgstr ""
 "Gerçekleştirilecek testin çeşidini belirtir. Ayrıntılar için <link href="
-"\"rkward://rhelp/dixon.test\"/> bölümüne bakın. Öntanımlı değer (0), "
+"\"rkward://rhelp/dixon.test\"/> bölümüne bakın. Varsayılan değer (0), "
 "örneklemin boyutuna göre uygun bir çeşidin kendiliğinden seçildiği anlamına "
 "gelir."
 
@@ -2166,7 +2166,7 @@ msgstr ""
 #: rkward/plugins/analysis/outliers/dixon_test.rkh:21
 #, kde-format
 msgid "Should the test be treated as two-sided (default)?"
-msgstr "Test iki taraflı (öntanımlı) olarak mı değerlendirilmelidir?"
+msgstr "Test iki taraflı (varsayılan) olarak mı değerlendirilmelidir?"
 
 #. i18n: ectx: (Loaded from Dixon tests for outlier) <settings> <setting> (refers to element labelled "Opposite")
 #. i18n: ectx: (Loaded from Grubbs tests for one or two outliers in data sample) <settings> <setting> (refers to element labelled "Opposite")
@@ -3677,7 +3677,7 @@ msgid ""
 msgstr ""
 "Bu, yumuşatma parametresidir. Verilerin sıklığına bağlı olarak en yaygın üç "
 "değeri içeren bir açılır menünüz vardır (<i>Yıllık</i>, <i>Üç Aylık</i> ve "
-"<i>Aylık</i>). (Öntanımlı: 1600)"
+"<i>Aylık</i>). (Varsayılan: 1600)"
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter) <settings> <setting> (refers to element labelled "Custom value")
 #: rkward/plugins/analysis/time_series/hp_filter.rkh:22
@@ -3700,17 +3700,17 @@ msgid ""
 "\"myseries.hptrend\").</i>"
 msgstr ""
 "Çalışma alanında hangi sonuçtaki serinin oluşturulması gerektiğini seçin. "
-"Özgün serinin trendi öntanımlı olarak oluşturulur. Seri için tanımlayıcı "
-"olarak kullanmak istediğiniz herhangi bir adı yazın. Öntanımlı olarak <i>hp</"
-"i> ve ardından <i>trend</i> ve/veya <i>cycle</i> gelir. <i>İpucu: Diğer "
-"değişkenlerin trendinin/döngüsünün üzerine yazmayı önlemek için özgün "
+"Özgün serinin trendi varsayılan olarak oluşturulur. Seri için tanımlayıcı "
+"olarak kullanmak istediğiniz herhangi bir adı yazın. Varsayılan olarak "
+"<i>hp</i> ve ardından <i>trend</i> ve/veya <i>cycle</i> gelir. <i>İpucu: "
+"Diğer değişkenlerin trendinin/döngüsünün üzerine yazmayı önlemek için özgün "
 "serinin adını ekleyebilirsiniz (örneğin, \"myseries.hptrend\").</i>"
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter) <settings> <setting> (refers to element labelled "Plot Cycle")
 #: rkward/plugins/analysis/time_series/hp_filter.rkh:25
 #, kde-format
 msgid "Plot the cyclical component below the trend graph. (Default: YES)"
-msgstr "Döngüsel bileşeni trend grafiğinin altına çizin. (Öntanımlı: EVET)"
+msgstr "Döngüsel bileşeni trend grafiğinin altına çizin. (Varsayılan: EVET)"
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter) <settings> <setting> (refers to element labelled "Lines")
 #: rkward/plugins/analysis/time_series/hp_filter.rkh:26
@@ -3720,7 +3720,8 @@ msgid ""
 "plot. (Default: blue series, red trend and dark green cycle)"
 msgstr ""
 "Burada çizimdeki her serinin çizgi genişliğini, türünü ve rengini "
-"ayarlayabilirsiniz. (Öntanımlı: mavi seri, kırmızı trend ve koyu yeşil döngü)"
+"ayarlayabilirsiniz. (Varsayılan: mavi seri, kırmızı trend ve koyu yeşil "
+"döngü)"
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter) <settings> <setting> (refers to element labelled "Original series and trend Y axis label")
 #: rkward/plugins/analysis/time_series/hp_filter.rkh:28
@@ -3731,7 +3732,7 @@ msgid ""
 "Trend</i>."
 msgstr ""
 "Burada trend grafiğinin (üst) Y ekseni etiketindeki metni "
-"belirleyebilirsiniz. Boşsa öntanımlı etiket özgün serinin adı artı <i>, "
+"belirleyebilirsiniz. Boşsa varsayılan etiket özgün serinin adı artı <i>, "
 "Trend</i> olur."
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter) <settings> <setting> (refers to element labelled "Cycle Y axis label")
@@ -3742,7 +3743,7 @@ msgid ""
 "if applicable). If empty, the default label is <i>Cycle</i>."
 msgstr ""
 "Burada döngü grafiğinin Y ekseni etiketindeki metni belirleyebilirsiniz "
-"(varsa alt). Boşsa öntanımlı etiket <i>Döngü</i>’dür."
+"(varsa alt). Boşsa varsayılan etiket <i>Döngü</i>’dür."
 
 #. i18n: ectx: (Loaded from Hodrick-Prescott Filter) <settings> <setting> (refers to element labelled "interpret as string")
 #: rkward/plugins/analysis/time_series/hp_filter.rkh:30
@@ -3753,7 +3754,7 @@ msgid ""
 msgstr ""
 "Değişmez (alıntılanan) diziler olarak değerlendirilen etiketleri "
 "etkinleştirin veya devre dışı bırakın. Satır sonu elde etmek için (tırnak "
-"içine alınmış bir dizide), ‘\\n’ girin. (Öntanımlı: EVET)"
+"içine alınmış bir dizide), ‘\\n’ girin. (Varsayılan: EVET)"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:30
@@ -3859,7 +3860,7 @@ msgstr "Çizgi türü"
 #: rkward/plugins/analysis/time_series/hp_filter.xml:95
 #, kde-format
 msgid "default"
-msgstr "öntanımlı"
+msgstr "varsayılan"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> [...] <dropdown label="Line type"> <option label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:68
@@ -3927,7 +3928,7 @@ msgstr "Döngü"
 #: rkward/plugins/analysis/time_series/hp_filter.xml:108
 #, kde-format
 msgid "Labels (leave empty for default)"
-msgstr "Etiketler (öntanımlılar için boş bırakın)"
+msgstr "Etiketler (varsayılanlar için boş bırakın)"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="Plot options"> <frame label="Labels (leave empty for default)"> <input label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:110
@@ -4008,7 +4009,7 @@ msgid ""
 "Indicates the null hypothesis and must be one of \"Level\" (default) or "
 "\"Trend\"."
 msgstr ""
-"Boş hipotezi belirtir ve ‘Düzey’ (öntanımlı) veya ‘Trend’den biri olmalıdır."
+"Boş hipotezi belirtir ve ‘Düzey’ (varsayılan) veya ‘Trend’den biri olmalıdır."
 
 #. i18n: ectx: (Loaded from KPSS Test for Stationarity) <settings> <setting> (refers to element labelled "version of truncation lag parameter")
 #: rkward/plugins/analysis/time_series/kpss_test.rkh:20
@@ -4150,7 +4151,7 @@ msgstr "Testin alternatif hipotezi."
 #: rkward/plugins/analysis/variances/F_test.rkh:22
 #, kde-format
 msgid "Defines the hypothesized ratio of the population variances."
-msgstr "Popülasyon varyanslarının öntanımlı oranını tanımlar."
+msgstr "Popülasyon varyanslarının varsayılan oranını tanımlar."
 
 #. i18n: ectx: (Loaded from F test) <settings> <setting> (refers to element labelled "Confidence level")
 #: rkward/plugins/analysis/variances/F_test.rkh:23
@@ -4385,7 +4386,7 @@ msgid ""
 "asymptomatic p-value is calculated if and only if you have less than 50 "
 "cases per group without binding when an exact test should be performed."
 msgstr ""
-"Kesin bir p değeri hesaplanmalı mıdır? Öntanımlı olarak (‘Kendiliğinden’) "
+"Kesin bir p değeri hesaplanmalı mıdır? Varsayılan olarak (‘Kendiliğinden’) "
 "asemptomatik bir p değeri, kesin bir testin yapılması gerektiğinde yalnızca "
 "grup başına 50’den az vakanız varsa bağlayıcı olmadan hesaplanır."
 
@@ -4696,7 +4697,7 @@ msgid ""
 "asymptotically normal consistency (see <link href=\"rkward://rhelp/mad\"/>)."
 msgstr ""
 "Ortanca mutlak sapmayı, yani ortancadan mutlak sapmaların (düşük/yüksek) "
-"ortancasını hesaplayın ve (öntanımlı olarak) asimptotik olarak normal "
+"ortancasını hesaplayın ve (varsayılan olarak) asimptotik olarak normal "
 "tutarlılık için bir çarpanla ayarlama yapın (bkz. <link href=\"rkward://"
 "rhelp) /deli\"/>)."
 
