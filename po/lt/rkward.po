@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lt\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-11-08 04:36+0000\n"
+"POT-Creation-Date: 2026-11-24 03:11+0000\n"
 "PO-Revision-Date: 2015-06-20 16:39+0300\n"
 "Last-Translator: Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
@@ -430,16 +430,6 @@ msgstr "Nurodytas vardas arba netinkamas, arba jau yra. Pervadinta į %1"
 #, kde-format
 msgid "Invalid Name"
 msgstr "Netinkamas vardas"
-
-#. i18n: ectx: Menu (edit)
-#: rkward/dataeditor/rkeditordataframepart.rc:9 rkward/rkconsolepart.rc:17
-#: rkward/rkwardui.rc:46 rkward/windows/detachedwindowcontainer.rc:16
-#: rkward/windows/rkcommandeditorwindowpart.rc:10
-#: rkward/windows/rkcommandlogpart.rc:9 rkward/windows/rkhelpwindow.rc:13
-#: rkward/windows/rkoutputwindow.rc:15 rkward/windows/rkstandardactions.rc:15
-#, kde-format
-msgid "&Edit"
-msgstr "&Keisti"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:273
 #: rkward/dataeditor/rkvareditmodel.cpp:550
@@ -3893,35 +3883,6 @@ msgstr "Papildyti"
 msgid "Reset, then submit"
 msgstr ""
 
-#. i18n: ectx: Menu (file)
-#: rkward/rkconsolepart.rc:9 rkward/rkwardui.rc:12
-#: rkward/windows/detachedwindowcontainer.rc:10
-#: rkward/windows/rkcommandeditorwindowpart.rc:9
-#: rkward/windows/rkhelpwindow.rc:9 rkward/windows/rkoutputwindow.rc:9
-#: rkward/windows/rkstandardactions.rc:12
-#, kde-format
-msgid "&File"
-msgstr "&Failas"
-
-#. i18n: ectx: Menu (view)
-#: rkward/rkconsolepart.rc:35 rkward/rkconsolepart.rc:60 rkward/rkwardui.rc:60
-#: rkward/windows/detachedwindowcontainer.rc:29
-#: rkward/windows/rkcatchedx11windowpart.rc:34
-#: rkward/windows/rkhelpwindow.rc:22 rkward/windows/rkoutputwindow.rc:28
-#, kde-format
-msgid "&View"
-msgstr "&Rodymas"
-
-#. i18n: ectx: Menu (run)
-#: rkward/rkconsolepart.rc:41 rkward/rkwardui.rc:63
-#: rkward/windows/detachedwindowcontainer.rc:35
-#: rkward/windows/rkcommandeditorwindowpart.rc:17
-#: rkward/windows/rkcommandeditorwindowpart.rc:38
-#: rkward/windows/rkstandardactions.rc:18
-#, kde-format
-msgid "&Run"
-msgstr "&Vykdyti"
-
 #: rkward/rkward.cpp:303
 #, kde-format
 msgid ""
@@ -4351,67 +4312,6 @@ msgstr "Atverti scenarijaus failą(-us)"
 #, kde-format
 msgid "[Unnamed Workspace]"
 msgstr "[Nepavadinta darbo erdvė]"
-
-#. i18n: ectx: Menu (new_data)
-#: rkward/rkwardui.rc:13
-#, kde-format
-msgid "&New"
-msgstr "&Nauja"
-
-#. i18n: ectx: Menu (open_specific)
-#: rkward/rkwardui.rc:19
-#, kde-format
-msgid "&Open by Type"
-msgstr ""
-
-#. i18n: ectx: Menu (import)
-#: rkward/rkwardui.rc:25
-#, kde-format
-msgid "&Import"
-msgstr "&Importuoti"
-
-#. i18n: ectx: Menu (export)
-#: rkward/rkwardui.rc:30
-#, kde-format
-msgid "&Export"
-msgstr "&Eksportuoti"
-
-#. i18n: ectx: Menu (workspace)
-#: rkward/rkwardui.rc:36
-#, kde-format
-msgid "&Workspace"
-msgstr "&Darbo erdvė"
-
-#. i18n: ectx: Menu (window)
-#: rkward/rkwardui.rc:75
-#, kde-format
-msgid "&Windows"
-msgstr "&Langai"
-
-#. i18n: ectx: Menu (window_activate)
-#: rkward/rkwardui.rc:84 rkward/windows/detachedwindowcontainer.rc:47
-#: rkward/windows/katepluginintegration.rc:10
-#: rkward/windows/rktoplevelwindowgui.rc:15
-#, kde-format
-msgid "&Activate"
-msgstr "&Aktyvuoti"
-
-#. i18n: ectx: Menu (settings)
-#: rkward/rkwardui.rc:94 rkward/windows/detachedwindowcontainer.rc:51
-#: rkward/windows/rkcommandeditorwindowpart.rc:23
-#: rkward/windows/rkcommandlogpart.rc:14 rkward/windows/rkstandardactions.rc:28
-#: rkward/windows/rktoplevelwindowgui.rc:26
-#, kde-format
-msgid "&Settings"
-msgstr "&Nuostatos"
-
-#. i18n: ectx: Menu (help)
-#: rkward/rkwardui.rc:102 rkward/windows/detachedwindowcontainer.rc:54
-#: rkward/windows/rkstandardactions.rc:24
-#: rkward/windows/rktoplevelwindowgui.rc:33
-#, kde-format
-msgid "&Help"
-msgstr "&Pagalba"
 
 #: rkward/robjectviewer.cpp:49
 #, kde-format
@@ -5717,28 +5617,6 @@ msgstr "Komandų žurnalas"
 msgid "Attach to main window"
 msgstr "Prisegti prie pagrindinio lango"
 
-#. i18n: ectx: Menu (device)
-#: rkward/windows/detachedwindowcontainer.rc:13
-#: rkward/windows/rkcatchedx11windowpart.rc:9
-#, kde-format
-msgid "&Device"
-msgstr "Į&renginys"
-
-#. i18n: ectx: Menu (history)
-#: rkward/windows/detachedwindowcontainer.rc:32
-#: rkward/windows/rkcatchedx11windowpart.rc:19
-#, kde-format
-msgid "&History"
-msgstr "Ž&urnalas"
-
-#. i18n: ectx: Menu (window)
-#: rkward/windows/detachedwindowcontainer.rc:43
-#: rkward/windows/katepluginintegration.rc:9
-#: rkward/windows/rktoplevelwindowgui.rc:10
-#, kde-format
-msgid "&Window"
-msgstr "&Langas"
-
 #: rkward/windows/katepluginintegration.cpp:607
 #, kde-format
 msgctxt "where to search"
@@ -6054,12 +5932,6 @@ msgstr "%1 (aktyvus)"
 #, kde-format
 msgid "%1 (Unused)"
 msgstr "%1 (nenaudojamas)"
-
-#. i18n: ectx: Menu (tools)
-#: rkward/windows/rkcommandeditorwindowpart.rc:11
-#, kde-format
-msgid "&Tools Move"
-msgstr "&Judėjimo įrankiai"
 
 #: rkward/windows/rkcommandlog.cpp:198
 #, kde-format
@@ -7101,6 +6973,54 @@ msgstr "Įveskite naują vardą"
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr ""
+
+#~ msgid "&Edit"
+#~ msgstr "&Keisti"
+
+#~ msgid "&File"
+#~ msgstr "&Failas"
+
+#~ msgid "&View"
+#~ msgstr "&Rodymas"
+
+#~ msgid "&Run"
+#~ msgstr "&Vykdyti"
+
+#~ msgid "&New"
+#~ msgstr "&Nauja"
+
+#~ msgid "&Import"
+#~ msgstr "&Importuoti"
+
+#~ msgid "&Export"
+#~ msgstr "&Eksportuoti"
+
+#~ msgid "&Workspace"
+#~ msgstr "&Darbo erdvė"
+
+#~ msgid "&Windows"
+#~ msgstr "&Langai"
+
+#~ msgid "&Activate"
+#~ msgstr "&Aktyvuoti"
+
+#~ msgid "&Settings"
+#~ msgstr "&Nuostatos"
+
+#~ msgid "&Help"
+#~ msgstr "&Pagalba"
+
+#~ msgid "&Device"
+#~ msgstr "Į&renginys"
+
+#~ msgid "&History"
+#~ msgstr "Ž&urnalas"
+
+#~ msgid "&Window"
+#~ msgstr "&Langas"
+
+#~ msgid "&Tools Move"
+#~ msgstr "&Judėjimo įrankiai"
 
 #, fuzzy
 #~| msgid "Install"

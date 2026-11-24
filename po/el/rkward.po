@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: el\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-11-08 04:36+0000\n"
+"POT-Creation-Date: 2026-11-24 03:11+0000\n"
 "PO-Revision-Date: 2012-10-09 04:02+0000\n"
 "Last-Translator: Giannis Katsampirhs <juankatsampirhs@gmail.com>\n"
 "Language-Team: en_US <kde-i18n-doc@lists.kde.org>\n"
@@ -431,16 +431,6 @@ msgstr ""
 #, kde-format
 msgid "Invalid Name"
 msgstr "Μη έγκυρο όνομα"
-
-#. i18n: ectx: Menu (edit)
-#: rkward/dataeditor/rkeditordataframepart.rc:9 rkward/rkconsolepart.rc:17
-#: rkward/rkwardui.rc:46 rkward/windows/detachedwindowcontainer.rc:16
-#: rkward/windows/rkcommandeditorwindowpart.rc:10
-#: rkward/windows/rkcommandlogpart.rc:9 rkward/windows/rkhelpwindow.rc:13
-#: rkward/windows/rkoutputwindow.rc:15 rkward/windows/rkstandardactions.rc:15
-#, kde-format
-msgid "&Edit"
-msgstr "&Επεξεργασία"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:273
 #: rkward/dataeditor/rkvareditmodel.cpp:550
@@ -3849,35 +3839,6 @@ msgstr ""
 msgid "Reset, then submit"
 msgstr ""
 
-#. i18n: ectx: Menu (file)
-#: rkward/rkconsolepart.rc:9 rkward/rkwardui.rc:12
-#: rkward/windows/detachedwindowcontainer.rc:10
-#: rkward/windows/rkcommandeditorwindowpart.rc:9
-#: rkward/windows/rkhelpwindow.rc:9 rkward/windows/rkoutputwindow.rc:9
-#: rkward/windows/rkstandardactions.rc:12
-#, kde-format
-msgid "&File"
-msgstr "&Αρχείο"
-
-#. i18n: ectx: Menu (view)
-#: rkward/rkconsolepart.rc:35 rkward/rkconsolepart.rc:60 rkward/rkwardui.rc:60
-#: rkward/windows/detachedwindowcontainer.rc:29
-#: rkward/windows/rkcatchedx11windowpart.rc:34
-#: rkward/windows/rkhelpwindow.rc:22 rkward/windows/rkoutputwindow.rc:28
-#, kde-format
-msgid "&View"
-msgstr "Π&ροβολή"
-
-#. i18n: ectx: Menu (run)
-#: rkward/rkconsolepart.rc:41 rkward/rkwardui.rc:63
-#: rkward/windows/detachedwindowcontainer.rc:35
-#: rkward/windows/rkcommandeditorwindowpart.rc:17
-#: rkward/windows/rkcommandeditorwindowpart.rc:38
-#: rkward/windows/rkstandardactions.rc:18
-#, kde-format
-msgid "&Run"
-msgstr "&Εκτέλεση"
-
 #: rkward/rkward.cpp:303
 #, kde-format
 msgid ""
@@ -4299,68 +4260,6 @@ msgstr ""
 #, kde-format
 msgid "[Unnamed Workspace]"
 msgstr "[Χώρος εργασίας χωρίς όνομα]"
-
-#. i18n: ectx: Menu (new_data)
-#: rkward/rkwardui.rc:13
-#, kde-format
-msgid "&New"
-msgstr "&Νέο"
-
-#. i18n: ectx: Menu (open_specific)
-#: rkward/rkwardui.rc:19
-#, kde-format
-msgid "&Open by Type"
-msgstr ""
-
-#. i18n: ectx: Menu (import)
-#: rkward/rkwardui.rc:25
-#, kde-format
-msgid "&Import"
-msgstr "&Εισαγωγή"
-
-#. i18n: ectx: Menu (export)
-#: rkward/rkwardui.rc:30
-#, fuzzy, kde-format
-#| msgid "&Import"
-msgid "&Export"
-msgstr "&Εισαγωγή"
-
-#. i18n: ectx: Menu (workspace)
-#: rkward/rkwardui.rc:36
-#, kde-format
-msgid "&Workspace"
-msgstr "&Χώρος εργασίας"
-
-#. i18n: ectx: Menu (window)
-#: rkward/rkwardui.rc:75
-#, kde-format
-msgid "&Windows"
-msgstr "&Παράθυρα"
-
-#. i18n: ectx: Menu (window_activate)
-#: rkward/rkwardui.rc:84 rkward/windows/detachedwindowcontainer.rc:47
-#: rkward/windows/katepluginintegration.rc:10
-#: rkward/windows/rktoplevelwindowgui.rc:15
-#, kde-format
-msgid "&Activate"
-msgstr "&Ενεργοποίηση"
-
-#. i18n: ectx: Menu (settings)
-#: rkward/rkwardui.rc:94 rkward/windows/detachedwindowcontainer.rc:51
-#: rkward/windows/rkcommandeditorwindowpart.rc:23
-#: rkward/windows/rkcommandlogpart.rc:14 rkward/windows/rkstandardactions.rc:28
-#: rkward/windows/rktoplevelwindowgui.rc:26
-#, kde-format
-msgid "&Settings"
-msgstr "Ρ&υθμίσεις"
-
-#. i18n: ectx: Menu (help)
-#: rkward/rkwardui.rc:102 rkward/windows/detachedwindowcontainer.rc:54
-#: rkward/windows/rkstandardactions.rc:24
-#: rkward/windows/rktoplevelwindowgui.rc:33
-#, kde-format
-msgid "&Help"
-msgstr "&Βοήθεια"
 
 #: rkward/robjectviewer.cpp:49
 #, kde-format
@@ -5653,28 +5552,6 @@ msgstr "Αρχείο καταγραφής εντολών"
 msgid "Attach to main window"
 msgstr "Επισύναψη στο κύριο παράθυρο"
 
-#. i18n: ectx: Menu (device)
-#: rkward/windows/detachedwindowcontainer.rc:13
-#: rkward/windows/rkcatchedx11windowpart.rc:9
-#, kde-format
-msgid "&Device"
-msgstr "&Συσκευή"
-
-#. i18n: ectx: Menu (history)
-#: rkward/windows/detachedwindowcontainer.rc:32
-#: rkward/windows/rkcatchedx11windowpart.rc:19
-#, kde-format
-msgid "&History"
-msgstr ""
-
-#. i18n: ectx: Menu (window)
-#: rkward/windows/detachedwindowcontainer.rc:43
-#: rkward/windows/katepluginintegration.rc:9
-#: rkward/windows/rktoplevelwindowgui.rc:10
-#, kde-format
-msgid "&Window"
-msgstr "Παρά&θυρο"
-
 #: rkward/windows/katepluginintegration.cpp:607
 #, kde-format
 msgctxt "where to search"
@@ -5989,12 +5866,6 @@ msgstr "%1 (Ενεργό)"
 #, kde-format
 msgid "%1 (Unused)"
 msgstr "%1 (Όχι σε χρήση)"
-
-#. i18n: ectx: Menu (tools)
-#: rkward/windows/rkcommandeditorwindowpart.rc:11
-#, kde-format
-msgid "&Tools Move"
-msgstr "&Μετακίνηση Εργαλείων"
 
 #: rkward/windows/rkcommandlog.cpp:198
 #, kde-format
@@ -7025,6 +6896,53 @@ msgstr "Εισάγετε ένα νέο όνομα"
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr ""
+
+#~ msgid "&Edit"
+#~ msgstr "&Επεξεργασία"
+
+#~ msgid "&File"
+#~ msgstr "&Αρχείο"
+
+#~ msgid "&View"
+#~ msgstr "Π&ροβολή"
+
+#~ msgid "&Run"
+#~ msgstr "&Εκτέλεση"
+
+#~ msgid "&New"
+#~ msgstr "&Νέο"
+
+#~ msgid "&Import"
+#~ msgstr "&Εισαγωγή"
+
+#, fuzzy
+#~| msgid "&Import"
+#~ msgid "&Export"
+#~ msgstr "&Εισαγωγή"
+
+#~ msgid "&Workspace"
+#~ msgstr "&Χώρος εργασίας"
+
+#~ msgid "&Windows"
+#~ msgstr "&Παράθυρα"
+
+#~ msgid "&Activate"
+#~ msgstr "&Ενεργοποίηση"
+
+#~ msgid "&Settings"
+#~ msgstr "Ρ&υθμίσεις"
+
+#~ msgid "&Help"
+#~ msgstr "&Βοήθεια"
+
+#~ msgid "&Device"
+#~ msgstr "&Συσκευή"
+
+#~ msgid "&Window"
+#~ msgstr "Παρά&θυρο"
+
+#~ msgid "&Tools Move"
+#~ msgstr "&Μετακίνηση Εργαλείων"
 
 #, fuzzy
 #~| msgid "Install"

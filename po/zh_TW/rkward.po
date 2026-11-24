@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-11-08 04:36+0000\n"
+"POT-Creation-Date: 2026-11-24 03:11+0000\n"
 "PO-Revision-Date: 2024-08-15 05:39+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -423,16 +423,6 @@ msgstr ""
 #, kde-format
 msgid "Invalid Name"
 msgstr "無效名稱"
-
-#. i18n: ectx: Menu (edit)
-#: rkward/dataeditor/rkeditordataframepart.rc:9 rkward/rkconsolepart.rc:17
-#: rkward/rkwardui.rc:46 rkward/windows/detachedwindowcontainer.rc:16
-#: rkward/windows/rkcommandeditorwindowpart.rc:10
-#: rkward/windows/rkcommandlogpart.rc:9 rkward/windows/rkhelpwindow.rc:13
-#: rkward/windows/rkoutputwindow.rc:15 rkward/windows/rkstandardactions.rc:15
-#, kde-format
-msgid "&Edit"
-msgstr "編輯(&E)"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:273
 #: rkward/dataeditor/rkvareditmodel.cpp:550
@@ -3758,35 +3748,6 @@ msgstr ""
 msgid "Reset, then submit"
 msgstr "重設，然後提交"
 
-#. i18n: ectx: Menu (file)
-#: rkward/rkconsolepart.rc:9 rkward/rkwardui.rc:12
-#: rkward/windows/detachedwindowcontainer.rc:10
-#: rkward/windows/rkcommandeditorwindowpart.rc:9
-#: rkward/windows/rkhelpwindow.rc:9 rkward/windows/rkoutputwindow.rc:9
-#: rkward/windows/rkstandardactions.rc:12
-#, kde-format
-msgid "&File"
-msgstr "檔案(&F)"
-
-#. i18n: ectx: Menu (view)
-#: rkward/rkconsolepart.rc:35 rkward/rkconsolepart.rc:60 rkward/rkwardui.rc:60
-#: rkward/windows/detachedwindowcontainer.rc:29
-#: rkward/windows/rkcatchedx11windowpart.rc:34
-#: rkward/windows/rkhelpwindow.rc:22 rkward/windows/rkoutputwindow.rc:28
-#, kde-format
-msgid "&View"
-msgstr "檢視(&V)"
-
-#. i18n: ectx: Menu (run)
-#: rkward/rkconsolepart.rc:41 rkward/rkwardui.rc:63
-#: rkward/windows/detachedwindowcontainer.rc:35
-#: rkward/windows/rkcommandeditorwindowpart.rc:17
-#: rkward/windows/rkcommandeditorwindowpart.rc:38
-#: rkward/windows/rkstandardactions.rc:18
-#, kde-format
-msgid "&Run"
-msgstr "執行(&R)"
-
 #: rkward/rkward.cpp:303
 #, kde-format
 msgid ""
@@ -4211,67 +4172,6 @@ msgstr "開啟文稿檔案"
 #, kde-format
 msgid "[Unnamed Workspace]"
 msgstr "[未命名工作區]"
-
-#. i18n: ectx: Menu (new_data)
-#: rkward/rkwardui.rc:13
-#, kde-format
-msgid "&New"
-msgstr "新增(&N)"
-
-#. i18n: ectx: Menu (open_specific)
-#: rkward/rkwardui.rc:19
-#, kde-format
-msgid "&Open by Type"
-msgstr "依類型開啟(&O)"
-
-#. i18n: ectx: Menu (import)
-#: rkward/rkwardui.rc:25
-#, kde-format
-msgid "&Import"
-msgstr "匯入(&I)"
-
-#. i18n: ectx: Menu (export)
-#: rkward/rkwardui.rc:30
-#, kde-format
-msgid "&Export"
-msgstr "匯出(&E)"
-
-#. i18n: ectx: Menu (workspace)
-#: rkward/rkwardui.rc:36
-#, kde-format
-msgid "&Workspace"
-msgstr "工作區(&W)"
-
-#. i18n: ectx: Menu (window)
-#: rkward/rkwardui.rc:75
-#, kde-format
-msgid "&Windows"
-msgstr "視窗(&W)"
-
-#. i18n: ectx: Menu (window_activate)
-#: rkward/rkwardui.rc:84 rkward/windows/detachedwindowcontainer.rc:47
-#: rkward/windows/katepluginintegration.rc:10
-#: rkward/windows/rktoplevelwindowgui.rc:15
-#, kde-format
-msgid "&Activate"
-msgstr ""
-
-#. i18n: ectx: Menu (settings)
-#: rkward/rkwardui.rc:94 rkward/windows/detachedwindowcontainer.rc:51
-#: rkward/windows/rkcommandeditorwindowpart.rc:23
-#: rkward/windows/rkcommandlogpart.rc:14 rkward/windows/rkstandardactions.rc:28
-#: rkward/windows/rktoplevelwindowgui.rc:26
-#, kde-format
-msgid "&Settings"
-msgstr "設定(&S)"
-
-#. i18n: ectx: Menu (help)
-#: rkward/rkwardui.rc:102 rkward/windows/detachedwindowcontainer.rc:54
-#: rkward/windows/rkstandardactions.rc:24
-#: rkward/windows/rktoplevelwindowgui.rc:33
-#, kde-format
-msgid "&Help"
-msgstr "說明(&H)"
 
 #: rkward/robjectviewer.cpp:49
 #, kde-format
@@ -5520,28 +5420,6 @@ msgstr "命令紀錄"
 msgid "Attach to main window"
 msgstr ""
 
-#. i18n: ectx: Menu (device)
-#: rkward/windows/detachedwindowcontainer.rc:13
-#: rkward/windows/rkcatchedx11windowpart.rc:9
-#, kde-format
-msgid "&Device"
-msgstr "裝置(&D)"
-
-#. i18n: ectx: Menu (history)
-#: rkward/windows/detachedwindowcontainer.rc:32
-#: rkward/windows/rkcatchedx11windowpart.rc:19
-#, kde-format
-msgid "&History"
-msgstr "歷史(&H)"
-
-#. i18n: ectx: Menu (window)
-#: rkward/windows/detachedwindowcontainer.rc:43
-#: rkward/windows/katepluginintegration.rc:9
-#: rkward/windows/rktoplevelwindowgui.rc:10
-#, kde-format
-msgid "&Window"
-msgstr "視窗(&W)"
-
 #: rkward/windows/katepluginintegration.cpp:607
 #, kde-format
 msgctxt "where to search"
@@ -5849,12 +5727,6 @@ msgstr "%1 (作用中)"
 #, kde-format
 msgid "%1 (Unused)"
 msgstr "%1 (未使用)"
-
-#. i18n: ectx: Menu (tools)
-#: rkward/windows/rkcommandeditorwindowpart.rc:11
-#, kde-format
-msgid "&Tools Move"
-msgstr "工具移動(&T)"
 
 #: rkward/windows/rkcommandlog.cpp:198
 #, kde-format
@@ -6861,3 +6733,51 @@ msgstr "輸入新名稱"
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr "在編輯器中檢視（唯獨）"
+
+#~ msgid "&Edit"
+#~ msgstr "編輯(&E)"
+
+#~ msgid "&File"
+#~ msgstr "檔案(&F)"
+
+#~ msgid "&View"
+#~ msgstr "檢視(&V)"
+
+#~ msgid "&Run"
+#~ msgstr "執行(&R)"
+
+#~ msgid "&New"
+#~ msgstr "新增(&N)"
+
+#~ msgid "&Open by Type"
+#~ msgstr "依類型開啟(&O)"
+
+#~ msgid "&Import"
+#~ msgstr "匯入(&I)"
+
+#~ msgid "&Export"
+#~ msgstr "匯出(&E)"
+
+#~ msgid "&Workspace"
+#~ msgstr "工作區(&W)"
+
+#~ msgid "&Windows"
+#~ msgstr "視窗(&W)"
+
+#~ msgid "&Settings"
+#~ msgstr "設定(&S)"
+
+#~ msgid "&Help"
+#~ msgstr "說明(&H)"
+
+#~ msgid "&Device"
+#~ msgstr "裝置(&D)"
+
+#~ msgid "&History"
+#~ msgstr "歷史(&H)"
+
+#~ msgid "&Window"
+#~ msgstr "視窗(&W)"
+
+#~ msgid "&Tools Move"
+#~ msgstr "工具移動(&T)"

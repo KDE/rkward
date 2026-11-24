@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-11-08 04:36+0000\n"
+"POT-Creation-Date: 2026-11-24 03:11+0000\n"
 "PO-Revision-Date: 2024-08-15 17:04+0200\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -432,16 +432,6 @@ msgstr ""
 #, kde-format
 msgid "Invalid Name"
 msgstr "Neplatný název"
-
-#. i18n: ectx: Menu (edit)
-#: rkward/dataeditor/rkeditordataframepart.rc:9 rkward/rkconsolepart.rc:17
-#: rkward/rkwardui.rc:46 rkward/windows/detachedwindowcontainer.rc:16
-#: rkward/windows/rkcommandeditorwindowpart.rc:10
-#: rkward/windows/rkcommandlogpart.rc:9 rkward/windows/rkhelpwindow.rc:13
-#: rkward/windows/rkoutputwindow.rc:15 rkward/windows/rkstandardactions.rc:15
-#, kde-format
-msgid "&Edit"
-msgstr "&Upravit"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:273
 #: rkward/dataeditor/rkvareditmodel.cpp:550
@@ -3968,35 +3958,6 @@ msgstr "Přidat"
 msgid "Reset, then submit"
 msgstr "Vymazat, pak odeslat"
 
-#. i18n: ectx: Menu (file)
-#: rkward/rkconsolepart.rc:9 rkward/rkwardui.rc:12
-#: rkward/windows/detachedwindowcontainer.rc:10
-#: rkward/windows/rkcommandeditorwindowpart.rc:9
-#: rkward/windows/rkhelpwindow.rc:9 rkward/windows/rkoutputwindow.rc:9
-#: rkward/windows/rkstandardactions.rc:12
-#, kde-format
-msgid "&File"
-msgstr "&Soubor"
-
-#. i18n: ectx: Menu (view)
-#: rkward/rkconsolepart.rc:35 rkward/rkconsolepart.rc:60 rkward/rkwardui.rc:60
-#: rkward/windows/detachedwindowcontainer.rc:29
-#: rkward/windows/rkcatchedx11windowpart.rc:34
-#: rkward/windows/rkhelpwindow.rc:22 rkward/windows/rkoutputwindow.rc:28
-#, kde-format
-msgid "&View"
-msgstr "Po&hled"
-
-#. i18n: ectx: Menu (run)
-#: rkward/rkconsolepart.rc:41 rkward/rkwardui.rc:63
-#: rkward/windows/detachedwindowcontainer.rc:35
-#: rkward/windows/rkcommandeditorwindowpart.rc:17
-#: rkward/windows/rkcommandeditorwindowpart.rc:38
-#: rkward/windows/rkstandardactions.rc:18
-#, kde-format
-msgid "&Run"
-msgstr "&Spustit"
-
 #: rkward/rkward.cpp:303
 #, kde-format
 msgid ""
@@ -4423,67 +4384,6 @@ msgstr "Otevřít soubor(y) skriptu"
 #, kde-format
 msgid "[Unnamed Workspace]"
 msgstr "[Nepojmenované pracovní prostředí]"
-
-#. i18n: ectx: Menu (new_data)
-#: rkward/rkwardui.rc:13
-#, kde-format
-msgid "&New"
-msgstr "&Nový"
-
-#. i18n: ectx: Menu (open_specific)
-#: rkward/rkwardui.rc:19
-#, kde-format
-msgid "&Open by Type"
-msgstr "&Otevřít podle typu"
-
-#. i18n: ectx: Menu (import)
-#: rkward/rkwardui.rc:25
-#, kde-format
-msgid "&Import"
-msgstr "&Importovat"
-
-#. i18n: ectx: Menu (export)
-#: rkward/rkwardui.rc:30
-#, kde-format
-msgid "&Export"
-msgstr "&Exportovat"
-
-#. i18n: ectx: Menu (workspace)
-#: rkward/rkwardui.rc:36
-#, kde-format
-msgid "&Workspace"
-msgstr "&Pracovní plocha"
-
-#. i18n: ectx: Menu (window)
-#: rkward/rkwardui.rc:75
-#, kde-format
-msgid "&Windows"
-msgstr "O&kna"
-
-#. i18n: ectx: Menu (window_activate)
-#: rkward/rkwardui.rc:84 rkward/windows/detachedwindowcontainer.rc:47
-#: rkward/windows/katepluginintegration.rc:10
-#: rkward/windows/rktoplevelwindowgui.rc:15
-#, kde-format
-msgid "&Activate"
-msgstr "&Aktivovat"
-
-#. i18n: ectx: Menu (settings)
-#: rkward/rkwardui.rc:94 rkward/windows/detachedwindowcontainer.rc:51
-#: rkward/windows/rkcommandeditorwindowpart.rc:23
-#: rkward/windows/rkcommandlogpart.rc:14 rkward/windows/rkstandardactions.rc:28
-#: rkward/windows/rktoplevelwindowgui.rc:26
-#, kde-format
-msgid "&Settings"
-msgstr "Na&stavení"
-
-#. i18n: ectx: Menu (help)
-#: rkward/rkwardui.rc:102 rkward/windows/detachedwindowcontainer.rc:54
-#: rkward/windows/rkstandardactions.rc:24
-#: rkward/windows/rktoplevelwindowgui.rc:33
-#, kde-format
-msgid "&Help"
-msgstr "Nápo&věda"
 
 #: rkward/robjectviewer.cpp:49
 #, kde-format
@@ -5803,28 +5703,6 @@ msgstr "Záznam příkazů"
 msgid "Attach to main window"
 msgstr ""
 
-#. i18n: ectx: Menu (device)
-#: rkward/windows/detachedwindowcontainer.rc:13
-#: rkward/windows/rkcatchedx11windowpart.rc:9
-#, kde-format
-msgid "&Device"
-msgstr "Zaří&zení"
-
-#. i18n: ectx: Menu (history)
-#: rkward/windows/detachedwindowcontainer.rc:32
-#: rkward/windows/rkcatchedx11windowpart.rc:19
-#, kde-format
-msgid "&History"
-msgstr "&Historie"
-
-#. i18n: ectx: Menu (window)
-#: rkward/windows/detachedwindowcontainer.rc:43
-#: rkward/windows/katepluginintegration.rc:9
-#: rkward/windows/rktoplevelwindowgui.rc:10
-#, kde-format
-msgid "&Window"
-msgstr "O&kno"
-
 #: rkward/windows/katepluginintegration.cpp:607
 #, kde-format
 msgctxt "where to search"
@@ -6128,12 +6006,6 @@ msgstr "%1 (Aktivní)"
 #, kde-format
 msgid "%1 (Unused)"
 msgstr "%1 (Nepoužito)"
-
-#. i18n: ectx: Menu (tools)
-#: rkward/windows/rkcommandeditorwindowpart.rc:11
-#, kde-format
-msgid "&Tools Move"
-msgstr ""
 
 #: rkward/windows/rkcommandlog.cpp:198
 #, kde-format
@@ -7133,3 +7005,51 @@ msgstr ""
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr ""
+
+#~ msgid "&Edit"
+#~ msgstr "&Upravit"
+
+#~ msgid "&File"
+#~ msgstr "&Soubor"
+
+#~ msgid "&View"
+#~ msgstr "Po&hled"
+
+#~ msgid "&Run"
+#~ msgstr "&Spustit"
+
+#~ msgid "&New"
+#~ msgstr "&Nový"
+
+#~ msgid "&Open by Type"
+#~ msgstr "&Otevřít podle typu"
+
+#~ msgid "&Import"
+#~ msgstr "&Importovat"
+
+#~ msgid "&Export"
+#~ msgstr "&Exportovat"
+
+#~ msgid "&Workspace"
+#~ msgstr "&Pracovní plocha"
+
+#~ msgid "&Windows"
+#~ msgstr "O&kna"
+
+#~ msgid "&Activate"
+#~ msgstr "&Aktivovat"
+
+#~ msgid "&Settings"
+#~ msgstr "Na&stavení"
+
+#~ msgid "&Help"
+#~ msgstr "Nápo&věda"
+
+#~ msgid "&Device"
+#~ msgstr "Zaří&zení"
+
+#~ msgid "&History"
+#~ msgstr "&Historie"
+
+#~ msgid "&Window"
+#~ msgstr "O&kno"

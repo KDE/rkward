@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-11-08 04:36+0000\n"
+"POT-Creation-Date: 2026-11-24 03:11+0000\n"
 "PO-Revision-Date: 2026-08-10 18:38+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
@@ -441,16 +441,6 @@ msgstr "الاسم الذي حددته مستخدم بالفعل أو غير ص�
 #, kde-format
 msgid "Invalid Name"
 msgstr "الاسم غير صالح"
-
-#. i18n: ectx: Menu (edit)
-#: rkward/dataeditor/rkeditordataframepart.rc:9 rkward/rkconsolepart.rc:17
-#: rkward/rkwardui.rc:46 rkward/windows/detachedwindowcontainer.rc:16
-#: rkward/windows/rkcommandeditorwindowpart.rc:10
-#: rkward/windows/rkcommandlogpart.rc:9 rkward/windows/rkhelpwindow.rc:13
-#: rkward/windows/rkoutputwindow.rc:15 rkward/windows/rkstandardactions.rc:15
-#, kde-format
-msgid "&Edit"
-msgstr "&حرّر"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:273
 #: rkward/dataeditor/rkvareditmodel.cpp:550
@@ -4033,35 +4023,6 @@ msgstr "ألحق"
 msgid "Reset, then submit"
 msgstr "أعِد الضبط، ثم أرسِل"
 
-#. i18n: ectx: Menu (file)
-#: rkward/rkconsolepart.rc:9 rkward/rkwardui.rc:12
-#: rkward/windows/detachedwindowcontainer.rc:10
-#: rkward/windows/rkcommandeditorwindowpart.rc:9
-#: rkward/windows/rkhelpwindow.rc:9 rkward/windows/rkoutputwindow.rc:9
-#: rkward/windows/rkstandardactions.rc:12
-#, kde-format
-msgid "&File"
-msgstr "&ملف"
-
-#. i18n: ectx: Menu (view)
-#: rkward/rkconsolepart.rc:35 rkward/rkconsolepart.rc:60 rkward/rkwardui.rc:60
-#: rkward/windows/detachedwindowcontainer.rc:29
-#: rkward/windows/rkcatchedx11windowpart.rc:34
-#: rkward/windows/rkhelpwindow.rc:22 rkward/windows/rkoutputwindow.rc:28
-#, kde-format
-msgid "&View"
-msgstr "&عرض"
-
-#. i18n: ectx: Menu (run)
-#: rkward/rkconsolepart.rc:41 rkward/rkwardui.rc:63
-#: rkward/windows/detachedwindowcontainer.rc:35
-#: rkward/windows/rkcommandeditorwindowpart.rc:17
-#: rkward/windows/rkcommandeditorwindowpart.rc:38
-#: rkward/windows/rkstandardactions.rc:18
-#, kde-format
-msgid "&Run"
-msgstr "&شغّل"
-
 #: rkward/rkward.cpp:303
 #, kde-format
 msgid ""
@@ -4501,67 +4462,6 @@ msgstr "افتح ملف (ملفات) نص برمجي"
 #, kde-format
 msgid "[Unnamed Workspace]"
 msgstr "[مساحة عمل غير مُسمّاة]"
-
-#. i18n: ectx: Menu (new_data)
-#: rkward/rkwardui.rc:13
-#, kde-format
-msgid "&New"
-msgstr "&جديد"
-
-#. i18n: ectx: Menu (open_specific)
-#: rkward/rkwardui.rc:19
-#, kde-format
-msgid "&Open by Type"
-msgstr "&افتح حسب النوع"
-
-#. i18n: ectx: Menu (import)
-#: rkward/rkwardui.rc:25
-#, kde-format
-msgid "&Import"
-msgstr "ا&ستورد"
-
-#. i18n: ectx: Menu (export)
-#: rkward/rkwardui.rc:30
-#, kde-format
-msgid "&Export"
-msgstr "&صدّر"
-
-#. i18n: ectx: Menu (workspace)
-#: rkward/rkwardui.rc:36
-#, kde-format
-msgid "&Workspace"
-msgstr "&مساحة العمل"
-
-#. i18n: ectx: Menu (window)
-#: rkward/rkwardui.rc:75
-#, kde-format
-msgid "&Windows"
-msgstr "ال&نوافذ"
-
-#. i18n: ectx: Menu (window_activate)
-#: rkward/rkwardui.rc:84 rkward/windows/detachedwindowcontainer.rc:47
-#: rkward/windows/katepluginintegration.rc:10
-#: rkward/windows/rktoplevelwindowgui.rc:15
-#, kde-format
-msgid "&Activate"
-msgstr "&نشّط"
-
-#. i18n: ectx: Menu (settings)
-#: rkward/rkwardui.rc:94 rkward/windows/detachedwindowcontainer.rc:51
-#: rkward/windows/rkcommandeditorwindowpart.rc:23
-#: rkward/windows/rkcommandlogpart.rc:14 rkward/windows/rkstandardactions.rc:28
-#: rkward/windows/rktoplevelwindowgui.rc:26
-#, kde-format
-msgid "&Settings"
-msgstr "إ&عدادات"
-
-#. i18n: ectx: Menu (help)
-#: rkward/rkwardui.rc:102 rkward/windows/detachedwindowcontainer.rc:54
-#: rkward/windows/rkstandardactions.rc:24
-#: rkward/windows/rktoplevelwindowgui.rc:33
-#, kde-format
-msgid "&Help"
-msgstr "م&ساعدة"
 
 #: rkward/robjectviewer.cpp:49
 #, kde-format
@@ -5902,28 +5802,6 @@ msgstr "سجل الأوامر"
 msgid "Attach to main window"
 msgstr "أرفق بالنافذة الرئيسة"
 
-#. i18n: ectx: Menu (device)
-#: rkward/windows/detachedwindowcontainer.rc:13
-#: rkward/windows/rkcatchedx11windowpart.rc:9
-#, kde-format
-msgid "&Device"
-msgstr "ال&جهاز"
-
-#. i18n: ectx: Menu (history)
-#: rkward/windows/detachedwindowcontainer.rc:32
-#: rkward/windows/rkcatchedx11windowpart.rc:19
-#, kde-format
-msgid "&History"
-msgstr "ال&تاريخ"
-
-#. i18n: ectx: Menu (window)
-#: rkward/windows/detachedwindowcontainer.rc:43
-#: rkward/windows/katepluginintegration.rc:9
-#: rkward/windows/rktoplevelwindowgui.rc:10
-#, kde-format
-msgid "&Window"
-msgstr "ال&نافذة"
-
 #: rkward/windows/katepluginintegration.cpp:607
 #, kde-format
 msgctxt "where to search"
@@ -6254,12 +6132,6 @@ msgstr "%1 (نشط)"
 #, kde-format
 msgid "%1 (Unused)"
 msgstr "%1 (غير مستخدمة)"
-
-#. i18n: ectx: Menu (tools)
-#: rkward/windows/rkcommandeditorwindowpart.rc:11
-#, kde-format
-msgid "&Tools Move"
-msgstr "تحريك &الأدوات"
 
 #: rkward/windows/rkcommandlog.cpp:198
 #, kde-format
@@ -7322,3 +7194,54 @@ msgstr "أدخل الاسم الجديد"
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr "اعرض في المحرر (للقراءة فقط)"
+
+#~ msgid "&Edit"
+#~ msgstr "&حرّر"
+
+#~ msgid "&File"
+#~ msgstr "&ملف"
+
+#~ msgid "&View"
+#~ msgstr "&عرض"
+
+#~ msgid "&Run"
+#~ msgstr "&شغّل"
+
+#~ msgid "&New"
+#~ msgstr "&جديد"
+
+#~ msgid "&Open by Type"
+#~ msgstr "&افتح حسب النوع"
+
+#~ msgid "&Import"
+#~ msgstr "ا&ستورد"
+
+#~ msgid "&Export"
+#~ msgstr "&صدّر"
+
+#~ msgid "&Workspace"
+#~ msgstr "&مساحة العمل"
+
+#~ msgid "&Windows"
+#~ msgstr "ال&نوافذ"
+
+#~ msgid "&Activate"
+#~ msgstr "&نشّط"
+
+#~ msgid "&Settings"
+#~ msgstr "إ&عدادات"
+
+#~ msgid "&Help"
+#~ msgstr "م&ساعدة"
+
+#~ msgid "&Device"
+#~ msgstr "ال&جهاز"
+
+#~ msgid "&History"
+#~ msgstr "ال&تاريخ"
+
+#~ msgid "&Window"
+#~ msgstr "ال&نافذة"
+
+#~ msgid "&Tools Move"
+#~ msgstr "تحريك &الأدوات"

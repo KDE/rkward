@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-11-08 04:36+0000\n"
+"POT-Creation-Date: 2026-11-24 03:11+0000\n"
 "PO-Revision-Date: 2026-03-28 16:40+0000\n"
 "Last-Translator: Aindriú Mac Giolla Eoin <aindriu80@yahoo.com>\n"
 "Language-Team: Irish <http://weblate.amgelocalnet.duckdns.org/projects/"
@@ -459,16 +459,6 @@ msgstr ""
 #, kde-format
 msgid "Invalid Name"
 msgstr "Ainm Neamhbhailí"
-
-#. i18n: ectx: Menu (edit)
-#: rkward/dataeditor/rkeditordataframepart.rc:9 rkward/rkconsolepart.rc:17
-#: rkward/rkwardui.rc:46 rkward/windows/detachedwindowcontainer.rc:16
-#: rkward/windows/rkcommandeditorwindowpart.rc:10
-#: rkward/windows/rkcommandlogpart.rc:9 rkward/windows/rkhelpwindow.rc:13
-#: rkward/windows/rkoutputwindow.rc:15 rkward/windows/rkstandardactions.rc:15
-#, kde-format
-msgid "&Edit"
-msgstr "&Eagarthóireacht"
 
 #: rkward/dataeditor/rkvareditmodel.cpp:273
 #: rkward/dataeditor/rkvareditmodel.cpp:550
@@ -4172,35 +4162,6 @@ msgstr "Iarcheangail"
 msgid "Reset, then submit"
 msgstr "Athshocraigh, ansin cuir isteach"
 
-#. i18n: ectx: Menu (file)
-#: rkward/rkconsolepart.rc:9 rkward/rkwardui.rc:12
-#: rkward/windows/detachedwindowcontainer.rc:10
-#: rkward/windows/rkcommandeditorwindowpart.rc:9
-#: rkward/windows/rkhelpwindow.rc:9 rkward/windows/rkoutputwindow.rc:9
-#: rkward/windows/rkstandardactions.rc:12
-#, kde-format
-msgid "&File"
-msgstr "&Comhad"
-
-#. i18n: ectx: Menu (view)
-#: rkward/rkconsolepart.rc:35 rkward/rkconsolepart.rc:60 rkward/rkwardui.rc:60
-#: rkward/windows/detachedwindowcontainer.rc:29
-#: rkward/windows/rkcatchedx11windowpart.rc:34
-#: rkward/windows/rkhelpwindow.rc:22 rkward/windows/rkoutputwindow.rc:28
-#, kde-format
-msgid "&View"
-msgstr "&Féach"
-
-#. i18n: ectx: Menu (run)
-#: rkward/rkconsolepart.rc:41 rkward/rkwardui.rc:63
-#: rkward/windows/detachedwindowcontainer.rc:35
-#: rkward/windows/rkcommandeditorwindowpart.rc:17
-#: rkward/windows/rkcommandeditorwindowpart.rc:38
-#: rkward/windows/rkstandardactions.rc:18
-#, kde-format
-msgid "&Run"
-msgstr "&Rith"
-
 #: rkward/rkward.cpp:303
 #, kde-format
 msgid ""
@@ -4648,67 +4609,6 @@ msgstr "Oscail comhad(anna) scripte"
 #, kde-format
 msgid "[Unnamed Workspace]"
 msgstr "[Spás Oibre Gan Ainm]"
-
-#. i18n: ectx: Menu (new_data)
-#: rkward/rkwardui.rc:13
-#, kde-format
-msgid "&New"
-msgstr "&Nua"
-
-#. i18n: ectx: Menu (open_specific)
-#: rkward/rkwardui.rc:19
-#, kde-format
-msgid "&Open by Type"
-msgstr "&Oscail de réir Cineáil"
-
-#. i18n: ectx: Menu (import)
-#: rkward/rkwardui.rc:25
-#, kde-format
-msgid "&Import"
-msgstr "&Iompórtáil"
-
-#. i18n: ectx: Menu (export)
-#: rkward/rkwardui.rc:30
-#, kde-format
-msgid "&Export"
-msgstr "&Easpórtáil"
-
-#. i18n: ectx: Menu (workspace)
-#: rkward/rkwardui.rc:36
-#, kde-format
-msgid "&Workspace"
-msgstr "&Spás Oibre"
-
-#. i18n: ectx: Menu (window)
-#: rkward/rkwardui.rc:75
-#, kde-format
-msgid "&Windows"
-msgstr "&Fuinneoga"
-
-#. i18n: ectx: Menu (window_activate)
-#: rkward/rkwardui.rc:84 rkward/windows/detachedwindowcontainer.rc:47
-#: rkward/windows/katepluginintegration.rc:10
-#: rkward/windows/rktoplevelwindowgui.rc:15
-#, kde-format
-msgid "&Activate"
-msgstr "&Gníomhachtaigh"
-
-#. i18n: ectx: Menu (settings)
-#: rkward/rkwardui.rc:94 rkward/windows/detachedwindowcontainer.rc:51
-#: rkward/windows/rkcommandeditorwindowpart.rc:23
-#: rkward/windows/rkcommandlogpart.rc:14 rkward/windows/rkstandardactions.rc:28
-#: rkward/windows/rktoplevelwindowgui.rc:26
-#, kde-format
-msgid "&Settings"
-msgstr "&Socruithe"
-
-#. i18n: ectx: Menu (help)
-#: rkward/rkwardui.rc:102 rkward/windows/detachedwindowcontainer.rc:54
-#: rkward/windows/rkstandardactions.rc:24
-#: rkward/windows/rktoplevelwindowgui.rc:33
-#, kde-format
-msgid "&Help"
-msgstr "&Cabhair"
 
 #: rkward/robjectviewer.cpp:49
 #, kde-format
@@ -6086,28 +5986,6 @@ msgstr "Log ordaithe"
 msgid "Attach to main window"
 msgstr "Ceangail leis an bpríomhfhuinneog"
 
-#. i18n: ectx: Menu (device)
-#: rkward/windows/detachedwindowcontainer.rc:13
-#: rkward/windows/rkcatchedx11windowpart.rc:9
-#, kde-format
-msgid "&Device"
-msgstr "&Gléas"
-
-#. i18n: ectx: Menu (history)
-#: rkward/windows/detachedwindowcontainer.rc:32
-#: rkward/windows/rkcatchedx11windowpart.rc:19
-#, kde-format
-msgid "&History"
-msgstr "&Stair"
-
-#. i18n: ectx: Menu (window)
-#: rkward/windows/detachedwindowcontainer.rc:43
-#: rkward/windows/katepluginintegration.rc:9
-#: rkward/windows/rktoplevelwindowgui.rc:10
-#, kde-format
-msgid "&Window"
-msgstr "&Fuinneog"
-
 #: rkward/windows/katepluginintegration.cpp:607
 #, kde-format
 msgctxt "where to search"
@@ -6432,12 +6310,6 @@ msgstr "%1 (Gníomhach)"
 #, kde-format
 msgid "%1 (Unused)"
 msgstr "%1 (Gan Úsáid)"
-
-#. i18n: ectx: Menu (tools)
-#: rkward/windows/rkcommandeditorwindowpart.rc:11
-#, kde-format
-msgid "&Tools Move"
-msgstr "&Uirlisí Bogadh"
 
 #: rkward/windows/rkcommandlog.cpp:198
 #, kde-format
@@ -7517,3 +7389,54 @@ msgstr "Cuir isteach an t-ainm nua"
 #, kde-format
 msgid "View in editor (read-only)"
 msgstr "Féach san eagarthóir (léamh amháin)"
+
+#~ msgid "&Edit"
+#~ msgstr "&Eagarthóireacht"
+
+#~ msgid "&File"
+#~ msgstr "&Comhad"
+
+#~ msgid "&View"
+#~ msgstr "&Féach"
+
+#~ msgid "&Run"
+#~ msgstr "&Rith"
+
+#~ msgid "&New"
+#~ msgstr "&Nua"
+
+#~ msgid "&Open by Type"
+#~ msgstr "&Oscail de réir Cineáil"
+
+#~ msgid "&Import"
+#~ msgstr "&Iompórtáil"
+
+#~ msgid "&Export"
+#~ msgstr "&Easpórtáil"
+
+#~ msgid "&Workspace"
+#~ msgstr "&Spás Oibre"
+
+#~ msgid "&Windows"
+#~ msgstr "&Fuinneoga"
+
+#~ msgid "&Activate"
+#~ msgstr "&Gníomhachtaigh"
+
+#~ msgid "&Settings"
+#~ msgstr "&Socruithe"
+
+#~ msgid "&Help"
+#~ msgstr "&Cabhair"
+
+#~ msgid "&Device"
+#~ msgstr "&Gléas"
+
+#~ msgid "&History"
+#~ msgstr "&Stair"
+
+#~ msgid "&Window"
+#~ msgstr "&Fuinneog"
+
+#~ msgid "&Tools Move"
+#~ msgstr "&Uirlisí Bogadh"
