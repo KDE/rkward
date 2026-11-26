@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-10 00:53+0000\n"
-"PO-Revision-Date: 2026-09-06 16:47+0200\n"
+"PO-Revision-Date: 2026-11-24 20:33+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -4181,7 +4181,7 @@ msgstr "S'ha produït un error mentre es connectava el dorsal gràfic"
 #: rkward/rbackend/rpackages/rkward/R/public_graphics.R:93
 #, no-c-format, kde-format
 msgid "Device type \"%1\" is unknown to RKWard"
-msgstr "El tipus de dispositiu «%1» es desconegut a RKWard"
+msgstr "El tipus de dispositiu «%1» és desconegut a RKWard"
 
 #: rkward/rbackend/rpackages/rkward/R/rk.download_appimage.R:66
 #, no-c-format, kde-format
@@ -5724,7 +5724,7 @@ msgstr ""
 "proporciona substituts per a estes funcions de dispositiu estàndard, les "
 "quals poden canviar el seu comportament quan s'utilitzen en codi d'usuari:</"
 "p><ul><li>Les crides es poden redirigir al dispositiu natiu de RKWard "
-"(<i>RK()</i>). Alguns però no tots els arguments de funcions coincidiran, "
+"(<i>RK()</i>). Alguns, però no tots els arguments de funcions coincidiran, "
 "els altres s'ignoraran.</li><li>Es poden utilitzar els dispositius originals "
 "específics de plataforma, però incrustats dins de finestres de RKWard. Esta "
 "opció no està disponible en macOS X.</li><li>Es poden utilitzar els "
@@ -6626,7 +6626,7 @@ msgid ""
 "Step through your code using single keystrokes (<a href=\"rkward://page/"
 "rkward_code_navigation\">more info</a>)"
 msgstr ""
-"Aneu pel codi utlitzant una única pulsació (<a href=\"rkward://page/"
+"Aneu pel codi utilitzant una única pulsació (<a href=\"rkward://page/"
 "rkward_code_navigation\">més informació</a>)"
 
 #: rkward/windows/rkcodenavigation.cpp:324
@@ -7582,7 +7582,7 @@ msgstr "Activa la visualització del document"
 #: rkward/windows/rktoplevelwindowgui.cpp:133
 #, kde-format
 msgid "Show/Hide %1"
-msgstr "Mostra/Oculta %1"
+msgstr "Mostra o oculta %1"
 
 #: rkward/windows/rktoplevelwindowgui.cpp:146
 #, kde-format
