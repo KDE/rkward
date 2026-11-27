@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-08 04:36+0000\n"
-"PO-Revision-Date: 2026-11-22 19:51+0300\n"
+"PO-Revision-Date: 2026-11-26 17:22+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -3751,9 +3751,9 @@ msgid ""
 "Enable or disable the labels being evaluated as literal (quoted) strings. To "
 "achieve a line-break (in a quoted string), enter '\\n'. (Default: YES)"
 msgstr ""
-"Değişmez (alıntılanan) diziler olarak değerlendirilen etiketleri "
+"Değişmez (alıntılanan) dizgeler olarak değerlendirilen etiketleri "
 "etkinleştirin veya devre dışı bırakın. Satır sonu elde etmek için (tırnak "
-"içine alınmış bir dizide), ‘\\n’ girin. (Varsayılan: EVET)"
+"içine alınmış bir dizgede), ‘\\n’ girin. (Varsayılan: EVET)"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:30
@@ -3945,14 +3945,14 @@ msgstr "Döngünün Y ekseni etiketi"
 #: rkward/plugins/analysis/time_series/hp_filter.xml:113
 #, kde-format
 msgid "Interpret these labels as literal (quoted) strings?"
-msgstr "Bu etiketler değişmez (tırnaklanmış) diziler olarak mı yorumlansın?"
+msgstr "Bu etiketler değişmez (tırnaklanmış) dizgeler olarak mı yorumlansın?"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="Plot options"> <frame label="Labels (leave empty for default)"> <checkbox label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:115
 #: rkward/plugins/analysis/time_series/hp_filter.xml:116
 #, kde-format
 msgid "interpret as string"
-msgstr "dizi olarak yorumla"
+msgstr "dizge olarak yorumla"
 
 #. i18n: ectx: (Loaded from KPSS Test for Stationarity)
 #: rkward/plugins/analysis/time_series/kpss_test.js:23

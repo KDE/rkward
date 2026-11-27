@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-08 04:36+0000\n"
-"PO-Revision-Date: 2026-11-22 19:51+0300\n"
+"PO-Revision-Date: 2026-11-26 17:22+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -191,7 +191,7 @@ msgid ""
 "of <b>rk.header()</b>."
 msgstr ""
 "<i>parameters</i>: Bu özellik, <b>rk.header()</b>’ın <i>parameters</i> "
-"argümanına yapıştırmaya uygun, sınırlama seçeneklerini açıklayan bir diziye "
+"argümanına yapıştırmaya uygun, sınırlama seçeneklerini açıklayan bir dizgeye "
 "ayarlanacaktır."
 
 #. i18n: ectx: <components> <component label="...">
@@ -435,7 +435,7 @@ msgid ""
 "of <b>rk.header()</b>."
 msgstr ""
 "<i>parameters</i>: Bu özellik, <b>rk.header()</b>’ın <i>parameters</i> "
-"argümanına yapıştırmaya uygun, tablolama seçeneklerini açıklayan bir diziye "
+"argümanına yapıştırmaya uygun, tablolama seçeneklerini açıklayan bir dizgeye "
 "ayarlanacaktır."
 
 #. i18n: ectx: (Loaded from Default histogram options)
@@ -933,7 +933,7 @@ msgid ""
 "varslot, or set it to a fixed string such as \"x\". This is required."
 msgstr ""
 "<i>xvar</i>: Veri değişkeninin adı. Bunu bir varslot’a bağlayabilir veya ‘x’ "
-"gibi sabit bir diziye ayarlayabilirsiniz. Bu gereklidir."
+"gibi sabit bir dizgeye ayarlayabilirsiniz. Bu gereklidir."
 
 #. i18n: i18n: "true", "false", and terms inside <i></i> or <b></b> should not be translated, here
 #. i18n: ectx: (Loaded from Barplot Options) <technical>
@@ -2100,7 +2100,7 @@ msgid ""
 msgstr ""
 "Bu, plot.default’un <i>main</i> argümanıdır. <b>plot.default</b> üzerine "
 "olan R başvurusuna bakın. Satır sonu elde etmek için (tırnak içine alınmış "
-"bir dizide) ‘\\n’ girin."
+"bir dizgede) ‘\\n’ girin."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Interpret this label as literal (quoted) string")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:19
@@ -2121,7 +2121,7 @@ msgid ""
 msgstr ""
 "Bu, plot.default’un <i>sub</i> argümanıdır. <b>plot.default</b> üzerine olan "
 "R başvurusuna bakın. Satır sonu elde etmek için (tırnak içine alınmış bir "
-"dizide) ‘\\n’ girin."
+"dizgede) ‘\\n’ girin."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Interpret this label as literal (quoted) string")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:21
@@ -2226,9 +2226,10 @@ msgid ""
 "(in a quoted string), enter '\\n'."
 msgstr ""
 "X ve Y ekseni etiketleri. Bunlar sırasıyla <b>plot.default</b>’un <i>xlab</"
-"i> ve <i>ylab</i> argümanlarıdır. Onay kutuları, düz (tırnak içinde) diziler "
-"olarak değerlendirilen etiketleri etkinleştirir veya devre dışı bırakır. "
-"Satır sonu elde etmek için (tırnak içine alınmış bir dizide) ‘\\n’ girin."
+"i> ve <i>ylab</i> argümanlarıdır. Onay kutuları, düz (tırnak içinde) "
+"dizgeler olarak değerlendirilen etiketleri etkinleştirir veya devre dışı "
+"bırakır. Satır sonu elde etmek için (tırnak içine alınmış bir dizgede) ‘\\n’ "
+"girin."
 
 #. i18n: ectx: (Loaded from Default plot options) <settings> <setting> (refers to element labelled "Scale (Minimum/Maximum values for X/Y). Leave blank for automatic")
 #: rkward/plugins/distributions/../plots/plot_options.rkh:35
@@ -2312,7 +2313,7 @@ msgid ""
 "argument."
 msgstr ""
 "<i>default_pointtype</i>: Kullanıcı ‘<label id=\"pointtype\"/>’ için "
-"‘Varsayılan’yı seçtiğinde varsayılan nokta türünü sağlayan bir dizi. "
+"‘Varsayılan’yı seçtiğinde varsayılan nokta türünü sağlayan bir dizge. "
 "Olasılıklar p,l,b,o,h,s ve S’dir; bu, <i>type</i> argümanına ilişkin "
 "seçeneklerdir."
 
@@ -2327,7 +2328,7 @@ msgid ""
 "<i>col</i> argument."
 msgstr ""
 "<i>default_pointcolor</i>: Kullanıcı ‘<label id=\"pointcolor\"/>’ için "
-"‘Varsayılan’yı seçtiğinde varsayılan nokta rengini sağlayan bir dizi. "
+"‘Varsayılan’yı seçtiğinde varsayılan nokta rengini sağlayan bir dizge. "
 "Çeşitli olasılıklar için color_chooser.xml koduna bakın; bu, <i>col</i> "
 "argümanının seçenekleridir."
 
@@ -2343,9 +2344,9 @@ msgid ""
 "\"&<i>quote;</i>\"."
 msgstr ""
 "<i>default_main</i>: <b>plot.default</b> için <i>main</i> argümanını "
-"belirten bir dizi. Varsayılan olarak bu \"\" şeklindedir; bu, çizim işlevi "
+"belirten bir dizge. Varsayılan olarak bu \"\" şeklindedir; bu, çizim işlevi "
 "tarafından oluşturulan ana başlığın kullanıldığı anlamına gelir. Not: "
-"Varsayılan her zaman tırnak içine alınmadan kullanılır. Bir düz dizi "
+"Varsayılan her zaman tırnak içine alınmadan kullanılır. Bir düz dizge "
 "belirtmek istiyorsanız açıkça \"&<i>quote;</i>\" şeklinde tırnak işaretleri "
 "ekleyin."
 
@@ -2527,7 +2528,7 @@ msgstr "Ana başlık (en üstte). Varsayılan başlık için boş bırakın"
 #: rkward/plugins/distributions/../plots/plot_options.xml:88
 #, kde-format
 msgid "Interpret this label as literal (quoted) string"
-msgstr "Bu etiketi düz (tırnak içinde) dizi olarak yorumlayın"
+msgstr "Bu etiketi düz (tırnak içinde) dizge olarak yorumlayın"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Title and margins"> <frame label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:86
@@ -2629,7 +2630,7 @@ msgstr "Y ekseni etiketi"
 #: rkward/plugins/distributions/../plots/plot_options.xml:116
 #, kde-format
 msgid "Interpret these labels as literal (quoted) strings?"
-msgstr "Bu etiketi düz (tırnak içinde) dizi olarak yorumlayın"
+msgstr "Bu etiketi düz (tırnak içinde) dizge olarak yorumlayın"
 
 #. i18n: ectx: (Default plot options) <dialog label="Default plot options"> <tab label="Axes"> <frame label="Labels (leave empty for default)"> <checkbox label="...">
 #: rkward/plugins/distributions/../plots/plot_options.xml:118

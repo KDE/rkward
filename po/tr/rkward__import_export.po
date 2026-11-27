@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-08 04:36+0000\n"
-"PO-Revision-Date: 2026-11-22 19:51+0300\n"
+"PO-Revision-Date: 2026-11-26 17:28+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -697,7 +697,7 @@ msgid ""
 "fields are also interpreted as NAs in columns that are not strings.)"
 msgstr ""
 "İçe aktarılacak dosyada eksik değerler (NA’lar) nasıl yazılır? (Boş alanlar "
-"aynı zamanda dizi olmayan sütunlardaki NA’lar olarak da yorumlanır.)"
+"aynı zamanda dizge olmayan sütunlardaki NA’lar olarak da yorumlanır.)"
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "String delimiter")
 #: rkward/plugins/00saveload/import/import_csv.rkh:47
@@ -715,7 +715,7 @@ msgid ""
 msgstr ""
 "Yukarıda ‘Diğer’ seçeneğini seçtiyseniz hangi tırnak karakterinin "
 "kullanılacağını buradan belirleyebilirsiniz. Kullanılacak tüm karakterleri "
-"girmeniz yeterlidir (boşluk veya virgül olmadan, örneğin dizi sınırlayıcısı "
+"girmeniz yeterlidir (boşluk veya virgül olmadan, örneğin dizge sınırlayıcısı "
 "olarak \", ' ve @ kullanmak için \"'@)."
 
 #. i18n: ectx: (Loaded from Import Text / CSV data) <settings> <setting> (refers to element labelled "Skip x lines at the start of the file")
@@ -1113,7 +1113,7 @@ msgstr "Ek Seçenekler"
 #: rkward/plugins/00saveload/import/import_csv.xml:186
 #, kde-format
 msgid "String handling"
-msgstr "Dizileri işlemek"
+msgstr "Dizgeleri işlemek"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="Further Options"> <frame label="String handling"> <checkbox label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:187
@@ -1165,13 +1165,13 @@ msgstr "Dönüştürme"
 #: rkward/plugins/00saveload/import/import_csv.xml:197
 #, kde-format
 msgid "Missing value string"
-msgstr "Eksik değer dizisi"
+msgstr "Eksik değer dizgesi"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> <tab label="Further Options"> <frame label="String handling"> <radio label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:200
 #, kde-format
 msgid "String delimiter"
-msgstr "Dizi sınırlayıcısı"
+msgstr "Dizge sınırlandırıcısı"
 
 #. i18n: ectx: (Import Text / CSV data) <dialog label="Import Text / CSV data"> [...] <radio label="String delimiter"> <option label="...">
 #: rkward/plugins/00saveload/import/import_csv.xml:201
@@ -2785,7 +2785,7 @@ msgid ""
 "Select a data object to export. Valid data types are array, data.frame, "
 "matrix, character, numeric, and integer."
 msgstr ""
-"Dışa aktarılacak bir veri nesnesi seçin. Geçerli veri türleri diziliş, data."
+"Dışa aktarılacak bir veri nesnesi seçin. Geçerli veri türleri dizi, data."
 "frame, matris, karakter, sayısal ve tam sayıdır."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "")
@@ -2904,7 +2904,7 @@ msgstr ""
 #: rkward/plugins/00saveload/save/write_csv.rkh:75
 #, kde-format
 msgid "Check this to have all string values quoted."
-msgstr "Tüm dizi değerlerinin tırnak içine alınması için bunu işaretleyin."
+msgstr "Tüm dizge değerlerinin tırnak içine alınması için bunu işaretleyin."
 
 #. i18n: ectx: (Export Table / CSV files) <settings> <setting> (refers to element labelled "Handling double quote characters")
 #: rkward/plugins/00saveload/save/write_csv.rkh:78
@@ -3061,7 +3061,7 @@ msgstr "Özel kodlama"
 #: rkward/plugins/00saveload/save/write_csv.xml:161
 #, kde-format
 msgid "Quote all strings"
-msgstr "Tüm dizileri tırnak içine al"
+msgstr "Tüm dizgeleri tırnak içine al"
 
 #. i18n: ectx: (Export Table / CSV files) <dialog label="Export Table / CSV files"> <tab label="Encoding and Character Options"> <radio label="...">
 #: rkward/plugins/00saveload/save/write_csv.xml:162

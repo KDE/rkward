@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: RKWard\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-24 03:11+0000\n"
-"PO-Revision-Date: 2026-11-22 19:51+0300\n"
+"PO-Revision-Date: 2026-11-26 17:22+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -1221,7 +1221,7 @@ msgid ""
 "<p>You can limit the packages displayed in the list to with names or titles "
 "matching a filter string.</p>"
 msgstr ""
-"<p>Listede görüntülenen paketleri, bir süzgeç dizisiyle eşleşen adlar veya "
+"<p>Listede görüntülenen paketleri, bir süzgeç dizgesiyle eşleşen adlar veya "
 "başlıklarla sınırlayabilirsiniz.</p>"
 
 #: rkward/dialogs/rkloadlibsdialog.cpp:650
@@ -2427,10 +2427,10 @@ msgid ""
 "search term, insert '.*'.</p>"
 msgstr ""
 "<p><b>Not:</b>Bu arama satırı, düzenli ifadeler olarak adlandırılan "
-"ifadeleri kabul eder. Aramayı dizinin başındaki eşlemelerle sınırlandırmak "
-"için süzgeci ‘^’ ile başlatın, örn. (‘^rk.’). Aramaları dizinin sonuna kadar "
-"sınırlandırmak için süzgecin sonuna ‘$’ ekleyin. Arama teriminin ortasındaki "
-"rastgele metni eşleştirmek için ‘.*.’ kullanın.</p>"
+"ifadeleri kabul eder. Aramayı dizgenin başındaki eşlemelerle sınırlandırmak "
+"için süzgeci ‘^’ ile başlatın, örn. (‘^rk.’). Aramaları dizgenin sonuna "
+"kadar sınırlandırmak için süzgecin sonuna ‘$’ ekleyin. Arama teriminin "
+"ortasındaki rastgele metni eşleştirmek için ‘.*.’ kullanın.</p>"
 
 #: rkward/misc/rkfindbar.cpp:58
 #, kde-format
@@ -2846,7 +2846,7 @@ msgstr "Yapıştırma Kipi"
 #: rkward/misc/rkspecialactions.cpp:84
 #, kde-format
 msgid "Single string"
-msgstr "Tek dizi"
+msgstr "Tek dizge"
 
 #: rkward/misc/rkspecialactions.cpp:87
 #, kde-format
