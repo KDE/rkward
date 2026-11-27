@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-11-08 02:53+0000\n"
-"PO-Revision-Date: 2026-11-23 18:16+0300\n"
+"PO-Revision-Date: 2026-11-26 19:10+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -3754,7 +3754,7 @@ msgid ""
 msgstr ""
 "Değişmez (alıntılanan) diziler olarak değerlendirilen etiketleri "
 "etkinleştirin veya devre dışı bırakın. Satır sonu elde etmek için (tırnak "
-"içine alınmış bir dizide), ‘\\n’ girin. (Varsayılan: EVET)"
+"içine alınmış bir dizgede), ‘\\n’ girin. (Varsayılan: EVET)"
 
 #. i18n: ectx: (Hodrick-Prescott Filter) <dialog label="Hodrick-Prescott Filter"> <tab label="...">
 #: rkward/plugins/analysis/time_series/hp_filter.xml:30
